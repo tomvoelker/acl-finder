@@ -360,7 +360,7 @@
                         ${paper.room_location ? `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${paper.room_location}</div>` : ''}
                         ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" class="acl-link"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
                     </div>
-                    ${paper.coauthors.length > 0 ? `
+                    ${paper.coauthors && paper.coauthors.length > 0 ? `
                         <div class="coauthors">
                             <strong>Coauthors:</strong>
                             ${paper.coauthors.map(coauthor => 
