@@ -144,18 +144,24 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            min-width: 0; /* Allow shrinking */
+            flex: 1;
         }
 
         .filter-group label {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--text-primary);
+            white-space: nowrap;
         }
 
         .filter-group select {
             padding: 8px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             background: var(--bg-secondary);
+            color: var(--text-primary);
+            min-width: 120px;
+            max-width: 100%;
         }
 
         .stats {
@@ -391,7 +397,24 @@
 
         @media (max-width: 768px) {
             .container { padding: 10px; }
-            .filters { flex-direction: column; }
+            .filters { 
+                flex-direction: column; 
+                gap: 15px;
+            }
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                width: 100%;
+            }
+            .filter-group label {
+                font-size: 0.9em;
+                margin-bottom: 2px;
+            }
+            .filter-group select {
+                width: 100%;
+                max-width: none;
+            }
             .paper-meta { flex-direction: column; gap: 10px; }
             .stats { flex-direction: column; gap: 10px; text-align: center; }
             h1 { font-size: 2em; }
@@ -776,17 +799,21 @@
             const savedTheme = localStorage.getItem('theme');
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
+            let currentTheme;
             if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                updateThemeToggle(savedTheme);
+                currentTheme = savedTheme;
             } else if (systemPrefersDark) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                updateThemeToggle('dark');
+                currentTheme = 'dark';
+            } else {
+                currentTheme = 'light';
             }
+            
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeToggle(currentTheme);
         }
 
         function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             document.documentElement.setAttribute('data-theme', newTheme);
