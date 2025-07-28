@@ -18,7 +18,15 @@
       "Bash(gh run list:*)",
       "WebFetch(domain:tomvoelker.github.io)",
       "Bash(python3:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(find:*)",
+      "Bash(true)",
+      "Bash(__NEW_LINE__ - Fixed authors.json generation to include all authors from papers.json)",
+      "Bash(- Restored proper author structure with paper references)",
+      "Bash(- Fixed author slug generation for special characters)",
+      "Bash(- Authors pages now work correctly)",
+      "Bash(- File size restored from 188KB to 5.9MB with complete data)",
+      "Bash(jq:*)"
     ],
     "deny": []
   }

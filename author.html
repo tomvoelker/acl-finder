@@ -136,11 +136,74 @@
         }
 
         .paper-card {
-            background: var(--bg-primary);
-            padding: 20px;
-            border-radius: 8px;
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
             margin-bottom: 15px;
-            border-left: 4px solid #3498db;
+        }
+
+        .paper-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-left-color: #3498db;
+        }
+
+        .paper-number {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .authors-section {
+            margin-bottom: 15px;
+        }
+
+        .authors-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .author-tag {
+            background: #e8f4f8;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            border: 1px solid #b8d4da;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .author-tag.presenter {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            font-weight: 600;
+        }
+
+        .author-tag:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        [data-theme="dark"] .author-tag {
+            background: #3d5a5a;
+            color: #e0f0f0;
+            border-color: #5a7a7a;
+        }
+
+        [data-theme="dark"] .author-tag.presenter {
+            background: #4a6a4a;
+            color: #c8f0c8;
+            border-color: #6a8a6a;
         }
 
         .paper-title {
@@ -165,26 +228,6 @@
             gap: 5px;
         }
 
-        .coauthors {
-            margin-top: 10px;
-        }
-
-        .coauthor-tag {
-            display: inline-block;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            margin: 2px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .coauthor-tag:hover {
-            background: var(--accent-color);
-            color: white;
-        }
 
         .presentation-badge {
             display: inline-block;
@@ -381,6 +424,19 @@
         function displayAuthorProfile(authorData) {
             const stats = authorData.stats;
             
+            // Calculate unique coauthors from papers
+            const allCoauthors = new Set();
+            authorData.papers.forEach(paper => {
+                if (paper.coauthors) {
+                    paper.coauthors.forEach(coauthor => {
+                        if (coauthor !== authorData.name) {
+                            allCoauthors.add(coauthor);
+                        }
+                    });
+                }
+            });
+            const uniqueCoauthorsCount = allCoauthors.size;
+            
             // Update page title
             document.title = `${authorData.name} - ACL 2025`;
 
@@ -394,7 +450,7 @@
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-users"></i>
-                        <span>${stats.coauthors.length} coauthor${stats.coauthors.length !== 1 ? 's' : ''}</span>
+                        <span>${uniqueCoauthorsCount} coauthor${uniqueCoauthorsCount !== 1 ? 's' : ''}</span>
                     </div>
                     ${stats.main_papers > 0 ? `
                         <div class="stat-item">
@@ -422,29 +478,30 @@
             // Display papers
             const papersHtml = authorData.papers.map(paper => `
                 <div class="paper-card">
-                    <div class="paper-title">
-                        ${paper.title}
-                        ${paper.is_presenter ? '<span class="presenter-indicator">PRESENTER</span>' : ''}
-                    </div>
-                    <div class="paper-meta">
-                        <div class="meta-item">
-                            <i class="fas fa-hashtag"></i>
-                            <span>${paper.paper_number}</span>
+                    <div class="paper-number">${paper.paper_number}</div>
+                    <div class="paper-title">${paper.title}</div>
+                    
+                    <div class="authors-section">
+                        <strong><i class="fas fa-users"></i> Authors:</strong>
+                        <div class="authors-list">
+                            ${paper.coauthors && paper.coauthors.length > 0 ? 
+                                paper.coauthors.map(coauthor => {
+                                    const isPresenter = paper.is_presenter && coauthor === authorData.name;
+                                    return `<a href="author.html?author=${createAuthorSlug(coauthor)}" class="author-tag ${isPresenter ? 'presenter' : ''}">${coauthor}</a>`;
+                                }).join('') : 
+                                `<span class="author-tag presenter">${authorData.name}</span>`
+                            }
                         </div>
+                    </div>
+                    
+                    <div class="paper-meta">
                         ${paper.presentation_type ? `<div class="meta-item">${getPresentationBadge(paper.presentation_type)}</div>` : ''}
                         ${paper.session_date ? `<div class="meta-item"><i class="fas fa-calendar"></i> ${paper.session_date}</div>` : ''}
                         ${paper.session_time ? `<div class="meta-item"><i class="fas fa-clock"></i> ${paper.session_time}</div>` : ''}
                         ${paper.room_location ? `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${paper.room_location}</div>` : ''}
                         ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" class="acl-link"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
                     </div>
-                    ${paper.coauthors && paper.coauthors.length > 0 ? `
-                        <div class="coauthors">
-                            <strong>Coauthors:</strong>
-                            ${paper.coauthors.map(coauthor => 
-                                `<a href="author.html?author=${createAuthorSlug(coauthor)}" class="coauthor-tag">${coauthor}</a>`
-                            ).join('')}
-                        </div>
-                    ` : ''}
+                    
                     ${paper.abstract ? `
                         <div class="paper-abstract">
                             <div class="abstract-preview" id="preview-${paper.paper_number}">${paper.abstract.substring(0, 200)}${paper.abstract.length > 200 ? '...' : ''}</div>
