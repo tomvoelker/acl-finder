@@ -479,8 +479,13 @@
         function displayAuthorProfile(authorData) {
             const stats = authorData.stats;
             
-            // Calculate unique coauthors from papers
+            // Calculate unique coauthors and accurate stats from papers
             const allCoauthors = new Set();
+            let mainPapers = 0;
+            let findingsPapers = 0;
+            let demoPapers = 0;
+            let workshopPapers = 0;
+            
             authorData.papers.forEach(paper => {
                 if (paper.authors && paper.authors.length > 0) {
                     paper.authors.forEach(author => {
@@ -489,13 +494,27 @@
                         }
                     });
                 }
+                
+                // Calculate correct track counts
+                if (paper.track) {
+                    if (paper.track.includes('Main Conference')) {
+                        mainPapers++;
+                    } else if (paper.track.includes('Findings')) {
+                        findingsPapers++;
+                    } else if (paper.track.includes('Demo')) {
+                        demoPapers++;
+                    } else if (paper.track.includes('Workshop') || paper.track.includes('Shared Task')) {
+                        workshopPapers++;
+                    }
+                }
             });
+            
             const uniqueCoauthorsCount = allCoauthors.size;
             
             // Update page title
             document.title = `${authorData.name} - ACL 2025`;
 
-            // Create author header
+            // Create author header with dynamically calculated stats
             const headerHtml = `
                 <h1 class="author-name">${authorData.name}</h1>
                 <div class="author-stats">
@@ -507,22 +526,28 @@
                         <i class="fas fa-users"></i>
                         <span>${uniqueCoauthorsCount} coauthor${uniqueCoauthorsCount !== 1 ? 's' : ''}</span>
                     </div>
-                    ${stats.main_papers > 0 ? `
+                    ${mainPapers > 0 ? `
                         <div class="stat-item">
                             <i class="fas fa-star"></i>
-                            <span>${stats.main_papers} main conference</span>
+                            <span>${mainPapers} main conference</span>
                         </div>
                     ` : ''}
-                    ${stats.findings_papers > 0 ? `
+                    ${findingsPapers > 0 ? `
                         <div class="stat-item">
                             <i class="fas fa-search"></i>
-                            <span>${stats.findings_papers} findings</span>
+                            <span>${findingsPapers} findings</span>
                         </div>
                     ` : ''}
-                    ${stats.demo_papers > 0 ? `
+                    ${demoPapers > 0 ? `
                         <div class="stat-item">
                             <i class="fas fa-laptop"></i>
-                            <span>${stats.demo_papers} demo</span>
+                            <span>${demoPapers} demo</span>
+                        </div>
+                    ` : ''}
+                    ${workshopPapers > 0 ? `
+                        <div class="stat-item">
+                            <i class="fas fa-cogs"></i>
+                            <span>${workshopPapers} workshop${workshopPapers !== 1 ? 's' : ''}</span>
                         </div>
                     ` : ''}
                 </div>
