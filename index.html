@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACL 2025 Paper Search</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 2.8em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-box:focus {
+            border-color: #3498db;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .stats {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: #7f8c8d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-tips {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .results {
+            display: grid;
+            gap: 20px;
+        }
+
+        .paper-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .paper-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-left-color: #3498db;
+        }
+
+        .paper-number {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .authors-section {
+            margin-bottom: 15px;
+        }
+
+        .authors-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .author-tag {
+            background: #e8f4f8;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            border: 1px solid #b8d4da;
+        }
+
+        .author-tag.presenter {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            font-weight: 600;
+        }
+
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .meta-item i {
+            width: 16px;
+        }
+
+        .paper-abstract {
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .abstract-preview {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .abstract-full {
+            display: none;
+        }
+
+        .toggle-abstract {
+            color: #3498db;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .toggle-abstract:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+        }
+
+        .presentation-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .badge-oral { background: #e8f5e8; color: #2d6a2d; }
+        .badge-poster { background: #e3f2fd; color: #1565c0; }
+        .badge-demo { background: #fff3e0; color: #e65100; }
+        .badge-virtual { background: #f3e5f5; color: #7b1fa2; }
+        .badge-other { background: #f5f5f5; color: #616161; }
+
+        .track-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .track-main { background: #e8f5e8; color: #2d6a2d; }
+        .track-findings { background: #e3f2fd; color: #1565c0; }
+        .track-demo { background: #fff3e0; color: #e65100; }
+        .track-industry { background: #f3e5f5; color: #7b1fa2; }
+        .track-srw { background: #fce4ec; color: #c2185b; }
+        .track-workshop { background: #f0f4ff; color: #3f51b5; }
+        .track-other { background: #f5f5f5; color: #616161; }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination .current-page {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .filters { flex-direction: column; }
+            .paper-meta { flex-direction: column; gap: 10px; }
+            .stats { flex-direction: column; gap: 10px; text-align: center; }
+            h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar" style="background: white; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px;">
+            <a href="authors.html" style="color: #3498db; text-decoration: none; font-weight: 500;"><i class="fas fa-users"></i> Browse Authors</a>
+        </div>
+
+        <header>
+            <h1><i class="fas fa-search"></i> ACL 2025 Papers</h1>
+            <p class="subtitle">🔍 Search through 4,100+ papers from all tracks and workshops</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Search papers by title, abstract, author names, or paper number...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="trackFilter">Track/Workshop:</label>
+                <select id="trackFilter">
+                    <option value="">All Tracks</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="presentationFilter">Presentation Type:</label>
+                <select id="presentationFilter">
+                    <option value="">All Types</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="attendanceFilter">Attendance:</label>
+                <select id="attendanceFilter">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="dateFilter">Date:</label>
+                <select id="dateFilter">
+                    <option value="">All Dates</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats" id="statsContainer">
+            <div><i class="fas fa-info-circle"></i> Loading papers...</div>
+            <div class="search-tips">💡 Tip: Search by author name, paper title, or keywords in abstract</div>
+        </div>
+
+        <div id="resultsContainer" class="results">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading papers...
+            </div>
+        </div>
+
+        <div id="paginationContainer" class="pagination" style="display: none;"></div>
+    </div>
+
+    <script>
+        let papers = [];
+        let fuse = null;
+        let filteredPapers = [];
+        let currentPage = 1;
+        const itemsPerPage = 20;
+        let searchTimeout = null;
+
+        // Load papers data
+        fetch('papers.json')
+            .then(response => response.json())
+            .then(data => {
+                papers = data;
+                initializeSearch();
+                populateFilters();
+                displayPapers(papers, 1);
+                updateStats(papers);
+            })
+            .catch(error => {
+                console.error('Error loading papers:', error);
+                document.getElementById('resultsContainer').innerHTML = 
+                    '<div class="no-results">Error loading papers data.</div>';
+            });
+
+        function initializeSearch() {
+            const fuseOptions = {
+                keys: [
+                    { name: 'title', weight: 0.4 },
+                    { name: 'searchable_text', weight: 0.3 },
+                    { name: 'authors', weight: 0.2 },
+                    { name: 'paper_number', weight: 0.1 }
+                ],
+                threshold: 0.4,
+                includeScore: true,
+                minMatchCharLength: 2,
+                ignoreLocation: true
+            };
+            fuse = new Fuse(papers, fuseOptions);
+        }
+
+        function populateFilters() {
+            const tracks = [...new Set(papers.map(p => p.track).filter(t => t))].sort();
+            const presentationTypes = [...new Set(papers.map(p => p.presentation_type).filter(t => t))];
+            const attendanceTypes = [...new Set(papers.map(p => p.attendance_type).filter(t => t))];
+            const dates = [...new Set(papers.map(p => p.session_date).filter(d => d))].sort();
+
+            populateSelect('trackFilter', tracks);
+            populateSelect('presentationFilter', presentationTypes);
+            populateSelect('attendanceFilter', attendanceTypes);
+            populateSelect('dateFilter', dates);
+        }
+
+        function populateSelect(selectId, options) {
+            const select = document.getElementById(selectId);
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+        }
+
+        function search() {
+            // Clear previous timeout
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+
+            // Debounce search for better performance
+            searchTimeout = setTimeout(() => {
+                performSearch();
+            }, 300);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            const trackFilter = document.getElementById('trackFilter').value;
+            const presentationFilter = document.getElementById('presentationFilter').value;
+            const attendanceFilter = document.getElementById('attendanceFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            let results = papers;
+
+            // Text search with performance optimization
+            if (query) {
+                if (query.length < 3) {
+                    // For short queries, use simple string matching for better performance
+                    const lowerQuery = query.toLowerCase();
+                    results = papers.filter(paper => 
+                        paper.searchable_text.includes(lowerQuery)
+                    );
+                } else {
+                    // For longer queries, use Fuse.js
+                    const fuseResults = fuse.search(query);
+                    results = fuseResults.map(result => result.item);
+                }
+            }
+
+            // Apply filters
+            if (trackFilter) {
+                results = results.filter(paper => paper.track === trackFilter);
+            }
+            if (presentationFilter) {
+                results = results.filter(paper => paper.presentation_type === presentationFilter);
+            }
+            if (attendanceFilter) {
+                results = results.filter(paper => paper.attendance_type === attendanceFilter);
+            }
+            if (dateFilter) {
+                results = results.filter(paper => paper.session_date === dateFilter);
+            }
+
+            filteredPapers = results;
+            currentPage = 1;
+            displayPapers(results, currentPage);
+            updateStats(results);
+            updatePagination(results.length);
+        }
+
+        function displayPapers(papersToShow, page) {
+            const container = document.getElementById('resultsContainer');
+            
+            if (papersToShow.length === 0) {
+                container.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><br>No papers found matching your criteria.</div>';
+                document.getElementById('paginationContainer').style.display = 'none';
+                return;
+            }
+
+            // Calculate pagination
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, papersToShow.length);
+            const pageItems = papersToShow.slice(startIndex, endIndex);
+
+            const html = pageItems.map(paper => `
+                <div class="paper-card">
+                    <div class="paper-number">${paper.paper_number}</div>
+                    ${paper.track ? `<div class="track-badge ${getTrackBadgeClass(paper.track)}">${paper.track}</div>` : ''}
+                    <h3 class="paper-title">${paper.title}</h3>
+                    
+                    ${paper.authors && paper.authors.length > 0 ? `
+                        <div class="authors-section">
+                            <div class="authors-list">
+                                ${paper.authors.map((author, index) => {
+                                    const isPresenter = paper.presenter_name && paper.presenter_name.includes(author);
+                                    const authorSlug = author.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[-\s]+/g, '-').replace(/^-|-$/g, '');
+                                    return `<a href="author.html?author=${authorSlug}" class="author-tag ${isPresenter ? 'presenter' : ''}" style="text-decoration: none;">${author}${isPresenter ? ' (presenter)' : ''}</a>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <div class="paper-meta">
+                        ${paper.presentation_type ? `<div class="meta-item">${getPresentationBadge(paper.presentation_type)}</div>` : ''}
+                        ${paper.session_date ? `<div class="meta-item"><i class="fas fa-calendar"></i> ${paper.session_date}</div>` : ''}
+                        ${paper.session_time ? `<div class="meta-item"><i class="fas fa-clock"></i> ${paper.session_time}</div>` : ''}
+                        ${paper.room_location ? `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${paper.room_location}</div>` : ''}
+                        ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500;"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
+                    </div>
+
+                    ${paper.abstract ? `
+                        <div class="paper-abstract">
+                            <div class="abstract-preview" id="preview-${paper.paper_number.replace(/[^a-zA-Z0-9]/g, '_')}">${truncateText(paper.abstract, 300)}</div>
+                            <div class="abstract-full" id="full-${paper.paper_number.replace(/[^a-zA-Z0-9]/g, '_')}" style="display: none;">${paper.abstract}</div>
+                            ${paper.abstract.length > 300 ? `<div class="toggle-abstract" onclick="toggleAbstract('${paper.paper_number.replace(/[^a-zA-Z0-9]/g, '_')}')">Read more</div>` : ''}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const paginationContainer = document.getElementById('paginationContainer');
+            
+            if (totalPages <= 1) {
+                paginationContainer.style.display = 'none';
+                return;
+            }
+
+            paginationContainer.style.display = 'flex';
+            
+            let html = `<button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+            
+            // Show page numbers with ellipsis
+            const showPages = [];
+            if (totalPages <= 7) {
+                for (let i = 1; i <= totalPages; i++) showPages.push(i);
+            } else {
+                showPages.push(1);
+                if (currentPage > 4) showPages.push('...');
+                for (let i = Math.max(2, currentPage - 2); i <= Math.min(totalPages - 1, currentPage + 2); i++) {
+                    showPages.push(i);
+                }
+                if (currentPage < totalPages - 3) showPages.push('...');
+                showPages.push(totalPages);
+            }
+
+            showPages.forEach(page => {
+                if (page === '...') {
+                    html += '<span>...</span>';
+                } else {
+                    html += `<button onclick="changePage(${page})" ${page === currentPage ? 'class="current-page"' : ''}>${page}</button>`;
+                }
+            });
+
+            html += `<button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+            
+            paginationContainer.innerHTML = html;
+        }
+
+        function changePage(newPage) {
+            const totalPages = Math.ceil(filteredPapers.length / itemsPerPage);
+            if (newPage < 1 || newPage > totalPages) return;
+            
+            currentPage = newPage;
+            displayPapers(filteredPapers, currentPage);
+            updatePagination(filteredPapers.length);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getTrackBadgeClass(track) {
+            if (track.includes('Main Conference')) return 'track-main';
+            if (track.includes('Findings')) return 'track-findings';
+            if (track.includes('Demo')) return 'track-demo';
+            if (track.includes('Industry')) return 'track-industry';
+            if (track.includes('Student Research')) return 'track-srw';
+            if (track.includes('Workshop') || track.includes('Shared Task')) return 'track-workshop';
+            return 'track-other';
+        }
+
+        function getPresentationBadge(type) {
+            const badgeClass = type.includes('Oral') ? 'badge-oral' :
+                             type.includes('Poster') ? 'badge-poster' :
+                             type.includes('Demo') ? 'badge-demo' :
+                             type.includes('V-') || type.includes('Virtual') ? 'badge-virtual' :
+                             'badge-other';
+            return `<span class="presentation-badge ${badgeClass}">${type}</span>`;
+        }
+
+        function truncateText(text, maxLength) {
+            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+        }
+
+        function toggleAbstract(paperId) {
+            const preview = document.getElementById(`preview-${paperId}`);
+            const full = document.getElementById(`full-${paperId}`);
+            const toggle = preview.nextElementSibling.nextElementSibling;
+
+            if (preview.style.display !== 'none') {
+                preview.style.display = 'none';
+                full.style.display = 'block';
+                toggle.textContent = 'Read less';
+            } else {
+                preview.style.display = 'block';
+                full.style.display = 'none';
+                toggle.textContent = 'Read more';
+            }
+        }
+
+        function updateStats(papersToShow) {
+            const total = papersToShow.length;
+            const statsContainer = document.getElementById('statsContainer');
+            
+            const authorsCount = papersToShow.reduce((sum, paper) => sum + (paper.authors ? paper.authors.length : 0), 0);
+            const multiAuthorCount = papersToShow.filter(paper => paper.authors && paper.authors.length > 1).length;
+            
+            statsContainer.innerHTML = `
+                <div><i class="fas fa-info-circle"></i> Showing ${total} of ${papers.length} papers</div>
+                <div class="search-tips">📊 ${authorsCount} authors • ${multiAuthorCount} multi-author papers</div>
+            `;
+        }
+
+        // Event listeners with debouncing
+        document.getElementById('searchInput').addEventListener('input', search);
+        document.getElementById('trackFilter').addEventListener('change', performSearch);
+        document.getElementById('presentationFilter').addEventListener('change', performSearch);
+        document.getElementById('attendanceFilter').addEventListener('change', performSearch);
+        document.getElementById('dateFilter').addEventListener('change', performSearch);
+
+        // Initialize search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>

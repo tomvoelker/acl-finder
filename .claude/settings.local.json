@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv init:*)",
+      "Bash(uv add:*)",
+      "Bash(uv run:*)",
+      "Bash(cp:*)",
+      "Bash(rm:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(pkill:*)",
+      "WebFetch(domain:aclanthology.org)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
