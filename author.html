@@ -282,8 +282,10 @@
 
         .caidas-logo {
             height: 40px;
-            filter: brightness(0) invert(1);
-            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .caidas-text {
@@ -480,7 +482,7 @@
     </script>
 
     <footer style="margin-top: 60px; padding: 20px; text-align: center; background: var(--bg-secondary); border-radius: 10px; box-shadow: 0 2px 10px var(--shadow);">
-        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
             <span style="color: var(--text-secondary); font-size: 0.9em;">
                 <i class="fas fa-graduation-cap"></i> ACL 2025 Conference
             </span>
@@ -500,6 +502,24 @@
                 <i class="fas fa-moon" id="themeIcon"></i>
                 <span id="themeText">Dark Mode</span>
             </button>
+        </div>
+        <div style="border-top: 1px solid var(--border-color); padding-top: 15px; color: var(--text-secondary); font-size: 0.8em;">
+            <div style="margin-bottom: 10px;">
+                <strong>Unofficial conference navigation tool</strong> - Not affiliated with ACL<br>
+                Created by <strong>LSX - Center for Artificial Intelligence and Data Science (CAIDAS)</strong><br>
+                Data Science Chair, Julius-Maximilians-Universität Würzburg
+            </div>
+            <div style="margin-bottom: 8px;">
+                Questions or feedback? Contact: 
+                <a href="mailto:voelker@informatik.uni-wuerzburg.de" style="color: var(--accent-color); text-decoration: none;">
+                    voelker@informatik.uni-wuerzburg.de
+                </a>
+            </div>
+            <div>
+                <a href="https://www.uni-wuerzburg.de/sonstiges/impressum/" target="_blank" style="color: var(--accent-color); text-decoration: none;">
+                    <i class="fas fa-external-link-alt"></i> Impressum
+                </a>
+            </div>
         </div>
     </footer>
 

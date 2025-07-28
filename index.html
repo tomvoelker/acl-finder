@@ -112,8 +112,10 @@
 
         .caidas-logo {
             height: 40px;
-            filter: brightness(0) invert(1);
-            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .caidas-text {
@@ -460,7 +462,7 @@
 
         <header>
             <h1><i class="fas fa-search"></i> ACL 2025 Papers</h1>
-            <p class="subtitle">🔍 Search through 4,100+ papers from all tracks and workshops</p>
+            <p class="subtitle">🔍 Unofficial conference navigation tool - Search through 4,100+ papers from all tracks and workshops</p>
             <div class="caidas-branding">
                 <img src="https://www.caidas.uni-wuerzburg.de/fileadmin/43150000/logos/CAIDAS_quer_4.png" alt="CAIDAS Logo" class="caidas-logo">
                 <div class="caidas-text">
@@ -531,8 +533,12 @@
                 papers = data;
                 initializeSearch();
                 populateFilters();
-                displayPapers(papers, 1);
-                updateStats(papers);
+                // Show prioritized papers initially (when no search query)
+                const prioritizedPapers = prioritizeCAIDASWork(papers);
+                filteredPapers = prioritizedPapers;
+                displayPapers(prioritizedPapers, 1);
+                updateStats(prioritizedPapers);
+                updatePagination(prioritizedPapers.length);
             })
             .catch(error => {
                 console.error('Error loading papers:', error);
@@ -871,9 +877,16 @@
             </button>
         </div>
         <div style="border-top: 1px solid var(--border-color); padding-top: 15px; color: var(--text-secondary); font-size: 0.8em;">
-            <div style="margin-bottom: 8px;">
+            <div style="margin-bottom: 10px;">
+                <strong>Unofficial conference navigation tool</strong> - Not affiliated with ACL<br>
                 Created by <strong>LSX - Center for Artificial Intelligence and Data Science (CAIDAS)</strong><br>
                 Data Science Chair, Julius-Maximilians-Universität Würzburg
+            </div>
+            <div style="margin-bottom: 8px;">
+                Questions or feedback? Contact: 
+                <a href="mailto:voelker@informatik.uni-wuerzburg.de" style="color: var(--accent-color); text-decoration: none;">
+                    voelker@informatik.uni-wuerzburg.de
+                </a>
             </div>
             <div>
                 <a href="https://www.uni-wuerzburg.de/sonstiges/impressum/" target="_blank" style="color: var(--accent-color); text-decoration: none;">
