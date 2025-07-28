@@ -101,6 +101,34 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
+        .caidas-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .caidas-logo {
+            height: 40px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .caidas-text {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.9em;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .powered-by {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
         .search-container {
             position: relative;
             margin-bottom: 30px;
@@ -433,6 +461,13 @@
         <header>
             <h1><i class="fas fa-search"></i> ACL 2025 Papers</h1>
             <p class="subtitle">🔍 Search through 4,100+ papers from all tracks and workshops</p>
+            <div class="caidas-branding">
+                <img src="https://www.caidas.uni-wuerzburg.de/fileadmin/43150000/logos/CAIDAS_quer_4.png" alt="CAIDAS Logo" class="caidas-logo">
+                <div class="caidas-text">
+                    <div class="powered-by">Powered by</div>
+                    <div>Center for Artificial Intelligence and Data Science (CAIDAS)<br>Data Science Chair (JMU)</div>
+                </div>
+            </div>
         </header>
 
         <div class="search-container">
@@ -543,6 +578,44 @@
             });
         }
 
+        // Prioritize CAIDAS work when no search query
+        function prioritizeCAIDASWork(allPapers) {
+            const priorityPapers = [
+                'pfister-etal-2025-llammlein', // LLäMmlein paper
+                'pfister-etal-2025-bartabsa'   // BARTABSA++ paper
+            ];
+            
+            const priorityAuthors = [
+                'julia wunderle',
+                'jan pfister', 
+                'tom völker',
+                'anton vlasjuk'
+            ];
+            
+            // Separate papers into priority and regular
+            const priorityPapersList = [];
+            const priorityAuthorPapers = [];
+            const regularPapers = [];
+            
+            allPapers.forEach(paper => {
+                if (priorityPapers.includes(paper.paper_number)) {
+                    priorityPapersList.push(paper);
+                } else if (paper.authors && paper.authors.some(author => 
+                    priorityAuthors.some(priorityAuthor => 
+                        author.toLowerCase().includes(priorityAuthor.toLowerCase()) ||
+                        priorityAuthor.toLowerCase().includes(author.toLowerCase())
+                    )
+                )) {
+                    priorityAuthorPapers.push(paper);
+                } else {
+                    regularPapers.push(paper);
+                }
+            });
+            
+            // Return prioritized list: priority papers first, then author papers, then regular papers
+            return [...priorityPapersList, ...priorityAuthorPapers, ...regularPapers];
+        }
+
         function search() {
             // Clear previous timeout
             if (searchTimeout) {
@@ -577,6 +650,9 @@
                     const fuseResults = fuse.search(query);
                     results = fuseResults.map(result => result.item);
                 }
+            } else {
+                // When no search query, prioritize CAIDAS papers and authors
+                results = prioritizeCAIDASWork(papers);
             }
 
             // Apply filters
@@ -773,7 +849,7 @@
     </script>
 
     <footer style="margin-top: 60px; padding: 20px; text-align: center; background: var(--bg-secondary); border-radius: 10px; box-shadow: 0 2px 10px var(--shadow);">
-        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
             <span style="color: var(--text-secondary); font-size: 0.9em;">
                 <i class="fas fa-graduation-cap"></i> ACL 2025 Conference
             </span>
@@ -793,6 +869,17 @@
                 <i class="fas fa-moon" id="themeIcon"></i>
                 <span id="themeText">Dark Mode</span>
             </button>
+        </div>
+        <div style="border-top: 1px solid var(--border-color); padding-top: 15px; color: var(--text-secondary); font-size: 0.8em;">
+            <div style="margin-bottom: 8px;">
+                Created by <strong>LSX - Center for Artificial Intelligence and Data Science (CAIDAS)</strong><br>
+                Data Science Chair, Julius-Maximilians-Universität Würzburg
+            </div>
+            <div>
+                <a href="https://www.uni-wuerzburg.de/sonstiges/impressum/" target="_blank" style="color: var(--accent-color); text-decoration: none;">
+                    <i class="fas fa-external-link-alt"></i> Impressum
+                </a>
+            </div>
         </div>
     </footer>
 
