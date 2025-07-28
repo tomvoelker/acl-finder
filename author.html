@@ -206,6 +206,34 @@
             border-color: #6a8a6a;
         }
 
+        .track-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .track-main { background: #e8f5e8; color: #2d6a2d; }
+        .track-findings { background: #e3f2fd; color: #1565c0; }
+        .track-demo { background: #fff3e0; color: #e65100; }
+        .track-industry { background: #f3e5f5; color: #7b1fa2; }
+        .track-srw { background: #fce4ec; color: #c2185b; }
+        .track-workshop { background: #f0f4ff; color: #3f51b5; }
+        .track-other { background: #f5f5f5; color: #616161; }
+
+        [data-theme="dark"] .track-main { background: #3d5a3d; color: #b8e8b8; }
+        [data-theme="dark"] .track-findings { background: #2e4a7f; color: #a0d0f9; }
+        [data-theme="dark"] .track-demo { background: #5a4330; color: #ffbb50; }
+        [data-theme="dark"] .track-industry { background: #5a3d5a; color: #f1cef7; }
+        [data-theme="dark"] .track-srw { background: #6d3d5a; color: #f8cbd9; }
+        [data-theme="dark"] .track-workshop { background: #3d4a7f; color: #afb8ea; }
+        [data-theme="dark"] .track-other { background: #505050; color: #d0d0d0; }
+
         .paper-title {
             font-size: 1.2em;
             font-weight: 600;
@@ -394,6 +422,21 @@
             return `<span class="presentation-badge ${badgeClass}">${type}</span>`;
         }
 
+        function getTrackBadgeClass(track) {
+            if (track.includes('Main Conference')) return 'track-main';
+            if (track.includes('Findings')) return 'track-findings';
+            if (track.includes('Demo')) return 'track-demo';
+            if (track.includes('Industry')) return 'track-industry';
+            if (track.includes('Student Research')) return 'track-srw';
+            if (track.includes('Workshop') || track.includes('Shared Task')) return 'track-workshop';
+            return 'track-other';
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
         function loadAuthorProfile() {
             const authorSlug = getUrlParameter('author');
             if (!authorSlug) {
@@ -402,9 +445,12 @@
                 return;
             }
 
-            fetch('authors.json')
-                .then(response => response.json())
-                .then(authors => {
+            // Load both authors.json and papers.json to get complete data
+            Promise.all([
+                fetch('authors.json').then(response => response.json()),
+                fetch('papers.json').then(response => response.json())
+            ])
+                .then(([authors, allPapers]) => {
                     const authorData = authors[authorSlug];
                     if (!authorData) {
                         document.getElementById('authorHeader').innerHTML = 
@@ -412,7 +458,16 @@
                         return;
                     }
 
-                    displayAuthorProfile(authorData);
+                    // Enrich author data with full paper details
+                    const enrichedAuthorData = {
+                        ...authorData,
+                        papers: authorData.papers.map(authorPaper => {
+                            const fullPaper = allPapers.find(p => p.paper_number === authorPaper.paper_number);
+                            return fullPaper || authorPaper;
+                        })
+                    };
+
+                    displayAuthorProfile(enrichedAuthorData);
                 })
                 .catch(error => {
                     console.error('Error loading author data:', error);
@@ -427,10 +482,10 @@
             // Calculate unique coauthors from papers
             const allCoauthors = new Set();
             authorData.papers.forEach(paper => {
-                if (paper.coauthors) {
-                    paper.coauthors.forEach(coauthor => {
-                        if (coauthor !== authorData.name) {
-                            allCoauthors.add(coauthor);
+                if (paper.authors && paper.authors.length > 0) {
+                    paper.authors.forEach(author => {
+                        if (author !== authorData.name) {
+                            allCoauthors.add(author);
                         }
                     });
                 }
@@ -475,40 +530,38 @@
 
             document.getElementById('authorHeader').innerHTML = headerHtml;
 
-            // Display papers
+            // Display papers - using exact same structure as index.html
             const papersHtml = authorData.papers.map(paper => `
                 <div class="paper-card">
                     <div class="paper-number">${paper.paper_number}</div>
-                    <div class="paper-title">${paper.title}</div>
+                    ${paper.track ? `<div class="track-badge ${getTrackBadgeClass(paper.track)}">${paper.track}</div>` : ''}
+                    <h3 class="paper-title">${paper.title}</h3>
                     
-                    <div class="authors-section">
-                        <strong><i class="fas fa-users"></i> Authors:</strong>
-                        <div class="authors-list">
-                            ${paper.coauthors && paper.coauthors.length > 0 ? 
-                                paper.coauthors.map(coauthor => {
-                                    const isPresenter = paper.is_presenter && coauthor === authorData.name;
-                                    return `<a href="author.html?author=${createAuthorSlug(coauthor)}" class="author-tag ${isPresenter ? 'presenter' : ''}">${coauthor}</a>`;
-                                }).join('') : 
-                                `<span class="author-tag presenter">${authorData.name}</span>`
-                            }
+                    ${paper.authors && paper.authors.length > 0 ? `
+                        <div class="authors-section">
+                            <div class="authors-list">
+                                ${paper.authors.map((author, index) => {
+                                    const isPresenter = paper.presenter_name && paper.presenter_name.includes(author);
+                                    const authorSlug = createAuthorSlug(author);
+                                    return `<a href="author.html?author=${authorSlug}" class="author-tag ${isPresenter ? 'presenter' : ''}" style="text-decoration: none;">${author}${isPresenter ? ' (presenter)' : ''}</a>`;
+                                }).join('')}
+                            </div>
                         </div>
-                    </div>
-                    
+                    ` : ''}
+
                     <div class="paper-meta">
                         ${paper.presentation_type ? `<div class="meta-item">${getPresentationBadge(paper.presentation_type)}</div>` : ''}
                         ${paper.session_date ? `<div class="meta-item"><i class="fas fa-calendar"></i> ${paper.session_date}</div>` : ''}
                         ${paper.session_time ? `<div class="meta-item"><i class="fas fa-clock"></i> ${paper.session_time}</div>` : ''}
                         ${paper.room_location ? `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${paper.room_location}</div>` : ''}
-                        ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" class="acl-link"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
+                        ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
                     </div>
-                    
+
                     ${paper.abstract ? `
                         <div class="paper-abstract">
-                            <div class="abstract-preview" id="preview-${paper.paper_number}">${paper.abstract.substring(0, 200)}${paper.abstract.length > 200 ? '...' : ''}</div>
-                            ${paper.abstract.length > 200 ? `
-                                <div class="abstract-full" id="full-${paper.paper_number}" style="display: none;">${paper.abstract}</div>
-                                <div class="toggle-abstract" onclick="toggleAbstract('${paper.paper_number}')">Read more</div>
-                            ` : ''}
+                            <div class="abstract-preview" id="preview-${paper.paper_number.replace(/[^a-zA-Z0-9]/g, '_')}">${truncateText(paper.abstract, 300)}</div>
+                            <div class="abstract-full" id="full-${paper.paper_number.replace(/[^a-zA-Z0-9]/g, '_')}" style="display: none;">${paper.abstract}</div>
+                            ${paper.abstract.length > 300 ? `<div class="toggle-abstract" onclick="toggleAbstract('${paper.paper_number.replace(/[^a-zA-Z0-9]/g, '_')}')">Read more</div>` : ''}
                         </div>
                     ` : ''}
                 </div>

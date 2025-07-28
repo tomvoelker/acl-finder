@@ -16,6 +16,9 @@
             --shadow: rgba(0,0,0,0.1);
             --shadow-hover: rgba(0,0,0,0.15);
             --accent-color: #3498db;
+            --gradient-start: #3498db;
+            --gradient-end: #2c3e50;
+            --gradient-shadow: rgba(52, 152, 219, 0.3);
         }
 
         [data-theme="dark"] {
@@ -27,6 +30,9 @@
             --shadow: rgba(0,0,0,0.3);
             --shadow-hover: rgba(0,0,0,0.4);
             --accent-color: #5bb3f0;
+            --gradient-start: #5bb3f0;
+            --gradient-end: #3a4f63;
+            --gradient-shadow: rgba(91, 179, 240, 0.3);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -39,6 +45,9 @@
                 --shadow: rgba(0,0,0,0.3);
                 --shadow-hover: rgba(0,0,0,0.4);
                 --accent-color: #5bb3f0;
+                --gradient-start: #5bb3f0;
+                --gradient-end: #3a4f63;
+                --gradient-shadow: rgba(91, 179, 240, 0.3);
             }
         }
 
@@ -86,20 +95,21 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            background: var(--bg-secondary);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px var(--shadow);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--gradient-shadow);
         }
 
         h1 {
-            color: var(--text-primary);
+            color: white;
             margin-bottom: 10px;
             font-size: 2.5em;
         }
 
         .subtitle {
-            color: var(--text-secondary);
+            color: rgba(255,255,255,0.9);
             font-size: 1.1em;
         }
 
@@ -248,7 +258,7 @@
 
         <header>
             <h1><i class="fas fa-users"></i> ACL 2025 Authors</h1>
-            <p class="subtitle">Unofficial conference navigation tool - Browse all authors who presented at the conference</p>
+            <p class="subtitle">👥 Unofficial conference navigation tool - Browse all 15,000+ authors who presented at the conference</p>
             <a href="https://www.informatik.uni-wuerzburg.de/datascience/" target="_blank" class="caidas-branding" style="text-decoration: none; color: inherit;">
                 <img src="https://www.caidas.uni-wuerzburg.de/fileadmin/43150000/logos/CAIDAS_quer_4.png" alt="CAIDAS Logo" class="caidas-logo">
                 <div class="caidas-text">
