@@ -111,7 +111,7 @@
             border-radius: 30px;
             outline: none;
             transition: all 0.3s ease;
-            background: white;
+            background: var(--bg-secondary);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
@@ -135,7 +135,7 @@
             gap: 10px;
             margin-bottom: 20px;
             padding: 20px;
-            background: white;
+            background: var(--bg-secondary);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -155,11 +155,11 @@
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background: white;
+            background: var(--bg-secondary);
         }
 
         .stats {
-            background: white;
+            background: var(--bg-secondary);
             padding: 15px 20px;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -181,7 +181,7 @@
         }
 
         .paper-card {
-            background: white;
+            background: var(--bg-secondary);
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
@@ -292,7 +292,7 @@
             text-align: center;
             padding: 50px;
             color: #7f8c8d;
-            background: white;
+            background: var(--bg-secondary);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -317,6 +317,12 @@
         .badge-virtual { background: #f3e5f5; color: #7b1fa2; }
         .badge-other { background: #f5f5f5; color: #616161; }
 
+        [data-theme="dark"] .badge-oral { background: #2d4a2d; color: #a8d8a8; }
+        [data-theme="dark"] .badge-poster { background: #1e3a5f; color: #90caf9; }
+        [data-theme="dark"] .badge-demo { background: #4a3320; color: #ffab40; }
+        [data-theme="dark"] .badge-virtual { background: #4a2d4a; color: #e1bee7; }
+        [data-theme="dark"] .badge-other { background: #404040; color: #b0b0b0; }
+
         .track-badge {
             display: inline-block;
             padding: 6px 12px;
@@ -337,13 +343,21 @@
         .track-workshop { background: #f0f4ff; color: #3f51b5; }
         .track-other { background: #f5f5f5; color: #616161; }
 
+        [data-theme="dark"] .track-main { background: #2d4a2d; color: #a8d8a8; }
+        [data-theme="dark"] .track-findings { background: #1e3a5f; color: #90caf9; }
+        [data-theme="dark"] .track-demo { background: #4a3320; color: #ffab40; }
+        [data-theme="dark"] .track-industry { background: #4a2d4a; color: #e1bee7; }
+        [data-theme="dark"] .track-srw { background: #5d2d4a; color: #f8bbd9; }
+        [data-theme="dark"] .track-workshop { background: #2d3a5f; color: #9fa8da; }
+        [data-theme="dark"] .track-other { background: #404040; color: #b0b0b0; }
+
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
             margin-top: 30px;
-            background: white;
+            background: var(--bg-secondary);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -352,7 +366,7 @@
         .pagination button {
             padding: 8px 12px;
             border: 1px solid #ddd;
-            background: white;
+            background: var(--bg-secondary);
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.2s;
@@ -386,8 +400,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="nav-bar" style="background: white; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px;">
-            <a href="authors.html" style="color: #3498db; text-decoration: none; font-weight: 500;"><i class="fas fa-users"></i> Browse Authors</a>
+        <div class="nav-bar" style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px var(--shadow); display: flex; align-items: center; gap: 15px;">
+            <a href="authors.html" style="color: var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-users"></i> Browse Authors</a>
         </div>
 
         <header>
@@ -597,7 +611,7 @@
                         ${paper.session_date ? `<div class="meta-item"><i class="fas fa-calendar"></i> ${paper.session_date}</div>` : ''}
                         ${paper.session_time ? `<div class="meta-item"><i class="fas fa-clock"></i> ${paper.session_time}</div>` : ''}
                         ${paper.room_location ? `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${paper.room_location}</div>` : ''}
-                        ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500;"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
+                        ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
                     </div>
 
                     ${paper.abstract ? `
