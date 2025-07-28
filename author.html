@@ -257,7 +257,8 @@
         }
 
         function createAuthorSlug(name) {
-            return name.toLowerCase()
+            return name.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
                 .replace(/[^\w\s-]/g, '')
                 .replace(/[-\s]+/g, '-')
                 .replace(/^-|-$/g, '');
