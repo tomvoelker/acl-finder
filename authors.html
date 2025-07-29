@@ -245,9 +245,104 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 10px; }
-            .authors-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2em; }
+            .container { padding: 8px; }
+            
+            /* Compact navigation */
+            .nav-bar { 
+                padding: 10px 15px; 
+                margin-bottom: 15px;
+                font-size: 0.9em;
+            }
+            
+            /* Compact header */
+            header { 
+                padding: 25px 20px; 
+                margin-bottom: 20px;
+            }
+            h1 { 
+                font-size: 1.8em; 
+                margin-bottom: 8px;
+            }
+            .subtitle { 
+                font-size: 0.95em;
+                line-height: 1.4;
+            }
+            .caidas-branding { 
+                margin-top: 15px; 
+                gap: 10px;
+            }
+            .caidas-text { 
+                font-size: 0.8em; 
+            }
+            .caidas-logo { 
+                height: 32px; 
+                padding: 6px 10px;
+            }
+            
+            /* Tighter search */
+            .search-container { 
+                margin-bottom: 15px; 
+            }
+            .search-box { 
+                padding: 12px 45px 12px 15px; 
+                font-size: 15px;
+            }
+            .search-icon { 
+                right: 15px; 
+            }
+            
+            /* Compact stats */
+            .stats { 
+                padding: 10px 15px; 
+                margin-bottom: 15px;
+                font-size: 0.9em;
+            }
+            
+            /* Single column grid with tighter spacing */
+            .authors-grid { 
+                grid-template-columns: 1fr; 
+                gap: 12px;
+            }
+            
+            /* Compact author cards */
+            .author-card { 
+                padding: 15px; 
+            }
+            .author-name { 
+                font-size: 1.1em; 
+                margin-bottom: 8px;
+            }
+            .author-stats { 
+                gap: 6px; 
+                font-size: 0.85em;
+            }
+            .stat-badge { 
+                padding: 3px 6px; 
+                font-size: 0.8em;
+                gap: 3px;
+            }
+            .stat-badge i { 
+                font-size: 0.9em; 
+            }
+            
+            /* Compact loading/no results */
+            .loading, .no-results { 
+                padding: 30px; 
+                font-size: 0.9em;
+            }
+            
+            /* Compact footer */
+            footer { 
+                margin-top: 30px; 
+                padding: 15px;
+            }
+            footer > div:first-child { 
+                margin-bottom: 10px; 
+            }
+            footer button { 
+                padding: 6px 10px; 
+                font-size: 0.8em;
+            }
         }
     </style>
 </head>
@@ -297,16 +392,48 @@
                 .replace(/^-|-$/g, '');
         }
 
-        // Load authors data
-        fetch('authors.json')
-            .then(response => response.json())
-            .then(data => {
-                // Convert object to array and sort by paper count
-                allAuthors = Object.entries(data)
-                    .map(([slug, authorData]) => ({
-                        slug,
-                        ...authorData
-                    }))
+        // Load authors data with paper details for accurate track classification
+        Promise.all([
+            fetch('authors.json').then(response => response.json()),
+            fetch('papers.json').then(response => response.json())
+        ])
+            .then(([authorsData, allPapers]) => {
+                // Convert object to array and enrich with accurate paper track stats
+                allAuthors = Object.entries(authorsData)
+                    .map(([slug, authorData]) => {
+                        // Calculate accurate track counts from papers
+                        let mainPapers = 0;
+                        let findingsPapers = 0;
+                        let demoPapers = 0;
+                        let workshopPapers = 0;
+                        
+                        authorData.papers.forEach(authorPaper => {
+                            const fullPaper = allPapers.find(p => p.paper_number === authorPaper.paper_number);
+                            if (fullPaper && fullPaper.track) {
+                                if (fullPaper.track.includes('Main Conference')) {
+                                    mainPapers++;
+                                } else if (fullPaper.track.includes('Findings')) {
+                                    findingsPapers++;
+                                } else if (fullPaper.track.includes('Demo')) {
+                                    demoPapers++;
+                                } else if (fullPaper.track.includes('Workshop') || fullPaper.track.includes('Shared Task')) {
+                                    workshopPapers++;
+                                }
+                            }
+                        });
+                        
+                        return {
+                            slug,
+                            ...authorData,
+                            actualStats: {
+                                ...authorData.stats,
+                                main_papers: mainPapers,
+                                findings_papers: findingsPapers,
+                                demo_papers: demoPapers,
+                                workshop_papers: workshopPapers
+                            }
+                        };
+                    })
                     .filter(author => 
                         author.name.trim() && 
                         !author.name.includes('do not plan') &&
@@ -346,16 +473,28 @@
                                 <span>${author.stats.coauthors.length} coauthor${author.stats.coauthors.length !== 1 ? 's' : ''}</span>
                             </div>
                         ` : ''}
-                        ${author.stats.main_papers > 0 ? `
+                        ${author.actualStats.main_papers > 0 ? `
                             <div class="stat-badge">
                                 <i class="fas fa-star"></i>
-                                <span>${author.stats.main_papers} main</span>
+                                <span>${author.actualStats.main_papers} main</span>
                             </div>
                         ` : ''}
-                        ${author.stats.findings_papers > 0 ? `
+                        ${author.actualStats.findings_papers > 0 ? `
                             <div class="stat-badge">
                                 <i class="fas fa-search"></i>
-                                <span>${author.stats.findings_papers} findings</span>
+                                <span>${author.actualStats.findings_papers} findings</span>
+                            </div>
+                        ` : ''}
+                        ${author.actualStats.demo_papers > 0 ? `
+                            <div class="stat-badge">
+                                <i class="fas fa-laptop"></i>
+                                <span>${author.actualStats.demo_papers} demo</span>
+                            </div>
+                        ` : ''}
+                        ${author.actualStats.workshop_papers > 0 ? `
+                            <div class="stat-badge">
+                                <i class="fas fa-cogs"></i>
+                                <span>${author.actualStats.workshop_papers} workshop${author.actualStats.workshop_papers !== 1 ? 's' : ''}</span>
                             </div>
                         ` : ''}
                     </div>
@@ -442,16 +581,28 @@
                                 <span>${author.stats.coauthors.length} coauthor${author.stats.coauthors.length !== 1 ? 's' : ''}</span>
                             </div>
                         ` : ''}
-                        ${author.stats.main_papers > 0 ? `
+                        ${author.actualStats.main_papers > 0 ? `
                             <div class="stat-badge">
                                 <i class="fas fa-star"></i>
-                                <span>${author.stats.main_papers} main</span>
+                                <span>${author.actualStats.main_papers} main</span>
                             </div>
                         ` : ''}
-                        ${author.stats.findings_papers > 0 ? `
+                        ${author.actualStats.findings_papers > 0 ? `
                             <div class="stat-badge">
                                 <i class="fas fa-search"></i>
-                                <span>${author.stats.findings_papers} findings</span>
+                                <span>${author.actualStats.findings_papers} findings</span>
+                            </div>
+                        ` : ''}
+                        ${author.actualStats.demo_papers > 0 ? `
+                            <div class="stat-badge">
+                                <i class="fas fa-laptop"></i>
+                                <span>${author.actualStats.demo_papers} demo</span>
+                            </div>
+                        ` : ''}
+                        ${author.actualStats.workshop_papers > 0 ? `
+                            <div class="stat-badge">
+                                <i class="fas fa-cogs"></i>
+                                <span>${author.actualStats.workshop_papers} workshop${author.actualStats.workshop_papers !== 1 ? 's' : ''}</span>
                             </div>
                         ` : ''}
                     </div>
