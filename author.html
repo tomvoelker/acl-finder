@@ -565,7 +565,7 @@
             // Load both authors.json and papers.json to get complete data
             Promise.all([
                 fetch('authors.json').then(response => response.json()),
-                fetch('papers_merged.json').then(response => response.json())
+                fetch('papers_merged.json').catch(() => fetch('papers.json')).then(response => response.json())
             ])
                 .then(([authors, allPapers]) => {
                     const authorData = authors[authorSlug];

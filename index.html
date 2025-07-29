@@ -665,8 +665,9 @@
         const itemsPerPage = 20;
         let searchTimeout = null;
 
-        // Load papers data
+        // Load papers data - try merged version first, fallback to original
         fetch('papers_merged.json')
+            .catch(() => fetch('papers.json'))
             .then(response => response.json())
             .then(data => {
                 papers = data;
