@@ -565,7 +565,7 @@
             // Load both authors.json and papers.json to get complete data
             Promise.all([
                 fetch('authors.json').then(response => response.json()),
-                fetch('papers.json').then(response => response.json())
+                fetch('papers_merged.json').then(response => response.json())
             ])
                 .then(([authors, allPapers]) => {
                     const authorData = authors[authorSlug];
@@ -696,6 +696,7 @@
                         ${paper.session_date ? `<div class="meta-item"><i class="fas fa-calendar"></i> ${paper.session_date}</div>` : ''}
                         ${paper.session_time ? `<div class="meta-item"><i class="fas fa-clock"></i> ${paper.session_time}</div>` : ''}
                         ${paper.room_location ? `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${paper.room_location}</div>` : ''}
+                        ${paper.poster_hall && paper.poster_board ? `<div class="meta-item"><i class="fas fa-map-pin"></i> ${paper.poster_hall} Board ${paper.poster_board}</div>` : ''}
                         ${paper.acl_url ? `<div class="meta-item"><a href="${paper.acl_url}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-external-link-alt"></i> ACL Anthology</a></div>` : ''}
                     </div>
 
