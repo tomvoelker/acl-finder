@@ -42,6 +42,7 @@ jobs:
           cp author.html _site/
           cp authors.html _site/
           cp papers.json _site/
+          cp papers_merged.json _site/
           cp authors.json _site/
           cp favicon.svg _site/
           cp LICENSE _site/ 2>/dev/null || echo "No LICENSE file found, skipping"
