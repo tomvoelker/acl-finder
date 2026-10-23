@@ -1,0 +1,1061 @@
+{
+  "updatedAt": "2026-10-23",
+  "sourceUrl": "https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490#gid=943432490",
+  "sourceRows": 5611,
+  "uniqueIds": 5611,
+  "countsByStatus": {
+    "not presenting": 1225,
+    "scheduled": 4312,
+    "unscheduled": 66,
+    "withdrawn": 8
+  },
+  "countsByTrack": {
+    "Computational Linguistics": 13,
+    "Findings": 2487,
+    "Industry": 265,
+    "Main conference": 2710,
+    "Systems demonstrations": 86,
+    "TACL": 50
+  },
+  "missingPresenters": 374,
+  "issueCounts": {
+    "conflicting times": 1,
+    "inactive paper retains assignment": 2,
+    "incomplete room name": 1,
+    "missing assignment": 67,
+    "presentation unconfirmed": 1,
+    "presenter repeats title": 10,
+    "unusual session assignment": 13
+  },
+  "note": "Source values are retained. An unusual assignment may be intentional; no times or rooms are inferred from neighboring rows.",
+  "issues": [
+    {
+      "id": "9557-TACL",
+      "sourceRow": 27,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "116-MAIN",
+      "sourceRow": 106,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "312-MAIN",
+      "sourceRow": 184,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "403-MAIN",
+      "sourceRow": 213,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session",
+        "room"
+      ]
+    },
+    {
+      "id": "448-MAIN",
+      "sourceRow": 232,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "506-MAIN",
+      "sourceRow": 249,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "701-MAIN",
+      "sourceRow": 317,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "1309-MAIN",
+      "sourceRow": 570,
+      "type": "missing assignment",
+      "fields": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "1309-MAIN",
+      "sourceRow": 570,
+      "type": "unusual session assignment",
+      "session": "Virtual 3",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        null,
+        null
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "07:00",
+        "08:30"
+      ]
+    },
+    {
+      "id": "1331-MAIN",
+      "sourceRow": 579,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "1523-MAIN",
+      "sourceRow": 648,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2062-MAIN",
+      "sourceRow": 825,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2159-MAIN",
+      "sourceRow": 861,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2201-MAIN",
+      "sourceRow": 875,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2239-MAIN",
+      "sourceRow": 886,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2407-MAIN",
+      "sourceRow": 949,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "3137-MAIN",
+      "sourceRow": 1169,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "3181-MAIN",
+      "sourceRow": 1178,
+      "type": "unusual session assignment",
+      "session": "Session 11",
+      "sourceDate": "2026-10-27",
+      "sourceTime": [
+        "11:00",
+        "12:00"
+      ],
+      "usualDate": "2026-10-27",
+      "usualTime": [
+        "11:00",
+        "12:30"
+      ]
+    },
+    {
+      "id": "3184-MAIN",
+      "sourceRow": 1179,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "3213-MAIN",
+      "sourceRow": 1194,
+      "type": "unusual session assignment",
+      "session": "Session 4",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "12:30",
+        "14:00"
+      ],
+      "usualDate": "2026-10-25",
+      "usualTime": [
+        "16:00",
+        "17:30"
+      ]
+    },
+    {
+      "id": "3473-MAIN",
+      "sourceRow": 1260,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4019-MAIN",
+      "sourceRow": 1436,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4106-MAIN",
+      "sourceRow": 1457,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "4473-MAIN",
+      "sourceRow": 1575,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4587-MAIN",
+      "sourceRow": 1610,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4671-MAIN",
+      "sourceRow": 1637,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4768-MAIN",
+      "sourceRow": 1669,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4800-MAIN",
+      "sourceRow": 1680,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "4973-MAIN",
+      "sourceRow": 1732,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5081-MAIN",
+      "sourceRow": 1763,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5082-MAIN",
+      "sourceRow": 1764,
+      "type": "conflicting times",
+      "note": "The source lists 18:00-19:30 CET and a conflicting end time of 10:30. Check the source sheet."
+    },
+    {
+      "id": "5082-MAIN",
+      "sourceRow": 1764,
+      "type": "missing assignment",
+      "fields": [
+        "end"
+      ]
+    },
+    {
+      "id": "5082-MAIN",
+      "sourceRow": 1764,
+      "type": "unusual session assignment",
+      "session": "Session 5",
+      "sourceDate": "2026-10-25",
+      "sourceTime": [
+        "18:00",
+        null
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "09:00",
+        "10:30"
+      ]
+    },
+    {
+      "id": "5665-MAIN",
+      "sourceRow": 1909,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "6124-MAIN",
+      "sourceRow": 2025,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "6137-MAIN",
+      "sourceRow": 2030,
+      "type": "unusual session assignment",
+      "session": "Session 4",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "11:00",
+        "12:30"
+      ],
+      "usualDate": "2026-10-25",
+      "usualTime": [
+        "16:00",
+        "17:30"
+      ]
+    },
+    {
+      "id": "6424-MAIN",
+      "sourceRow": 2108,
+      "type": "missing assignment",
+      "fields": [
+        "room"
+      ]
+    },
+    {
+      "id": "7223-MAIN",
+      "sourceRow": 2331,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7303-MAIN",
+      "sourceRow": 2349,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7351-MAIN",
+      "sourceRow": 2360,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7365-MAIN",
+      "sourceRow": 2364,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7875-MAIN",
+      "sourceRow": 2473,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "8128-MAIN",
+      "sourceRow": 2522,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "8477-MAIN",
+      "sourceRow": 2601,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "8696-MAIN",
+      "sourceRow": 2643,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "8735-MAIN",
+      "sourceRow": 2647,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "8915-MAIN",
+      "sourceRow": 2673,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "9062-MAIN",
+      "sourceRow": 2696,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "9090-MAIN",
+      "sourceRow": 2700,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "237-IND",
+      "sourceRow": 2825,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "307-IND",
+      "sourceRow": 2843,
+      "type": "unusual session assignment",
+      "session": "Session 6",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "09:00",
+        "10:30"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "11:00",
+        "12:30"
+      ]
+    },
+    {
+      "id": "635-IND",
+      "sourceRow": 2935,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "745-IND",
+      "sourceRow": 2970,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "888-IND",
+      "sourceRow": 3021,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "894-IND",
+      "sourceRow": 3024,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7-DEMO",
+      "sourceRow": 3041,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "13-DEMO",
+      "sourceRow": 3042,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "15-DEMO",
+      "sourceRow": 3043,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "40-DEMO",
+      "sourceRow": 3052,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "99-DEMO",
+      "sourceRow": 3072,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "202-DEMO",
+      "sourceRow": 3100,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "425-FIND",
+      "sourceRow": 3235,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "544-FIND",
+      "sourceRow": 3264,
+      "type": "presentation unconfirmed"
+    },
+    {
+      "id": "798-FIND",
+      "sourceRow": 3333,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "1121-FIND",
+      "sourceRow": 3419,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "1144-FIND",
+      "sourceRow": 3426,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "1275-FIND",
+      "sourceRow": 3459,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "1619-FIND",
+      "sourceRow": 3544,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "1781-FIND",
+      "sourceRow": 3583,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2012-FIND",
+      "sourceRow": 3653,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "2167-FIND",
+      "sourceRow": 3690,
+      "type": "incomplete room name",
+      "value": "Hall"
+    },
+    {
+      "id": "2352-FIND",
+      "sourceRow": 3741,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "2505-FIND",
+      "sourceRow": 3780,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "2609-FIND",
+      "sourceRow": 3813,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "2792-FIND",
+      "sourceRow": 3870,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "3234-FIND",
+      "sourceRow": 3984,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "3314-FIND",
+      "sourceRow": 4012,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "3811-FIND",
+      "sourceRow": 4135,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "5123-FIND",
+      "sourceRow": 4472,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5353-FIND",
+      "sourceRow": 4525,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5409-FIND",
+      "sourceRow": 4542,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5458-FIND",
+      "sourceRow": 4549,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session",
+        "room"
+      ]
+    },
+    {
+      "id": "5743-FIND",
+      "sourceRow": 4621,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5749-FIND",
+      "sourceRow": 4626,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "5882-FIND",
+      "sourceRow": 4653,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "5913-FIND",
+      "sourceRow": 4662,
+      "type": "inactive paper retains assignment",
+      "status": "not presenting"
+    },
+    {
+      "id": "7113-FIND",
+      "sourceRow": 4983,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7609-FIND",
+      "sourceRow": 5102,
+      "type": "inactive paper retains assignment",
+      "status": "not presenting"
+    },
+    {
+      "id": "7634-FIND",
+      "sourceRow": 5109,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7677-FIND",
+      "sourceRow": 5118,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7688-FIND",
+      "sourceRow": 5120,
+      "type": "unusual session assignment",
+      "session": "Session 9",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "16:46",
+        "18:15"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "16:45",
+        "18:15"
+      ]
+    },
+    {
+      "id": "8000-FIND",
+      "sourceRow": 5202,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    },
+    {
+      "id": "8522-FIND",
+      "sourceRow": 5336,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "8633-FIND",
+      "sourceRow": 5361,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "9316-FIND",
+      "sourceRow": 5517,
+      "type": "presenter repeats title",
+      "note": "The source repeats the paper title in its presenter field."
+    }
+  ]
+}
