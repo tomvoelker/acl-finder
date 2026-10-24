@@ -14,8 +14,10 @@ export function initialDay(requested, days, today) {
 
 export function sessionKey(paper) {
   if (paper._inactive) return paper.status;
-  if (!paper._timed) return `unconfirmed:${paper.date || 'undated'}`;
-  return JSON.stringify([paper.date, paper.start, paper.end, paper.session]);
+  return JSON.stringify([
+    paper._timed ? 'scheduled' : 'unconfirmed',
+    paper.date, paper.start, paper.end, paper.session, paper.topic, paper.room,
+  ]);
 }
 
 export function expandSessions(state) {

@@ -6,7 +6,7 @@ An unofficial paper and presentation finder for EMNLP 2026 in Budapest. The main
 
 Search by title, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Click a paper title to open its ACL Anthology page. Use **Schedule link** to share its presentation details; filters can also be shared through the URL.
 
-The finder selects the current conference day in Budapest unless the URL specifies a day. Outside the scheduled dates, it shows all days. Sessions start collapsed; searches, filters other than day, shortlist views, and paper links open the matching sessions. Open session headings stay below the search bar as you scroll.
+The finder selects the current conference day in Budapest unless the URL specifies a day. Outside the scheduled dates, it shows all days. Each session groups papers with the same date, time, session label, topic, and room, so parallel sessions remain separate. Headers show the topic and room alongside the time and session label. Sessions start collapsed; searches, filters other than day, shortlist views, and paper links open the matching sessions. Open session headings stay below the search bar as you scroll.
 
 Save papers to a browser-local shortlist and export confirmed presentations as calendar files. Missing, conflicting, withdrawn, and non-presenting assignments are excluded from calendar export.
 

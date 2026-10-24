@@ -212,6 +212,8 @@ abbr[title] { text-decoration: none; cursor: help; }
 .session[open] > .session__header::before { transform: rotate(45deg); }
 .session__header:hover { color: var(--accent-strong); }
 .session__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font-size: .9375rem; font-weight: 600; }
+.session__topic { flex-basis: 100%; }
+.session__room { font-weight: 700; }
 .session__date { color: var(--muted); }
 .session__time { font-family: var(--font-mono); }
 .session__zone { margin-left: -9px; font-size: .6875rem; color: var(--muted); }

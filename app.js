@@ -665,13 +665,15 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
       if (p._inactive) {
         title.append(STATUS_LABELS[p.status]);
       } else {
+        title.append(h('span', { class: 'session__topic' }, p.topic || 'Topic not listed'));
+        title.append(h('span', { class: 'session__room' }, p.room || 'Room not listed'));
         title.append(h('span', { class: 'session__date' }, p.date ? dateInfo(p.date).short : 'No date listed'));
         title.append(h('span', { class: 'session__time' }, p._timed ? timeRange(p) : 'Time not confirmed'));
         if (p._timed) {
           const zone = zoneLabel(p.date, p.start);
           title.append(h('abbr', { class: 'session__zone', title: zone.title }, zone.abbr));
-          if (p.session) title.append(h('span', { class: 'session__name' }, p.session));
         }
+        if (p.session) title.append(h('span', { class: 'session__name' }, p.session));
       }
       const summary = h('summary', { class: 'session__header' }, title,
         h('span', { class: 'session__count' }, plural(group.papers.length, 'paper', 'papers')));

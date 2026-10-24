@@ -35,12 +35,20 @@ test('browsing days stays collapsed; searches, facets, shortlist and paper links
   }
 });
 
-test('session groups keep distinct dates, times and source session labels separate', () => {
-  const paper = { date: '2026-10-26', start: '16:45', end: '18:15', session: 'Session 9', _timed: true };
-  assert.equal(sessionKey(paper), sessionKey({ ...paper, room: 'Hall H', title: 'Another paper' }));
-  for (const change of [{ date: '2026-10-27' }, { start: '16:46' }, { end: '18:00' }, { session: 'Virtual 4' }]) {
+test('parallel sessions stay separate by topic and room as well as date, time and session label', () => {
+  const paper = { date: '2026-10-25', start: '11:00', end: '12:30', session: 'Session 2',
+    topic: 'Question Answering', room: 'G7-8', _timed: true };
+  for (const change of [{ date: '2026-10-27' }, { start: '11:01' }, { end: '12:00' }, { session: 'Virtual 4' },
+    { room: 'F8' }, { room: null }, { topic: 'Machine Learning for NLP 1' }, { topic: null }]) {
     assert.notEqual(sessionKey(paper), sessionKey({ ...paper, ...change }));
   }
+});
+
+test('papers in the same session stay together across tracks and missing presentation formats', () => {
+  const paper = { date: '2026-10-25', start: '11:00', end: '12:30', session: 'Session 2',
+    topic: 'Poster Session A', room: 'Hall H', trackCode: 'MAIN', presentation: 'Poster', _timed: true };
+  assert.equal(sessionKey(paper), sessionKey({ ...paper, title: 'Another paper', trackCode: 'FIND', presentation: null }));
+  assert.notEqual(sessionKey(paper), sessionKey({ ...paper, topic: 'Demo Session A', presentation: 'Demo' }));
 });
 
 test('inactive and unconfirmed entries never become scheduled session groups', () => {
@@ -52,4 +60,6 @@ test('inactive and unconfirmed entries never become scheduled session groups', (
   }
   assert.notEqual(sessionKey({ ...stale, _timed: false }), scheduled);
   assert.notEqual(sessionKey({ ...stale, _timed: false }), sessionKey({ date: null, _timed: false }));
+  assert.notEqual(sessionKey({ ...stale, _timed: false, room: 'Hall H' }),
+    sessionKey({ ...stale, _timed: false, room: 'Zoom' }));
 });
