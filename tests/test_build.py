@@ -26,12 +26,14 @@ class BuildTests(unittest.TestCase):
             html = (output / "index.html").read_text()
             app_name = re.search(r'src="(app\.[a-f0-9]+\.js)"', html).group(1)
             css_name = re.search(r'href="(styles\.[a-f0-9]+\.css)"', html).group(1)
+            theme_name = re.search(r'src="(theme\.[a-f0-9]+\.js)"', html).group(1)
             app = (output / app_name).read_text()
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [app_name, css_name, module_name]:
+            for name in [app_name, css_name, module_name, theme_name]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
+            self.assertLess(html.index(theme_name), html.index(css_name), "Theme must apply before CSS loads")
             source = json.loads((ROOT / "data/papers.json").read_text())
             deployed = json.loads((output / "data/papers.json").read_text())
             by_id = {paper["id"]: paper for paper in deployed["papers"]}

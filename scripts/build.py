@@ -9,7 +9,7 @@ from import_anthology import match_papers
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
-FILES = ["index.html", "styles.css", "app.js", "schedule-view.mjs", "favicon.svg", "data/papers.json",
+FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.svg", "data/papers.json",
          "data/anthology-catalog.json", "data/anthology-overrides.json", "LICENSE"]
 
 
@@ -42,9 +42,11 @@ def build():
     module_name = asset("schedule-view.mjs", (ROOT / "schedule-view.mjs").read_bytes())
     app = (ROOT / "app.js").read_text().replace("'./schedule-view.mjs'", f"'./{module_name}'")
     app_name = asset("app.js", app.encode())
+    theme_name = asset("theme.js", (ROOT / "theme.js").read_bytes())
     styles_name = asset("styles.css", (ROOT / "styles.css").read_bytes())
     html = (ROOT / "index.html").read_text().replace('src="app.js"', f'src="{app_name}"')
     html = html.replace('href="styles.css"', f'href="{styles_name}"')
+    html = html.replace('src="theme.js"', f'src="{theme_name}"')
     (OUTPUT / "index.html").write_text(html)
 
     (OUTPUT / "data").mkdir()

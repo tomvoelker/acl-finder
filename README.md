@@ -6,6 +6,8 @@ An unofficial paper and presentation finder for EMNLP 2026 in Budapest. The main
 
 Search by title, author, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Click a paper title to open its ACL Anthology page. Use **Schedule link** to share its presentation details; filters can also be shared through the URL.
 
+The header’s **Theme** control offers Auto, Light, and Dark. Auto follows the system colour preference; explicit choices are saved in this browser and applied before the page renders. The palette draws on the supplied navy, cornflower, coral, and sand references without university logos or seals.
+
 Full author lists appear in publication order. Presenters whose names match are bold and labelled within the list. Otherwise, the spreadsheet's presenter entry appears separately in bold, including when author metadata is unavailable. Name differences and ambiguous matches are not guessed.
 
 The finder selects the current conference day in Budapest unless the URL specifies a day. Outside the scheduled dates, it shows all days. Each session groups papers with the same date, time, session label, topic, and room, so parallel sessions remain separate. Headers show the topic and room alongside the time and session label. Sessions start collapsed; searches, filters other than day, shortlist views, and paper links open the matching sessions. Open session headings stay below the search bar as you scroll.
@@ -65,7 +67,7 @@ Review the catalog and audit changes before committing. Add a title override onl
 ```sh
 python3 -m unittest discover -s tests -p 'test_*.py'
 node --input-type=module --check < app.js
-node --test tests/test_view.mjs
+node --test tests/*.mjs
 python3 scripts/build.py
 ```
 

@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>EMNLP 2026 Paper Finder · Unofficial Budapest schedule</title>
   <meta name="description" content="Unofficial, searchable schedule of EMNLP 2026 presentations in Budapest. Find papers by title, author, presenter, paper ID or topic and filter by day, track, format, attendance and room.">
-  <meta name="theme-color" content="#ededed">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#02246c">
+  <meta name="color-scheme" content="light dark">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" type="module"></script>
 </head>
@@ -18,8 +19,8 @@
     <div class="wrap masthead__inner">
       <a class="brand" href="./">
         <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-          <rect width="64" height="64" rx="14" fill="#004a8f"/>
-          <rect x="13" y="15" width="11" height="7" rx="2" fill="#ffffff"/>
+          <rect width="64" height="64" rx="14" fill="#02246c"/>
+          <rect x="13" y="15" width="11" height="7" rx="2" fill="#ed6a5b"/>
           <rect x="28" y="15" width="23" height="7" rx="2" fill="#ffffff"/>
           <rect x="13" y="28.5" width="11" height="7" rx="2" fill="#ffffff" fill-opacity=".45"/>
           <rect x="28" y="28.5" width="16" height="7" rx="2" fill="#ffffff"/>
@@ -31,11 +32,21 @@
           <span class="brand__meta">Budapest · HUNGEXPO · 24–29 October 2026</span>
         </span>
       </a>
-      <nav class="masthead__nav" aria-label="Official conference links">
-        <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">Official programme<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-        <a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener">Venue<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-        <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Source sheet<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-      </nav>
+      <div class="masthead__actions">
+        <nav class="masthead__nav" aria-label="Official conference links">
+          <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">Official programme<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+          <a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener">Venue<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+          <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Source sheet<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+        </nav>
+        <label class="theme-picker" hidden>
+          <span>Theme</span>
+          <select id="theme" class="select" aria-label="Colour theme">
+            <option value="auto">Auto</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </label>
+      </div>
     </div>
     <div class="wrap notice">
       <p>
