@@ -23,9 +23,11 @@ def build():
     catalog = json.loads((ROOT / "data/anthology-catalog.json").read_text())
     overrides = json.loads((ROOT / "data/anthology-overrides.json").read_text())
     links, _ = match_papers(data["papers"], catalog, overrides)
+    publications = {paper["id"]: paper for paper in catalog["papers"]}
     for paper in data["papers"]:
         if paper["id"] in links:
             paper["anthologyId"] = links[paper["id"]]
+            paper["authors"] = publications[paper["anthologyId"]]["authors"]
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>EMNLP 2026 Paper Finder · Unofficial Budapest schedule</title>
-  <meta name="description" content="Unofficial, searchable schedule of EMNLP 2026 presentations in Budapest. Find papers by title, presenter, paper ID or topic and filter by day, track, format, attendance and room.">
+  <meta name="description" content="Unofficial, searchable schedule of EMNLP 2026 presentations in Budapest. Find papers by title, author, presenter, paper ID or topic and filter by day, track, format, attendance and room.">
   <meta name="theme-color" content="#ededed">
   <meta name="color-scheme" content="light">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -51,9 +51,9 @@
     <div class="toolbar" id="toolbar">
       <div class="wrap toolbar__inner">
         <form class="search" id="search-form" role="search" action="./">
-          <label class="visually-hidden" for="q">Search by title, presenter, paper ID or topic</label>
+          <label class="visually-hidden" for="q">Search by title, author, presenter, paper ID or topic</label>
           <svg class="search__icon icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 20 20"/></svg>
-          <input class="search__input" id="q" name="q" type="search" placeholder="Title, presenter, paper ID or topic" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="search-hint">
+          <input class="search__input" id="q" name="q" type="search" placeholder="Title, author, presenter, paper ID or topic" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="search-hint">
           <kbd class="search__kbd" aria-hidden="true">/</kbd>
           <button class="search__clear" id="q-clear" type="button" hidden>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -97,7 +97,7 @@
             <li class="paper is-skeleton"><div class="paper__where"><i class="sk sk--s"></i></div><div class="paper__body"><i class="sk sk--l"></i><i class="sk sk--m"></i></div></li>
             <li class="paper is-skeleton"><div class="paper__where"><i class="sk sk--s"></i></div><div class="paper__body"><i class="sk sk--m"></i><i class="sk sk--s"></i></div></li>
           </ul>
-          <noscript><p class="state">This finder needs JavaScript. The official <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490">Author Presentations sheet</a> has the same information.</p></noscript>
+          <noscript><p class="state">This finder needs JavaScript. See the official <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490">Author Presentations sheet</a> for presentation details.</p></noscript>
         </div>
 
         <p class="visually-hidden" id="live" role="status" aria-live="polite"></p>
@@ -107,7 +107,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Unofficial schedule from the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>. Presenter names only; no full author lists or abstracts. Check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for changes.</p>
+      <p>Unofficial schedule from the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>. Author lists from <a href="https://aclanthology.org/events/emnlp-2026/" target="_blank" rel="noopener">ACL Anthology</a>; presenters are shown in bold. Check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for changes.</p>
       <p>Made by the <a href="https://www.informatik.uni-wuerzburg.de/datascience/" target="_blank" rel="noopener">Data Science Chair, University of Würzburg</a>. Your shortlist stays in this browser.</p>
     </div>
   </footer>

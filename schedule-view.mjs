@@ -23,3 +23,16 @@ export function sessionKey(paper) {
 export function expandSessions(state) {
   return !!(state.q.trim() || state.saved || state.paper || Object.values(state.filters).some((value) => value !== null));
 }
+
+export function presenterAuthorIndices(authors, presenter) {
+  if (!presenter) return [];
+  const normalize = (name) => name.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim().replace(/\s+/g, ' ');
+  const names = authors.map(normalize);
+  const matches = presenter.split(/[,;]/).map((name) => {
+    const normalized = normalize(name);
+    const index = names.indexOf(normalized);
+    return index >= 0 && index === names.lastIndexOf(normalized) ? index : -1;
+  });
+  // Keep the source presenter entry explicit if any name is missing or ambiguous.
+  return matches.includes(-1) || new Set(matches).size !== matches.length ? [] : matches;
+}

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { conferenceNow, initialDay, sessionKey, expandSessions } from '../schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices } from '../schedule-view.mjs';
 
 const days = ['all', '2026-10-25', '2026-10-26', '2026-10-27', 'undated'];
 const empty = { q: '', day: '2026-10-25', saved: false, paper: null, filters: { track: null, room: null } };
@@ -62,4 +62,28 @@ test('inactive and unconfirmed entries never become scheduled session groups', (
   assert.notEqual(sessionKey({ ...stale, _timed: false }), sessionKey({ date: null, _timed: false }));
   assert.notEqual(sessionKey({ ...stale, _timed: false, room: 'Hall H' }),
     sessionKey({ ...stale, _timed: false, room: 'Zoom' }));
+});
+
+test('presenters match full author names despite case, accents or whitespace', () => {
+  assert.deepEqual(presenterAuthorIndices(['Jan Pfister', 'Tom Völker', 'Andreas Hotho'], ' JAN  PFISTER '), [0]);
+  assert.deepEqual(presenterAuthorIndices(['Jan Pfister', 'Tom Völker', 'Andreas Hotho'], 'Tom Volker'), [1]);
+});
+
+test('multiple named presenters are identified without changing author order', () => {
+  const authors = ['Yi-Sheng Hsu', 'Nils Feldhus', 'Manfred Stede'];
+  assert.deepEqual(presenterAuthorIndices(authors, 'Nils Feldhus, Yi-Sheng Hsu'), [1, 0]);
+  assert.deepEqual(presenterAuthorIndices(authors, 'Nils Feldhus; Yi-Sheng Hsu'), [1, 0]);
+});
+
+test('missing names, name differences and outside presenters are not guessed', () => {
+  for (const presenter of [null, '', 'Taylor', 'Samuel Taylor', 'Someone Else']) {
+    assert.deepEqual(presenterAuthorIndices(['Samuel M. Taylor', 'Benjamin K. Bergen'], presenter), []);
+  }
+  assert.deepEqual(presenterAuthorIndices([], 'Jan Pfister'), []);
+});
+
+test('ambiguous or partially matched presenter lists stay explicit', () => {
+  assert.deepEqual(presenterAuthorIndices(['José Li', 'Jose Li'], 'Jose Li'), []);
+  assert.deepEqual(presenterAuthorIndices(['Jan Pfister', 'Tom Völker'], 'Jan Pfister, Someone Else'), []);
+  assert.deepEqual(presenterAuthorIndices(['Jan Pfister'], 'Jan Pfister, Jan Pfister'), []);
 });

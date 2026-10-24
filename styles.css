@@ -236,12 +236,12 @@ abbr[title] { text-decoration: none; cursor: help; }
 .paper__title { font: 600 1.125rem/1.35 var(--font-serif); color: var(--accent); text-wrap: pretty; overflow-wrap: anywhere; }
 .paper__title a { text-decoration-color: var(--rule); text-underline-offset: .15em; }
 .paper__title a:hover { text-decoration-color: currentColor; }
-.paper__presenter { margin-top: 5px; font-size: .9375rem; color: var(--ink-2); }
+.paper__people { margin-top: 5px; font-size: .9375rem; color: var(--ink-2); overflow-wrap: anywhere; }
 .paper__label {
   margin-right: 6px; font-size: .6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
 }
 .paper__aside, .is-missing { color: var(--muted); }
-.paper__presenter .is-missing { font-style: italic; }
+.paper__people .is-missing { font-style: italic; }
 .paper__topic { margin-top: 2px; font-size: .875rem; color: var(--muted); }
 .paper__flags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .paper__meta {
@@ -362,7 +362,7 @@ mark {
   .paper__where .fmt { margin-top: 0; }
   .star { width: 40px; height: 40px; margin: -6px -6px 0 0; }
   .paper__title { font-size: 1.0625rem; }
-  .paper__presenter { font-size: .875rem; }
+  .paper__people { font-size: .875rem; }
   .paper.is-featured::before { left: -10px; }
 }
 

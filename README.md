@@ -4,7 +4,9 @@ An unofficial paper and presentation finder for EMNLP 2026 in Budapest. The main
 
 **Live site:** [tomvoelker.de/acl-finder](http://tomvoelker.de/acl-finder/)
 
-Search by title, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Click a paper title to open its ACL Anthology page. Use **Schedule link** to share its presentation details; filters can also be shared through the URL.
+Search by title, author, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Click a paper title to open its ACL Anthology page. Use **Schedule link** to share its presentation details; filters can also be shared through the URL.
+
+Full author lists appear in publication order. Presenters whose names match are bold and labelled within the list. Otherwise, the spreadsheet's presenter entry appears separately in bold, including when author metadata is unavailable. Name differences and ambiguous matches are not guessed.
 
 The finder selects the current conference day in Budapest unless the URL specifies a day. Outside the scheduled dates, it shows all days. Each session groups papers with the same date, time, session label, topic, and room, so parallel sessions remain separate. Headers show the topic and room alongside the time and session label. Sessions start collapsed; searches, filters other than day, shortlist views, and paper links open the matching sessions. Open session headings stay below the search bar as you scroll.
 
@@ -67,6 +69,6 @@ node --test tests/test_view.mjs
 python3 scripts/build.py
 ```
 
-The build adds verified Anthology IDs to the public schedule in `_site/data/papers.json`, leaving the source schedule unchanged. It copies only public site assets into `_site/` and adds content hashes to JavaScript and CSS filenames so cached assets cannot mix across releases. Push to `main` to run the checks and deploy through the repository’s existing GitHub Pages configuration. Pull requests run the checks and build without deploying.
+The build adds verified Anthology IDs and author lists to the public schedule in `_site/data/papers.json`, leaving the source schedule unchanged. It copies only public site assets into `_site/` and adds content hashes to JavaScript and CSS filenames so cached assets cannot mix across releases. Push to `main` to run the checks and deploy through the repository’s existing GitHub Pages configuration. Pull requests run the checks and build without deploying.
 
 The site uses plain HTML, CSS, and JavaScript. It replaces the previous conference edition; older data and code remain available in Git history.

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices } from './schedule-view.mjs';
 
 (() => {
   const DATA_URL = 'data/papers.json';
@@ -260,6 +260,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
     const p = {
       id: text(raw.id), title: text(raw.title), track: text(raw.track), trackCode: text(raw.trackCode),
       presentation: text(raw.presentation), mode: text(raw.mode), presenter: text(raw.presenter),
+      authors: Array.isArray(raw.authors) ? raw.authors.map(text).filter(Boolean) : [],
       presenterNote: text(raw.presenterNote), room: text(raw.room), session: text(raw.session),
       topic: text(raw.topic), date: validDate(raw.date), start: validTime(raw.start), end: validTime(raw.end),
       timeZone: text(raw.timeZone), status: text(raw.status), scheduleNote: text(raw.scheduleNote),
@@ -273,7 +274,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
     p._timed = p.status === 'scheduled' && !p.scheduleNote && !!p.date && !!p.start;
     p._bucket = p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
     p._day = p._inactive ? null : p.date || 'undated';
-    p._hay = fold([p.id, p.title, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
+    p._hay = fold([p.id, p.title, ...p.authors, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);
     return p;
   }
@@ -738,16 +739,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
       ' on ACL Anthology (opens in a new tab)') : titleText);
     body.append(title);
 
-    const presenter = h('p', { class: 'paper__presenter' }, h('span', { class: 'paper__label' }, 'Presenter'));
-    if (p.presenter) {
-      const name = h('span');
-      highlightInto(name, p.presenter, terms);
-      presenter.append(name);
-    } else {
-      presenter.append(h('span', { class: 'is-missing' }, 'not listed'));
-    }
-    if (p.presenterNote) presenter.append(h('span', { class: 'paper__aside' }, ` (${p.presenterNote.replace(/\.$/, '')})`));
-    body.append(presenter);
+    body.append(...peopleLines(p, 'paper__people', terms));
 
     if (p.topic && !p._inactive) {
       const topic = h('p', { class: 'paper__topic' });
@@ -842,6 +834,34 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
     return h('ul', { class: 'papers papers--skeleton', 'aria-hidden': 'true' }, row(), row(), row(), row());
   }
 
+  /* ---------- Authors and presenters ---------- */
+
+  function peopleLines(p, className, searchTerms = []) {
+    const lines = [];
+    const presenters = presenterAuthorIndices(p.authors, p.presenter);
+    if (p.authors.length) {
+      const authors = h('p', { class: className }, h('span', { class: 'paper__label' }, 'Authors'));
+      p.authors.forEach((author, i) => {
+        if (i) authors.append(' · ');
+        const isPresenter = presenters.includes(i);
+        const name = h(isPresenter ? 'strong' : 'span');
+        highlightInto(name, author, searchTerms);
+        authors.append(name);
+        if (isPresenter) authors.append(h('span', { class: 'paper__aside' }, ' (presenter)'));
+      });
+      lines.push(authors);
+    }
+    if (!presenters.length) {
+      const presenter = h('p', { class: className }, h('span', { class: 'paper__label' }, 'Presenter'));
+      const name = h(p.presenter ? 'strong' : 'span', { class: p.presenter ? null : 'is-missing' });
+      highlightInto(name, p.presenter || 'not listed', searchTerms);
+      presenter.append(name);
+      if (p.presenterNote) presenter.append(h('span', { class: 'paper__aside' }, ` (${p.presenterNote.replace(/\.$/, '')})`));
+      lines.push(presenter);
+    }
+    return lines;
+  }
+
   /* ---------- Featured paper ---------- */
 
   function renderFeatured() {
@@ -849,7 +869,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
     if (!p) { els.featured.hidden = true; return; }
     const when = p._timed ? `${dateInfo(p.date).short}, ${timeRange(p)} ${zoneLabel(p.date, p.start)?.abbr || ''}` :
       p._inactive ? STATUS_LABELS[p.status] : 'Time not confirmed';
-    const details = [when, !p._inactive ? p.room : null, p.presenter].filter(Boolean).join(' · ');
+    const details = [when, !p._inactive ? p.room : null].filter(Boolean).join(' · ');
     els.featured.replaceChildren(
       h('div', null,
         h('p', { class: 'featured__kicker' }, 'Our paper · Come say hello'),
@@ -857,6 +877,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
           ? newTab(p.anthologyUrl, [p.title || p.id, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
             ' on ACL Anthology (opens in a new tab)')
           : p.title || p.id),
+        ...peopleLines(p, 'featured__details'),
         h('p', { class: 'featured__details' }, details, ' · ',
           h('a', { href: permalinkHref(p.id), 'data-permalink': p.id }, 'Schedule link'), ' · ',
           newTab(REPO_URL, 'Code ↗', ' on GitHub (opens in a new tab)'))),
