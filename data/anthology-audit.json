@@ -12,7 +12,7 @@
     "https://aclanthology.org/volumes/2026.cl-2/"
   ],
   "matched": 5584,
-  "total": 5611,
+  "total": 5603,
   "matchedByTrack": {
     "CL": 2,
     "DEMO": 86,
@@ -101,24 +101,6 @@
       "reason": "No verified match"
     },
     {
-      "id": "230-MAIN",
-      "title": "ScienceCritic: Empowering AI Review Systems with Non-objective Scientific Value Judgment",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
-      "id": "1946-MAIN",
-      "title": "Reinforcing Dual-Path Reasoning in Spatial Vision Language Models",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
-      "id": "3160-MAIN",
-      "title": "5-DIALECTS-BN: Unmasking the Impact of Transliteration on Bangla Dialectal LLMs",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
       "id": "5210-MAIN",
       "title": "Q-Bimodal Attention: Prefix and Tail Dispatch for Efficient Tree-Structured LLM Decoding",
       "status": "scheduled",
@@ -128,24 +110,6 @@
       "id": "6620-MAIN",
       "title": "The Necessity of Rational Grounding in Surprisal Theory",
       "status": "scheduled",
-      "reason": "No verified match"
-    },
-    {
-      "id": "6944-MAIN",
-      "title": "Tokenization Helps When It Creates a Low-Dimensional Predictive Quotient",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
-      "id": "8927-MAIN",
-      "title": "Do Models Use What They Write? Causal Computation Graph Recovery for CoT Faithfulness",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
-      "id": "150-FIND",
-      "title": "ReBeCA: Unveiling Interpretable Behavior Hierarchy behind the Iterative Self-Reflection of Language Models with Causal Analysis",
-      "status": "withdrawn",
       "reason": "No verified match"
     },
     {
@@ -167,18 +131,6 @@
       "reason": "No verified match"
     },
     {
-      "id": "5757-FIND",
-      "title": "TaskGraph-RAG: Lightweight Relation-Aware Graph RAG via Entity-Anchored Task Execution",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
-      "id": "6930-FIND",
-      "title": "Information Geometry of Zipfian Token Distributions",
-      "status": "withdrawn",
-      "reason": "No verified match"
-    },
-    {
       "id": "7609-FIND",
       "title": "Neuron Level Analysis of Large Language Model in Legal Domain Reasoning",
       "status": "not presenting",
@@ -193,7 +145,7 @@
     {
       "id": "9475-FIND",
       "title": "EQL-Act: Evidence Query Language Guided Scientific Operation Acting for Scientific VQA",
-      "status": "not presenting",
+      "status": "desk rejected",
       "reason": "No verified match"
     }
   ]

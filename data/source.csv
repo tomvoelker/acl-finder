@@ -149,7 +149,6 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 224-MAIN,Gated Residual Discrepancy for Efficient Bi-Encoder Factuality Verification,Oral,In-Person,Zeyang Liu,G15-16,Session 11,Efficient Methods for NLP 3,2026-10-27,11:00,12:30
 225-MAIN,Graph2Counsel: Clinically Grounded Synthetic Counseling Dialogue Generation from Client Psychological Graphs,Poster,In-Person,Aishik Mandal,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 226-MAIN,LLM-Based Adversarial Persuasion Attacks on Fact-Checking Systems,Oral,In-Person,Olesya Razuvayevskaya,G7-8,Session 4,Computational Social Science and Cultural Analytics 1,2026-10-25,16:00,17:30
-230-MAIN,ScienceCritic: Empowering AI Review Systems with Non-objective Scientific Value Judgment,Withdrawn,Withdrawn,Yaowen Hu,,,,,,
 232-MAIN,SpokenUS: A Spoken User Simulator for Task-Oriented Dialogue,Poster,In-Person,Junseong Pyo,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 237-MAIN,LENS: Exploiting the Cross-View Stability Gap for Hallucination Mitigation in Medical Vision–Language Models,Poster,In-Person,Dwarikanath Mahapatra,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 239-MAIN,CORE-T: COherent REtrieval of Tables for Text-to-SQL,Poster,In-Person,Hassan Soliman,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
@@ -211,7 +210,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 393-MAIN,VTCBench: Can Vision-Language Models Understand Long Contexts with Vision-Text Compression?,Poster,In-Person,Meng Wang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 394-MAIN,When Hate Meets Facts: LLMs-in-the-Loop for Check-worthiness Detection in Hate Speech,Oral,In-Person,Nicolás Benjamín Ocampo,G13-14,Session 10,Resources and Evaluation 7,2026-10-27,09:00,10:30
 398-MAIN,Keeping Eyes on the Image: Dynamic Visual Attention Recalibration for Vision-Language Reasoning,Poster,In-Person,Yuna Jeong,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
-403-MAIN,MAPLE: Masked Adapter Prototype Learning for OOD generalization,Virtual Pres,Virtual ,Lu Yin,,#N/A,,,,
+403-MAIN,MAPLE: Masked Adapter Prototype Learning for OOD generalization,Virtual Pres,Virtual ,Lu Yin,Zoom,#N/A,TBD,,,
 406-MAIN,From Test-taking to Cognitive Scaffolding: A Pedagogical Diagnostic Benchmark for LLMs on English Standardized Tests,Virtual Pres,Virtual ,Luoxi Tang,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 409-MAIN,JuDi: Revisiting Judge Decoding from First Principles via Training-Free Distributional Divergence,Virtual Pres,Virtual ,Shengyin Sun,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 411-MAIN,Demystifying Hybrid Thinking: Can LLMs Truly Switch Between Think and No-Think?,Poster,In-Person,Vipin Chaudhary,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
@@ -230,7 +229,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 440-MAIN,M-QUEST - Meme Question-Understanding Evaluation on Semantics and Toxicity,Poster,In-Person,Stefano De Giorgis,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 441-MAIN,More Test-Time Compute Can Hurt: Overestimation Bias in LLM Beam Search,Virtual Pres,Virtual ,Gal Dalal,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 446-MAIN,AgentFold: Closed-Loop Agentic Search for Protein Folding Model Design,Virtual Pres,Virtual ,Mingquan Liu,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
-448-MAIN,LDC: Learning to Generate Research Idea with Dynamic Control,Virtual Pres,Virtual,Ruochen Li,Zoom,#N/A,,,,
+448-MAIN,LDC: Learning to Generate Research Idea with Dynamic Control,Virtual Pres,Virtual,Ruochen Li,Zoom,#N/A,TBD,,,
 451-MAIN,Evaluating Style-Personalized Text Generation: Challenges and Directions,Poster,In-Person,Adrian de Wynter,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 453-MAIN,DSPA: Dynamic SAE Steering for Data-Efficient Preference Alignment,Virtual Pres,Virtual ,James Wedgwood,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 456-MAIN,Generalizable Lifelong Model Editing via Preference Optimization,Oral,In-Person,Dahyun Jung,F7,Session 9,Machine Learning for NLP 3,2026-10-26,16:45,18:15
@@ -247,7 +246,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 492-MAIN,HyLaT: Efficient Multi-Agent Communication via Hybrid Latent–Text Protocol,Virtual Pres,Virtual ,Xinyi Mou,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 501-MAIN,DebugLM: Learning Traceable Training Data Provenance for LLMs,Poster,In-Person,Wenjie Jacky Mo,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 504-MAIN,DiscoSign: Discourse-Aware Text to Sign Language Gloss Translation,Poster,In-Person,Vasileios Baltatzis,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
-506-MAIN,CRISP: Cliff-awaRe Input-adaptive Sparse Prefilling with Structural-Mass-Motivated Routing,Virtual Pres,Virtual ,Huy Huu Nguyen,Zoom,#N/A,,,,
+506-MAIN,CRISP: Cliff-awaRe Input-adaptive Sparse Prefilling with Structural-Mass-Motivated Routing,Virtual Pres,Virtual ,Huy Huu Nguyen,Zoom,Virtual 5,,,,
 512-MAIN,Response-Aware User Memory Selection for LLM Personalization,Poster,In-Person,Chan Young Park,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 517-MAIN,Do Latent Tokens Think? A Causal and Adversarial Analysis of Chain-of-Continuous-Thought,Virtual Pres,Virtual ,Yuyi Zhang,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 519-MAIN,MAS-on-the-Fly: In-Context Structural Adaptation of LLM-Based Multi-Agent Systems,Poster,In-Person,Guangyi Liu,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
@@ -321,7 +320,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 705-MAIN,From Accuracy to Robustness: A Study of Rule- and Model-based Verifiers in Mathematical Reasoning,Virtual Pres,Virtual ,Junxian He,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 706-MAIN,From Gaps to Active Retrieval : Open-Domain Iterative Timeline Completion via Historical Trajectory Analogy and Dynamic Ontology,Virtual Pres,Virtual ,yunhui zheng,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 708-MAIN,PGA-KD: Principal Geometry Alignment and Semantic Consistency for VLM2Vec Distillation,Virtual Pres,Virtual ,The-Anh Tran,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
-709-MAIN,Fully Unleashing the Multimodal Attacker: Meta-Adaptive Jailbreaking of Vision-Language Models,Poster,In-Person,Shen Pang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
+709-MAIN,Fully Unleashing the Multimodal Attacker: Meta-Adaptive Jailbreaking of Vision-Language Models,Virtual Pres,Virtual ,Shen Pang,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,,
 710-MAIN,GGSS: Geodesic-Gated Spherical Steering for Inference-Time Debiasing of Generative Vision-Language Models,Poster,In-Person,Yiqun Sun,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 713-MAIN,Validity Is Not Visibility: A Lifecycle FSM for Agent Memory,Poster,In-Person,Shuo Zhou,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 714-MAIN,DocFollow: A Hierarchical Fine-Grained Constraints Following Benchmark in Long Contexts for LLMs,Poster,In-Person,Yanji He,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
@@ -577,7 +576,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 1324-MAIN,"Every Time I Hire a Linguist, Inference Costs Go Down: On Linguistic Rules as Effective Prompt Compressors",Poster,In-Person,Emmanuele Chersoni,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 1325-MAIN,TopoAlign: A Framework for Aligning Code to Math via Topological Decomposition,Oral,In-Person,Philipp Borchert,G15-16,Session 5,NLP and Symbolic Reasoning,2026-10-26,09:00,10:30
 1326-MAIN,Beyond SFT-Optimality: Cold-Start Data Selection for Reinforcement Learning via Gradient Subspace Coverage,Virtual Pres,Virtual ,Haisheng Lv,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
-1331-MAIN,LLM Agents as Computational Typologists,Virtual Pres,Virtual ,Changbing Yang,Zoom,#N/A,TBD,#N/A,#N/A,
+1331-MAIN,LLM Agents as Computational Typologists,Virtual Pres,Virtual ,Changbing Yang,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,#N/A,
 1332-MAIN,Personas Differ from Native-Language Generation: Language Pathways Shape LLM Interpersonal Advice,Poster,In-Person,Jinhee Won,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 1333-MAIN,Beyond the Vacuum: Combinatorial Strategy Selection for Competitor-Aware Generative Engine Optimization,Oral,In-Person,Vaibhav Sourirajan,G4-6,Session 11,Information Retrieval and Text Mining 2,2026-10-27,11:00,12:30
 1335-MAIN,The Magnitude Mirage: Rethinking Confidence for Reasoning-Intensive Retrieval,Poster,In-Person,Jamie Holdcroft,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
@@ -646,7 +645,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 1518-MAIN,Chartographer: Counterfactual Chart Generation for Evaluating Vision-Language Models,Poster,In-Person,Yifan Jiang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 1519-MAIN,SABER: Stability-Aware Early Exit for LLM Reasoning via Adversarial Branch Probing,Virtual Pres,Virtual ,Wanli Cheng,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 1521-MAIN,When Metadata Remembers: Ordered Provenance Enables Document-Level Embedding Inversion,Virtual Pres,Virtual ,Liwen Zheng,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
-1523-MAIN,When LLMs Forget What They Believe: Characterizing State Integrity Collapse in Long-Horizon Dialogues,Virtual Pres,Virtual ,Yifan Yuan,Zoom,#N/A,,,,
+1523-MAIN,When LLMs Forget What They Believe: Characterizing State Integrity Collapse in Long-Horizon Dialogues,Virtual Pres,Virtual ,Yifan Yuan,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,,
 1525-MAIN,LongDS-Bench: On the Failure of Long-Horizon Agentic Data Analysis,Oral,In-Person,Haoming Xu,G13-14,Session 10,Resources and Evaluation 7,2026-10-27,09:00,10:30
 1526-MAIN,AgentSpec: Speculative Decoding for Batch Inference of LLM Agents,Virtual Pres,Virtual ,Xin Wang,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 1530-MAIN,MeetingToM: Evaluating Multimodal LLMs on Theory-of-Mind Reasoning in Multi-Party Meetings,Oral,In-Person,Ziyi Wang,G13-14,Session 4,Resources and Evaluation 2,2026-10-25,16:00,17:30
@@ -787,9 +786,8 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 1937-MAIN,HELM: Steering Long-Horizon Agents with Learned Hierarchical Memory and Epistemic Governance,Poster,In-Person,Jialong Liu,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 1939-MAIN,Why It Hurts: Identifying the Drivers of Negative Thoughts in Emotional Support Conversations,Poster,In-Person,Hainiu Xu,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 1945-MAIN,TRACES: Proactive Safety Auditing for Multi-Turn LLM Agents via Trajectory-State Modeling,Poster,In-Person,Jiaqian Li,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-1946-MAIN,Reinforcing Dual-Path Reasoning in Spatial Vision Language Models,Withdrawn,Withdrawn,Yatai Ji,,,,,,
 1950-MAIN,Safety Sentry: Context-Aware Human Intervention via EXECUTE–ASK–REFUSE Routing,Poster,In-Person,Tianyu Chen,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-1953-MAIN,Citing Less Critically: LLMs Reshape the Rhetoric and Reach of Scientific Citation,Poster,In-Person,Yixuan Liu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
+1953-MAIN,Citing Less Critically: LLMs Reshape the Rhetoric and Reach of Scientific Citation,Virtual Pres,Virtual,Yixuan Liu,Zoom,TBC,,,,
 1954-MAIN,"SIMPA: Restricting What Experts See, Not What They Produce, in MoE-PEFT",Poster,In-Person,Pham Tri Quang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 1957-MAIN,INFA-Guard: Mitigating Malicious Propagation via Infection-Aware Safeguarding in LLM-Based Multi-Agent Systems,Poster,In-Person,Yijin Zhou,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 1961-MAIN,QUBRIC: Co-Designing Queries and Rubrics for RL Beyond Verifiable Rewards,Poster,In-Person,Zhihan Zhang,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
@@ -853,7 +851,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 2136-MAIN,Conformalized Large Language Models under Configuration Shift,Poster,In-Person,Yuqicheng Zhu,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 2137-MAIN,PreUnlearn: Auditing Collateral Knowledge Damage Before Large Language Model Unlearning,Virtual Pres,Virtual ,Bo Su,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 2138-MAIN,BALMS: Benchmarking Agentic LLMs for Longitudinal Mental Health Sensing,Poster,In-Person,Yvonne Wu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-2144-MAIN,"More Haste, Less Speed: Weaker Single-Layer Watermark Improves Distortion-Free Watermark Ensembles",Poster,In-Person,Ruibo Chen,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
+2144-MAIN,"More Haste, Less Speed: Weaker Single-Layer Watermark Improves Distortion-Free Watermark Ensembles",Virtual Pres,Virtual,Ruibo Chen,Hall H,Session 6,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 2146-MAIN,One Frozen Simulator Is Not Enough: Simulator Collapse in Multi-Agent RL,Poster,In-Person,Simon Yu,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 2147-MAIN,ChronoVision: Temporal Reasoning via Latent State Reconstruction,Virtual Pres,Virtual ,Yifan Shen,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 2149-MAIN,LexRubric: A Rubric-Guided Diagnostic Benchmark for Open-Ended Legal Tasks,Poster,In-Person,Yifan Chen,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
@@ -873,7 +871,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 2192-MAIN,Do Language Models Understand Implicit Logical Meaning? A Case Study of Scope Ambiguity Resolution in Context,Oral,In-Person,JIEUN KIM,F4-5,Session 4,Lexical and Sentence-Level,2026-10-25,16:00,17:30
 2195-MAIN,StratPrune: Cascade Stratum Pruning for Efficient Time Series Reasoning,Poster,In-Person,Chenghao Liu,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 2200-MAIN,HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation,Poster,In-Person,Edward Ajayi,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
-2201-MAIN,TOUCAN: Synthesizing 1.5M Tool-Agentic Data from Real-World MCP Environments,Virtual Pres,Virtual ,Radha Poovendran,Zoom,,,,,
+2201-MAIN,TOUCAN: Synthesizing 1.5M Tool-Agentic Data from Real-World MCP Environments,Virtual Pres,Virtual ,Radha Poovendran,Zoom,TBC,,,,
 2205-MAIN,Batch-of-Thought: Cross-Instance Learning for Enhanced LLM Reasoning,Poster,In-Person,XUAN YANG,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 2208-MAIN,KnowMeBenchV2: Evidence-Grounded Person-Centric Long-Video Understanding,Oral,In-Person,Tingyu Wu,F9-10,Session 11,Multiple Tracks 6,2026-10-27,11:00,12:30
 2216-MAIN,Secret Stealing Attacks on Local LLM Fine-Tuning through Supply-Chain Model Code Backdoors,Poster,In-Person,Zi Li,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
@@ -884,7 +882,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 2226-MAIN,Translation-Induced Label Drift in Natural Language Inference: Evidence from Nine Languages,Virtual Pres,Virtual ,Muhammad S. Abdo,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 2231-MAIN,ConsensusBench: Benchmark of Consensus Nodes for LLM Reasoning via Outcome Reward Densifying,Oral,In-Person,Shi-Qi Yan,P1,Session 11,Special Theme: New Missions for NLP Research,2026-10-27,11:00,12:30
 2236-MAIN,"The Art of Efficient Reasoning: Data, Reward, and Optimization",Poster,In-Person,Taiqiang Wu,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
-2239-MAIN,"VectorGym: A Multi-Task Benchmark for SVG Code Generation, Sketching and Editing",Virtual Pres,Virtual ,Joan Rodriguez,Zoom,,,,,
+2239-MAIN,"VectorGym: A Multi-Task Benchmark for SVG Code Generation, Sketching and Editing",Virtual Pres,Virtual ,Joan Rodriguez,Zoom,TBC,,,,
 2240-MAIN,Skill Reuse as Compression in Agentic RL,Virtual Pres,Virtual ,Zhikun Xu,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 2241-MAIN,PunGraph: Retrieval-Enhanced Phonetic-Semantic Graph Reasoning for Pun Understanding,Oral,In-Person,Yuchen Su,F4-5,Session 6,"Sentiment Analysis, Stylistic Analysis, and Argument Mining",2026-10-26,11:00,12:30
 2245-MAIN,Token-weighted Direct Preference Optimization with Attention,Virtual Pres,Virtual ,Chengyu Huang,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
@@ -947,7 +945,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 2399-MAIN,Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs,Poster,In-Person,JuHeon Ha,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 2402-MAIN,INSIGHT: Structured Multimodal Knowledge Modeling for Vision-Guided Task-Oriented Dialogue,Virtual Pres,Virtual ,Xuelian Dong,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 2404-MAIN,OmniHalluc-L: Counterfactual Benchmarking and Modality-Perturbation Calibration for Long-Form Omni Hallucination,Virtual Pres,Virtual ,Jiaheng Liu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
-2407-MAIN,Pak3H: Evaluating the Cost of Cultural Mismatch in LLM Alignment with a Human-Contextualized Urdu Benchmark,Virtual Pres,Virtual ,Abdullah Hashmat,Zoom,#N/A,,,,
+2407-MAIN,Pak3H: Evaluating the Cost of Cultural Mismatch in LLM Alignment with a Human-Contextualized Urdu Benchmark,Virtual Pres,Virtual ,Abdullah Hashmat,Zoom,Virtual 2,,,,
 2411-MAIN,When Irrelevant Text Matters: Affine Margin Shifts in Multimodal Large Language Models,Poster,In-Person,Yinfeng Wang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 2415-MAIN,HMPO: Hybrid Median-length Policy Optimization for Chain-of-Thought Compression,Poster,In-Person,MinghuiZheng,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 2416-MAIN,NEAR: Neighborhood-Aware Context Reconstruction for Ultra-Long Document Reading Comprehension of LLMs,Virtual Pres,Virtual ,Han Li,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
@@ -1167,17 +1165,16 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 3120-MAIN,Lung-R1: A Knowledge Graph-Guided LLM for Pulmonary Diagnostic Reasoning,Poster,In-Person,Haoyang Zeng,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 3124-MAIN,Rigel: Self-Distilled Score Adaptation for Image and Video Captioning Evaluation,Oral,In-Person,Shuitsu Koyama,G13-14,Session 9,Resources and Evaluation 5,2026-10-26,16:45,18:15
 3136-MAIN,SecOPD: Mitigating Adaptive Prompt Injections by On-Policy Distillation,Poster,In-Person,Yu-Lin Tsai; Yibo Peng,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
-3137-MAIN,ObSchema: From Local Observations to Global Entity Attribute Schemas in Scientific Literature,Virtual Pres,Virtual ,Xueqiang Xu,Zoom,,,,,
+3137-MAIN,ObSchema: From Local Observations to Global Entity Attribute Schemas in Scientific Literature,Virtual Pres,Virtual ,Xueqiang Xu,Zoom,TBC,,,,
 3143-MAIN,HLoRA: Hierarchical Regularization on Combined Parameter Space for LoRA Fine-Tuning,Virtual Pres,Virtual ,Hao Xu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 3145-MAIN,APEx: Distillation of Agent Procedural Experience for Adaptive Deep Research Question Answering,Virtual Pres,Virtual ,Jie Ding,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 3158-MAIN,Beyond Outliers: A Data-Free Layer-wise Mixed-Precision Quantization Approach Driven by Numerical and Structural Dual-Sensitivity,Poster,In-Person,Jing Xiong,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-3160-MAIN,5-DIALECTS-BN: Unmasking the Impact of Transliteration on Bangla Dialectal LLMs,Withdrawn,Withdrawn,Md Mahir Jawad,,,,,,
 3161-MAIN,AOR-Bench: Do Large Audio Language Models Over-Refuse Pseudo-Harmful Queries?,Poster,In-Person,Chaewan Chun,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 3165-MAIN,LexPath: A Domain-Oriented Multi-Path Framework for Legal Article Retrieval,Poster,In-Person,Weixuan Liu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 3173-MAIN,Fathom-Vaidya: Advancing Medical Reasoning with Rubric-Based Rewards,Virtual Pres,Virtual ,Kunal Singh,zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 3175-MAIN,ANI: Adaptive Numerical Injection for Unifying Semantic and Arithmetic Representations in Numerical Reasoning,Poster,In-Person,Jinsung Jeon,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 3181-MAIN,A Unified Mechanistic Analysis of Knowledge- and Safety-Based Refusals,Oral,In-Person,Yuri Son,F4-5,Session 11,Multiple Tracks 5,2026-10-27,11:00,12:00
-3184-MAIN,The Straight and Narrow: Do LLMs Possess an Internal Moral Path?,Virtual Pres,Virtual ,Luoming Hu,Zoom,#N/A,TBD,#N/A,#N/A,
+3184-MAIN,The Straight and Narrow: Do LLMs Possess an Internal Moral Path?,Virtual Pres,Virtual ,Luoming Hu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 3187-MAIN,"Can LLMs Reliably Self-Report Adversarial Prefills, and How?",Poster,In-Person,Quang Minh Nguyen,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 3191-MAIN,Understanding the Effects of Distractors on Reasoning Vision-Language Models,Oral,In-Person,Jiyun Bae,P1,Session 2,Efficient Methods for NLP 1,2026-10-25,11:00,12:30
 3193-MAIN,Rubric-Aware Multi-Expert Online Policy Distillation for Chinese Elementary School Essay Writing,Virtual Pres,Virtual ,Wei Tian,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
@@ -1192,10 +1189,10 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 3209-MAIN,"Not What, But How: A Communicative Audit of LLM Response Framing",Poster,In-Person,Siddhesh Milind Pawar,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 3211-MAIN,Jasper-Flash: Elastic Token Compression and Progressive Distillation for Inference-Scalable Text Embedding Models,Poster,In-Person,Haining An,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 3212-MAIN,Speaking While Listening: A Survey and Empirical Audit of Full-Duplex Spoken Dialogue Systems,Poster,In-Person,Jingyu Lu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-3213-MAIN,PAC: Progress-Augmented Advantage Curriculum for Multi-Task Reinforcement Learning of LLMs,Virtual Pres,Virtual ,Yuanqiang Yu,Zoom,Session 4,,2026-10-26,12:30-14:00 CET,
+3213-MAIN,PAC: Progress-Augmented Advantage Curriculum for Multi-Task Reinforcement Learning of LLMs,Virtual Pres,Virtual ,Yuanqiang Yu,Zoom,Session 4,Virtual Presentations 4,2026-10-25,12:30-14:00 CET,
 3220-MAIN,"Latent Thoughts, Certain Gains: Bayesian Optimization for LLM Reasoning",Poster,In-Person,Xin Xiao,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 3221-MAIN,Can MLLMs Perceive and Describe Medical Image Quality Beyond Scores?,Oral,In-Person,Jiyao Liu,G7-8,Session 6,Clinical and Biomedical Applications,2026-10-26,11:00,12:30
-3226-MAIN,"Branch Later, Compute Less, Think Better: Adaptive Depth Parallelism for Efficient Parallel Prefix-Tuning",Poster,In-Person,Mingqian Zhang,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
+3226-MAIN,"Branch Later, Compute Less, Think Better: Adaptive Depth Parallelism for Efficient Parallel Prefix-Tuning",Virtual Pres,Virtual ,Mingqian Zhang,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 3230-MAIN,SCOPE: Signal-Calibrated On-Policy Distillation Enhancement with Dual-Path Adaptive Weighting,Virtual Pres,Virtual ,Xing Ma,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 3238-MAIN,UltraX: Refining Pre-Training Data at Scale with Adaptive Programmatic Editing,Poster,In-Person,Yudong Wang,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 3240-MAIN,PsychēChat: An Empathic Framework Focused on Emotion Shift Tracking and Safety Risk Analysis in Psychological Counseling,Poster,In-Person,Zhentao Xia,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
@@ -1233,7 +1230,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 3341-MAIN,MMDS-Bench: Benchmarking Multimodal Large Language Models on Dynamic Stance in Social Media Interactions,Oral,In-Person,Yuzhe Ding,F4-5,Session 6,"Sentiment Analysis, Stylistic Analysis, and Argument Mining",2026-10-26,11:00,12:30
 3344-MAIN,MMGR: Multi-Modal Generative Reasoning Benchmark and Evaluation,Poster,In-Person,Xinyan Velocity Yu,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 3347-MAIN,EmoDap: Dual-Agent Prompt Retrieval Framework for Zero-Shot Fine-Grained Emotion Recognition,Poster,In-Person,Kun Peng,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-3353-MAIN,OP-Bench: Benchmarking Over-Personalization for Memory-Augmented Personalized Conversational Agents,Poster,In-Person,Yulin Hu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
+3353-MAIN,OP-Bench: Benchmarking Over-Personalization for Memory-Augmented Personalized Conversational Agents,Virtual Pres,Virtual ,Yulin Hu,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 3358-MAIN,MM-BrowseComp: A Comprehensive Benchmark for Multimodal Browsing Agents,Virtual Pres,Virtual ,Shilong Li,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 3366-MAIN,RAVE: Re-Allocating Visual Attention in Large Multimodal Models,Poster,In-Person,Xinhong Ma,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 3374-MAIN,Whether LLMs Can Navigate Beliefs and Facts Depends on How You Phrase It,Poster,In-Person,Quang Minh Nguyen,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
@@ -1258,7 +1255,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 3454-MAIN,LADA: Enabling Adaptation of Black-Box LLMs to Dynamic Domain Changes at Test Time,Virtual Pres,Virtual ,Yihao Hu,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 3457-MAIN,Rethinking the Role of Temperature in Large Language Model Distillation,Virtual Pres,Virtual ,Hoang-Chau Luong,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 3464-MAIN,ACTD: Anchor-Based Cross-Tokenizer Distillation with Residual Regularization,Poster,In-Person,Huiyi Zhang,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-3473-MAIN,Reflect to Inform: Boosting Multimodal Reasoning via Information-Gain-Driven Verification,Virtual Pres,Virtual ,Shuai Lv,Zoom,#N/A,TBD,#N/A,#N/A,
+3473-MAIN,Reflect to Inform: Boosting Multimodal Reasoning via Information-Gain-Driven Verification,Virtual Pres,Virtual ,Shuai Lv,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 3475-MAIN,COLLABMEM: A Diagnostic Benchmark for Collaborative Memory Operations in Multi-Agent LLM Systems,Poster,In-Person,Kang Liu,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 3476-MAIN,Over-reasoning as a Vulnerability: Neuron Activation-Guided Denial-of-Service Attacks on Large Reasoning Models,Virtual Pres,Virtual ,Jiaxiang Li,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 3477-MAIN,VisCache: Visual KV Cache Pruning for Efficient Vision Large Language Model Inference,Poster,In-Person,Lyuke Wang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
@@ -1434,11 +1431,11 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 4014-MAIN,It’s Not RoPE that Creates Sinks: The Role of Self-Concentration and Value-Non-Mixing in Attention,Poster,In-Person,Raito Kiya,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 4016-MAIN,LoopCD: Loop-wise Contrastive Decoding for Improving Reasoning in Looped Language Models,Poster,In-Person,Byeongho Yu,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 4018-MAIN,MedSPA: Self-planning Medical Agents,Poster,In-Person,Luu Van Huy,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
-4019-MAIN,When the Strongest Teacher Is Not the Best Teacher: Student-Centric Answer Selection,Virtual Pres,Virtual ,Zhengyu Hu,Zoom,,,,,
+4019-MAIN,When the Strongest Teacher Is Not the Best Teacher: Student-Centric Answer Selection,Virtual Pres,Virtual ,Zhengyu Hu,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,,
 4020-MAIN,"Don't Guess, Ask Wisely: Benchmarking and Training Proactive Elicitation in Open-Domain LLM Conversations",Oral,In-Person,Rongyu Zhang,G15-16,Session 10,Dialogue and Interactive Systems,2026-10-27,09:00,10:30
 4033-MAIN,Beyond FLOPs: Benchmarking Real Inference Acceleration of LLM Pruning under a GEMM-Centric Taxonomy,Virtual Pres,Virtual,Xiaoyu Shen,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 4034-MAIN,DecSelfMask: Leveraging Unlabeled Text via Self-Relevance-Guided Masking for Decoder-Only Classification,Poster,In-Person,Pietro Ferrazzi,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
-4043-MAIN,VideoSearcher: Empowering Video Deep Research with Multi-Tool Agentic Reasoning via Reinforcement Learning,Poster,In-Person,Zhenkun Gao,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
+4043-MAIN,VideoSearcher: Empowering Video Deep Research with Multi-Tool Agentic Reasoning via Reinforcement Learning,Virtual Pres,Virtual,Zhenkun Gao,Hall H,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 4048-MAIN,AT-TTA: Dual-View Anchor-Tethered Test-Time Adaptation for Large Language Models,Virtual Pres,Virtual ,Yaxin Wang,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 4051-MAIN,From Unverifiable Domain Text to Cross-Lingual RLVR via Code-Switched Task Synthesis,Poster,In-Person,Cheonbok Park,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 4052-MAIN,MARBO: Relational Belief Grounding for LLM Agents in Social Deduction Games,Oral,In-Person,Yechan Hwang,F8,Session 9,LLM Agents 4,2026-10-26,16:45,18:15
@@ -1524,7 +1521,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 4310-MAIN,Ontology-Based Knowledge Graphs for Industrial Standards with Scope-Aware Logical Rule Structuring,Oral,In-Person,Hyuna Jeon,G15-16,Session 4,Information Extraction,2026-10-25,16:00,17:30
 4311-MAIN,LoCoDec: Robust Decoding for LLM-based Sequence-Structured Prediction,Virtual Pres,Virtual ,Chang Liu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 4327-MAIN,RACE: Scalable Statistical Estimation of Functional Consistency in LLM Neurons,Poster,In-Person,Runyu Wang,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-4328-MAIN,Consensus Group Relative Policy Optimization for Text Generation,Virtual Pres,Virtual ,Yuki Ichihara,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
+4328-MAIN,Consensus Group Relative Policy Optimization for Text Generation,Virtual Pres,Virtual ,Yuki Ichihara,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,18:00-19:30 CET,
 4330-MAIN,Data Efficient Sample Selection for In-Context Learning,Poster,In-Person,Venktesh Viswanathan,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 4332-MAIN,MultiHashFormer: Hash-based Generative Language Models,Poster,In-Person,Huiyin Xue,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 4333-MAIN,Bridging the Temporal Gap: A New Benchmark and Dynasty-aware Adaptation Framework for Ancient Chinese WSD,Virtual Pres,Virtual ,Lixiang Ma,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
@@ -1573,7 +1570,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 4460-MAIN,"Ask Now, Use Later: Benchmarking the Proactivity Gap in Long-Lived LLM Agents",Poster,In-Person,Bin Wu,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 4462-MAIN,The Mirage of Calibrated Confidence: Trajectory-Independence of Verbalized Confidence in Vision-Language Models,Poster,In-Person,Jisoo Yang,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 4463-MAIN,INSPIRE: An Internalize-Then-Improve Approach for Example-Driven Mathematical Reasoning,Poster,In-Person,Shuai Wang,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
-4473-MAIN,DreamReasoner-8B: Block-Size Curriculum Learning for Diffusion Reasoning Models,Virtual Pres,Virtual ,Zirui Wu,Zoom,#N/A,,,,
+4473-MAIN,DreamReasoner-8B: Block-Size Curriculum Learning for Diffusion Reasoning Models,Virtual Pres,Virtual ,Zirui Wu,Zoom,#N/A,TBD,,,
 4475-MAIN,Seeing the Unseen: Visual Similarity for Pixel Language Model Adaptation,Poster,In-Person,Wessel Poelman,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 4476-MAIN,Length and Meaning for Language Model Maps,Poster,In-Person,Momose Oyama,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 4477-MAIN,Intrinsic Temporal Adaptation of CLIP for Partially Relevant Video Retrieval,Oral,In-Person,Woojin Jun,F9-10,Session 9,Multiple Tracks 4,2026-10-26,16:45,18:15
@@ -1608,7 +1605,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 4577-MAIN,GSR-LoRA:Group-Sparse Routing-aware Low-Rank Adapter Compression for Multi-Task Mixture-of-Experts Fine-Tuning,Virtual Pres,Virtual ,Yatian Shen,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 4578-MAIN,From Global to Regional Coverage: Hyperspherical Prototype Discovery for Storage-Efficient Multimodal Retrieval,Oral,In-Person,Xing Mu,G4-6,Session 5,Information Retrieval and Text Mining 1,2026-10-26,09:00,10:30
 4585-MAIN,What and Whose Knowledge? Measuring Epistemic Diversity in Large Language Models,Oral,In-Person,Dustin Wright,F9-10,Session 2,Multiple Tracks 1,2026-10-25,11:00,12:30
-4587-MAIN,When Compression Helps and When It Hurts: Condition-Aware Analysis of Chain-of-Thought Distillation,Virtual Pres,Virtual,Xiaoyu Shen,Zoom,,,,,
+4587-MAIN,When Compression Helps and When It Hurts: Condition-Aware Analysis of Chain-of-Thought Distillation,Virtual Pres,Virtual,Xiaoyu Shen,Zoom,TBC,,,,
 4588-MAIN,Learning What to Share and What to Personalize: Hierarchical Strategy Co-Evolution for Agent Memory,Virtual Pres,Virtual ,Yupeng Han,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 4590-MAIN,HEMP: Hierarchical Entity-aligned Memory Prompting for CT Report Generation,Poster,In-Person,Tong Xu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 4592-MAIN,HalloMTBench: A Large-Scale Human-Verified Benchmark for Diagnosing Hallucination Triggers in LLM Translation,Oral,In-Person,Shaowei Zhang,F9-10,Session 10,Machine Translation and Semantics,2026-10-27,09:00,10:30
@@ -1730,7 +1727,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 4965-MAIN,Mitigating Hallucination in Vision-Language Models through Barrier-Regulated Adaptive Closed-form Steering,Virtual Pres,Virtual ,Soumyadeep Jana,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 4969-MAIN,Metonymic Circuits for Abstract Concept Grounding in Vision Transformers,Virtual Pres,Virtual ,Jing Ding,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 4972-MAIN,Proof-of-Use: Mitigating tool-call hacking in Deep Research Agents,Poster,In-Person,Shengjie Ma,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-4973-MAIN,DECENT: Distribution-aware Prototypical Calibration with Fine-grained Voting for VLM Misclassification Detection,Virtual Pres,Virtual,Yijun Gong,zoom,#N/A,,,,
+4973-MAIN,DECENT: Distribution-aware Prototypical Calibration with Fine-grained Voting for VLM Misclassification Detection,Virtual Pres,Virtual,Yijun Gong,zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 4977-MAIN,SeVeR: Selective Visual Exposure and Retrieval for 3D Medical Image Question Answering,Poster,In-Person,Danyang Tu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 4978-MAIN,PRO-Step: Step-level Process Reward Optimization for Retrieval-Augmented Generation,Poster,In-Person,MinKeon Kim,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 4980-MAIN,The Illusion of Expertise: Narrow Finetuning Induces Persistent Domain Priors in Vision-Language Models,Poster,In-Person,Qinglin Zeng,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
@@ -1761,8 +1758,8 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 5075-MAIN,Elastic Horizon: Discovering the Effective Interaction Frontier in Agentic Reinforcement Learning,Poster,In-Person,Gangyi Zhang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 5078-MAIN,Less is MoE: Trimming Experts in Domain-Specialist Language Models,Poster,In-Person,Juncheng Billy Li,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 5080-MAIN,Cross-lingual Representation Learning via Centroid Intervention Fusion,Oral,In-Person,Wei Sun,F9-10,Session 6,Multilingualism and Linguistic Theories,2026-10-26,11:00,12:30
-5081-MAIN,TRIAGE: Label-Free Hateful Video Detection with Boundary Mapping and Resolution,Virtual Pres,Virtual ,Junyi Chen,Zoom,,,,,
-5082-MAIN,How Do People Challenge Racial Stereotypes Online? Counter-Story Detection Across Reddit Communities,Poster,In-Person,Uma Sushmitha Gunturi,Hall H,Session 5,Poster Session C,2026-10-25,18:00-19:30 CET,10:30
+5081-MAIN,TRIAGE: Label-Free Hateful Video Detection with Boundary Mapping and Resolution,Virtual Pres,Virtual ,Junyi Chen,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
+5082-MAIN,How Do People Challenge Racial Stereotypes Online? Counter-Story Detection Across Reddit Communities,Poster,In-Person,Uma Sushmitha Gunturi,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 5087-MAIN,Can Segmentation Models Understand the World? Proactive Affordance Reasoning via Vision-Grounded Chain-of-Thought,Poster,In-Person,Weifeng Su,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 5094-MAIN,Mitigating Memory Interference in Lifelong Model Editing through Multi-Head Hopfield Retrieval,Poster,In-Person,Yue Che,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 5098-MAIN,OrgAccess: A Benchmark for Role‑Based Access Control in Organization Scale LLMs,Virtual Pres,Virtual ,Debdeep Sanyal,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
@@ -1907,7 +1904,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 5654-MAIN,One Form to Transfer Them All: Pretraining Multilingual Language Models Beyond Native Orthography,Poster,In-Person,Muge Zhang,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 5660-MAIN,Confess What You Know: Forget-Set Misalignment with Model Knowledge in LLM Unlearning,Poster,In-Person,Seungwon Jeong,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 5664-MAIN,RoCo-ACE: Rollout-Conditioned Online Distillation for Retention-Aware Knowledge Injection,Virtual Pres,Virtual ,Yan Hong,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
-5665-MAIN,Learning Query-Specific Rubrics from Human Preferences for DeepResearch Report Generation,Virtual Pres,Virtual ,Changze Lv,Zoom,,,,,
+5665-MAIN,Learning Query-Specific Rubrics from Human Preferences for DeepResearch Report Generation,Virtual Pres,Virtual ,Changze Lv,Zoom,TBC,,,,
 5668-MAIN,Physiognomy Revisited: How Vision–Language Models Encode Sensitive Attributes Through Image Transformation,Oral,In-Person,Soumyajit Datta,G4-6,Session 4,"Ethics, Bias, and Fairness 1",2026-10-25,16:00,17:30
 5670-MAIN,Lessons Without Borders? Evaluating Cultural Alignment of LLMs Using Multilingual Story Moral Generation,Oral,In-Person,Sophie Wu,G7-8,Session 4,Computational Social Science and Cultural Analytics 1,2026-10-25,16:00,17:30
 5674-MAIN,Benchmarking Language Models for Statistical Problem Formulation,Poster,In-Person,Junzhe Zhao,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
@@ -2028,7 +2025,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 6130-MAIN,DITING: Evaluating Sentence-Level Cultural Meaning in Web Novel Translation,Poster,In-Person,Enze Zhang,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 6132-MAIN,Robust Multi-Agent LLMs under Byzantine Faults,Oral,In-Person,Vincent-Daniel Yun,P1,Session 4,LLM Agents 1,2026-10-25,16:00,17:30
 6135-MAIN,Goldsmith: Gold-Loss-Guided Definition Optimization with an Agentic Annotation Harness,Oral,In-Person,Yihan Li,G15-16,Session 4,Information Extraction,2026-10-25,16:00,17:30
-6137-MAIN,StructSynth: Dependency Graphs as Generation Plans for Low-Data Tabular Synthesis with Language Models,Poster,In-Person,Siyi Liu,Hall H,Session 4,Poster Session D,2026-10-26,11:00,12:30
+6137-MAIN,StructSynth: Dependency Graphs as Generation Plans for Low-Data Tabular Synthesis with Language Models,Poster,In-Person,Siyi Liu,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 6142-MAIN,Rethinking Evaluation Practices in Automated Essay Scoring: A Quantitative Analysis over the Past Decade,Oral,In-Person,Tamer Elsayed,F9-10,Session 11,Multiple Tracks 6,2026-10-27,11:00,12:30
 6146-MAIN,RAG over Thinking Traces Can Improve Reasoning Tasks,Poster,In-Person,Negar Arabzadeh,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 6149-MAIN,Beyond Perfect APIs: Evaluating LLM Agents Under Realistic API Complexity,Virtual Pres,Virtual ,Doyoung Kim,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
@@ -2052,7 +2049,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 6228-MAIN,First-Stage Groundwork Shapes Downstream RL Outcomes: Two-Stage Post-Training for LLM Personality Acquisition,Poster,In-Person,Tetsuya Hashimoto,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 6231-MAIN,"Perceive to Hypothesize, Verify to Ground: an Agentic Reasoning Framework for Open-World Geo-Localization",Oral,In-Person,Yutian Jiang,F9-10,Session 4,Multiple Tracks 2,2026-10-25,16:00,17:30
 6240-MAIN,GLOBE: Training-Free Calibration for Image-Text Retrieval with Global-Local Bias and Graph Evidence,Virtual Pres,Virtual ,Xuzhe Zhao,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
-6242-MAIN,Learning to Retrieve: Dual-Level Long-Term Memory for Text-to-SQL Agents,Virtual Pres,Virtual ,Yibo Wang,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
+6242-MAIN,Learning to Retrieve: Dual-Level Long-Term Memory for Text-to-SQL Agents,Virtual Pres,Virtual ,Yibo Wang,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,12:30-14:00 CET,
 6246-MAIN,Can Vision-Language Models Solve the Shell Game?,Poster,In-Person,Tiedong Liu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 6247-MAIN,Benchmarking Correctness and Security in Multi-Turn Code Generation,Poster,In-Person,Ruchit Rawal,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 6248-MAIN,GraphVerse: A Comprehensive Visual Graph Reasoning Benchmark for Multimodal Large Language Models,Poster,In-Person,Yuanfu Sun,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
@@ -2256,7 +2253,6 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 6928-MAIN,CForce: Boosting Parallel Decoding for dLLMs via Consistency Forcing,Poster,In-Person,Yuji Ren,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 6939-MAIN,Unified Context Evolution for LLM Agents,Poster,In-Person,Zixuan Zhu,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 6942-MAIN,Exploring Collaboration between a language and a non-language agent,Poster,In-Person,Somesh Singh,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-6944-MAIN,Tokenization Helps When It Creates a Low-Dimensional Predictive Quotient,Withdrawn,Withdrawn,Khanh Nguyen,,,,,,
 6952-MAIN,Steering from Random Quotients: A Sample-Complexity Theory of Polysemantic Contrast Pairs,Virtual Pres,Virtual ,Khanh Nguyen,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 6954-MAIN,CultureVidBench: Benchmarking Cultural Understanding in Text-to-Video Generation,Poster,In-Person,Bin Zhu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 6955-MAIN,Can LLM-as-a-Judge Reliably Verify Rubrics in Agentic Scenarios?,Poster,In-Person,Yangda Peng,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
@@ -2357,12 +2353,12 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 7340-MAIN,DELTA: Decoupling Latent Heterogeneity in Asymmetric Low-Rank Compression,Poster,In-Person,Jialin Zhan,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 7344-MAIN,Sequential Diffusion Language Models,Virtual Pres,Virtual ,Yangzhou Liu,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 7345-MAIN,Lost in Interpretation: The Plausibility-Faithfulness Trade-off in Cross-Lingual Explanations,Poster,In-Person,Pranav Jha,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-7350-MAIN,MemeLens: Multilingual Multitask VLMs for Memes,Poster,In-Person,Ali Shahroor,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-7351-MAIN,Before You Poll with LLMs: A Deliberative Diagnostic Framework,Virtual Pres,Virtual ,Hassaan Tayyab,Zoom,,,,,
+7350-MAIN,MemeLens: Multilingual Multitask VLMs for Memes,Virtual Pres,Virtual,Ali Shahroor,Zoom,TBC,,,,
+7351-MAIN,Before You Poll with LLMs: A Deliberative Diagnostic Framework,Virtual Pres,Virtual ,Hassaan Tayyab,Zoom,Virtual 4,,,,
 7354-MAIN,ContextBias: Controlled Evaluation of Bias Persistence Under Context Shift in Text-to-Image Models,Poster,In-Person,Shaghayegh Kolli,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 7358-MAIN,Twin Worlds: Equivariance-Based Abstention for Evidence-Grounded Reasoning,Poster,In-Person,Xiuzhen Zhang,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 7362-MAIN,"Is Alignment Enough for Helpfulness, Harmlessness, and Honesty?",Poster,In-Person,Gautam Siddharth Kashyap,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
-7365-MAIN,DIVA: Exploiting Cross-Step Conditional Propagation for Visual Jailbreaks in Discrete Diffusion Vision-Language Models,Virtual Pres,Virtual ,Guorui Song,Zoom,#N/A,,,,
+7365-MAIN,DIVA: Exploiting Cross-Step Conditional Propagation for Visual Jailbreaks in Discrete Diffusion Vision-Language Models,Virtual Pres,Virtual ,Guorui Song,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 7367-MAIN,"A Survey on Long-Term Memory Security in LLM Agents: Attacks, Defenses, and Governance Across the Memory Lifecycle",Virtual Pres,Virtual ,Zehao Lin,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 7370-MAIN,GRADFILTERING: Uncertainty-Aware Gradient Signal-to-Noise Data Selection for Instruction Tuning,Poster,In-Person,Zhihang Yuan,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 7371-MAIN,Creative Generation via Multi-Agent Debate: Does Debate Suppress Diversity?,Oral,In-Person,Manh Tien Anh Nguyen,F6,Session 11,LLM Agents 6,2026-10-27,11:00,12:30
@@ -2445,7 +2441,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 7746-MAIN,Compositional SVG Generation via VLM-Driven Hierarchical Semantic Parsing,Poster,In-Person,Sehwan Park,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 7747-MAIN,The Trigger Is in the Embedding: Supervision-Free Discovery and Diagnosis of Universal Adversarial Triggers in Fact Verification,Poster,In-Person,Michele Luca Contalbo,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 7749-MAIN,HPP: Hierarchical Programmatic Probing for Long Video Understanding by Decoupling Perception and Reasoning,Poster,In-Person,Awais Rauf,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
-7752-MAIN,DiffNeCTIS: Diffusion-based Nested Compound Type Identification for Sanskrit,Virtual Pres,Virtual ,Pretam Ray,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
+7752-MAIN,DiffNeCTIS: Diffusion-based Nested Compound Type Identification for Sanskrit,Virtual Pres,Virtual ,Pretam Ray,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 7755-MAIN,SeMLI-RAG: Semantics-Guided Multimodal Late Interaction for Retrieval-Augmented Radiology Report Generation,Poster,In-Person,Jiawei He,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 7757-MAIN,An Embarrassingly Simple Data Selection Strategy for Million-Scale Multi-Modal Instruction-Tuning,Virtual Pres,Virtual,Mengyao Lyu,zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 7759-MAIN,Evolutionary Soups: Evolving Mixture-of-Experts for Multi-Objective LLM Alignment,Poster,In-Person,Lingxiao Kong,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
@@ -2520,7 +2516,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 8117-MAIN,Scaling Near-Optimal SFT-RL Annotation Budget Allocation from Small to Large LLMs,Poster,In-Person,Jingtan Wang,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 8118-MAIN,MacAgentBench: Benchmarking AI Agents on Real-World macOS Desktop,Oral,In-Person,Yikun Fu,P1,Session 4,LLM Agents 1,2026-10-25,16:00,17:30
 8120-MAIN,When Tokenization is Secretly Output Supervision,Oral,In-Person,Tanja Baeumel,P1,Session 11,Special Theme: New Missions for NLP Research,2026-10-27,11:00,12:30
-8128-MAIN,Delta-Crosscoder: Robust Crosscoder Model Diffing in Narrow Fine-Tuning Regimes,Virtual Pres,Virtual ,Aly M. Kassem,Zoom,,,,,
+8128-MAIN,Delta-Crosscoder: Robust Crosscoder Model Diffing in Narrow Fine-Tuning Regimes,Virtual Pres,Virtual ,Aly M. Kassem,Zoom,Virtual 1,,,,
 8130-MAIN,Evaluating LLMs on Conversational Text-to-SQL under Chain Ambiguity and Intent Drift,Virtual Pres,Virtual ,Yujia Liu,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 8134-MAIN,Towards Understanding the Robustness of Self-Consuming Generative Models,Virtual Pres,Virtual ,Aobo Chen,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 8135-MAIN,mPhonBench: Evaluating LLMs On Multilingual Phonology,Poster,In-Person,Lennart Keller,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
@@ -2615,7 +2611,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 8530-MAIN,Scoped Semantic Invariance as a Foundation for LLM Reliability,Virtual Pres,Virtual ,Rosario Uceda-Sosa,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 8538-MAIN,Investigating and Alleviating Harm Amplification in LLM Interactions,Poster,In-Person,Alan Ritter,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 8539-MAIN,Don’t Peek at the Answer: Outcome-Masked Group Relative Policy Optimization for Label-Free RLVR,Oral,In-Person,Yongshi Ye,F7,Session 9,Machine Learning for NLP 3,2026-10-26,16:45,18:15
-8544-MAIN,FrankenReport: Early Exiting in Long-Form Generation Using Expected Value of Computation,Poster,In-Person,Zhengping Jiang,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
+8544-MAIN,FrankenReport: Early Exiting in Long-Form Generation Using Expected Value of Computation,Virtual Pres,Virtual ,Zhengping Jiang,Zoom,,,,,
 8546-MAIN,PEARL: Front-Loading Relational Chains for Multi-Hop Table Retrieval,Poster,In-Person,Subeen Ho,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 8547-MAIN,PAMT: Process-Aligned Reinforcement Learning for Multi-Domain Machine Translation,Oral,In-Person,Yongshi Ye,G7-8,Session 11,Machine Translation,2026-10-27,11:00,12:30
 8548-MAIN,Not All Memories Are Equal: Hierarchical Collaborative Memory for Validity-Aware Retrieval in LLM Agents,Poster,In-Person,Yufei Shi,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
@@ -2673,7 +2669,6 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 8914-MAIN,Dual Controller Architecture to Enable Adherence of LLM-based Counselors to Session- and Discourse-level Aspects of Motivational Interviewing Theory,Poster,In-Person,Alexander Kotov,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 8915-MAIN,Beyond Analysis: Training Language Models with Internal Mechanistic Feedback,Virtual Pres,Virtual ,Hanlin Xue,Zoom,#N/A,TBD,#N/A,#N/A,
 8917-MAIN,Bridge Routing Heads: Where Multilingual Multi-hop Reasoning Lives in LLMs,Poster,In-Person,Seunghan Kim,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-8927-MAIN,Do Models Use What They Write? Causal Computation Graph Recovery for CoT Faithfulness,Withdrawn,Withdrawn,Roderick Wu,,,,,,
 8931-MAIN,There Is More to Refusal in Large Language Models than a Single Direction,Poster,In-Person,Husrev Taha Sencar,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 8938-MAIN,AI Alignment through a Game-theoretic Lens: A Survey,Poster,In-Person,Yanan Cai,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 8947-MAIN,Who Pays More for Safety? Measuring the Disparate Cost of Safety Alignment across Languages,Poster,In-Person,Chanwoong Yoon,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
@@ -2694,11 +2689,11 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 9019-MAIN,TAP: Policy Interfaces for Diffusion Language Models,Poster,In-Person,Preeti,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 9042-MAIN,Vision-Braille: A Curriculum Learning Toolkit and Braille-Chinese Corpus for Braille Translation,Poster,In-Person,Alan Wu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 9058-MAIN,Localizing Cross-Lingual Generalization in Parameter Space,Poster,In-Person,Yeoreum Lee,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
-9062-MAIN,TRACE: Temporal Retrieval with Anchored and Convergent Evidence for Long-Horizon Video Understanding,Virtual Pres,Virtual ,Pengyiang Liu,Zoom,#N/A,,,,
-9078-MAIN,DIPLOMAT: Dialogue-Span-Aware Direct Preference Optimization for Polite Persuasive Workplace Negotiation Dialogues,Poster,In-Person,Bibhuti Jha,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
+9062-MAIN,TRACE: Temporal Retrieval with Anchored and Convergent Evidence for Long-Horizon Video Understanding,Virtual Pres,Virtual ,Pengyiang Liu,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
+9078-MAIN,DIPLOMAT: Dialogue-Span-Aware Direct Preference Optimization for Polite Persuasive Workplace Negotiation Dialogues,Virtual Pres,Virtual ,Bibhuti Jha,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 9080-MAIN,PRAGMA: Evaluating Personalized Guidance with Memory Alignment in Lifelong Conversations,Poster,In-Person,Hyojeong Yu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 9086-MAIN,Small Reward Models via Backward Inference,Poster,In-Person,Yike Wang,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
-9090-MAIN,MARD: A Multi-Agent Reinforced Debiasing Framework for Large Language Models,Virtual Pres,Virtual,Xiaoqing Cheng,Zoom,,,,,
+9090-MAIN,MARD: A Multi-Agent Reinforced Debiasing Framework for Large Language Models,Virtual Pres,Virtual,Xiaoqing Cheng,Zoom,TBC,,,,
 9105-MAIN,HarmoLoRA: Commit-Stage Update Admission in Low-Rank Adaptation for Continual Speech Recognition,Poster,In-Person,Ye-Eun Ko,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 9108-MAIN,From Anonymous Speaker Seeds to Consistent Characters: Zero-Shot Manga Speaker Attribution,Poster,In-Person,Yanhao Chen,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 9122-MAIN,Dango: A Strictly L1-Only Large Language Model for Studying Second Language Acquisition,Poster,In-Person,Shiho Matta,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
@@ -2774,7 +2769,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 9796-MAIN,IGG: A Benchmark for Interactive GUI Grounding under Visibility Constraints,Poster,In-Person,Kyeong Seon Kim,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 9808-MAIN,RUBICON: Do Language Models Know When They've Crossed the Point of No Return?,Poster,In-Person,Srija Mukhopadhyay,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 8-IND,Beyond Offline A/B Testing: Context-Aware Agent Simulation for Recommender System Evaluation,Poster,In-Person,Nicolas Bougie,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
-10-IND,LLP: LLM-Based Product Pricing in E-commerce,Poster,In-Person,Shuguang Han,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
+10-IND,LLP: LLM-Based Product Pricing in E-commerce,Virtual Pres,Virtual,Shuguang Han,Zoom,TBC,,,,
 12-IND,Prompts Don't Protect: Architectural Enforcement via MCP Proxy for LLM Tool Access Control,Oral ,Virtual,Rohith Uppala,G1-3,Session 9,"Industry 4: Trust, Safety, and Control			",2026-10-26,16:45,18:15
 16-IND,Lunar-R1: Efficient Reasoning of Large Language Models for Lunar Exploration via Reinforcement Learning,Virtual Pres,Virtual,Xin-Yu Xiao,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 21-IND,Debate-to-Skill: Capability-Bound Process Supervision for Industrial Query-to-Agent Annotation,Virtual Pres,Virtual,Shiyu Zhang,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
@@ -2823,7 +2818,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 220-IND,Session-Guided Pre-training for Query Understanding: Constraining Mask Prediction and Improving Query Fine-tunability,Poster,In-Person,Sosuke Nishikawa,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 221-IND,"Configurable Clinical Information Extraction with Agentic RAG: What Works, What Breaks, and Why",Virtual Pres,Virtual,Osman Alperen Çinar-Koraş,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 222-IND,FLASH-MAXSIM: IO-Aware Fused Kernels for Late-Interaction Retrieval,Virtual Pres,Virtual,roipony@gmail.com,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
-237-IND,Trains but Doesn’t Learn: A Post-Training Delivery Benchmark for LLM Agents as Forward-Deployed Engineers,Virtual Pres,Virtual,Weihang Ding,Zoom,,,,,
+237-IND,Trains but Doesn’t Learn: A Post-Training Delivery Benchmark for LLM Agents as Forward-Deployed Engineers,Virtual Pres,Virtual,Weihang Ding,Zoom,Virtual 3,,,,
 243-IND,Loom: Weaving Diagnostic Strands into Free-Text Consensus via Embedding-Space Reweighting,Poster,In-Person,Ron Begleiter,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 244-IND,SPAR: Experience-Driven Strategy Evolution in Multi-Session B2B Sales,Oral,In-Person,Hangming Zhang,G1-3,Session 10,Industry 5:  Orals: Agents in Production,2026-10-27,09:00,10:30
 247-IND,"RAW: Refusal Aversion in the Wild, A Causal Measurement Method for Deployed LLMs",Oral,In-Person,Pavel Kireyev,G1-3,Session 9,"Industry 4: Trust, Safety, and Control			",2026-10-26,16:45,18:15
@@ -2969,7 +2964,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 735-IND,"Litmus: Zero-Label, Code-Driven Metric Specification for Evaluating AI Systems",Poster,In-Person,Prasang Gupta,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 740-IND,VoiceAgentGuard: Contract-Gated Tool Release for Production Voice Agents,Virtual Pres,Virtual,Emmanuelle Bourigault,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 743-IND,Iterate Until Retrieved: Factual Nugget Optimization for Discoverable Continual Corrections in Agentic RAG,Oral,In-Person,Gal Patel,G1-3,Session 2,"Industry 1: Opening, Retrieval and RAG",2026-10-25,11:00,12:30
-745-IND,SIRF: A Spec-Internalized Risk Foundation Model for Industrial Content Risk Control,virtual pres,virtual,Suwan Wu,Zoom,#N/A,,,,
+745-IND,SIRF: A Spec-Internalized Risk Foundation Model for Industrial Content Risk Control,virtual pres,virtual,Suwan Wu,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,,
 749-IND,Not All Tokens Earn the Reward: Contrastive Credit Assignment for Production Detection,Virtual Pres,Virtual,Tejas Alisyam,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 752-IND,Awakening Dormant Users: Modeling Intent Evolution via LLM-based Functional Role Reasoning for Generative Recommendation,Poster,In-Person,Fuwei Zhang,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 755-IND,Do Agents Help? Agentic Document Information Extraction with Enterprise Database Grounding,Poster,In-Person,Zhijie Zhang,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
@@ -3020,7 +3015,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 874-IND,Hybrid Generative–Tagging Decoding for Product Attribute–Value Extraction,Poster,In-Person,Keshav Kolluru,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 885-IND,What Else Needs Fixing? Exploring Cost-Effective Test-Time Compute for Revision Propagation in Artifacts Generated Through Conversation,Virtual Pres,Virtual,Daisuke Kikuta,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 886-IND,LatentRiskBench: Measuring State-Dependent Risks in Enterprise Agents,Oral,Virtual,Jingyue Cong,G1-3,Session 10,Industry 5:  Orals: Agents in Production,2026-10-27,09:00,10:30
-888-IND,Certified Cost-Optimal Triage for Suggestion Detection in Reviews,Virtual Pres,Virtual,Aakash Trivedi,Zoom,#N/A,,,,
+888-IND,Certified Cost-Optimal Triage for Suggestion Detection in Reviews,Virtual Pres,Virtual,Aakash Trivedi,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 890-IND,Fund2Persona: A Framework for Building and Refining Financial Advisor Personas from Fund Disclosure Data,Poster,In-Person,Yongjae Lee,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 893-IND,Cite or Decline: A Strict Course-Grounded Chatbot for STEM Lecture Videos,Virtual Pres,Virtual,S M Masrur Ahmed,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
 894-IND,"When Do Prompt-Side Agent Playbooks Transfer?Accuracy, Cost, and Runtime Shift in Agent Deployment",Virtual Pres,Virtual,Weihong Lin,Zoom,#N/A,TBD,#N/A,#N/A,
@@ -3040,8 +3035,8 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 943-IND,Trace-GRAF: Trace-Guided Granularity Routing for Sequential Agentic Workflows,Virtual Pres,Virtual,Artem Sosedka,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 949-IND,Cloud and On-Premises Deployment of Uzbek Legal RAG via Targeted Retriever Fine-Tuning,Poster,In-Person,Tatul Danielyan,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 3-DEMO,ChatDev 2.0: A No-Code Multi-Agent Platform for Developing Everything,Demo,In-Person,"Yufan Dang, Shu Yao",Hall H,Session 2,Demo Session A,2026-10-25,11:00,12:30
-7-DEMO,HintEval: An Open-Source Python Toolkit for Hint Generation and Hint Evaluation,Virtual Pres,Virtual  ,Jamshid Mozafari,Zoom,#N/A,TBD,#N/A,#N/A,
-13-DEMO,EasySteer: A Unified Framework for High-Performance and Extensible LLM Steering,Virtual Pres,Virtual  ,Yongliang Shen,Zoom,#N/A,TBD,#N/A,#N/A,
+7-DEMO,HintEval: An Open-Source Python Toolkit for Hint Generation and Hint Evaluation,Virtual Pres,Virtual  ,Jamshid Mozafari,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
+13-DEMO,EasySteer: A Unified Framework for High-Performance and Extensible LLM Steering,Virtual Pres,Virtual  ,Yongliang Shen,Zoom,Virtual 4,,#N/A,#N/A,
 15-DEMO,ReasoningLens: Hierarchical Visualization and Diagnostic Auditing for Large Reasoning Models,Virtual Pres,Virtual  ,Jun Zhang,Zoom,#N/A,TBD,#N/A,#N/A,
 16-DEMO,Jiuge-Tuiqiao: An Interpretable Human-AI System for Classical Chinese Poetry Refinement,Demo,In-Person,Yufeng Han,Hall H,Session 4,Demo Session B,2026-10-25,16:00,17:30
 20-DEMO,CoLearn: An Agentic Tutor that Learns its Learner in a Human--AI Co-Learning Loop,Demo,In-Person,"Jiazheng Li, Zhihao Wu",Hall H,Session 5,Demo Session C,2026-10-26,09:00,10:30
@@ -3051,7 +3046,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 32-DEMO,ARCCS: An Automated Regulatory Compliance Checking System,Demo,In-Person,Chrysoula Zerva,Hall H,Session 11,Demo Session G,2026-10-27,11:00,12:30
 35-DEMO,RISE-NLP: Interactive Residual Distribution Diagnostics for Fairness Auditing in Text Classification,Demo,In-Person,Ray Chen,Hall H,Session 2,Demo Session A,2026-10-25,11:00,12:30
 38-DEMO,MangaLens: A Multi-Model Tool for Structured Manga Parsing,Demo,In-Person,Jiannan Mao,Hall H,Session 4,Demo Session B,2026-10-25,16:00,17:30
-40-DEMO,Drift Inspector: Exploring and Measuring Scientific Drift with Atomic Contribution Claims,Virtual Pres,Virtual  ,"Vsevolod Karimov, Alexander Panchenko",Zoom,#N/A,TBD,#N/A,#N/A,
+40-DEMO,Drift Inspector: Exploring and Measuring Scientific Drift with Atomic Contribution Claims,Demo,In-Person,"Vsevolod Karimov, Alexander Panchenko",Hall H,Session 10,Demo Session F,2026-10-27,09:00,10:30
 41-DEMO,LLMberjack: Guided Trimming of Debate Trees for Multi-Party Conversation Creation,Demo,In-Person,Nicolò Penzo,Hall H,Session 5,Demo Session C,2026-10-26,09:00,10:30
 46-DEMO,TraceFork: A System for Inspecting GUI-Agent Trajectory Forks,Demo,In-Person,Yuzhang Zhong,Hall H,Session 6,Demo Session D,2026-10-26,11:00,12:30
 51-DEMO,Who Is Asking? Personalized and Tiered Memory for Long-Lived AI Assistants,Virtual Pres,Virtual  ,Yueqian Lin,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
@@ -3093,7 +3088,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 151-DEMO,"AgentDebugX: An Open-Source Toolkit for Failure Observability, Attribution, and Recovery in LLM Agents",Demo,In-Person,Kunlun Zhu,Hall H,Session 6,Demo Session D,2026-10-26,11:00,12:30
 161-DEMO,CoDA: A Human-LM Collaborative Codebook Development Assistant for Domain-Specific Text Annotation,Demo,In-Person,Jaspreet Ranjit,Hall H,Session 9,Demo Session E,2026-10-26,16:45,18:15
 165-DEMO,ShareChatInsights: An Automated Pipeline for Analyzing Large-Scale Human–LLM Conversations,Demo,In-Person,Yueru Yan,Hall H,Session 11,Demo Session G,2026-10-27,11:00,12:30
-167-DEMO,Karma: A Composable Framework for Evaluating LLM Agents on Stateful Kubernetes Operations,Demo,In-Person,Shaw Liu,Hall H,Session 10,Demo Session F,2026-10-27,09:00,10:30
+167-DEMO,Karma: A Composable Framework for Evaluating LLM Agents on Stateful Kubernetes Operations,Demo,In-Person,Shaw Liu,,,,,,
 174-DEMO,Bergson: An Open Source Library for Data Attribution,Demo,In-Person,Lucia Quirke,Hall H,Session 11,Demo Session G,2026-10-27,11:00,12:30
 190-DEMO,TreeThink: A Modular Tree Search Library for Mathematical Reasoning with LLMs,Demo,In-Person,Gözde Gül Şahin,Hall H,Session 2,Demo Session A,2026-10-25,11:00,12:30
 191-DEMO,hoBIT: A Profile-Aware Retrieval-Augmented Chatbot for University Academic Advising,Demo,In-Person,KIM YOONSEO,Hall H,Session 4,Demo Session B,2026-10-25,16:00,17:30
@@ -3173,7 +3168,6 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 139-FIND,DIAL: Direct Iterative Adversarial Learning for Realistic Multi-Turn Dialogue Simulation,Poster,In-Person,Ziyi Zhu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 146-FIND,Localize-Then-Decide Guarantees for LLM Judgments,Not Presenting,Not Presenting,Xinyu Li,,,,,,
 149-FIND,JAM: A Tiny Flow-based Song Generator with Fine-grained Controllability and Aesthetic Alignment,Not Presenting,Not Presenting,Liu Renhang,,,,,,
-150-FIND,ReBeCA: Unveiling Interpretable Behavior Hierarchy behind the Iterative Self-Reflection of Language Models with Causal Analysis,Withdrawn,Withdrawn,N/A,,,,,,
 158-FIND,“Give a Positive Review Only”: An Early Investigation Into In-Paper Prompt Injection Attacks and Defenses for AI Reviewers,Not Presenting,Not Presenting,Qin Zhou,,,,,,
 160-FIND,ReserveGate: Reserve-Aware Evidence Scheduling for Long-Horizon Language Agents,Not Presenting,Not Presenting,Shuang Cao,,,,,,
 161-FIND,TraceWeaver: Language-Conditioned Action Selection for Web Agents via Coupled Rollouts and Episodic Memory,Not Presenting,Not Presenting,Shuang Cao,,,,,,
@@ -3418,7 +3412,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 1110-FIND,Roles with Rails: Contract-Preserving Role Evolution in Multi-Agent Structured Reasoning,Not Presenting,Not Presenting,N/A; Attendance=do not present,,,,,,
 1119-FIND,SparseAlign-OOC: Auditing News Image-Text Out-of-Context Detection with Sparse Autoencoders,Not Presenting,Not Presenting,Guoxin Wang,,,,,,
 1120-FIND,BASIS: Batchwise Advantage Estimation from Single-Rollout Information Sharing for LLM Reasoning,Not Presenting,Not Presenting,Shijin Gong,,,,,,
-1121-FIND,ReMCTS: Reflect-Enhanced Monte Carlo Tree Search Strategy for Code Generation,Virtual Pres,Virtual,Yifan Yuan,zoom,#N/A,,,,
+1121-FIND,ReMCTS: Reflect-Enhanced Monte Carlo Tree Search Strategy for Code Generation,Virtual Pres,Virtual,Yifan Yuan,zoom,Virtual 4,,,,
 1122-FIND,Diagnosing CFG Interpretation in LLMs,Not Presenting,Not Presenting,Hanqi Li,,,,,,
 1125-FIND,TRACE: A Traceable Agentic Co-Optimizer for Experimental Optimization,Not Presenting,Not Presenting,Haoran Xu,,,,,,
 1128-FIND,S2M-Inject: Prompt-Guided Zero-Shot Voice Cloning for Music Generation,Not Presenting,Not Presenting,Teng Ma,,,,,,
@@ -3869,7 +3863,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 2779-FIND,Linear Fitness Subspace in Protein Language Models Enables Sample-Efficient Directed Evolution,Not Presenting,Not Presenting,SiYuan Ma,,,,,,
 2780-FIND,Analyzing Reasoning Shifts in Audio Deepfake Detection Under Adversarial Attacks,Not Presenting,Not Presenting,Binh Nguyen,,,,,,
 2783-FIND,RealWorldShop: Benchmarking and Improving Conversational Shopping Agents in Real-World E-commerce,Poster,In-Person,Xinwei Yang,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
-2792-FIND,PRAXIS: A 68-Industry Benchmark for Pragmatic-Form Bias in Suggestion Mining,Virtual Pres,Virtual,Aniket Upadhyay,Zoom,#N/A,,,,
+2792-FIND,PRAXIS: A 68-Industry Benchmark for Pragmatic-Form Bias in Suggestion Mining,Not Presenting,Not Presenting,Aniket Upadhyay,,,,,,
 2797-FIND,Spectral Query-Key Product Weight Steering for Training-Free VLM Hallucination Mitigation,Poster,In-Person,Karn Tiwari,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 2800-FIND,EvoPool: Evolutionary Programmatic Annotation for Label-Efficient Specialized Supervision,Not Presenting,Not Presenting,Tianyi Xu,,,,,,
 2802-FIND,Doc2Weight: In-Weights Retrieval-Augmented Generation via Parameter Injection,Poster,In-Person,Seung-Hoon Na,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
@@ -4471,7 +4465,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 5109-FIND,FairFund-Bench: Evaluating Distributive Bias in LLM Resource Allocation,Poster,In-Person,Martin Lukk,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 5114-FIND,From Process Loss to Assembly Bonus: Human-Grounded Diagnosis of Multi-Agent LLM Collaboration,Poster,In-Person,Ala N. Tak,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 5115-FIND,The Scientific Contribution Graph: Automated Literature-based Technological Roadmapping at Scale,Not Presenting,Not Presenting,Peter Jansen,,,,,,
-5123-FIND,CyberChainBench: Can AI Agents Secure Smart Contracts Against Real-World On-Chain Vulnerabilities?,Virtual Pres,Virtual,Radha Poovendran,Zoom,,,,,
+5123-FIND,CyberChainBench: Can AI Agents Secure Smart Contracts Against Real-World On-Chain Vulnerabilities?,Virtual Pres,Virtual,Radha Poovendran,Zoom,TBC,,,,
 5124-FIND,DRFLOW: A Deep Research Benchmark for Personalized Workflow Prediction,Poster,In-Person,Muhammad Abdul-Mageed,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 5127-FIND,CodeEvolve: an open-source evolutionary framework for algorithmic discovery and optimization,Poster,In-Person,Henrique Assumpção,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 5130-FIND,The Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation,Virtual Pres,Virtual,Adar Peleg,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
@@ -4541,14 +4535,14 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 5398-FIND,CITAR-NER-Br: A Unified NER Dataset for Fine-Grained Legal Citation Extraction in Brazilian Portuguese,Poster,In-Person,Arthur Elwing Torres,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 5404-FIND,Composition Collapse: Stable Factual Knowledge Does Not Imply Compositional Reasoning,Poster,In-Person,Zhe Yu,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 5405-FIND,Step-by-Step CCG Parsing with Large Language Models,Poster,In-Person,Tu-Anh Tran,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-5409-FIND,TextNCA: Neural Cellular Automata for Language Modeling via Hierarchical Local Attention,Virtual Pres,Virtual,Avni Mittal,Zoom,#N/A,,,,
+5409-FIND,TextNCA: Neural Cellular Automata for Language Modeling via Hierarchical Local Attention,Virtual Pres,Virtual,Avni Mittal,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 5412-FIND,IDEEA: training-free Input-Dependent stEEring via Activation cluster matching,Poster,In-Person,Zheng Wang,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 5429-FIND,Long-Context Demonstration Selection Using State Space Models,Not Presenting,Not Presenting,Ziniu Zhang,,,,,,
 5440-FIND,Agentic Uncertainty Quantification,Poster,In-Person,Jiaxin Zhang,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 5441-FIND,Retrieval-Augmented Foundation Models for Matched Molecular Pair Transformations to Recapitulate Medicinal Chemistry Intuition,Not Presenting,Not Presenting,N/A,,,,,,
 5449-FIND,Thinking with Visual Grounding,Not Presenting,Not Presenting,None,,,,,,
 5457-FIND,RadJEPA: Radiology Encoder for Chest X-Rays via Joint Embedding Predictive Architecture,Poster,In-Person,Pratik Jalan,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-5458-FIND,Many-Tier Instruction Hierarchy in LLM Agents,Virtual Pres,Virtual,Jingyu Zhang,,#N/A,,,,
+5458-FIND,Many-Tier Instruction Hierarchy in LLM Agents,Virtual Pres,Virtual,Jingyu Zhang,Zoom,#N/A,TBD,,,
 5459-FIND,SyPS: Measuring Sycophancy Prompt Sensitivity in Large Language Models,Not Presenting,Not Presenting,Lijia Huang,,,,,,
 5460-FIND,MMGist: A Comprehensive Multimodal Benchmark for 2027,Not Presenting,Not Presenting,wenzhen yuan,,,,,,
 5461-FIND,When Reasoning Meets Structure: Understanding Reasoning Strategies for Structured Analysis,Not Presenting,Not Presenting,Xin Qiu,,,,,,
@@ -4620,14 +4614,13 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 5734-FIND,Benchmarking Argument Identification and Ellipsis Recovery in Chinese Comparative Constructions,Not Presenting,Not Presenting,N/A,,,,,,
 5737-FIND,OPE: Overcoming Information Saturation in Parallel Thinking via Outline-Guided Path Exploration,Not Presenting,Not Presenting,Qi Guo,,,,,,
 5742-FIND,Beyond Similarity: Coverage-Aware Prompt Selection for Time Series Forecasting with LLMs,Poster,In-Person,Yohan Lee,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-5743-FIND,BlockBatch: Multi-Scale Consensus Decoding for Efficient Diffusion Language Model Inference,Virtual Pres,Virtual,Xiaoyou Wu,zoom,#N/A,,,,
+5743-FIND,BlockBatch: Multi-Scale Consensus Decoding for Efficient Diffusion Language Model Inference,Virtual Pres,Virtual,Xiaoyou Wu,Zoom,#N/A,TBD,,,
 5745-FIND,AMDKernelVault: Large-Scale Datasets and Agentic Training for AMD GPU Kernel Optimization,Poster,In-Person,Ziqiong Liu,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 5746-FIND,KGFlow: Enhancing Large Language Model Reasoning with Multi-Graph Alignment for Knowledge-Intensive Medical Question Answering,Poster,In-Person,Xiangdong Kong,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 5747-FIND,CWF: A Collaborative Writing Framework for Personalized and Reliable Long-Form Popular Science Writing,Not Presenting,Not Presenting,NA,,,,,,
 5748-FIND,Compositional Generalization with Outcome-Level Optimization,Not Presenting,Not Presenting,Xiyan Fu,,,,,,
 5749-FIND,From Perception to Simulation: Unveiling and Empowering Mental Spatial Dynamics in MLLMs,Not Presenting,Not Presenting,From Perception to Simulation: Unveiling and Empowering Mental Spatial Dynamics in MLLMs,,,,,,
 5752-FIND,SteganoBackdoor: Evading Data-Poisoning Defenses via Steganographic Backdoors,Not Presenting,Not Presenting,Eric Xue,,,,,,
-5757-FIND,TaskGraph-RAG: Lightweight Relation-Aware Graph RAG via Entity-Anchored Task Execution,Withdrawn,Withdrawn,N/A,,,,,,
 5758-FIND,Vendi-RAG: Adaptively Trading-Off Diversity And Quality Significantly Improves Retrieval Augmented Generation With LLMs,Not Presenting,Not Presenting,not presenting,,,,,,
 5761-FIND,Which Language Should a Skeleton Speak? Language Choices in Multilingual Reasoning,Poster,In-Person,HyeonSeok Lim,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 5769-FIND,When Helpfulness Becomes Scientific Sycophancy: Triggering and Mitigating LLM Failures on Flawed Scientific Premises,Not Presenting,Not Presenting,NA,,,,,,
@@ -4652,7 +4645,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 5876-FIND,Transition Overlap: Construction-Time Conditioning for Position-Independent KV Cache Reuse,Not Presenting,Not Presenting,NA,,,,,,
 5877-FIND,PrAM: Offline Checkpoint Selection for Post-Hoc Training Data Attribution,Not Presenting,Not Presenting,N/A (Findings),,,,,,
 5878-FIND,Counterfactual Self-Distillation: A Distribution-Shaping Framework for Entity-Fact Unlearning in Large Language Models,Not Presenting,Not Presenting,Ying Zhao,,,,,,
-5882-FIND,Why Knowing Both Hops Is Not Enough: Understanding Two-Hop Generalization in Language Models,Virtual Pres,Virtual,Yilin Wang,zoom,,,,,
+5882-FIND,Why Knowing Both Hops Is Not Enough: Understanding Two-Hop Generalization in Language Models,Virtual Pres,Virtual,Yilin Wang,zoom,Virtual 4,,,,
 5883-FIND,"Unified Fragment Growing, Linking, and Merging with Energy-Aware Pre-training and Reward-Ranked Alignment",Not Presenting,Not Presenting,Xuefeng Liu,,,,,,
 5887-FIND,HoloDP: A Multilingual Benchmark Suite and Script-Aware Framework for Document Parsing,Not Presenting,Not Presenting,Wencan Ying,,,,,,
 5889-FIND,LookBack: Where and How to Score LVLM Responses via Visual Reference Usage,Poster,In-Person,"Beomsik Cho, Jinhyeong Kim",Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
@@ -4661,7 +4654,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 5906-FIND,HybridProver: Augmenting Theorem Proving with LLM-Driven Proof Synthesis and Refinement,Not Presenting,Not Presenting,Jilin Hu,,,,,,
 5907-FIND,HyperPathsRAG: Multi-Target Path Approximation over Hypergraph Knowledge Graphs for Multi-Hop QA,Not Presenting,Not Presenting,Guanhua Zhu,,,,,,
 5912-FIND,GRAIN: Bridging Name and Narrative Shifts in Real-World Graph Reasoning through Invariance-Rewarded Agentic RL,Poster,In-Person,Zike Yuan,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-5913-FIND,Counterfactual Selective Imitation for Long-Horizon Agents,Not Presenting,Not Presenting,NA,,Session 2,Poster Session A,2026-10-25,11:00,12:30
+5913-FIND,Counterfactual Selective Imitation for Long-Horizon Agents,Not Presenting,Not Presenting,NA,,,,2026-10-25,11:00,12:30
 5920-FIND,Ada-SQL: Efficient and Adaptive Reasoning for Text-to-SQL,Not Presenting,Not Presenting,N/A,,,,,,
 5921-FIND,Beyond Gradient Egalitarianism: Dual-Adaptive C-AUM Framework for Few-Shot Fine-Tuning of Large Language Models,Not Presenting,Not Presenting,NA,,,,,,
 5928-FIND,Interpretable Oracle Bone Script Decipherment via Progressive Glyph Analysis with LVLMs,Not Presenting,Not Presenting,Mengyang Zhao,,,,,,
@@ -4705,7 +4698,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 6050-FIND,RADAM: A Retrieval-Augmented Detection and Mitigation Framework for Faithfulness Hallucinations,Not Presenting,Not Presenting,N/A,,,,,,
 6052-FIND,SCP-ISA: Spatial Cross-attention Projection for Textual Spatial Semantic Anomaly Detection and Attribution,Not Presenting,Not Presenting,Mengqi Ding,,,,,,
 6056-FIND,Cross-Session Decomposition Attacks: Scaling Risk and Intent-Aligned Retrieval Defense,Poster,In-Person,Freda Shi,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
-6057-FIND,SAFIRE: Safety-Critical Benchmark for Fine-grained Fire and Smoke Understanding in Multimodal LLMs,Poster,In-Person,Pengfei Li,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
+6057-FIND,SAFIRE: Safety-Critical Benchmark for Fine-grained Fire and Smoke Understanding in Multimodal LLMs,Not Presenting,Not Presenting,Pengfei Li,,,,,,
 6059-FIND,Relevant Is Not Warranted: Evidence-Force Calibration for Cited RAG,Not Presenting,Not Presenting,Pin Qian,,,,,,
 6060-FIND,LivingRAG: Augmenting Graph RAG with Experience,Not Presenting,Not Presenting,Yuzhuo Cui,,,,,,
 6067-FIND,"Human Inputs, Model Outputs: Dual Sources of Variability in Stance Mining on Gun Rights/Control",Poster,In-Person,Soumyajit Datta,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
@@ -4938,7 +4931,6 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 6919-FIND,ShardMemo: Scope-Before-Routing for Agentic Memory Retrieval,Not Presenting,Not Presenting,N/A,,,,,,
 6921-FIND,SoVTR: Set-of-Vision-Text Rewards for Attribute-Grounded Emotion Recognition in VLLMs,Not Presenting,Not Presenting,Zhifeng Wang,,,,,,
 6929-FIND,"Ethical Imprints in LLMs: From Corpus Ethics to ICL, SFT, and Their Interaction on Deception Dilemmas",Not Presenting,Not Presenting,Jiafeng Wang,,,,,,
-6930-FIND,Information Geometry of Zipfian Token Distributions,Withdrawn,Withdrawn,Ngoc Mai Vu,,,,,,
 6933-FIND,Hallucination-Aware Multi-Agent RAG via Internal Attention Rewards,Not Presenting,Not Presenting,Runsong Jia,,,,,,
 6935-FIND,GNMR: Runtime Stability Control for Low-Precision Large Language Model Training,Not Presenting,Not Presenting,"N/A – Findings, not presenting",,,,,,
 6938-FIND,Lost in Sampling: Assessing Lexical Reachability in LLMs via the Word Coverage Score (WCS),Poster,In-Person,Samer Awad,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
@@ -4982,7 +4974,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 7105-FIND,miniReranker: Efficient Multimodal Reranking through Visual Cache Reuse and Interaction Sparsity,Not Presenting,Not Presenting,Yingqi Fan,,,,,,
 7110-FIND,RULER: Instance-aware Rubric Rewards for SVG Generation,Not Presenting,Not Presenting,NA,,,,,,
 7111-FIND,FourierSampler: Unlocking Non-Autoregressive Potential in Diffusion Language Models via Frequency-Guided Generation,Poster,In-Person,Siyang He,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
-7113-FIND,Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training,Virtual Pres,Virtual,Zhiyong Cao,zoom,,,,,
+7113-FIND,Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training,Virtual Pres,Virtual,Zhiyong Cao,zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 7116-FIND,Shared Low-rank Basis Factorization for Data-free Mixture-of-Experts Compression,Poster,In-Person,Tianxiao Cao,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 7117-FIND,Does the Temporal Focus of Information Affect Confidence Calibration in LLMs? A Study of Temporal Effects on Model Confidence,Not Presenting,Not Presenting,Bhawna Piryani,,,,,,
 7128-FIND,ASIL: Replacing Screenshot-and-Click with Structured State and Semantic Actions,Not Presenting,Not Presenting,Rui Xie,,,,,,
@@ -5108,7 +5100,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 7628-FIND,Factorized Soft Prompts with Inference-Time Latent Control for LLM Personalization,Not Presenting,Not Presenting,None,,,,,,
 7629-FIND,Refinement Provenance Inference: Detecting LLM-Refined Training Prompts from Model Behavior,Not Presenting,Not Presenting,NA,,,,,,
 7630-FIND,Surveying Representation Collapse in Pretrained Models of American Sign Language,Not Presenting,Not Presenting,Lee Kezar,,,,,,
-7634-FIND,EYELIGNR: Aligning Gaze and Text via Contrastive Learning for Improved Reading Scanpath Prediction,Virtual Pres,Virtual,Ekta Sood,Zoom,#N/A,,,,
+7634-FIND,EYELIGNR: Aligning Gaze and Text via Contrastive Learning for Improved Reading Scanpath Prediction,Virtual Pres,Virtual,Ekta Sood,Zoom,#N/A,TBD,,,
 7638-FIND,HiDet: Hierarchical AI Text Detection via Coarse Filtering and Multi-Grained Contrastive Learning,Not Presenting,Not Presenting,Xiao Yang,,,,,,
 7645-FIND,Mind the Motions: Benchmarking Theory‑of‑Mind in Everyday Body Language,Poster,In-Person,Seungbeen Lee,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 7649-FIND,FAIR-Eval: Reliable and Efficient Adaptive Benchmarking for Large Language Models,Not Presenting,Not Presenting,N/A,,,,,,
@@ -5163,7 +5155,7 @@ Jia Yu Lim ",Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 7844-FIND,Modeling Distinct Human Interaction in Web Agents,Poster,In-Person,Faria Huq,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 7850-FIND,Cross-lingual Functional Vectors for Emotion Detection in Large Language Models,Poster,In-Person,Xue Jieying,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 7854-FIND,Exploring Solution Divergence and Its Effect on Large Language Model Problem Solving,Not Presenting,Not Presenting,Hang Li,,,,,,
-7855-FIND,KODE: Mining Implicit Domain Knowledge from Historical Experience for Text-to-SQL,Not Presenting,Not Presenting,Qingshuo Lyu,,,,,,
+7855-FIND,KODE: Mining Implicit Domain Knowledge from Historical Experience for Text-to-SQL,Poster,In-Person,Qingshuo Lyu,Hall H,Session 4,Poster B,2026-10-25,16:00,17:30
 7860-FIND,Phonologically Informed Tokenization for German Speech Recognition: A Cross-Domain Study,Poster,In-Person,Christopher Witzl,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 7861-FIND,"Vision-Default, Prior-Override: Causal Mechanisms of Perception-Knowledge Conflict in Vision-Language Models",Poster,In-Person,"Michal
 Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
@@ -5240,11 +5232,11 @@ Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 8096-FIND,From Distribution to Decision: A Diagnostic for Composable PTQ Primitives,Poster,In-Person,Dorsa Zeinali,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 8100-FIND,MoraLink: Bridging Morals and Narrative Fables for Retrieval,Poster,In-Person,Kai Golan Hashiloni,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 8103-FIND,Inference-Time Scaling in Diffusion Models: A Beam Search Approach to Visual Sequences Generation,Not Presenting,Not Presenting,Joao Magalhaes,,,,,,
-8105-FIND,PragReST: Self-Reinforcing Counterfactual Reasoning for Pragmatic Language Understanding,Not Presenting,Not Presenting,Jihyung Park,,,,,,
+8105-FIND,PragReST: Self-Reinforcing Counterfactual Reasoning for Pragmatic Language Understanding,Virtual Pres,Virtual,Jihyung Park,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 8109-FIND,VeriSim: A Configurable Framework for Stress-Testing Medical AI Under Patient Communication Noise,Virtual Pres,Virtual,Mohit Marvania,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,
 8110-FIND,"Right Frame, Wrong Rule: Cultural Cues Expose the Financial Knowledge Gap They Were Meant to Close",Poster,In-Person,Zhuohan Xie,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 8112-FIND,AREAs-Lab: An Interactive Environment for AI-driven Requirement Elicitation for AI Systems,Not Presenting,Not presenting,Pengshan Cai,,,,,,
-8116-FIND,Counterexample Generation via Per-Theorem Symbolic Verifiers: When Imitation Hurts and Reinforcement Repairs,Not Presenting,Not Presenting,Omar Farouk Zouak,,,,,,
+8116-FIND,Counterexample Generation via Per-Theorem Symbolic Verifiers: When Imitation Hurts and Reinforcement Repairs,Virtual Pres,Virtual,Omar Farouk Zouak,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,
 8122-FIND,ERGA: An Explorer--Refiner Game with Backdoor-Adjusted Verdict Aggregation for LLM-based Claim Verification,Not Presenting,Not Presenting,None,,,,,,
 8125-FIND,Identifying Crucial Attention Heads for Multilingual Language Models: Retrieval and Retrieval-Transition Heads,Poster,In-Person,Vishvesh Trivedi,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
 8126-FIND,Separating Syntax from Language: A Mechanistic Account of Translation in Multilingual LLMs,Poster,In-Person,Tanja Baeumel,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
@@ -5341,7 +5333,7 @@ Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 8531-FIND,Depth as Verifiable Geometric Feedback: Enhancing Spatial Reasoning in Multimodal Large Language Models,Not Presenting,Not Presenting,Ruohang Xu,,,,,,
 8535-FIND,The Interplay of Harness Design and Post-training in LLM Agents,Poster,In-Person,Kyungmin Kim,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
 8541-FIND,Proactive Safety Alignment: Enabling Proactive Initiative in Multi-Turn Defence,Poster,In-Person,Mengyuan Qin,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
-8543-FIND,MetaCLASS: Metacognitive Coaching for Learning with Adaptive Self-regulation Support,Virtual Pres,Virtual,Naiming Liu,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,
+8543-FIND,MetaCLASS: Metacognitive Coaching for Learning with Adaptive Self-regulation Support,Virtual Pres,Virtual,Naiming Liu,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 8549-FIND,EMR-AGENT: An LLM Agent Framework for Cohort and Feature Extraction from Heterogeneous EHR Databases,Not Presenting,Not Presenting,Kwanhyung Lee,,,,,,
 8556-FIND,Revisiting Complete Reasoning Traces for Post-Training,Poster,In-Person,Jaehui Hwang,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 8558-FIND,Auditing Speaker-Level Metadata Utility in Text-Residual Prosody Prediction,Not Presenting,Not Presenting,Gaeun Kim,,,,,,
@@ -5361,7 +5353,7 @@ Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 8629-FIND,Supporting and performing culture from the inside,Poster,In-Person,Lea Frermann,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 8630-FIND,From Empathy to Personalized Empathy: Adapting Empathetic Strategies to Individual Users,Not Presenting,Not Presenting,Wuqiang Zheng,,,,,,
 8632-FIND,PV-Decoding: Progressive Verification Decoding with Decode Gating for Diffusion Language Models,Poster,In-Person,Renxi Liu,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
-8633-FIND,DeepPersona: Scaling Persona Depth via Taxonomy-Guided Generation,Virtual Pres,Virtual,Yufan Zhou,Zoom,#N/A,,,,
+8633-FIND,DeepPersona: Scaling Persona Depth via Taxonomy-Guided Generation,Virtual Pres,Virtual,Yufan Zhou,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 8637-FIND,Listwise Explanation of Embedding-Based Rankings via Semantic Chunk Grouping,Poster,In-Person,Hyunkyu Kim,Hall H,Session 11,Poster Session G,2026-10-27,11:00,12:30
 8641-FIND,Accelerate Speculative Decoding with Sparse Computation in Verification,Not Presenting,Not Presenting,Jikai Wang,,,,,,
 8642-FIND,From Decoding Knobs to Commit Frontiers: Understanding Trajectory Control in Discrete Diffusion Language Models,Not Presenting,Not Presenting,Junzhuo Li,,,,,,
@@ -5382,7 +5374,7 @@ Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 8709-FIND,Beyond Output Consistency: Diagnosing Representation-Level Causal Controllability in LLM Persona Simulation,Not Presenting,Not Presenting,NA,,,,,,
 8716-FIND,TopicMerge: A Divide and Conquer Approach to Topic Modeling,Virtual Pres,Virtual,Matthew Raffel,Zoom,Virtual 2,VIrtual Presentations 2,2026-10-25,18:00-19:30 CET,
 8719-FIND,MUSE: Multi-Domain Chinese User Simulation via Self-Evolving Profiles and Rubric-Guided Alignment,Not Presenting,Not Presenting,N/A,,,,,,
-8722-FIND,Ask or Answer: A Decision Framework for Multi-Turn Health Misinformation Intervention,Poster,In-Person,Lingzi Hong,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
+8722-FIND,Ask or Answer: A Decision Framework for Multi-Turn Health Misinformation Intervention,Virtual Pres,Virtual,Lingzi Hong,Zoom,,,,,
 8724-FIND,FinanceHarness: Autonomous Financial Deep Research Framework,Poster,In-Person,Rujun Han,Hall H,Session 6,Poster Session D,2026-10-26,11:00,12:30
 8731-FIND,Generate What You Can Trust: Content Credibility in Generative Recommenders,Not Presenting,Not Presenting,NA,,,,,,
 8738-FIND,F-GraphRAG: Preserving Fine-Grained Facts in Graph Retrieval-Augmented Generation,Poster,In-Person,Zhang Kang,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15
@@ -5552,7 +5544,7 @@ Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 9463-FIND,When Clinical Notes Are Incomplete: Fusing Clinical Notes and Time Series Using Diffusion-based Models,Poster,In-Person,Feilong Wu,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 9466-FIND,Enhancing SAE-based Steering via Neighbor Integrated Feature Selection,Not Presenting,Not Presenting,Yutian Liu,,,,,,
 9471-FIND,LLM Forensics: Where Do Backdoors Hide? Localizing and Controlling Trigger Mechanisms with Sparse Autoencoders,Poster,In-Person,Wissam Antoun,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30
-9475-FIND,EQL-Act: Evidence Query Language Guided Scientific Operation Acting for Scientific VQA,Not Presenting,Not Presenting,Yang Li,,,,,,
+9475-FIND,EQL-Act: Evidence Query Language Guided Scientific Operation Acting for Scientific VQA,Desk Reject,Desk Reject,Yang Li,,,,,,
 9479-FIND,TrustMem: Learning Trustworthy Memory Consolidation for LLM Agents with Long-Term Memory,Virtual Pres,Virtual,Tianyu Yang,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,
 9481-FIND,CALIBER: Calibrating Confidence Before and After Reasoning in Language Models,Poster,In-Person,Conor Finlay,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 9483-FIND,CI-RELAY: Contextual Integrity Mediation for Privacy in LLM-based Multi-Agent Systems,Not Presenting,Not Presenting,NA,,,,,,
@@ -5606,7 +5598,7 @@ Golovanevsky",Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 9770-FIND,One Rate Is Not Enough: Adaptive Anisotropic Learning Rates for LoRA Fine-Tuning,Poster,In-Person,Huiyi Wang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30
 9778-FIND,Omni-Embed-Mini: Binding Modalities Without Forgetting via Dense Distillation,Poster,In-Person,Mohammed Irfan Kurpath,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 9792-FIND,EvoBrowseComp: Benchmarking Search Agents on Evolving Knowledge,Poster,In-Person,Jiaan Wang,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
-9800-FIND,Soft Sequence Policy Optimization,Not Presenting,Not Presenting,Maksim Kryzhanovskiy,,,,,,
+9800-FIND,Soft Sequence Policy Optimization,Poster,In-Person,Maksim Kryzhanovskiy,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30
 9801-FIND,ExCAM: Explainable Cultural Awareness Metrics,Poster,In-Person,Christoph Leiter,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30
 9802-FIND,Why Latent Chain-of-Thought Helps Exploration but Hurts Precise Computation,Not Presenting,Not Presenting,Yaozhong Xiong,,,,,,
 9806-FIND,PRISM-VLM: A Multi-Axis Discriminative Benchmark for Compact Vision-Language Models,Not Presenting,Not Presenting,Sanghee Park,,,,,,

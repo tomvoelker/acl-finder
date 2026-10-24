@@ -54,7 +54,7 @@ test('papers in the same session stay together across tracks and missing present
 test('inactive and unconfirmed entries never become scheduled session groups', () => {
   const stale = { date: '2026-10-25', start: '11:00', end: '12:30', session: 'Session 2' };
   const scheduled = sessionKey({ ...stale, _timed: true });
-  for (const status of ['not presenting', 'withdrawn']) {
+  for (const status of ['not presenting', 'withdrawn', 'desk rejected']) {
     assert.equal(sessionKey({ ...stale, status, _inactive: true }), status);
     assert.notEqual(sessionKey({ ...stale, status, _inactive: true }), scheduled);
   }

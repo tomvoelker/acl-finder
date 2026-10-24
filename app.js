@@ -23,9 +23,10 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     unscheduled: 'Time not confirmed',
     'not presenting': 'Not presenting',
     withdrawn: 'Withdrawn',
+    'desk rejected': 'Desk rejected',
   };
-  const INACTIVE = new Set(['not presenting', 'withdrawn']);
-  const STATUS_LIKE = new Set(['Not presenting', 'Withdrawn']);
+  const INACTIVE = new Set(['not presenting', 'withdrawn', 'desk rejected']);
+  const STATUS_LIKE = new Set(['Not presenting', 'Withdrawn', 'Desk rejected']);
   const IMPLIED_MODE = { Oral: 'In person', Poster: 'In person', Demo: 'In person', Virtual: 'Virtual', 'Virtual demo': 'Virtual' };
   const FORMAT_CLASS = { Oral: 'oral', Poster: 'poster', Demo: 'demo', Virtual: 'virtual', 'Virtual demo': 'virtual' };
   const FORMAT_RANK = { Oral: 0, Demo: 1, Poster: 2, 'Virtual demo': 3, Virtual: 4 };
@@ -40,7 +41,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       hint: 'How the presenter attends. A virtual presenter can still be assigned a physical room.' },
     { key: 'room', param: 'room', label: 'Room', all: 'All rooms', get: (p) => p.room, order: ['Hall H'] },
     { key: 'status', param: 'status', label: 'Status', all: 'Any status', get: (p) => p.status,
-      order: ['scheduled', 'unscheduled', 'not presenting', 'withdrawn'], labels: STATUS_LABELS },
+      order: ['scheduled', 'unscheduled', 'not presenting', 'withdrawn', 'desk rejected'], labels: STATUS_LABELS },
   ];
 
   const ICONS = {
@@ -272,7 +273,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     p._inactive = INACTIVE.has(p.status);
     // A time is only presented as confirmed when the source schedules it without a conflict note.
     p._timed = p.status === 'scheduled' && !p.scheduleNote && !!p.date && !!p.start;
-    p._bucket = p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
+    p._bucket = p.status === 'desk rejected' ? 4 : p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
     p._day = p._inactive ? null : p.date || 'undated';
     p._hay = fold([p.id, p.title, ...p.authors, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);

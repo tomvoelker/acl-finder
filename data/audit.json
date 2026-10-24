@@ -1,31 +1,30 @@
 {
-  "updatedAt": "2026-10-23",
+  "updatedAt": "2026-10-24",
   "sourceUrl": "https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490#gid=943432490",
-  "sourceRows": 5611,
-  "uniqueIds": 5611,
+  "sourceRows": 5603,
+  "uniqueIds": 5603,
   "countsByStatus": {
-    "not presenting": 1225,
-    "scheduled": 4312,
-    "unscheduled": 66,
-    "withdrawn": 8
+    "desk rejected": 1,
+    "not presenting": 1222,
+    "scheduled": 4321,
+    "unscheduled": 59
   },
   "countsByTrack": {
     "Computational Linguistics": 13,
-    "Findings": 2487,
+    "Findings": 2484,
     "Industry": 265,
-    "Main conference": 2710,
+    "Main conference": 2705,
     "Systems demonstrations": 86,
     "TACL": 50
   },
-  "missingPresenters": 374,
+  "missingPresenters": 372,
   "issueCounts": {
-    "conflicting times": 1,
     "inactive paper retains assignment": 2,
     "incomplete room name": 1,
-    "missing assignment": 67,
+    "missing assignment": 60,
     "presentation unconfirmed": 1,
     "presenter repeats title": 10,
-    "unusual session assignment": 13
+    "unusual session assignment": 19
   },
   "note": "Source values are retained. An unusual assignment may be intentional; no times or rooms are inferred from neighboring rows.",
   "issues": [
@@ -53,7 +52,7 @@
     },
     {
       "id": "312-MAIN",
-      "sourceRow": 184,
+      "sourceRow": 183,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -64,19 +63,18 @@
     },
     {
       "id": "403-MAIN",
-      "sourceRow": 213,
+      "sourceRow": 212,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
         "end",
-        "session",
-        "room"
+        "session"
       ]
     },
     {
       "id": "448-MAIN",
-      "sourceRow": 232,
+      "sourceRow": 231,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -87,18 +85,17 @@
     },
     {
       "id": "506-MAIN",
-      "sourceRow": 249,
+      "sourceRow": 248,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "701-MAIN",
-      "sourceRow": 317,
+      "sourceRow": 316,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -108,8 +105,33 @@
       ]
     },
     {
+      "id": "709-MAIN",
+      "sourceRow": 322,
+      "type": "missing assignment",
+      "fields": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "709-MAIN",
+      "sourceRow": 322,
+      "type": "unusual session assignment",
+      "session": "Virtual 3",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        null,
+        null
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "07:00",
+        "08:30"
+      ]
+    },
+    {
       "id": "1309-MAIN",
-      "sourceRow": 570,
+      "sourceRow": 569,
       "type": "missing assignment",
       "fields": [
         "start",
@@ -118,7 +140,7 @@
     },
     {
       "id": "1309-MAIN",
-      "sourceRow": 570,
+      "sourceRow": 569,
       "type": "unusual session assignment",
       "session": "Virtual 3",
       "sourceDate": "2026-10-26",
@@ -134,18 +156,57 @@
     },
     {
       "id": "1331-MAIN",
-      "sourceRow": 579,
+      "sourceRow": 578,
       "type": "missing assignment",
       "fields": [
-        "date",
         "start",
-        "end",
-        "session"
+        "end"
+      ]
+    },
+    {
+      "id": "1331-MAIN",
+      "sourceRow": 578,
+      "type": "unusual session assignment",
+      "session": "Virtual 2",
+      "sourceDate": "2026-10-25",
+      "sourceTime": [
+        null,
+        null
+      ],
+      "usualDate": "2026-10-25",
+      "usualTime": [
+        "18:00",
+        "19:30"
       ]
     },
     {
       "id": "1523-MAIN",
-      "sourceRow": 648,
+      "sourceRow": 647,
+      "type": "missing assignment",
+      "fields": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "1523-MAIN",
+      "sourceRow": 647,
+      "type": "unusual session assignment",
+      "session": "Virtual 1",
+      "sourceDate": "2026-10-25",
+      "sourceTime": [
+        null,
+        null
+      ],
+      "usualDate": "2026-10-25",
+      "usualTime": [
+        "12:30",
+        "14:00"
+      ]
+    },
+    {
+      "id": "1953-MAIN",
+      "sourceRow": 789,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -156,7 +217,7 @@
     },
     {
       "id": "2062-MAIN",
-      "sourceRow": 825,
+      "sourceRow": 823,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -166,8 +227,24 @@
       ]
     },
     {
+      "id": "2144-MAIN",
+      "sourceRow": 853,
+      "type": "unusual session assignment",
+      "session": "Session 6",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "07:00",
+        "08:30"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "11:00",
+        "12:30"
+      ]
+    },
+    {
       "id": "2159-MAIN",
-      "sourceRow": 861,
+      "sourceRow": 859,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -178,7 +255,7 @@
     },
     {
       "id": "2201-MAIN",
-      "sourceRow": 875,
+      "sourceRow": 873,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -189,7 +266,7 @@
     },
     {
       "id": "2239-MAIN",
-      "sourceRow": 886,
+      "sourceRow": 884,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -200,18 +277,17 @@
     },
     {
       "id": "2407-MAIN",
-      "sourceRow": 949,
+      "sourceRow": 947,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "3137-MAIN",
-      "sourceRow": 1169,
+      "sourceRow": 1167,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -222,7 +298,7 @@
     },
     {
       "id": "3181-MAIN",
-      "sourceRow": 1178,
+      "sourceRow": 1175,
       "type": "unusual session assignment",
       "session": "Session 11",
       "sourceDate": "2026-10-27",
@@ -237,22 +313,11 @@
       ]
     },
     {
-      "id": "3184-MAIN",
-      "sourceRow": 1179,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "3213-MAIN",
-      "sourceRow": 1194,
+      "sourceRow": 1191,
       "type": "unusual session assignment",
       "session": "Session 4",
-      "sourceDate": "2026-10-26",
+      "sourceDate": "2026-10-25",
       "sourceTime": [
         "12:30",
         "14:00"
@@ -264,36 +329,55 @@
       ]
     },
     {
-      "id": "3473-MAIN",
-      "sourceRow": 1260,
+      "id": "4019-MAIN",
+      "sourceRow": 1433,
       "type": "missing assignment",
       "fields": [
-        "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "4019-MAIN",
-      "sourceRow": 1436,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
+      "sourceRow": 1433,
+      "type": "unusual session assignment",
+      "session": "Virtual 3",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        null,
+        null
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "07:00",
+        "08:30"
       ]
     },
     {
       "id": "4106-MAIN",
-      "sourceRow": 1457,
+      "sourceRow": 1454,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
+      "id": "4328-MAIN",
+      "sourceRow": 1523,
+      "type": "unusual session assignment",
+      "session": "Virtual 3",
+      "sourceDate": "2026-10-26",
+      "sourceTime": [
+        "18:00",
+        "19:30"
+      ],
+      "usualDate": "2026-10-26",
+      "usualTime": [
+        "07:00",
+        "08:30"
+      ]
+    },
+    {
       "id": "4473-MAIN",
-      "sourceRow": 1575,
+      "sourceRow": 1572,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -304,7 +388,7 @@
     },
     {
       "id": "4587-MAIN",
-      "sourceRow": 1610,
+      "sourceRow": 1607,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -315,7 +399,7 @@
     },
     {
       "id": "4671-MAIN",
-      "sourceRow": 1637,
+      "sourceRow": 1634,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -326,7 +410,7 @@
     },
     {
       "id": "4768-MAIN",
-      "sourceRow": 1669,
+      "sourceRow": 1666,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -337,70 +421,18 @@
     },
     {
       "id": "4800-MAIN",
-      "sourceRow": 1680,
+      "sourceRow": 1677,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
         "end",
         "session"
-      ]
-    },
-    {
-      "id": "4973-MAIN",
-      "sourceRow": 1732,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "5081-MAIN",
-      "sourceRow": 1763,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "5082-MAIN",
-      "sourceRow": 1764,
-      "type": "conflicting times",
-      "note": "The source lists 18:00-19:30 CET and a conflicting end time of 10:30. Check the source sheet."
-    },
-    {
-      "id": "5082-MAIN",
-      "sourceRow": 1764,
-      "type": "missing assignment",
-      "fields": [
-        "end"
-      ]
-    },
-    {
-      "id": "5082-MAIN",
-      "sourceRow": 1764,
-      "type": "unusual session assignment",
-      "session": "Session 5",
-      "sourceDate": "2026-10-25",
-      "sourceTime": [
-        "18:00",
-        null
-      ],
-      "usualDate": "2026-10-26",
-      "usualTime": [
-        "09:00",
-        "10:30"
       ]
     },
     {
       "id": "5665-MAIN",
-      "sourceRow": 1909,
+      "sourceRow": 1906,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -411,29 +443,29 @@
     },
     {
       "id": "6124-MAIN",
-      "sourceRow": 2025,
+      "sourceRow": 2022,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
-      "id": "6137-MAIN",
-      "sourceRow": 2030,
+      "id": "6242-MAIN",
+      "sourceRow": 2051,
       "type": "unusual session assignment",
-      "session": "Session 4",
+      "session": "Virtual 3",
       "sourceDate": "2026-10-26",
       "sourceTime": [
-        "11:00",
-        "12:30"
+        "12:30",
+        "14:00"
       ],
-      "usualDate": "2026-10-25",
+      "usualDate": "2026-10-26",
       "usualTime": [
-        "16:00",
-        "17:30"
+        "07:00",
+        "08:30"
       ]
     },
     {
       "id": "6424-MAIN",
-      "sourceRow": 2108,
+      "sourceRow": 2105,
       "type": "missing assignment",
       "fields": [
         "room"
@@ -441,7 +473,7 @@
     },
     {
       "id": "7223-MAIN",
-      "sourceRow": 2331,
+      "sourceRow": 2327,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -452,7 +484,18 @@
     },
     {
       "id": "7303-MAIN",
-      "sourceRow": 2349,
+      "sourceRow": 2345,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "7350-MAIN",
+      "sourceRow": 2355,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -463,29 +506,17 @@
     },
     {
       "id": "7351-MAIN",
-      "sourceRow": 2360,
+      "sourceRow": 2356,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "7365-MAIN",
-      "sourceRow": 2364,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "7875-MAIN",
-      "sourceRow": 2473,
+      "sourceRow": 2469,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -496,7 +527,17 @@
     },
     {
       "id": "8128-MAIN",
-      "sourceRow": 2522,
+      "sourceRow": 2518,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "8477-MAIN",
+      "sourceRow": 2597,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -506,8 +547,8 @@
       ]
     },
     {
-      "id": "8477-MAIN",
-      "sourceRow": 2601,
+      "id": "8544-MAIN",
+      "sourceRow": 2613,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -518,7 +559,7 @@
     },
     {
       "id": "8696-MAIN",
-      "sourceRow": 2643,
+      "sourceRow": 2639,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -529,24 +570,13 @@
     },
     {
       "id": "8735-MAIN",
-      "sourceRow": 2647,
+      "sourceRow": 2643,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "8915-MAIN",
-      "sourceRow": 2673,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "9062-MAIN",
-      "sourceRow": 2696,
+      "sourceRow": 2669,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -557,7 +587,18 @@
     },
     {
       "id": "9090-MAIN",
-      "sourceRow": 2700,
+      "sourceRow": 2695,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session"
+      ]
+    },
+    {
+      "id": "10-IND",
+      "sourceRow": 2771,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -568,18 +609,17 @@
     },
     {
       "id": "237-IND",
-      "sourceRow": 2825,
+      "sourceRow": 2820,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "307-IND",
-      "sourceRow": 2843,
+      "sourceRow": 2838,
       "type": "unusual session assignment",
       "session": "Session 6",
       "sourceDate": "2026-10-26",
@@ -595,7 +635,7 @@
     },
     {
       "id": "635-IND",
-      "sourceRow": 2935,
+      "sourceRow": 2930,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -606,40 +646,32 @@
     },
     {
       "id": "745-IND",
-      "sourceRow": 2970,
+      "sourceRow": 2965,
       "type": "missing assignment",
       "fields": [
-        "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
-      "id": "888-IND",
-      "sourceRow": 3021,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
+      "id": "745-IND",
+      "sourceRow": 2965,
+      "type": "unusual session assignment",
+      "session": "Virtual 5",
+      "sourceDate": "2026-10-27",
+      "sourceTime": [
+        null,
+        null
+      ],
+      "usualDate": "2026-10-27",
+      "usualTime": [
+        "12:30",
+        "14:00"
       ]
     },
     {
       "id": "894-IND",
-      "sourceRow": 3024,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "7-DEMO",
-      "sourceRow": 3041,
+      "sourceRow": 3019,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -650,29 +682,17 @@
     },
     {
       "id": "13-DEMO",
-      "sourceRow": 3042,
+      "sourceRow": 3037,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "15-DEMO",
-      "sourceRow": 3043,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "40-DEMO",
-      "sourceRow": 3052,
+      "sourceRow": 3038,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -683,7 +703,7 @@
     },
     {
       "id": "99-DEMO",
-      "sourceRow": 3072,
+      "sourceRow": 3067,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -693,8 +713,20 @@
       ]
     },
     {
+      "id": "167-DEMO",
+      "sourceRow": 3089,
+      "type": "missing assignment",
+      "fields": [
+        "date",
+        "start",
+        "end",
+        "session",
+        "room"
+      ]
+    },
+    {
       "id": "202-DEMO",
-      "sourceRow": 3100,
+      "sourceRow": 3095,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -705,7 +737,7 @@
     },
     {
       "id": "425-FIND",
-      "sourceRow": 3235,
+      "sourceRow": 3229,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -721,12 +753,12 @@
     },
     {
       "id": "544-FIND",
-      "sourceRow": 3264,
+      "sourceRow": 3258,
       "type": "presentation unconfirmed"
     },
     {
       "id": "798-FIND",
-      "sourceRow": 3333,
+      "sourceRow": 3327,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -742,36 +774,35 @@
     },
     {
       "id": "1121-FIND",
-      "sourceRow": 3419,
+      "sourceRow": 3413,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "1144-FIND",
-      "sourceRow": 3426,
+      "sourceRow": 3420,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "1275-FIND",
-      "sourceRow": 3459,
+      "sourceRow": 3453,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "1619-FIND",
-      "sourceRow": 3544,
+      "sourceRow": 3538,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "1781-FIND",
-      "sourceRow": 3583,
+      "sourceRow": 3577,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -782,7 +813,7 @@
     },
     {
       "id": "2012-FIND",
-      "sourceRow": 3653,
+      "sourceRow": 3647,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -793,13 +824,13 @@
     },
     {
       "id": "2167-FIND",
-      "sourceRow": 3690,
+      "sourceRow": 3684,
       "type": "incomplete room name",
       "value": "Hall"
     },
     {
       "id": "2352-FIND",
-      "sourceRow": 3741,
+      "sourceRow": 3735,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -815,13 +846,13 @@
     },
     {
       "id": "2505-FIND",
-      "sourceRow": 3780,
+      "sourceRow": 3774,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "2609-FIND",
-      "sourceRow": 3813,
+      "sourceRow": 3807,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -836,19 +867,8 @@
       ]
     },
     {
-      "id": "2792-FIND",
-      "sourceRow": 3870,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "3234-FIND",
-      "sourceRow": 3984,
+      "sourceRow": 3978,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -864,7 +884,7 @@
     },
     {
       "id": "3314-FIND",
-      "sourceRow": 4012,
+      "sourceRow": 4006,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -875,7 +895,7 @@
     },
     {
       "id": "3811-FIND",
-      "sourceRow": 4135,
+      "sourceRow": 4129,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -891,7 +911,7 @@
     },
     {
       "id": "5123-FIND",
-      "sourceRow": 4472,
+      "sourceRow": 4466,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -902,18 +922,7 @@
     },
     {
       "id": "5353-FIND",
-      "sourceRow": 4525,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "5409-FIND",
-      "sourceRow": 4542,
+      "sourceRow": 4519,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -924,19 +933,18 @@
     },
     {
       "id": "5458-FIND",
-      "sourceRow": 4549,
+      "sourceRow": 4543,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
         "end",
-        "session",
-        "room"
+        "session"
       ]
     },
     {
       "id": "5743-FIND",
-      "sourceRow": 4621,
+      "sourceRow": 4615,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -947,47 +955,35 @@
     },
     {
       "id": "5749-FIND",
-      "sourceRow": 4626,
+      "sourceRow": 4620,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "5882-FIND",
-      "sourceRow": 4653,
+      "sourceRow": 4646,
       "type": "missing assignment",
       "fields": [
         "date",
         "start",
-        "end",
-        "session"
+        "end"
       ]
     },
     {
       "id": "5913-FIND",
-      "sourceRow": 4662,
+      "sourceRow": 4655,
       "type": "inactive paper retains assignment",
       "status": "not presenting"
     },
     {
-      "id": "7113-FIND",
-      "sourceRow": 4983,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "7609-FIND",
-      "sourceRow": 5102,
+      "sourceRow": 5094,
       "type": "inactive paper retains assignment",
       "status": "not presenting"
     },
     {
       "id": "7634-FIND",
-      "sourceRow": 5109,
+      "sourceRow": 5101,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -998,7 +994,7 @@
     },
     {
       "id": "7677-FIND",
-      "sourceRow": 5118,
+      "sourceRow": 5110,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -1009,7 +1005,7 @@
     },
     {
       "id": "7688-FIND",
-      "sourceRow": 5120,
+      "sourceRow": 5112,
       "type": "unusual session assignment",
       "session": "Session 9",
       "sourceDate": "2026-10-26",
@@ -1025,13 +1021,13 @@
     },
     {
       "id": "8000-FIND",
-      "sourceRow": 5202,
+      "sourceRow": 5194,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     },
     {
       "id": "8522-FIND",
-      "sourceRow": 5336,
+      "sourceRow": 5328,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -1041,8 +1037,8 @@
       ]
     },
     {
-      "id": "8633-FIND",
-      "sourceRow": 5361,
+      "id": "8722-FIND",
+      "sourceRow": 5374,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -1053,7 +1049,7 @@
     },
     {
       "id": "9316-FIND",
-      "sourceRow": 5517,
+      "sourceRow": 5509,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
     }

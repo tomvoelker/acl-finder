@@ -3,7 +3,7 @@
 
 Refresh: python3 scripts/import_schedule.py --fetch
 Reproduce the committed snapshot:
-  python3 scripts/import_schedule.py --source data/source.csv --updated-at 2026-10-23
+  python3 scripts/import_schedule.py --source data/source.csv --updated-at 2026-10-24
 
 The source lists presenters, not complete author lists, and contains no abstracts.
 Only the Python standard library is required.
@@ -38,11 +38,11 @@ TRACKS = {
 PRESENTATIONS = {
     "oral": "Oral", "poster": "Poster", "demo": "Demo", "virtual pres": "Virtual",
     "virtual pres-demo": "Virtual demo", "not presenting": "Not presenting",
-    "withdrawn": "Withdrawn",
+    "withdrawn": "Withdrawn", "desk reject": "Desk rejected",
 }
 MODES = {
     "in-person": "In person", "virtual": "Virtual", "not presenting": "Not presenting",
-    "withdrawn": "Withdrawn",
+    "withdrawn": "Withdrawn", "desk reject": "Desk rejected",
 }
 UNKNOWN = {"", "na", "n/a", "#n/a", "none", "null", "tbd", "tbc"}
 TIME_RE = re.compile(r"\d{2}:\d{2}")
@@ -115,7 +115,9 @@ def normalize_row(row, source_row):
         day, start, end = parse_schedule(*cells[8:11])
     except ValueError as error:
         raise ValueError(f"Row {source_row} ({paper_id}): {error}") from error
-    if "Withdrawn" in (presentation, mode):
+    if "Desk rejected" in (presentation, mode):
+        status = "desk rejected"
+    elif "Withdrawn" in (presentation, mode):
         status = "withdrawn"
     elif "Not presenting" in (presentation, mode):
         status = "not presenting"
@@ -176,11 +178,11 @@ def audit_papers(papers, updated_at):
     issues = []
     for paper in papers:
         missing = [key for key in ("date", "start", "end", "session", "room") if paper[key] is None]
-        if paper["status"] not in ("not presenting", "withdrawn") and missing:
+        if paper["status"] not in ("not presenting", "withdrawn", "desk rejected") and missing:
             issues.append({"id": paper["id"], "sourceRow": paper["sourceRow"], "type": "missing assignment", "fields": missing})
         if paper["presenterNote"]:
             issues.append({"id": paper["id"], "sourceRow": paper["sourceRow"], "type": "presenter repeats title", "note": paper["presenterNote"]})
-        if paper["status"] in ("not presenting", "withdrawn") and any(paper[key] for key in ("date", "start", "end", "session", "room")):
+        if paper["status"] in ("not presenting", "withdrawn", "desk rejected") and any(paper[key] for key in ("date", "start", "end", "session", "room")):
             issues.append({"id": paper["id"], "sourceRow": paper["sourceRow"], "type": "inactive paper retains assignment", "status": paper["status"]})
         if paper["scheduleNote"]:
             issues.append({"id": paper["id"], "sourceRow": paper["sourceRow"], "type": "conflicting times", "note": paper["scheduleNote"]})
@@ -225,7 +227,8 @@ def main():
     else:
         if not args.updated_at:
             parser.error("--source requires --updated-at with the date that source was retrieved")
-        source_text = args.source.read_text(encoding="utf-8-sig")
+        with args.source.open(encoding="utf-8-sig", newline="") as source:
+            source_text = source.read()
         updated_at = args.updated_at
     rows = list(csv.reader(io.StringIO(source_text)))
     dataset, audit = build_dataset(rows, updated_at)

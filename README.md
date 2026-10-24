@@ -10,19 +10,19 @@ Full author lists appear in publication order. Presenters whose names match are 
 
 The finder selects the current conference day in Budapest unless the URL specifies a day. Outside the scheduled dates, it shows all days. Each session groups papers with the same date, time, session label, topic, and room, so parallel sessions remain separate. Headers show the topic and room alongside the time and session label. Sessions start collapsed; searches, filters other than day, shortlist views, and paper links open the matching sessions. Open session headings stay below the search bar as you scroll.
 
-Save papers to a browser-local shortlist and export confirmed presentations as calendar files. Missing, conflicting, withdrawn, and non-presenting assignments are excluded from calendar export.
+Save papers to a browser-local shortlist and export confirmed presentations as calendar files. Missing, conflicting, withdrawn, desk-rejected, and non-presenting assignments are excluded from calendar export.
 
 ## Schedule data
 
-The source is the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490), linked from the [conference program](https://2026.emnlp.org/program/). The committed snapshot was retrieved on 23 October 2026 and contains 5,611 entries across Main, Findings, Industry, Demonstrations, TACL, and Computational Linguistics.
+The source is the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490), linked from the [conference program](https://2026.emnlp.org/program/). The committed snapshot was retrieved on 24 October 2026 and contains 5,603 entries across Main, Findings, Industry, Demonstrations, TACL, and Computational Linguistics.
 
-The sheet provides **presenter names**, not complete author lists or abstracts. Missing assignments remain unknown. Withdrawn papers and papers marked “Not Presenting” retain those statuses. Conflicting times are flagged rather than inferred from other sessions. See `data/audit.json` for the import report and `data/source.csv` for the original values.
+The sheet provides **presenter names**, not complete author lists or abstracts. Missing assignments remain unknown. Withdrawn papers and papers marked “Not Presenting” or “Desk Reject” retain those statuses. Conflicting times are flagged rather than inferred from other sessions. See `data/audit.json` for the import report and `data/source.csv` for the original values.
 
 Times remain in **Europe/Budapest**. The main-conference dates use CET (UTC+1); daylight saving time ends on 25 October. The spreadsheet’s workbook timezone setting is not used to convert presentation times.
 
 The featured paper is **Some Assembly Required: Pointer-Decoded Seq2Seq Models for German Without a Native Seq2Seq Backbone** (`9736-FIND`). Its presentation details come from the same dataset as every other paper.
 
-Publication links come from the [EMNLP 2026 proceedings](https://aclanthology.org/events/emnlp-2026/) and the TACL and Computational Linguistics volumes. The metadata snapshot was retrieved on 24 October 2026. It matches 5,584 schedule entries; 27 entries without a verified match remain unlinked. Titles are matched within each track after normalizing typography and TeX. Reviewed title changes are recorded in `data/anthology-overrides.json`, and `data/anthology-audit.json` lists unmatched entries. The publication metadata does not alter presentation details.
+Publication links come from the [EMNLP 2026 proceedings](https://aclanthology.org/events/emnlp-2026/) and the TACL and Computational Linguistics volumes. The metadata snapshot was retrieved on 24 October 2026. It matches 5,584 schedule entries; 19 entries without a verified match remain unlinked. Titles are matched within each track after normalizing typography and TeX. Reviewed title changes are recorded in `data/anthology-overrides.json`, and `data/anthology-audit.json` lists unmatched entries. The publication metadata does not alter presentation details.
 
 ## Run locally
 
@@ -49,7 +49,7 @@ Review the changes to `data/source.csv`, `data/papers.json`, `data/audit.json`, 
 To reproduce the committed snapshot without network access:
 
 ```sh
-python3 scripts/import_schedule.py --source data/source.csv --updated-at 2026-10-23
+python3 scripts/import_schedule.py --source data/source.csv --updated-at 2026-10-24
 ```
 
 To refresh publication metadata from ACL Anthology:

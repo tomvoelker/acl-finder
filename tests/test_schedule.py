@@ -42,7 +42,8 @@ class ParsingTests(unittest.TestCase):
         self.assertTrue(any(issue["id"] == paper["id"] and issue["type"] == "conflicting times" for issue in audit["issues"]))
 
     def test_inactive_status_takes_precedence_over_stale_assignment(self):
-        for presentation, expected_status in (("Not Presenting", "not presenting"), ("Withdrawn", "withdrawn")):
+        for presentation, expected_status in (("Not Presenting", "not presenting"), ("Withdrawn", "withdrawn"),
+                                               ("Desk Reject", "desk rejected")):
             row = ["42-FIND", "Inactive paper", presentation, presentation, "Someone", "Hall H",
                    "Session 2", "Poster Session A", "2026-10-25", "11:00", "12:30"]
             dataset, audit = build_dataset([HEADER, row], "2026-10-23")
@@ -50,6 +51,12 @@ class ParsingTests(unittest.TestCase):
             self.assertEqual(paper["status"], expected_status)
             self.assertEqual(paper["date"], "2026-10-25")
             self.assertTrue(any(issue["id"] == paper["id"] and issue["type"] == "inactive paper retains assignment" for issue in audit["issues"]))
+
+    def test_desk_rejection_in_either_source_column_is_inactive_without_missing_assignment(self):
+        for presentation, mode in (("Desk Reject", ""), ("", "Desk Reject")):
+            dataset, audit = build_dataset([HEADER, ["42-FIND", "Rejected paper", presentation, mode]], "2026-10-24")
+            self.assertEqual(dataset["papers"][0]["status"], "desk rejected")
+            self.assertNotIn("missing assignment", audit["issueCounts"])
 
     def test_presenter_title_errors_are_not_displayed_as_names(self):
         row = ["42-MAIN", "Repeated title", "Oral", "In-Person", "Repeated title", "F6",
@@ -135,7 +142,7 @@ class SourceSnapshotTests(unittest.TestCase):
         }
         for paper in self.papers.values():
             self.assertEqual(set(paper), required_fields)
-            self.assertIn(paper["status"], {"scheduled", "unscheduled", "not presenting", "withdrawn"})
+            self.assertIn(paper["status"], {"scheduled", "unscheduled", "not presenting", "withdrawn", "desk rejected"})
 
 
 if __name__ == "__main__":
