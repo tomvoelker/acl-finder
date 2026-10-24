@@ -5,6 +5,8 @@
  */
 'use strict';
 
+import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedule-view.mjs';
+
 (() => {
   const DATA_URL = 'data/papers.json';
   const PAGE_SIZE = 80;
@@ -55,7 +57,7 @@
     day: $('#day'), facets: $('#facets'), results: $('#results'),
     count: $('#results-count'), nowBtn: $('#now-btn'), savedBtn: $('#saved-btn'), savedCount: $('#saved-count'),
     clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
-    list: $('#list'), more: $('#more'), moreStatus: $('#more-status'), moreBtn: $('#more-btn'), live: $('#live'),
+    list: $('#list'), live: $('#live'),
   };
 
   const collator = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
@@ -78,9 +80,7 @@
   const facetSelects = {};
   let results = [];
   let terms = [];
-  let rendered = 0;
-  let paperList = null;
-  const paperEls = new Map();
+  const sessions = new Map();
   let lastNav = null;
   let typingTimer = null;
   let announceTimer = null;
@@ -228,11 +228,7 @@
 
   function zonedNow() {
     try {
-      const parts = new Intl.DateTimeFormat('en-GB', {
-        timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-      }).formatToParts(new Date());
-      const get = (t) => (parts.find((x) => x.type === t) || {}).value;
-      return { date: `${get('year')}-${get('month')}-${get('day')}`, time: `${get('hour')}:${get('minute')}` };
+      return conferenceNow(tz);
     } catch {
       return null;
     }
@@ -425,8 +421,7 @@
     const paper = text(params.get('paper'));
     if (paper) { s.paper = paper.slice(0, 64); return s; }
     s.q = (params.get('q') || '').slice(0, 200);
-    const day = params.get('day');
-    if (day && dayOptions.some((d) => d.value === day)) s.day = day;
+    s.day = initialDay(params.get('day'), dayOptions.map((d) => d.value), zonedNow()?.date);
     s.saved = params.get('saved') === '1';
     for (const f of FACETS) {
       const raw = params.get(f.param);
@@ -443,7 +438,8 @@
       params.set('paper', state.paper);
     } else {
       if (state.q.trim()) params.set('q', state.q.trim());
-      if (state.day !== 'all') params.set('day', state.day);
+      // Keep an explicit choice of All days when the page is reopened during the conference.
+      params.set('day', state.day);
       for (const f of FACETS) {
         const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
         if (opt) params.set(f.param, opt.slug);
@@ -501,7 +497,9 @@
   function buildDays() {
     const dates = [...new Set(papers.map((p) => p._day).filter((d) => d && d !== 'undated'))].sort();
     const today = (zonedNow() || {}).date;
-    dayOptions = [{ value: 'all', label: 'All days' }, ...dates.map((date) => ({ value: date, label: dateInfo(date).short }))];
+    dayOptions = [{ value: 'all', label: 'All days' }, ...dates.map((date) => ({
+      value: date, label: `${dateInfo(date).short}${date === today ? ' · Today' : ''}`,
+    }))];
     if (papers.some((p) => p._day === 'undated')) dayOptions.push({ value: 'undated', label: 'No date' });
     els.day.replaceChildren();
     for (const d of dayOptions) {
@@ -648,33 +646,62 @@
   function renderList() {
     els.list.removeAttribute('aria-busy');
     els.list.replaceChildren();
-    paperEls.clear();
-    rendered = 0;
+    sessions.clear();
     if (!results.length) {
       els.list.append(emptyState());
-      els.more.hidden = true;
       return;
     }
-    paperList = h('ul', { class: 'papers' });
-    els.list.append(paperList);
-    renderMore();
+    for (const p of results) {
+      const key = sessionKey(p);
+      if (!sessions.has(key)) sessions.set(key, { papers: [], rendered: 0 });
+      sessions.get(key).papers.push(p);
+    }
+    const expand = expandSessions(state);
+    for (const group of sessions.values()) {
+      const p = group.papers[0];
+      const title = h('h3', { class: 'session__title' });
+      if (p._inactive) {
+        title.append(STATUS_LABELS[p.status]);
+      } else {
+        title.append(h('span', { class: 'session__date' }, p.date ? dateInfo(p.date).short : 'No date listed'));
+        title.append(h('span', { class: 'session__time' }, p._timed ? timeRange(p) : 'Time not confirmed'));
+        if (p._timed) {
+          const zone = zoneLabel(p.date, p.start);
+          title.append(h('abbr', { class: 'session__zone', title: zone.title }, zone.abbr));
+          if (p.session) title.append(h('span', { class: 'session__name' }, p.session));
+        }
+      }
+      const summary = h('summary', { class: 'session__header' }, title,
+        h('span', { class: 'session__count' }, plural(group.papers.length, 'paper', 'papers')));
+      group.list = h('ul', { class: 'papers' });
+      group.status = h('p', { class: 'more__status' });
+      group.button = h('button', { type: 'button', class: 'btn', onclick: () => {
+        renderMore(group);
+        announce(group.status.textContent, 50);
+      } });
+      group.more = h('div', { class: 'more' }, group.status, group.button);
+      group.details = h('details', { class: 'session', open: expand }, summary, group.list, group.more);
+      group.details.addEventListener('toggle', () => {
+        if (group.details.open && !group.rendered) renderMore(group);
+      });
+      if (expand) renderMore(group);
+      els.list.append(group.details);
+    }
   }
 
-  function renderMore() {
-    const end = Math.min(results.length, rendered + PAGE_SIZE);
+  function renderMore(group) {
+    const end = Math.min(group.papers.length, group.rendered + PAGE_SIZE);
     const now = zonedNow();
-    for (let i = rendered; i < end; i++) {
-      const p = results[i];
+    for (let i = group.rendered; i < end; i++) {
+      const p = group.papers[i];
       const row = paperRow(p, now);
-      paperList.append(row);
-      paperEls.set(p._key, row);
+      group.list.append(row);
     }
-    rendered = end;
-    els.more.hidden = false;
-    els.moreStatus.textContent = `Showing ${fmtNum(rendered)} of ${plural(results.length, 'paper', 'papers')}`;
-    const remaining = results.length - rendered;
-    els.moreBtn.hidden = remaining <= 0;
-    els.moreBtn.textContent = `Show ${fmtNum(Math.min(PAGE_SIZE, remaining))} more`;
+    group.rendered = end;
+    group.status.textContent = `Showing ${fmtNum(end)} of ${plural(group.papers.length, 'paper', 'papers')} in this session`;
+    const remaining = group.papers.length - end;
+    group.more.hidden = remaining <= 0;
+    group.button.textContent = `Show ${fmtNum(Math.min(PAGE_SIZE, remaining))} more`;
   }
 
   function paperRow(p, now) {
@@ -699,7 +726,7 @@
     }
 
     const body = h('div', { class: 'paper__body' });
-    const title = h('h3', { class: 'paper__title', tabindex: '-1' });
+    const title = h('h4', { class: 'paper__title', tabindex: '-1' });
     highlightInto(title, p.title || 'Untitled entry', terms);
     body.append(title);
 
@@ -868,10 +895,11 @@
       announce('No more sessions with a confirmed time today match your filters.', 50);
       return;
     }
-    while (rendered <= idx) renderMore();
-    const row = paperEls.get(results[idx]._key);
-    row.scrollIntoView({ block: 'start' });
-    row.querySelector('.paper__title').focus({ preventScroll: true });
+    const group = sessions.get(sessionKey(results[idx]));
+    group.details.open = true;
+    if (!group.rendered) renderMore(group);
+    group.details.scrollIntoView({ block: 'start' });
+    group.details.querySelector('summary').focus({ preventScroll: true });
   }
 
   function bindEvents() {
@@ -933,10 +961,6 @@
     });
     els.clearAll.addEventListener('click', () => { resetAll(); els.q.focus({ preventScroll: true }); });
     els.nowBtn.addEventListener('click', jumpToNow);
-    els.moreBtn.addEventListener('click', () => {
-      renderMore();
-      announce(els.moreStatus.textContent, 50);
-    });
 
     els.list.addEventListener('click', handleAction);
     els.featured.addEventListener('click', handleAction);
@@ -1002,7 +1026,6 @@
   function showError(err) {
     els.list.removeAttribute('aria-busy');
     els.count.textContent = 'Schedule unavailable';
-    els.more.hidden = true;
     const src = (sourceUrl && sourceUrl.href) || FALLBACK_SOURCE;
     els.list.replaceChildren(h('div', { class: 'state', role: 'alert' },
       h('h3', null, 'The schedule couldn’t be loaded'),

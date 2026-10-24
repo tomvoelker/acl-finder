@@ -6,6 +6,8 @@ An unofficial paper and presentation finder for EMNLP 2026 in Budapest. The main
 
 Search by title, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Paper links and filters can be shared through the URL.
 
+The finder selects the current conference day in Budapest unless the URL specifies a day. Outside the scheduled dates, it shows all days. Sessions start collapsed; searches, filters other than day, shortlist views, and paper links open the matching sessions. Open session headings stay below the search bar as you scroll.
+
 Save papers to a browser-local shortlist and export confirmed presentations as calendar files. Missing, conflicting, withdrawn, and non-presenting assignments are excluded from calendar export.
 
 ## Schedule data
@@ -48,7 +50,8 @@ python3 scripts/import_schedule.py --source data/source.csv --updated-at 2026-10
 
 ```sh
 python3 -m unittest discover -s tests -p 'test_*.py'
-node --check app.js
+node --input-type=module --check < app.js
+node --test tests/test_view.mjs
 python3 scripts/build.py
 ```
 

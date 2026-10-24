@@ -195,6 +195,29 @@ abbr[title] { text-decoration: none; cursor: help; }
 .banner p { flex: 1 1 260px; }
 
 /* ---------- Programme list ---------- */
+.session { border-bottom: 1px solid var(--rule); scroll-margin-top: var(--toolbar-h); }
+.session__header {
+  display: flex; align-items: center; gap: 12px; padding: 17px 0;
+  list-style: none; cursor: pointer; background: var(--paper);
+}
+.session__header::-webkit-details-marker { display: none; }
+.session__header::before {
+  content: ""; flex: none; width: 8px; height: 8px; margin: 0 4px 0 2px;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg);
+}
+.session[open] > .session__header {
+  position: sticky; top: var(--toolbar-h); z-index: 10;
+  border-bottom: 1px solid var(--rule);
+}
+.session[open] > .session__header::before { transform: rotate(45deg); }
+.session__header:hover { color: var(--accent-strong); }
+.session__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font-size: .9375rem; font-weight: 600; }
+.session__date { color: var(--muted); }
+.session__time { font-family: var(--font-mono); }
+.session__zone { margin-left: -9px; font-size: .6875rem; color: var(--muted); }
+.session__name { font-weight: 500; }
+.session__count { flex: none; margin-left: auto; font-size: .8125rem; font-variant-numeric: tabular-nums; color: var(--muted); }
+.session .paper:last-child { border-bottom: 0; }
 .papers { margin: 0; padding: 0; list-style: none; }
 .paper {
   display: grid; grid-template-columns: 11rem minmax(0, 1fr) 44px; grid-template-areas: "where body star";
@@ -326,6 +349,10 @@ mark {
   .results__bar { gap: 8px; }
   .results__tools { gap: 4px; }
   .pill { padding-inline: 9px; }
+  .session__header { gap: 8px; padding-block: 14px; }
+  .session__title { gap: 3px 10px; font-size: .8125rem; }
+  .session__zone { margin-left: -6px; }
+  .session__count { font-size: .75rem; }
   .paper { grid-template-columns: minmax(0, 1fr) 40px; grid-template-areas: "where star" "body body"; gap: 8px; padding: 14px 0; }
   .paper__where { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; padding-top: 0; }
   .paper__where .fmt { margin-top: 0; }
@@ -341,5 +368,6 @@ mark {
 
 @media print {
   .toolbar, .filter-bar, .star, .more, .results__tools, .skip-link { display: none !important; }
+  .session[open] > .session__header { position: static; }
   body { background: #fff; }
 }

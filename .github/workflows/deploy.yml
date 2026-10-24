@@ -22,7 +22,9 @@ jobs:
       - name: Verify schedule importer
         run: python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Verify JavaScript syntax
-        run: node --check app.js
+        run: node --input-type=module --check < app.js
+      - name: Verify day selection and session grouping
+        run: node --test tests/test_view.mjs
       - name: Build static site
         run: python3 scripts/build.py
       - uses: actions/upload-pages-artifact@v3
