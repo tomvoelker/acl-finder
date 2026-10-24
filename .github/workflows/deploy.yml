@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify schedule importer
+      - name: Verify data importers and build
         run: python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Verify JavaScript syntax
         run: node --input-type=module --check < app.js

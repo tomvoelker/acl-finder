@@ -232,6 +232,8 @@ abbr[title] { text-decoration: none; cursor: help; }
 .paper__room.is-missing { font-size: .8125rem; font-weight: 500; color: var(--muted); }
 .paper__body { grid-area: body; min-width: 0; }
 .paper__title { font: 600 1.125rem/1.35 var(--font-serif); text-wrap: pretty; overflow-wrap: anywhere; }
+.paper__title a { text-decoration-color: var(--rule); text-underline-offset: .15em; }
+.paper__title a:hover { text-decoration-color: currentColor; }
 .paper__presenter { margin-top: 5px; font-size: .9375rem; color: var(--ink-2); }
 .paper__label {
   margin-right: 6px; font-size: .6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);

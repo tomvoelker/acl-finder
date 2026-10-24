@@ -5,9 +5,12 @@ import hashlib
 import shutil
 from pathlib import Path
 
+from import_anthology import match_papers
+
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
-FILES = ["index.html", "styles.css", "app.js", "schedule-view.mjs", "favicon.svg", "data/papers.json", "LICENSE"]
+FILES = ["index.html", "styles.css", "app.js", "schedule-view.mjs", "favicon.svg", "data/papers.json",
+         "data/anthology-catalog.json", "data/anthology-overrides.json", "LICENSE"]
 
 
 def build():
@@ -17,6 +20,12 @@ def build():
     data = json.loads((ROOT / "data/papers.json").read_text())
     assert data["conference"]["name"] == "EMNLP 2026"
     assert data["papers"], "The conference dataset must not be empty"
+    catalog = json.loads((ROOT / "data/anthology-catalog.json").read_text())
+    overrides = json.loads((ROOT / "data/anthology-overrides.json").read_text())
+    links, _ = match_papers(data["papers"], catalog, overrides)
+    for paper in data["papers"]:
+        if paper["id"] in links:
+            paper["anthologyId"] = links[paper["id"]]
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)
@@ -36,12 +45,14 @@ def build():
     html = html.replace('href="styles.css"', f'href="{styles_name}"')
     (OUTPUT / "index.html").write_text(html)
 
-    for name in ["favicon.svg", "data/papers.json", "LICENSE"]:
+    (OUTPUT / "data").mkdir()
+    (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
+    for name in ["favicon.svg", "LICENSE"]:
         destination = OUTPUT / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)
     (OUTPUT / ".nojekyll").touch()
-    print(f"Built {len(data['papers']):,} paper entries into {OUTPUT}")
+    print(f"Built {len(data['papers']):,} paper entries with {len(links):,} Anthology links into {OUTPUT}")
 
 
 if __name__ == "__main__":

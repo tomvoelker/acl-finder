@@ -1,0 +1,62 @@
+{
+  "8891-MAIN": {
+    "anthologyId": "2026.emnlp-main.2598",
+    "scheduleTitle": "Accountable AI with Grounded, Faithful, Consistent, Actionable Rationale: A Case Study in Clinical Trial Matching with VERDICT",
+    "anthologyTitle": "Accountable AI with Grounded, Faithful, Consistent, Actionable Rationales: A Case Study in Clinical Trial Matching with VERDICT",
+    "note": "Rationale becomes Rationales; presenter Zikai Zhou is an author."
+  },
+  "458-IND": {
+    "anthologyId": "2026.emnlp-industry.109",
+    "scheduleTitle": "Style Is Not Origin: Style Confounding and False Positives in AI Detection of Non-Native Academic Writing",
+    "anthologyTitle": "Style as a Confound: False Positives in AI Detection of Non-Native Academic Writing",
+    "note": "Reworded style-confounding title; presenter Hyeonchu Park is the first author."
+  },
+  "229-DEMO": {
+    "anthologyId": "2026.emnlp-demos.74",
+    "scheduleTitle": "ABRA: Agent-Bound, Readable Interactions over Reusable Views",
+    "anthologyTitle": "ABRA: Agent-Bound UI for Human-Agent Communication beyond Chat with Reusable Views",
+    "note": "Reworded ABRA subtitle; presenter Hannah Kim is an author."
+  },
+  "260-DEMO": {
+    "anthologyId": "2026.emnlp-demos.82",
+    "scheduleTitle": "Dr. Claw: A Unified System for the Vibe Research Paradigm",
+    "anthologyTitle": "Dr. Claw: An AI Scientist Workspace for Vibe Research",
+    "note": "Reworded Dr. Claw subtitle; presenter Dingjie Song is the first author."
+  },
+  "7253-FIND": {
+    "anthologyId": "2026.findings-emnlp.1882",
+    "scheduleTitle": "UniCAR-RL: Seeing Better before Thinking Deeper in Visual Mathematic",
+    "anthologyTitle": "UniCAR-RL: Seeing Better before Thinking Deeper in Visual Mathematics",
+    "note": "Mathematic becomes Mathematics; presenter Yuzhe Li is the first author."
+  },
+  "8971-TACL": {
+    "anthologyId": "2026.tacl-1.57",
+    "scheduleTitle": "Preferences for Idiomatic Language are Acquired Slowly -- and Forgotten Quickly",
+    "anthologyTitle": "Preferences for Idiomatic Language are Acquired Slowly — and Forgotten Quickly: A Case Study on Swedish",
+    "note": "Publication adds A Case Study on Swedish; Jenny Kunz is the sole author."
+  },
+  "9787-TACL": {
+    "anthologyId": "2026.tacl-1.50",
+    "scheduleTitle": "CROC: Evaluating and Training T2I Metrics Pseudo- and Human-Labeled Contrastive Robustness Checks",
+    "anthologyTitle": "CROC: Evaluating and Training T2I Metrics with Pseudo- and Human-Labeled Contrastive Robustness Checks",
+    "note": "Publication adds with before Pseudo; presenter Christoph Leiter is the first author."
+  },
+  "9963-TACL": {
+    "anthologyId": "2026.tacl-1.88",
+    "scheduleTitle": "Do Large Language Models Exhibit Spontaneous Rational Deception?",
+    "anthologyTitle": "When Do Large Language Models Exhibit Unsolicited Deception?",
+    "note": "Reworded LLM deception title; presenter Samuel Taylor matches first author Samuel M. Taylor."
+  },
+  "10481-TACL": {
+    "anthologyId": "2026.tacl-1.93",
+    "scheduleTitle": "Probabilistic Inferences in Humans and LLMs",
+    "anthologyTitle": "Humans and LLMs Diverge on Probabilistic Inferences",
+    "note": "Reworded human/LLM probabilistic inference title; presenter Gaurav Kamath is the first author."
+  },
+  "11242-TACL": {
+    "anthologyId": "2026.tacl-1.103",
+    "scheduleTitle": "STEMTOX: From Social Tags to Fine-Grained Toxic Meme Detection\\\\ via Entropy-Guided Multi-Task Learning",
+    "anthologyTitle": "STEM TOX: From Collaborative Tags to Fine-Grained Toxic Meme Detection via Entropy-Guided Multi-Task Learning",
+    "note": "STEMTOX title changes Social Tags to Collaborative Tags; presenter Subhankar Swain is the first author."
+  }
+}

@@ -1,5 +1,5 @@
 /*
- * EMNLP 2026 Paper Finder: an unofficial, buildless schedule search.
+ * EMNLP 2026 Paper Finder: an unofficial, static schedule search.
  * Every value from data/papers.json is untrusted text. It is rendered through
  * DOM APIs (textContent / text nodes) only, never as HTML.
  */
@@ -264,6 +264,8 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
       topic: text(raw.topic), date: validDate(raw.date), start: validTime(raw.start), end: validTime(raw.end),
       timeZone: text(raw.timeZone), status: text(raw.status), scheduleNote: text(raw.scheduleNote),
       sourceRow: Number.isInteger(raw.sourceRow) && raw.sourceRow > 0 ? raw.sourceRow : null,
+      anthologyUrl: typeof raw.anthologyId === 'string' && /^\d{4}\.[a-z0-9-]+\.[1-9]\d*$/.test(raw.anthologyId)
+        ? `https://aclanthology.org/${raw.anthologyId}/` : null,
     };
     p._key = p.id || `row-${index}`;
     p._inactive = INACTIVE.has(p.status);
@@ -727,7 +729,11 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
 
     const body = h('div', { class: 'paper__body' });
     const title = h('h4', { class: 'paper__title', tabindex: '-1' });
-    highlightInto(title, p.title || 'Untitled entry', terms);
+    const titleText = h('span');
+    highlightInto(titleText, p.title || 'Untitled entry', terms);
+    title.append(p.anthologyUrl ? newTab(p.anthologyUrl,
+      [titleText, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
+      ' on ACL Anthology (opens in a new tab)') : titleText);
     body.append(title);
 
     const presenter = h('p', { class: 'paper__presenter' }, h('span', { class: 'paper__label' }, 'Presenter'));
@@ -769,7 +775,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
     }
     if (p.track) meta.append(h('span', null, p.track));
     if (p.session && !p._inactive) meta.append(h('span', null, p.session));
-    if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Shareable link to ${p.id}` }, 'Link'));
+    if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Shareable schedule link to ${p.id}` }, 'Schedule link'));
     const src = sourceRowUrl(p.sourceRow);
     if (src) meta.append(newTab(src, `Sheet row ${p.sourceRow}`, ' in the source spreadsheet (opens in a new tab)'));
     if (calendarEligible(p)) {
@@ -845,8 +851,13 @@ import { conferenceNow, initialDay, sessionKey, expandSessions } from './schedul
     els.featured.replaceChildren(
       h('div', null,
         h('p', { class: 'featured__kicker' }, 'Our paper · Come say hello'),
-        h('h2', { class: 'featured__title' }, h('a', { href: permalinkHref(p.id), 'data-permalink': p.id }, p.title || p.id)),
-        h('p', { class: 'featured__details' }, details, ' · ', newTab(REPO_URL, 'Code ↗', ' on GitHub (opens in a new tab)'))),
+        h('h2', { class: 'featured__title' }, p.anthologyUrl
+          ? newTab(p.anthologyUrl, [p.title || p.id, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
+            ' on ACL Anthology (opens in a new tab)')
+          : p.title || p.id),
+        h('p', { class: 'featured__details' }, details, ' · ',
+          h('a', { href: permalinkHref(p.id), 'data-permalink': p.id }, 'Schedule link'), ' · ',
+          newTab(REPO_URL, 'Code ↗', ' on GitHub (opens in a new tab)'))),
       starButton(p));
     els.featured.hidden = false;
   }

@@ -2,13 +2,16 @@
 
 import hashlib
 import importlib.util
+import json
 import re
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 spec = importlib.util.spec_from_file_location("site_build", ROOT / "scripts/build.py")
 site_build = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(site_build)
@@ -29,7 +32,15 @@ class BuildTests(unittest.TestCase):
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
-            self.assertTrue((output / "data/papers.json").is_file())
+            source = json.loads((ROOT / "data/papers.json").read_text())
+            deployed = json.loads((output / "data/papers.json").read_text())
+            by_id = {paper["id"]: paper for paper in deployed["papers"]}
+            self.assertEqual(by_id["9736-FIND"]["anthologyId"], "2026.findings-emnlp.2464")
+            self.assertNotIn("anthologyId", by_id["6620-MAIN"])
+            for paper in deployed["papers"]:
+                paper.pop("anthologyId", None)
+            self.assertEqual(deployed, source, "Adding paper links must not change the schedule")
+            self.assertEqual([p.name for p in (output / "data").iterdir()], ["papers.json"])
 
 
 if __name__ == "__main__":

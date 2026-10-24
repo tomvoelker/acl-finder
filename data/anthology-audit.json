@@ -1,0 +1,200 @@
+{
+  "updatedAt": "2026-10-24",
+  "sources": [
+    "https://aclanthology.org/events/emnlp-2026/",
+    "https://aclanthology.org/volumes/2025.tacl-1/",
+    "https://aclanthology.org/volumes/2026.tacl-1/",
+    "https://aclanthology.org/volumes/2025.cl-1/",
+    "https://aclanthology.org/volumes/2025.cl-2/",
+    "https://aclanthology.org/volumes/2025.cl-3/",
+    "https://aclanthology.org/volumes/2025.cl-4/",
+    "https://aclanthology.org/volumes/2026.cl-1/",
+    "https://aclanthology.org/volumes/2026.cl-2/"
+  ],
+  "matched": 5584,
+  "total": 5611,
+  "matchedByTrack": {
+    "CL": 2,
+    "DEMO": 86,
+    "FIND": 2478,
+    "IND": 265,
+    "MAIN": 2703,
+    "TACL": 50
+  },
+  "reviewedTitleChanges": [
+    "8971-TACL",
+    "9787-TACL",
+    "9963-TACL",
+    "10481-TACL",
+    "11242-TACL",
+    "8891-MAIN",
+    "458-IND",
+    "229-DEMO",
+    "260-DEMO",
+    "7253-FIND"
+  ],
+  "unmatched": [
+    {
+      "id": "3146-CL",
+      "title": "What if Deception cannot be Detected? A Cross-linguistic Study on the Limits of Deception Detection from Text",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3276-CL",
+      "title": "Strategic Deflection: Defending LLMs from Logit Manipulation",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3350-CL",
+      "title": "Rethinking Evaluation in Simultaneous Speech Translation: A Case for Monotonic Test Sets",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3371-CL",
+      "title": "Quantified Reproducibility Assessment for Four Common Types of Evaluation Results in NLP/ML",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3398-CL",
+      "title": "Explanation Variability in Text Classification: Humans vs. LLMs",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3407-CL",
+      "title": "Causal Adversarial Training for Improving Language Understanding and Robustness",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3417-CL",
+      "title": "How to Evaluate Speech Translation with Source-Aware Neural MT Metrics",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3424-CL",
+      "title": "Representational Equality in Cross-country Value Simulation: A Systematic Analysis of Large Language Models",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3501-CL",
+      "title": "MultiLoKo: a multilingual local knowledgebenchmark for LLMs spanning 31 languages",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3530-CL",
+      "title": "Eye Tracking Based Cognitive Evaluation of Automatic Readability Assessment Methods",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3579-CL",
+      "title": "Justify Your Prompts!",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "230-MAIN",
+      "title": "ScienceCritic: Empowering AI Review Systems with Non-objective Scientific Value Judgment",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "1946-MAIN",
+      "title": "Reinforcing Dual-Path Reasoning in Spatial Vision Language Models",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "3160-MAIN",
+      "title": "5-DIALECTS-BN: Unmasking the Impact of Transliteration on Bangla Dialectal LLMs",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "5210-MAIN",
+      "title": "Q-Bimodal Attention: Prefix and Tail Dispatch for Efficient Tree-Structured LLM Decoding",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "6620-MAIN",
+      "title": "The Necessity of Rational Grounding in Surprisal Theory",
+      "status": "scheduled",
+      "reason": "No verified match"
+    },
+    {
+      "id": "6944-MAIN",
+      "title": "Tokenization Helps When It Creates a Low-Dimensional Predictive Quotient",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "8927-MAIN",
+      "title": "Do Models Use What They Write? Causal Computation Graph Recovery for CoT Faithfulness",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "150-FIND",
+      "title": "ReBeCA: Unveiling Interpretable Behavior Hierarchy behind the Iterative Self-Reflection of Language Models with Causal Analysis",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "1725-FIND",
+      "title": "CLBench-V: Evaluating Multimodal Context Learning from Grounding to Knowledge Acquisition",
+      "status": "not presenting",
+      "reason": "No verified match"
+    },
+    {
+      "id": "1727-FIND",
+      "title": "Multilingual Coreference Resolution via Cycle-Consistent Machine Translation",
+      "status": "not presenting",
+      "reason": "No verified match"
+    },
+    {
+      "id": "2677-FIND",
+      "title": "From Fact Overwriting to Knowledge Evolution: Causal Editing via On-Policy Self-Distillation",
+      "status": "not presenting",
+      "reason": "No verified match"
+    },
+    {
+      "id": "5757-FIND",
+      "title": "TaskGraph-RAG: Lightweight Relation-Aware Graph RAG via Entity-Anchored Task Execution",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "6930-FIND",
+      "title": "Information Geometry of Zipfian Token Distributions",
+      "status": "withdrawn",
+      "reason": "No verified match"
+    },
+    {
+      "id": "7609-FIND",
+      "title": "Neuron Level Analysis of Large Language Model in Legal Domain Reasoning",
+      "status": "not presenting",
+      "reason": "No verified match"
+    },
+    {
+      "id": "8977-FIND",
+      "title": "Beyond Chunk-Local Extraction: Cross-Chunk Graph Augmentation for GraphRAG",
+      "status": "not presenting",
+      "reason": "No verified match"
+    },
+    {
+      "id": "9475-FIND",
+      "title": "EQL-Act: Evidence Query Language Guided Scientific Operation Acting for Scientific VQA",
+      "status": "not presenting",
+      "reason": "No verified match"
+    }
+  ]
+}
