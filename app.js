@@ -13,7 +13,6 @@
   const DEFAULT_TZ = 'Europe/Budapest';
   const PROGRAM_URL = 'https://2026.emnlp.org/program/';
   const REPO_URL = 'https://github.com/LSX-UniWue/some-assembly-required';
-  const CHAIR_URL = 'https://www.informatik.uni-wuerzburg.de/datascience/';
   const FALLBACK_SOURCE = 'https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490';
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -29,40 +28,33 @@
   const FORMAT_CLASS = { Oral: 'oral', Poster: 'poster', Demo: 'demo', Virtual: 'virtual', 'Virtual demo': 'virtual' };
   const FORMAT_RANK = { Oral: 0, Demo: 1, Poster: 2, 'Virtual demo': 3, Virtual: 4 };
 
-  // Faceted filters: OR within a facet, AND across facets.
   const FACETS = [
-    { key: 'track', param: 'track', label: 'Track', get: (p) => p.track,
+    { key: 'track', param: 'track', label: 'Track', all: 'All tracks', get: (p) => p.track,
       order: ['Main conference', 'Findings', 'Industry', 'Systems demonstrations', 'TACL', 'Computational Linguistics'] },
-    { key: 'format', param: 'format', label: 'Format', get: (p) => p.presentation,
+    { key: 'format', param: 'format', label: 'Format', all: 'All formats', get: (p) => p.presentation,
       order: ['Oral', 'Poster', 'Demo', 'Virtual', 'Virtual demo'], hide: STATUS_LIKE },
-    { key: 'mode', param: 'attendance', label: 'Attendance', get: (p) => p.mode,
+    { key: 'mode', param: 'attendance', label: 'Attendance', all: 'Any', get: (p) => p.mode,
       order: ['In person', 'Virtual'], hide: STATUS_LIKE,
       hint: 'How the presenter attends. A virtual presenter can still be assigned a physical room.' },
-    { key: 'room', param: 'room', label: 'Room', get: (p) => p.room, order: ['Hall H'], single: true },
-    { key: 'status', param: 'status', label: 'Schedule status', get: (p) => p.status,
+    { key: 'room', param: 'room', label: 'Room', all: 'All rooms', get: (p) => p.room, order: ['Hall H'] },
+    { key: 'status', param: 'status', label: 'Status', all: 'Any status', get: (p) => p.status,
       order: ['scheduled', 'unscheduled', 'not presenting', 'withdrawn'], labels: STATUS_LABELS },
   ];
 
   const ICONS = {
     star: 'M12 3.6l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.62 6.9 19.3l.98-5.68L3.75 9.6l5.7-.83z',
-    x: 'M6 6l12 12M18 6 6 18',
     cal: 'M5 6h14v14H5zM5 10h14M9 3.5v4M15 3.5v4',
-    code: 'M9 8l-4 4 4 4M15 8l4 4-4 4',
   };
 
   const WD_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const WD_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const MON_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const MON_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   const $ = (sel) => document.querySelector(sel);
   const els = {
     featured: $('#featured'), toolbar: $('#toolbar'), form: $('#search-form'), q: $('#q'), qClear: $('#q-clear'),
-    days: $('#days'), filters: $('#filters'), facets: $('#facets'), filtersOpen: $('#filters-open'),
-    filtersClose: $('#filters-close'), filtersDone: $('#filters-done'), filtersReset: $('#filters-reset'),
-    filtersResetTop: $('#filters-reset-top'), filtersBadge: $('#filters-badge'), results: $('#results'),
+    day: $('#day'), facets: $('#facets'), results: $('#results'),
     count: $('#results-count'), nowBtn: $('#now-btn'), savedBtn: $('#saved-btn'), savedCount: $('#saved-count'),
-    clearAll: $('#clear-all'), chips: $('#chips'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
+    clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
     list: $('#list'), more: $('#more'), moreStatus: $('#more-status'), moreBtn: $('#more-btn'), live: $('#live'),
   };
 
@@ -83,14 +75,12 @@
   let byKey = new Map();
   let dayOptions = [];
   const facetOptions = Object.fromEntries(FACETS.map((f) => [f.key, []]));
-  const roomSelect = { el: null };
+  const facetSelects = {};
   let results = [];
   let terms = [];
   let rendered = 0;
-  let cursor = null;
-  let slotEls = new Map();
-  let slotCounts = new Map();
-  let dayGroupCounts = new Map();
+  let paperList = null;
+  const paperEls = new Map();
   let lastNav = null;
   let typingTimer = null;
   let announceTimer = null;
@@ -100,7 +90,7 @@
 
   const blankState = () => ({
     q: '', day: 'all', saved: false, paper: null,
-    filters: Object.fromEntries(FACETS.map((f) => [f.key, new Set()])),
+    filters: Object.fromEntries(FACETS.map((f) => [f.key, null])),
   });
   const state = blankState();
 
@@ -185,9 +175,7 @@
     const [y, m, d] = iso.split('-').map(Number);
     const wd = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
     return {
-      wdShort: WD_SHORT[wd], wdLong: WD_LONG[wd],
       short: `${WD_SHORT[wd]} ${d} ${MON_SHORT[m - 1]}`,
-      dayMonth: `${d} ${MON_LONG[m - 1]}`, dayMonthShort: `${d} ${MON_SHORT[m - 1]}`,
       full: `${d} ${MON_SHORT[m - 1]} ${y}`,
     };
   }
@@ -289,29 +277,7 @@
     p._day = p._inactive ? null : p.date || 'undated';
     p._hay = fold([p.id, p.title, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);
-    p._group = groupInfo(p);
     return p;
-  }
-
-  function groupInfo(p) {
-    if (p._bucket === 0) {
-      const d = dateInfo(p.date);
-      const zone = p._timed ? zoneLabel(p.date, p.start) : null;
-      return {
-        dayKey: `d:${p.date}`, dayKicker: d.wdLong, dayTitle: d.dayMonth, short: d.short,
-        slotKey: `d:${p.date}|${p._timed ? `${p.start}|${p.end || ''}` : 'tbc'}|${p.session || ''}`,
-        time: p._timed ? timeRange(p) : null, zone, session: p.session,
-      };
-    }
-    if (p._bucket === 1) {
-      return { dayKey: 'undated', dayKicker: 'Schedule', dayTitle: 'Date not listed', slotKey: `u|${p.session || ''}`, session: p.session || 'No session listed' };
-    }
-    const label = p._bucket === 2 ? 'Not presenting' : 'Withdrawn';
-    return {
-      dayKey: p._bucket === 2 ? 'np' : 'wd', dayKicker: 'Status', dayTitle: label, slotKey: p._bucket === 2 ? 'np' : 'wd',
-      untimed: 'Listed for reference',
-      note: `The source marks these papers “${label}”. They are not a presentation slot to attend.`,
-    };
   }
 
   function compare(a, b) {
@@ -465,12 +431,8 @@
     for (const f of FACETS) {
       const raw = params.get(f.param);
       if (!raw) continue;
-      for (const slug of raw.split(',')) {
-        const opt = facetOptions[f.key].find((o) => o.slug === slug.trim().toLowerCase());
-        if (!opt) continue;
-        if (f.single) s.filters[f.key].clear();
-        s.filters[f.key].add(opt.value);
-      }
+      const opt = facetOptions[f.key].find((o) => o.slug === raw);
+      if (opt) s.filters[f.key] = opt.value;
     }
     return s;
   }
@@ -483,12 +445,12 @@
       if (state.q.trim()) params.set('q', state.q.trim());
       if (state.day !== 'all') params.set('day', state.day);
       for (const f of FACETS) {
-        const sel = state.filters[f.key];
-        if (sel.size) params.set(f.param, facetOptions[f.key].filter((o) => sel.has(o.value)).map((o) => o.slug).join(','));
+        const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
+        if (opt) params.set(f.param, opt.slug);
       }
       if (state.saved) params.set('saved', '1');
     }
-    const qs = params.toString().replace(/%2C/g, ',');
+    const qs = params.toString();
     return location.pathname + (qs ? `?${qs}` : '');
   }
 
@@ -539,62 +501,37 @@
   function buildDays() {
     const dates = [...new Set(papers.map((p) => p._day).filter((d) => d && d !== 'undated'))].sort();
     const today = (zonedNow() || {}).date;
-    dayOptions = [{ value: 'all', wd: 'Programme', date: 'All days' }];
-    for (const d of dates) {
-      const info = dateInfo(d);
-      dayOptions.push({ value: d, wd: d === today ? 'Today' : info.wdShort, date: info.dayMonthShort, today: d === today, long: info.short });
-    }
-    if (papers.some((p) => p._day === 'undated')) dayOptions.push({ value: 'undated', wd: 'Pending', date: 'No date' });
-
+    dayOptions = [{ value: 'all', label: 'All days' }, ...dates.map((date) => ({ value: date, label: dateInfo(date).short }))];
+    if (papers.some((p) => p._day === 'undated')) dayOptions.push({ value: 'undated', label: 'No date' });
+    els.day.replaceChildren();
     for (const d of dayOptions) {
-      d.input = h('input', { type: 'radio', name: 'day', value: d.value });
-      d.countEl = h('span', { class: 'day-opt__count' });
-      d.label = h('label', { class: 'day-opt' }, d.input,
-        h('span', { class: 'day-opt__box' },
-          h('span', { class: `day-opt__wd${d.today ? ' is-today' : ''}` }, d.wd),
-          h('span', { class: 'day-opt__date' }, d.date),
-          d.countEl, h('span', { class: 'visually-hidden' }, ' papers')));
-      els.days.append(d.label);
+      d.optionEl = h('option', { value: d.value }, d.label);
+      els.day.append(d.optionEl);
     }
     els.nowBtn.hidden = !dates.includes(today);
   }
 
   function buildFacets() {
-    els.facets.replaceChildren();
     FACETS.forEach((f) => {
       const opts = facetOptions[f.key];
-      if (!opts.length) return;
-      if (f.single) {
-        const id = `facet-${f.key}`;
-        const select = h('select', { class: 'select', id, 'data-facet': f.key }, h('option', { value: '' }, `All ${f.label.toLowerCase()}s`));
-        for (const o of opts) { o.optionEl = h('option', { value: o.slug }, o.label); select.append(o.optionEl); }
-        roomSelect.el = select;
-        els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__legend', for: id }, f.label), select));
-        return;
-      }
-      const box = h('div', { class: 'facet__opts' });
+      const id = `facet-${f.key}`;
+      const select = h('select', { class: 'select', id, 'data-facet': f.key, title: f.hint }, h('option', { value: '' }, f.all));
       for (const o of opts) {
-        o.input = h('input', { type: 'checkbox', name: f.param, value: o.slug, 'data-facet': f.key });
-        o.countEl = h('span', { class: 'opt__count' });
-        o.row = h('label', { class: 'opt' }, o.input, h('span', { class: 'opt__label' }, o.label), o.countEl);
-        box.append(o.row);
+        o.optionEl = h('option', { value: o.slug }, o.label);
+        select.append(o.optionEl);
       }
-      els.facets.append(h('fieldset', { class: 'facet' }, h('legend', { class: 'facet__legend' }, f.label), box,
-        f.hint ? h('p', { class: 'facet__hint' }, f.hint) : null));
+      facetSelects[f.key] = select;
+      els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__label', for: id }, f.label), select));
     });
   }
 
   function syncControls() {
     if (els.q.value !== state.q) els.q.value = state.q;
     els.qClear.hidden = !els.q.value;
-    for (const d of dayOptions) d.input.checked = d.value === state.day;
+    els.day.value = state.day;
     for (const f of FACETS) {
-      for (const o of facetOptions[f.key]) if (o.input) o.input.checked = state.filters[f.key].has(o.value);
-      if (f.single && roomSelect.el) {
-        const v = [...state.filters[f.key]][0];
-        const opt = facetOptions[f.key].find((o) => o.value === v);
-        roomSelect.el.value = opt ? opt.slug : '';
-      }
+      const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
+      if (facetSelects[f.key]) facetSelects[f.key].value = opt ? opt.slug : '';
     }
     els.savedBtn.setAttribute('aria-pressed', String(state.saved));
   }
@@ -614,7 +551,6 @@
     terms = fold(state.q).split(/\s+/).filter(Boolean);
     const n = FACETS.length;
     const dayCounts = new Map();
-    let dayAll = 0;
     const counts = FACETS.map(() => new Map());
     const matched = [];
     for (const p of papers) {
@@ -624,10 +560,10 @@
       if (state.day !== 'all' && p._day !== state.day) m |= 4;
       for (let j = 0; j < n; j++) {
         const sel = state.filters[FACETS[j].key];
-        if (sel.size && !sel.has(p._f[j])) m |= 8 << j;
+        if (sel !== null && sel !== p._f[j]) m |= 8 << j;
       }
       if (m === 0) matched.push(p);
-      if ((m & ~4) === 0) { dayAll++; if (p._day) dayCounts.set(p._day, (dayCounts.get(p._day) || 0) + 1); }
+      if ((m & ~4) === 0 && p._day) dayCounts.set(p._day, (dayCounts.get(p._day) || 0) + 1);
       for (let j = 0; j < n; j++) {
         if ((m & ~(8 << j)) === 0) counts[j].set(p._f[j], (counts[j].get(p._f[j]) || 0) + 1);
       }
@@ -635,10 +571,9 @@
     const focus = state.paper ? byKey.get(state.paper) || null : null;
     results = state.paper ? (focus ? [focus] : []) : matched;
 
-    renderDayCounts(dayCounts, dayAll);
+    renderDayCounts(dayCounts);
     renderFacetCounts(counts);
     renderSummary();
-    renderChips();
     renderBanner(focus);
     if (state.saved) renderShortlistBar(); else els.shortlistBar.hidden = true;
     renderList();
@@ -646,30 +581,20 @@
     announce(state.paper ? (focus ? `Showing paper ${focus.id}.` : 'Paper not found.') : `${plural(results.length, 'paper', 'papers')} found.`, typing ? 800 : 150);
   }
 
-  function renderDayCounts(dayCounts, all) {
+  function renderDayCounts(dayCounts) {
     for (const d of dayOptions) {
-      const c = d.value === 'all' ? all : dayCounts.get(d.value) || 0;
-      d.countEl.textContent = fmtNum(c);
-      d.label.classList.toggle('is-zero', c === 0);
+      const c = dayCounts.get(d.value) || 0;
+      d.optionEl.textContent = d.value === 'all' ? d.label : `${d.label} (${fmtNum(c)})`;
     }
   }
 
   function renderFacetCounts(counts) {
-    let active = 0;
     FACETS.forEach((f, j) => {
-      active += state.filters[f.key].size;
       for (const o of facetOptions[f.key]) {
         const c = counts[j].get(o.value) || 0;
-        if (o.countEl) {
-          o.countEl.textContent = fmtNum(c);
-          o.row.classList.toggle('is-zero', c === 0 && !state.filters[f.key].has(o.value));
-        }
-        if (o.optionEl) o.optionEl.textContent = `${o.label} (${fmtNum(c)})`;
+        o.optionEl.textContent = `${o.label} (${fmtNum(c)})`;
       }
     });
-    els.filtersBadge.hidden = active === 0;
-    els.filtersBadge.textContent = String(active);
-    els.filtersOpen.setAttribute('aria-label', active ? `Filters, ${active} active` : 'Filters');
   }
 
   function renderSummary() {
@@ -685,38 +610,9 @@
         els.count.append(h('span', { class: 'results__of' }, ` of ${fmtNum(total)}`));
       }
     }
-    els.filtersDone.textContent = `Show ${plural(results.length, 'paper', 'papers')}`;
     els.savedCount.textContent = fmtNum(savedPapers().length);
-  }
-
-  function renderChips() {
-    const chips = [];
-    const q = state.q.trim();
-    if (q) chips.push(['Search', `“${q}”`, () => { state.q = ''; }]);
-    if (state.day !== 'all') {
-      const d = dayOptions.find((x) => x.value === state.day);
-      chips.push(['Day', d.long || d.date, () => { state.day = 'all'; }]);
-    }
-    for (const f of FACETS) {
-      for (const o of facetOptions[f.key]) {
-        if (state.filters[f.key].has(o.value)) chips.push([f.label, o.label, () => state.filters[f.key].delete(o.value)]);
-      }
-    }
-    if (state.saved) chips.push(['View', 'Shortlist', () => { state.saved = false; }]);
-
-    els.chips.replaceChildren(...chips.map(([k, v, remove], i) => h('button', {
-      type: 'button', class: 'chip', 'aria-label': `Remove ${k}: ${v}`,
-      onclick: () => {
-        remove();
-        state.paper = null;
-        syncControls();
-        commit('filter');
-        const next = els.chips.querySelectorAll('.chip');
-        (next[Math.min(i, next.length - 1)] || els.count).focus();
-      },
-    }, h('span', { class: 'chip__k' }, `${k}:`), ' ', v, icon('x'))));
-    els.chips.hidden = chips.length === 0;
-    els.clearAll.hidden = chips.length === 0 && !state.paper;
+    els.clearAll.hidden = !state.q.trim() && state.day === 'all' && !state.saved && !state.paper &&
+      FACETS.every((f) => state.filters[f.key] === null);
   }
 
   function renderBanner(focus) {
@@ -752,20 +648,15 @@
   function renderList() {
     els.list.removeAttribute('aria-busy');
     els.list.replaceChildren();
-    cursor = { day: null, dayEl: null, slot: null, ul: null };
-    slotEls = new Map();
-    slotCounts = new Map();
-    dayGroupCounts = new Map();
+    paperEls.clear();
     rendered = 0;
     if (!results.length) {
       els.list.append(emptyState());
       els.more.hidden = true;
       return;
     }
-    for (const p of results) {
-      slotCounts.set(p._group.slotKey, (slotCounts.get(p._group.slotKey) || 0) + 1);
-      dayGroupCounts.set(p._group.dayKey, (dayGroupCounts.get(p._group.dayKey) || 0) + 1);
-    }
+    paperList = h('ul', { class: 'papers' });
+    els.list.append(paperList);
     renderMore();
   }
 
@@ -774,24 +665,9 @@
     const now = zonedNow();
     for (let i = rendered; i < end; i++) {
       const p = results[i];
-      const g = p._group;
-      if (g.dayKey !== cursor.day) {
-        cursor.day = g.dayKey;
-        cursor.slot = null;
-        cursor.dayEl = h('section', { class: 'day-block' },
-          h('h2', { class: 'day-title' },
-            h('span', { class: 'day-title__kicker' }, g.dayKicker), h('span', null, g.dayTitle),
-            h('span', { class: 'day-title__count' }, plural(dayGroupCounts.get(g.dayKey) || 0, 'paper', 'papers'))));
-        els.list.append(cursor.dayEl);
-      }
-      if (g.slotKey !== cursor.slot) {
-        cursor.slot = g.slotKey;
-        const sec = slotBlock(p, now);
-        cursor.ul = sec.querySelector('.papers');
-        cursor.dayEl.append(sec);
-        slotEls.set(g.slotKey, sec);
-      }
-      cursor.ul.append(paperRow(p));
+      const row = paperRow(p, now);
+      paperList.append(row);
+      paperEls.set(p._key, row);
     }
     rendered = end;
     els.more.hidden = false;
@@ -801,33 +677,29 @@
     els.moreBtn.textContent = `Show ${fmtNum(Math.min(PAGE_SIZE, remaining))} more`;
   }
 
-  function slotBlock(p, now) {
-    const g = p._group;
-    const live = !!now && p._timed && !!p.end && p.date === now.date && p.start <= now.time && now.time < p.end;
-    const title = h('h3', { class: 'slot__title', tabindex: '-1' },
-      g.short ? h('span', { class: 'slot__day' }, g.short) : null,
-      g.time ? h('span', { class: 'slot__time' }, g.time) : h('span', { class: 'slot__time is-tbc' }, g.untimed || 'Time not confirmed'),
-      g.time && g.zone ? h('abbr', { class: 'slot__tz', title: g.zone.title }, g.zone.abbr) : null,
-      g.session ? h('span', { class: 'slot__session' }, g.session) : null);
-    const head = h('div', { class: 'slot__head' }, title,
-      live ? h('span', { class: 'slot__live' }, 'Now') : null,
-      h('span', { class: 'slot__count' }, plural(slotCounts.get(g.slotKey) || 0, 'paper', 'papers')),
-      g.note ? h('p', { class: 'slot__note' }, g.note) : null);
-    return h('section', { class: `slot${live ? ' is-now' : ''}` }, head, h('ul', { class: 'papers' }));
-  }
-
-  function paperRow(p) {
+  function paperRow(p, now) {
     const li = h('li', { class: `paper${p._inactive ? ' is-inactive' : ''}${p.id && p.id === featuredId ? ' is-featured' : ''}` });
 
     const where = h('div', { class: 'paper__where' });
-    if (p._inactive) where.append(h('span', { class: 'paper__room is-status' }, STATUS_LABELS[p.status]));
-    else where.append(h('span', { class: `paper__room${p.room ? '' : ' is-missing'}` }, p.room || 'Room not listed'));
+    if (p._inactive) {
+      where.append(h('span', { class: 'paper__date is-missing' }, STATUS_LABELS[p.status]));
+    } else {
+      where.append(h('span', { class: 'paper__date' }, p.date ? dateInfo(p.date).short : 'Date not listed'));
+      if (p._timed) {
+        const zone = zoneLabel(p.date, p.start);
+        where.append(h('span', { class: 'paper__time' }, timeRange(p),
+          zone ? h('abbr', { title: zone.title }, ` ${zone.abbr}`) : null));
+      } else {
+        where.append(h('span', { class: 'is-missing' }, 'Time not confirmed'));
+      }
+      where.append(h('span', { class: `paper__room${p.room ? '' : ' is-missing'}` }, p.room || 'Room not listed'));
+    }
     if (p.presentation && !STATUS_LIKE.has(p.presentation)) {
       where.append(h('span', { class: `fmt fmt--${FORMAT_CLASS[p.presentation] || 'other'}` }, p.presentation));
     }
 
     const body = h('div', { class: 'paper__body' });
-    const title = h('h4', { class: 'paper__title' });
+    const title = h('h3', { class: 'paper__title', tabindex: '-1' });
     highlightInto(title, p.title || 'Untitled entry', terms);
     body.append(title);
 
@@ -849,6 +721,9 @@
     }
 
     const flags = [];
+    if (now && p._timed && p.end && p.date === now.date && p.start <= now.time && now.time < p.end) {
+      flags.push(h('span', { class: 'flag flag--accent' }, 'Now'));
+    }
     if (p.id && p.id === featuredId) flags.push(h('span', { class: 'flag flag--accent' }, 'Our paper · come say hello'));
     if (!p._inactive && IMPLIED_MODE[p.presentation] !== p.mode) {
       if (p.mode && !STATUS_LIKE.has(p.mode)) flags.push(h('span', { class: `flag${p.mode === 'Virtual' ? ' flag--virtual' : ''}` }, `Attendance: ${p.mode}`));
@@ -866,6 +741,7 @@
       meta.append(id);
     }
     if (p.track) meta.append(h('span', null, p.track));
+    if (p.session && !p._inactive) meta.append(h('span', null, p.session));
     if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Shareable link to ${p.id}` }, 'Link'));
     const src = sourceRowUrl(p.sourceRow);
     if (src) meta.append(newTab(src, `Sheet row ${p.sourceRow}`, ' in the source spreadsheet (opens in a new tab)'));
@@ -936,29 +812,15 @@
   function renderFeatured() {
     const p = featuredId && byKey.get(featuredId);
     if (!p) { els.featured.hidden = true; return; }
-    const when = h('dd');
-    if (p._timed && p._bucket === 0) {
-      when.append(`${p._group.short} · `, h('span', { class: 'featured__time' }, timeRange(p)));
-      if (p._group.zone) when.append(' ', h('abbr', { class: 'featured__tz', title: p._group.zone.title }, p._group.zone.abbr));
-    } else {
-      when.append(p._inactive ? STATUS_LABELS[p.status] : 'Time not confirmed', ...checkSource(p));
-    }
-    const where = h('dd', null, p._inactive ? '—' : [p.room || 'Room not listed', p.topic, p.session].filter(Boolean).join(' · '));
-    const byline = [p.presenter ? `Presenter: ${p.presenter}` : null, p.track, p.presentation].filter(Boolean).join(' · ');
-
-    els.featured.replaceChildren(h('div', { class: 'featured__card' },
+    const when = p._timed ? `${dateInfo(p.date).short}, ${timeRange(p)} ${zoneLabel(p.date, p.start)?.abbr || ''}` :
+      p._inactive ? STATUS_LABELS[p.status] : 'Time not confirmed';
+    const details = [when, !p._inactive ? p.room : null, p.presenter].filter(Boolean).join(' · ');
+    els.featured.replaceChildren(
       h('div', null,
-        h('p', { class: 'featured__kicker' }, 'Our paper', h('span', null, ' · Come say hello')),
-        h('h2', { class: 'featured__title' }, p.title || p.id),
-        h('p', { class: 'featured__by' }, byline, ' · ', newTab(CHAIR_URL, 'Data Science Chair, Würzburg'))),
-      h('dl', { class: 'featured__when' },
-        h('div', null, h('dt', null, 'When'), when),
-        h('div', null, h('dt', null, 'Where'), where)),
-      h('div', { class: 'featured__actions' },
-        h('a', { class: 'btn btn--ink', href: permalinkHref(p.id), 'data-permalink': p.id }, 'Show in schedule'),
-        calendarEligible(p) ? h('button', { type: 'button', class: 'btn', 'data-action': 'ics', 'data-key': p._key }, icon('cal'), 'Add to calendar') : null,
-        newTab(REPO_URL, [icon('code'), 'Code'], ' on GitHub (opens in a new tab)', 'btn'),
-        starButton(p))));
+        h('p', { class: 'featured__kicker' }, 'Our paper · Come say hello'),
+        h('h2', { class: 'featured__title' }, h('a', { href: permalinkHref(p.id), 'data-permalink': p.id }, p.title || p.id)),
+        h('p', { class: 'featured__details' }, details, ' · ', newTab(REPO_URL, 'Code ↗', ' on GitHub (opens in a new tab)'))),
+      starButton(p));
     els.featured.hidden = false;
   }
 
@@ -1007,43 +869,9 @@
       return;
     }
     while (rendered <= idx) renderMore();
-    const sec = slotEls.get(results[idx]._group.slotKey);
-    if (!sec) return;
-    sec.scrollIntoView({ block: 'start' });
-    sec.querySelector('.slot__title').focus({ preventScroll: true });
-  }
-
-  const drawerQuery = window.matchMedia('(max-width: 959px)');
-  const drawerOpen = () => els.filters.classList.contains('is-open');
-
-  function openFilters() {
-    if (!drawerQuery.matches) return;
-    els.filters.classList.add('is-open');
-    els.filters.setAttribute('role', 'dialog');
-    els.filters.setAttribute('aria-modal', 'true');
-    els.filtersOpen.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('has-drawer');
-    els.filtersClose.focus();
-  }
-
-  function closeFilters(returnFocus = true) {
-    if (!drawerOpen()) return;
-    els.filters.classList.remove('is-open');
-    els.filters.removeAttribute('role');
-    els.filters.removeAttribute('aria-modal');
-    els.filtersOpen.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('has-drawer');
-    if (returnFocus) els.filtersOpen.focus();
-  }
-
-  function trapFocus(e) {
-    const items = [...els.filters.querySelectorAll('button, input, select, a[href]')]
-      .filter((el) => !el.disabled && el.getClientRects().length);
-    if (!items.length) return;
-    const first = items[0];
-    const last = items[items.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    const row = paperEls.get(results[idx]._key);
+    row.scrollIntoView({ block: 'start' });
+    row.querySelector('.paper__title').focus({ preventScroll: true });
   }
 
   function bindEvents() {
@@ -1053,7 +881,7 @@
       state.q = els.q.value;
       state.paper = null;
       commit('typing');
-      if (drawerQuery.matches) els.q.blur();
+      if (window.matchMedia('(max-width: 639px)').matches) els.q.blur();
     });
     els.q.addEventListener('input', () => {
       els.qClear.hidden = !els.q.value;
@@ -1081,8 +909,7 @@
       els.q.focus();
     });
 
-    els.days.addEventListener('change', (e) => {
-      if (e.target.name !== 'day') return;
+    els.day.addEventListener('change', (e) => {
       state.day = e.target.value;
       state.paper = null;
       commit('filter');
@@ -1093,13 +920,7 @@
       const key = t.dataset.facet;
       if (!key) return;
       const opt = facetOptions[key].find((o) => o.slug === t.value);
-      if (t.tagName === 'SELECT') {
-        state.filters[key].clear();
-        if (opt) state.filters[key].add(opt.value);
-      } else if (opt) {
-        if (t.checked) state.filters[key].add(opt.value);
-        else state.filters[key].delete(opt.value);
-      }
+      state.filters[key] = opt ? opt.value : null;
       state.paper = null;
       commit('filter');
     });
@@ -1111,8 +932,6 @@
       commit('filter');
     });
     els.clearAll.addEventListener('click', () => { resetAll(); els.q.focus({ preventScroll: true }); });
-    els.filtersReset.addEventListener('click', resetAll);
-    els.filtersResetTop.addEventListener('click', resetAll);
     els.nowBtn.addEventListener('click', jumpToNow);
     els.moreBtn.addEventListener('click', () => {
       renderMore();
@@ -1122,18 +941,8 @@
     els.list.addEventListener('click', handleAction);
     els.featured.addEventListener('click', handleAction);
 
-    els.filtersOpen.addEventListener('click', openFilters);
-    els.filtersClose.addEventListener('click', () => closeFilters());
-    els.filtersDone.addEventListener('click', () => { closeFilters(false); scrollToResults(true); els.count.focus({ preventScroll: true }); });
-    els.filters.addEventListener('keydown', (e) => {
-      if (!drawerOpen()) return;
-      if (e.key === 'Escape') { e.preventDefault(); closeFilters(); }
-      else if (e.key === 'Tab') trapFocus(e);
-    });
-    drawerQuery.addEventListener('change', () => closeFilters(false));
-
     document.addEventListener('keydown', (e) => {
-      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey || drawerOpen()) return;
+      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
       const t = e.target;
       if (t.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(t.tagName)) return;
       e.preventDefault();

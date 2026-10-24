@@ -38,15 +38,9 @@
       </nav>
     </div>
     <div class="wrap notice">
-      <span class="stamp">Unofficial</span>
       <p>
-        A snapshot of the official
-        <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">“Author Presentations” sheet</a>,
-        updated <time data-updated datetime="2026-10-23">23 Oct 2026</time>.
-        Schedules change: check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for the latest.
-        Covers main-conference presentations on 25–27 Oct.
-        <strong>All times are Budapest local time, CET (UTC+1).</strong>
-        Daylight saving time ends on 25 Oct; times are not converted to your device’s time zone.
+        Unofficial · Updated <time data-updated datetime="2026-10-23">23 Oct 2026</time> ·
+        <strong>All times: Budapest, CET (UTC+1).</strong>
       </p>
     </div>
   </header>
@@ -67,32 +61,16 @@
           </button>
           <p class="visually-hidden" id="search-hint">Results update as you type. All words must match. Press slash to jump here.</p>
         </form>
-        <button class="filters-toggle" id="filters-open" type="button" aria-controls="filters" aria-expanded="false">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4"/></svg>
-          Filters<span class="count-badge" id="filters-badge" hidden></span>
-        </button>
-        <fieldset class="days" id="days">
-          <legend class="visually-hidden">Conference day</legend>
-        </fieldset>
       </div>
     </div>
 
-    <div class="wrap layout">
-      <aside class="filters" id="filters" aria-labelledby="filters-title">
-        <div class="filters__head">
-          <h2 class="filters__title" id="filters-title">Refine</h2>
-          <button class="link-btn" id="filters-reset-top" type="button">Reset</button>
-          <button class="icon-btn filters__close" id="filters-close" type="button">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
-            <span class="visually-hidden">Close filters</span>
-          </button>
+    <div class="wrap">
+      <div class="filter-bar" id="facets" role="group" aria-label="Filter papers">
+        <div class="facet">
+          <label class="facet__label" for="day">Day</label>
+          <select class="select" id="day" name="day"><option value="all">All days</option></select>
         </div>
-        <div class="filters__body" id="facets"></div>
-        <div class="filters__foot">
-          <button class="btn" id="filters-reset" type="button">Reset all</button>
-          <button class="btn btn--ink" id="filters-done" type="button">Show results</button>
-        </div>
-      </aside>
+      </div>
 
       <section class="results" id="results" aria-labelledby="results-count" tabindex="-1">
         <div class="results__bar">
@@ -109,7 +87,6 @@
             <button class="pill pill--quiet" id="clear-all" type="button" hidden>Clear all</button>
           </div>
         </div>
-        <div class="chips" id="chips" role="group" aria-label="Active filters" hidden></div>
         <div class="banner" id="shortlist-bar" hidden></div>
         <div class="banner" id="paper-banner" hidden></div>
 
@@ -133,19 +110,9 @@
   </main>
 
   <footer class="site-footer">
-    <div class="wrap site-footer__grid">
-      <div>
-        <h2 class="site-footer__title">About this finder</h2>
-        <p>An unofficial tool, not affiliated with or endorsed by EMNLP or ACL. It lists <strong>presenters</strong> as given in the source sheet, not full author lists, and has no abstracts. Anything the sheet leaves blank is shown as not listed, never guessed.</p>
-      </div>
-      <div>
-        <h2 class="site-footer__title">Data</h2>
-        <p>Snapshot of the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>, updated <time data-updated datetime="2026-10-23">23 Oct 2026</time>. For changes and the full programme (24–29 Oct), see <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">2026.emnlp.org/program</a>. Venue: <a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener">HUNGEXPO, Budapest</a>.</p>
-      </div>
-      <div>
-        <h2 class="site-footer__title">Made in Würzburg</h2>
-        <p>By the <a href="https://www.informatik.uni-wuerzburg.de/datascience/" target="_blank" rel="noopener">Data Science Chair (CAIDAS), University of Würzburg</a>. Your shortlist is stored only in this browser.</p>
-      </div>
+    <div class="wrap">
+      <p>Unofficial schedule from the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>. Presenter names only; no full author lists or abstracts. Check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for changes.</p>
+      <p>Made by the <a href="https://www.informatik.uni-wuerzburg.de/datascience/" target="_blank" rel="noopener">Data Science Chair, University of Würzburg</a>. Your shortlist stays in this browser.</p>
     </div>
   </footer>
 </body>
