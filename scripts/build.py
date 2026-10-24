@@ -1,6 +1,7 @@
 """Package the static site for GitHub Pages. No dependencies required."""
 
 import json
+import hashlib
 import shutil
 from pathlib import Path
 
@@ -18,7 +19,24 @@ def build():
     assert data["papers"], "The conference dataset must not be empty"
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
-    for name in FILES:
+    OUTPUT.mkdir(parents=True)
+
+    def asset(name, content):
+        path = Path(name)
+        digest = hashlib.sha256(content).hexdigest()[:12]
+        versioned = f"{path.stem}.{digest}{path.suffix}"
+        (OUTPUT / versioned).write_bytes(content)
+        return versioned
+
+    module_name = asset("schedule-view.mjs", (ROOT / "schedule-view.mjs").read_bytes())
+    app = (ROOT / "app.js").read_text().replace("'./schedule-view.mjs'", f"'./{module_name}'")
+    app_name = asset("app.js", app.encode())
+    styles_name = asset("styles.css", (ROOT / "styles.css").read_bytes())
+    html = (ROOT / "index.html").read_text().replace('src="app.js"', f'src="{app_name}"')
+    html = html.replace('href="styles.css"', f'href="{styles_name}"')
+    (OUTPUT / "index.html").write_text(html)
+
+    for name in ["favicon.svg", "data/papers.json", "LICENSE"]:
         destination = OUTPUT / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)
