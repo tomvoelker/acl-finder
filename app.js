@@ -6,7 +6,7 @@
  */
 'use strict';
 
-import { conferenceNow, initialDay, sessionKey, presenterAuthorIndices, authorKey, indexAuthors, searchState, resultPage, RESULT_PAGE_SIZE, posterBrowsing, posterScope } from './schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, readOralSlot, presentationSlot, presenterAuthorIndices, authorKey, indexAuthors, searchState, resultPage, RESULT_PAGE_SIZE, posterBrowsing, posterScope } from './schedule-view.mjs';
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
 import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
@@ -282,6 +282,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
       presenterNote: text(raw.presenterNote), room: text(raw.room), session: text(raw.session),
       topic: text(raw.topic), date: validDate(raw.date), start: validTime(raw.start), end: validTime(raw.end),
       timeZone: text(raw.timeZone), status: text(raw.status), scheduleNote: text(raw.scheduleNote),
+      oralSlotNote: text(raw.oralSlotNote),
       poster: readPosterLocation(raw, posterSessions), posterIssue: text(raw.posterLocationIssue),
       posterClaimedBoard: Number.isInteger(raw.posterClaimedBoard) && raw.posterClaimedBoard >= 1 && raw.posterClaimedBoard <= 424 ? raw.posterClaimedBoard : null,
       sourceRow: Number.isInteger(raw.sourceRow) && raw.sourceRow > 0 ? raw.sourceRow : null,
@@ -290,6 +291,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
       underlineUrl: typeof raw.underlineUrl === 'string' && /^https:\/\/underline\.io\/events\/535\/schedule\/sessions\/[1-9]\d*\/lecture\/[1-9]\d*-[a-z0-9_-]+$/.test(raw.underlineUrl)
         ? raw.underlineUrl : null,
     };
+    p.oralSlot = readOralSlot({ ...p, oralSlot: raw.oralSlot });
     p._key = p.id || `row-${index}`;
     p._inactive = INACTIVE.has(p.status);
     // A time is only presented as confirmed when the source schedules it without a conflict note.
@@ -314,6 +316,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     if (!c && a._bucket <= 1) {
       c = (FORMAT_RANK[a.presentation] ?? 9) - (FORMAT_RANK[b.presentation] ?? 9) || nat(a.topic, b.topic) || nat(a.room, b.room);
     }
+    if (!c && (a.oralSlot || b.oralSlot)) c = str(presentationSlot(a).start, presentationSlot(b).start);
     return c || nat(a.title, b.title) || nat(a.id, b.id);
   }
 
@@ -326,8 +329,9 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
   const calCache = new Map();
   function calendarEligible(p) {
     if (calCache.has(p._key)) return calCache.get(p._key);
-    const ok = p.status === 'scheduled' && !p.scheduleNote && !!p.id && !!p.date && !!p.start && !!p.end &&
-      p.end > p.start && (p.timeZone || tz) === tz && !!localToUtc(p.date, p.start) && !!localToUtc(p.date, p.end);
+    const slot = presentationSlot(p);
+    const ok = p.status === 'scheduled' && !p.scheduleNote && !p.oralSlotNote && !!p.id && !!slot.date && !!slot.start && !!slot.end &&
+      slot.end > slot.start && (p.timeZone || tz) === tz && !!localToUtc(slot.date, slot.start) && !!localToUtc(slot.date, slot.end);
     calCache.set(p._key, ok);
     return ok;
   }
@@ -406,11 +410,13 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     const stamp = icsStamp(new Date());
     const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//EMNLP 2026 Paper Finder (unofficial)//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
     for (const p of events) {
+      const slot = presentationSlot(p);
       const description = [
         [p.track, p.presentation, p.mode && IMPLIED_MODE[p.presentation] !== p.mode ? `Attendance: ${p.mode}` : null].filter(Boolean).join(' · '),
         [p.session, p.topic].filter(Boolean).join(' — '),
         p.presenter ? `Presenter: ${p.presenter}` : null,
         `Paper ID: ${p.id}`,
+        p.oralSlot ? `Individual oral time from Underline: ${p.underlineUrl}. Programme session: ${p.start}–${p.end} CET.` : null,
         p.poster ? `Handbook poster: ${p.poster.label}, board ${p.poster.board}, ${p.poster.date} ${p.poster.start}–${p.poster.end}, ${p.poster.room}.` : p.posterIssue,
         p.poster ? `Poster map: ${new URL(posterMapHref(p.poster), location.href).href}` : null,
         `Budapest local time. Unofficial schedule snapshot (updated ${updatedLabel}). Check ${PROGRAM_URL} for changes.`,
@@ -419,8 +425,8 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
         'BEGIN:VEVENT',
         `UID:${p.id.replace(/[^A-Za-z0-9-]/g, '')}@emnlp2026-paper-finder`,
         `DTSTAMP:${stamp}`,
-        `DTSTART:${icsStamp(localToUtc(p.date, p.start).date)}`,
-        `DTEND:${icsStamp(localToUtc(p.date, p.end).date)}`,
+        `DTSTART:${icsStamp(localToUtc(slot.date, slot.start).date)}`,
+        `DTEND:${icsStamp(localToUtc(slot.date, slot.end).date)}`,
         `SUMMARY:${icsEscape(p.title || p.id)}`,
         p.room ? `LOCATION:${icsEscape(p.room)}` : null,
         `DESCRIPTION:${icsEscape(description)}`,
@@ -966,7 +972,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     const li = h('li', { class: `paper${p._inactive ? ' is-inactive' : ''}` });
     const where = h('div', { class: 'paper__where' });
     const poster = !p._inactive && p.poster;
-    const slot = poster || p;
+    const slot = poster || presentationSlot(p);
     if (p._inactive) where.append(h('span', { class: 'is-missing' }, STATUS_LABELS[p.status]));
     else {
       if (poster) where.append(newTab(posterMapHref(poster), `Board ${poster.board} ↗`,
@@ -977,10 +983,12 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
       if (slot.date) where.append(h('span', { class: 'paper__date' }, dateInfo(slot.date).short));
       if (poster || p._timed) {
         const zone = zoneLabel(slot.date, slot.start);
-        where.append(h('span', { class: 'paper__time' }, timeRange(slot), h('abbr', { title: zone.title }, ` ${zone.abbr}`)));
+        where.append(h('span', { class: 'paper__time' }, !poster && p.presentation === 'Oral' && !p.oralSlot ? 'Session ' : '', timeRange(slot), h('abbr', { title: zone.title }, ` ${zone.abbr}`)));
       } else where.append(h('span', { class: 'is-missing' }, 'Time unconfirmed'));
       if (slot.room) where.append(h('span', { class: 'paper__room' }, slot.room));
       if ((poster || p._timed) && now && slot.date === now.date && slot.start <= now.time && now.time < slot.end) where.append(h('span', { class: 'flag flag--accent' }, 'Now'));
+      if (poster && p.oralSlot) where.append(h('span', { class: 'paper__time' }, `Oral: ${dateInfo(p.date).short} · ${timeRange(p.oralSlot)} CET · ${p.room}`));
+      if (p.oralSlotNote) where.append(h('span', { class: 'flag' }, 'Talk time unconfirmed'));
     }
 
     const body = h('div', { class: 'paper__body' });
@@ -1002,9 +1010,11 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
 
     const detailsBody = h('div', { class: 'paper__details-body' });
     if (p.track || p.topic) detailsBody.append(h('p', null, [p.track, p.topic].filter(Boolean).join(' · ')));
+    if (p.oralSlot) detailsBody.append(h('p', null, `Individual oral time from Underline. Full session: ${timeRange(p)} CET.`));
+    if (p.oralSlotNote) detailsBody.append(h('p', { class: 'note' }, p.oralSlotNote));
     if (poster && posterSlotDiffers(p, poster)) {
       detailsBody.append(h('p', null, 'The handbook poster slot is shown above. ',
-        p._inactive ? '' : `Programme entry: ${[p.presentation, p.date ? dateInfo(p.date).short : null, p._timed ? timeRange(p) : 'Time unconfirmed', p.room, p.mode].filter(Boolean).join(' · ')}.`));
+        p._inactive ? '' : `Programme entry: ${[p.presentation, p.date ? dateInfo(p.date).short : null, p._timed ? timeRange(presentationSlot(p)) : 'Time unconfirmed', p.room, p.mode].filter(Boolean).join(' · ')}.`));
       if (calendarEligible(p)) detailsBody.append(h('button', { type: 'button', class: 'linkish', 'data-action': 'ics', 'data-key': p._key }, 'Calendar for programme entry'));
     }
     if (p.posterIssue) detailsBody.append(h('p', { class: 'note' }, p.posterIssue));
@@ -1169,7 +1179,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
       syncControls();
       commit('filter', { scroll: false });
     }
-    const idx = results.findIndex((p) => p._timed && p.date === now.date && (p.end || p.start) > now.time);
+    const idx = results.findIndex((p) => p._timed && p.date === now.date && (presentationSlot(p).end || p.start) > now.time);
     if (idx === -1) {
       scrollToResults(true);
       announce('No more sessions with a confirmed time today match your filters.', 50);

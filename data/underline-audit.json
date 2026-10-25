@@ -1,10 +1,49 @@
 {
   "updatedAt": "2026-10-25",
   "source": "https://underline.io/events/535/schedule",
-  "catalogEntries": 5612,
+  "catalogEntries": 5621,
   "total": 5603,
   "matched": 5602,
   "linked": 4351,
+  "oralSlots": 507,
+  "oralSlotIssues": [
+    {
+      "id": "809-MAIN",
+      "reason": "Underline lists 2026-10-25 17:31–17:43 CET, outside the programme session (2026-10-25 16:00–17:30). Confirm the oral time on Underline."
+    },
+    {
+      "id": "1530-MAIN",
+      "reason": "Underline lists 2026-10-25 17:31–17:43 CET, outside the programme session (2026-10-25 16:00–17:30). Confirm the oral time on Underline."
+    },
+    {
+      "id": "8261-MAIN",
+      "reason": "Underline lists 2026-10-25 17:31–17:42 CET, outside the programme session (2026-10-25 16:00–17:30). Confirm the oral time on Underline."
+    },
+    {
+      "id": "244-IND",
+      "reason": "Underline lists 2026-10-27 09:00–09:14 CET, overlapping another oral in G1-3. Confirm the talk time on Underline."
+    },
+    {
+      "id": "530-IND",
+      "reason": "Underline lists 2026-10-27 09:13–09:27 CET, overlapping another oral in G1-3. Confirm the talk time on Underline."
+    },
+    {
+      "id": "532-IND",
+      "reason": "Underline lists 2026-10-27 09:26–09:40 CET, overlapping another oral in G1-3. Confirm the talk time on Underline."
+    },
+    {
+      "id": "610-IND",
+      "reason": "Underline lists 2026-10-27 09:39–09:53 CET, overlapping another oral in G1-3. Confirm the talk time on Underline."
+    },
+    {
+      "id": "615-IND",
+      "reason": "Underline lists 2026-10-27 09:52–10:06 CET, overlapping another oral in G1-3. Confirm the talk time on Underline."
+    },
+    {
+      "id": "886-IND",
+      "reason": "Underline lists 2026-10-27 10:05–10:19 CET, overlapping another oral in G1-3. Confirm the talk time on Underline."
+    }
+  ],
   "linkedByTrack": {
     "CL": 13,
     "DEMO": 83,
@@ -35,6 +74,12 @@
       "underlineId": "165255",
       "status": "unscheduled",
       "reason": "Not published"
+    },
+    {
+      "id": "501-MAIN",
+      "underlineId": "163956",
+      "status": "scheduled",
+      "reason": "No session assigned"
     },
     {
       "id": "701-MAIN",
@@ -83,12 +128,6 @@
       "underlineId": "164605",
       "status": "unscheduled",
       "reason": "Not published"
-    },
-    {
-      "id": "7350-MAIN",
-      "underlineId": "164776",
-      "status": "unscheduled",
-      "reason": "No session assigned"
     },
     {
       "id": "8477-MAIN",

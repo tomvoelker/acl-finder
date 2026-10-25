@@ -1,4 +1,4 @@
-"""Import public Underline paper metadata and match direct presentation links.
+"""Import public Underline presentation links and individual oral talk times.
 
 Refresh: python3 scripts/import_underline.py --fetch
 Recheck the committed catalog: python3 scripts/import_underline.py
@@ -49,7 +49,8 @@ def parse_catalog(pages, updated_at):
             seen.add(row["id"])
             session = relationships["event_session"]["data"]
             papers.append({"id": row["id"], "title": attrs["title"], "slug": attrs["slug"],
-                           "sessionId": session["id"] if session else None, "published": attrs["published"]})
+                           "sessionId": session["id"] if session else None, "published": attrs["published"],
+                           "startsAt": attrs["held_at"], "endsAt": attrs["ends_at"], "poster": attrs["poster_lecture"]})
     if not papers or len(papers) != expected:
         raise ValueError("Incomplete Underline catalog")
     return {"updatedAt": updated_at, "source": SOURCE, "papers": sorted(papers, key=lambda p: int(p["id"]))}
@@ -70,6 +71,53 @@ def presentation_url(entry):
     return f"{SOURCE}/sessions/{session}/lecture/{entry['id']}-{entry['slug']}"
 
 
+def oral_timing(paper, entry):
+    """Use explicit talk times only when they fit the sheet's confirmed session."""
+    if paper.get("presentation") != "Oral":
+        return {}
+    def unavailable(reason):
+        return {"oralSlotNote": reason}
+    if paper["status"] != "scheduled" or paper.get("scheduleNote") or not all(paper.get(k) for k in ("date", "start", "end")):
+        return unavailable("The programme session is unconfirmed; check Underline for the individual oral time.")
+    if entry["poster"]:
+        return unavailable("Underline identifies this presentation as a poster; the individual oral time is unconfirmed.")
+    if not entry["startsAt"] or not entry["endsAt"]:
+        return unavailable("Underline does not list both start and end times for this oral.")
+    times = [datetime.fromisoformat(entry[key].replace("Z", "+00:00")) for key in ("startsAt", "endsAt")]
+    if any(t.tzinfo is None for t in times):
+        raise ValueError(f"Underline timestamp has no timezone: {entry['id']}")
+    start, end = [t.astimezone(ZoneInfo("Europe/Budapest")) for t in times]
+    if any(t.second or t.microsecond for t in (start, end)) or end <= start:
+        return unavailable("Underline's individual oral times are inconsistent; check the presentation page.")
+    slot = {"date": start.date().isoformat(), "start": start.strftime("%H:%M"), "end": end.strftime("%H:%M")}
+    if slot["date"] != paper["date"] or end.date() != start.date() or not (paper["start"] <= slot["start"] < slot["end"] <= paper["end"]):
+        return unavailable(f"Underline lists {slot['date']} {slot['start']}–{slot['end']} CET, outside the programme session ({paper['date']} {paper['start']}–{paper['end']}). Confirm the oral time on Underline.")
+    if (slot["start"], slot["end"]) == (paper["start"], paper["end"]):
+        return unavailable("Underline lists the full session window; the individual oral time is not published.")
+    return {"oralSlot": slot}
+
+
+def flag_overlapping_orals(papers, presentations):
+    groups = defaultdict(list)
+    for paper in papers:
+        presentation = presentations.get(paper["id"], {})
+        slot = presentation.get("oralSlot")
+        if slot:
+            groups[(slot["date"], paper["room"])].append(presentation)
+    for (day, room), group in groups.items():
+        group.sort(key=lambda item: item["oralSlot"]["start"])
+        for index, before in enumerate(group):
+            for after in group[index + 1:]:
+                if after["oralSlot"]["start"] >= before["oralSlot"]["end"]:
+                    break
+                for item in (before, after):
+                    slot = item["oralSlot"]
+                    item["oralSlotNote"] = f"Underline lists {day} {slot['start']}–{slot['end']} CET, overlapping another oral in {room}. Confirm the talk time on Underline."
+        for item in group:
+            if "oralSlotNote" in item:
+                item.pop("oralSlot")
+
+
 def match_presentations(papers, catalog, publication_titles, overrides):
     if catalog["source"] != SOURCE:
         raise ValueError("Unexpected Underline event")
@@ -78,9 +126,11 @@ def match_presentations(papers, catalog, publication_titles, overrides):
         if entry["id"] in by_id or not title_key(entry["title"]):
             raise ValueError("Duplicate Underline ID or empty title")
         presentation_url(entry)
+        if type(entry["poster"]) is not bool:
+            raise ValueError("Invalid Underline poster status")
         by_id[entry["id"]] = entry
         by_title[title_key(entry["title"])].append(entry["id"])
-    links, unmatched, unavailable, reviewed, used = {}, [], [], [], set()
+    presentations, unmatched, unavailable, reviewed, used = {}, [], [], [], set()
     counts = Counter()
     for paper in papers:
         keys = {title_key(paper["title"])}
@@ -104,13 +154,17 @@ def match_presentations(papers, catalog, publication_titles, overrides):
         used.add(entry["id"])
         url = presentation_url(entry)
         if url:
-            links[paper["id"]] = url
+            timing = oral_timing(paper, entry)
+            presentations[paper["id"]] = {"underlineUrl": url, **timing}
             counts[paper["trackCode"]] += 1
         else:
             unavailable.append({"id": paper["id"], "underlineId": entry["id"], "status": paper["status"],
                                 "reason": "Not published" if not entry["published"] else "No session assigned"})
-    return links, {"updatedAt": catalog["updatedAt"], "source": SOURCE, "catalogEntries": len(by_id),
-                   "total": len(papers), "matched": len(used), "linked": len(links),
+    flag_overlapping_orals(papers, presentations)
+    oral_issues = [{"id": pid, "reason": item["oralSlotNote"]} for pid, item in presentations.items() if "oralSlotNote" in item]
+    return presentations, {"updatedAt": catalog["updatedAt"], "source": SOURCE, "catalogEntries": len(by_id),
+                   "total": len(papers), "matched": len(used), "linked": len(presentations),
+                   "oralSlots": sum("oralSlot" in value for value in presentations.values()), "oralSlotIssues": oral_issues,
                    "linkedByTrack": dict(sorted(counts.items())), "reviewedTitleChanges": reviewed,
                    "unmatched": unmatched, "unavailable": unavailable}
 

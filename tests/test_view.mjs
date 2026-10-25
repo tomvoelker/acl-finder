@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { conferenceNow, initialDay, sessionKey, posterBrowsing, resultPage, RESULT_PAGE_SIZE, presenterAuthorIndices } from '../schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, readOralSlot, presentationSlot, posterBrowsing, resultPage, RESULT_PAGE_SIZE, presenterAuthorIndices } from '../schedule-view.mjs';
 
 const days = ['all', '2026-10-25', '2026-10-26', '2026-10-27', 'undated'];
 const empty = { q: '', day: '2026-10-25', saved: false, paper: null, filters: { track: null, room: null } };
@@ -128,4 +128,21 @@ test('ambiguous or partially matched presenter lists stay explicit', () => {
   assert.deepEqual(presenterAuthorIndices(['José Li', 'Jose Li'], 'Jose Li'), []);
   assert.deepEqual(presenterAuthorIndices(['Jan Pfister', 'Tom Völker'], 'Jan Pfister, Someone Else'), []);
   assert.deepEqual(presenterAuthorIndices(['Jan Pfister'], 'Jan Pfister, Jan Pfister'), []);
+});
+
+
+test('individual oral times preserve grouping and supply the presentation interval', () => {
+  const p = { presentation: 'Oral', status: 'scheduled', _timed: true,
+    date: '2026-10-26', start: '11:00', end: '12:30', session: 'Session 6', topic: 'Sentiment Analysis', room: 'F4-5' };
+  const a = { ...p, oralSlot: readOralSlot({ ...p, oralSlot: { date: p.date, start: '11:39', end: '11:51' } }) };
+  const b = { ...p, oralSlot: readOralSlot({ ...p, oralSlot: { date: p.date, start: '11:52', end: '12:04' } }) };
+  assert.equal(sessionKey(a), sessionKey(b));
+  assert.deepEqual(presentationSlot(a), { date: p.date, start: '11:39', end: '11:51', room: 'F4-5' });
+  assert.equal(presentationSlot(p), p);
+  for (const change of [{ status: 'withdrawn' }, { presentation: 'Poster' }, { scheduleNote: 'Conflict' },
+    { oralSlotNote: 'Outside session' }, { oralSlot: { date: p.date, start: '12:31', end: '12:43' } },
+    { oralSlot: { date: p.date, start: '11:99', end: '12:15' } },
+    { oralSlot: { date: p.date, start: p.start, end: p.end } }]) {
+    assert.equal(readOralSlot({ ...a, ...change }), null);
+  }
 });

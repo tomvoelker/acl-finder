@@ -54,13 +54,12 @@ def build():
     underline_catalog = json.loads((ROOT / "data/underline-catalog.json").read_text())
     underline_overrides = json.loads((ROOT / "data/underline-overrides.json").read_text())
     publication_titles = {pid: publications[aid]["title"] for pid, aid in links.items()}
-    underline_links, _ = match_presentations(data["papers"], underline_catalog, publication_titles, underline_overrides)
+    underline_presentations, _ = match_presentations(data["papers"], underline_catalog, publication_titles, underline_overrides)
     for paper in data["papers"]:
         if paper["id"] in links:
             paper["anthologyId"] = links[paper["id"]]
             paper["authors"] = publications[paper["anthologyId"]]["authors"]
-        if paper["id"] in underline_links:
-            paper["underlineUrl"] = underline_links[paper["id"]]
+        paper.update(underline_presentations.get(paper["id"], {}))
     poster_catalog = load_catalog(ROOT / "data/poster-boards.json")
     enrich_poster_boards(data, poster_catalog)
     if OUTPUT.exists():
@@ -127,7 +126,7 @@ def build():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)
     (OUTPUT / ".nojekyll").touch()
-    print(f"Built {len(data['papers']):,} paper entries with {len(links):,} Anthology links and {len(underline_links):,} Underline links into {OUTPUT}")
+    print(f"Built {len(data['papers']):,} paper entries with {len(links):,} Anthology links and {len(underline_presentations):,} Underline links into {OUTPUT}")
 
 
 if __name__ == "__main__":

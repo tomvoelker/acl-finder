@@ -20,6 +20,19 @@ export function sessionKey(paper) {
   ]);
 }
 
+export function readOralSlot(paper) {
+  const slot = paper.oralSlot;
+  if (paper.presentation !== 'Oral' || paper.status !== 'scheduled' || paper.scheduleNote || paper.oralSlotNote || !slot) return null;
+  if (slot.date !== paper.date || !/^([01]\d|2[0-3]):[0-5]\d$/.test(slot.start) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(slot.end)) return null;
+  if (!(paper.start <= slot.start && slot.start < slot.end && slot.end <= paper.end)) return null;
+  if (slot.start === paper.start && slot.end === paper.end) return null;
+  return { date: slot.date, start: slot.start, end: slot.end, room: paper.room };
+}
+
+export function presentationSlot(paper) {
+  return paper.oralSlot || paper;
+}
+
 export function searchState(state, query) {
   const leaveScope = state.author || (!state.shared && state.view === 'posters' && !state.q.trim());
   return {

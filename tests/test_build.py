@@ -58,6 +58,10 @@ class BuildTests(unittest.TestCase):
             publications = {paper["id"]: paper for paper in json.loads((ROOT / "data/anthology-catalog.json").read_text())["papers"]}
             self.assertIn("/lecture/162458-multi-block-diffusion-language-models", by_id["6176-MAIN"]["underlineUrl"])
             self.assertNotIn("underlineUrl", by_id["403-MAIN"])
+            self.assertEqual(by_id["3146-CL"]["oralSlot"], {"date": "2026-10-26", "start": "11:39", "end": "11:51"})
+            self.assertEqual((by_id["3146-CL"]["start"], by_id["3146-CL"]["end"]), ("11:00", "12:30"))
+            self.assertNotIn("oralSlot", by_id["809-MAIN"])
+            self.assertIn("outside the programme session", by_id["809-MAIN"]["oralSlotNote"])
             catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
             verified = {entry["paperId"]: entry for entry in catalog["entries"] if entry["paperId"] and entry["verified"]}
             self.assertEqual(len(verified), 2830)
@@ -79,6 +83,8 @@ class BuildTests(unittest.TestCase):
                 paper.pop("anthologyId", None)
                 paper.pop("authors", None)
                 paper.pop("underlineUrl", None)
+                paper.pop("oralSlot", None)
+                paper.pop("oralSlotNote", None)
             self.assertEqual(deployed.pop("posterSessions"), catalog["sessions"])
             self.assertEqual(deployed, source, "Adding paper links must not change the schedule")
             self.assertEqual(sorted(p.name for p in (output / "data").iterdir()), ["papers.json", "poster-boards.json"])
