@@ -87,6 +87,18 @@ THE SOFTWARE.
     <div class="wrap">
       <section class="author-profile" id="author-profile" aria-labelledby="author-name" hidden></section>
       <div class="day-nav" id="day" role="group" aria-label="Conference day"></div>
+      <div class="mobile-controls">
+        <div class="day-picker">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h14v14H5zM5 10h14M9 3.5v4M15 3.5v4"/></svg>
+          <label class="visually-hidden" for="day-select">Conference day</label>
+          <select id="day-select" class="select"></select>
+        </div>
+        <button class="filters-toggle" id="filters-toggle" type="button" aria-controls="facets" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h9m4 0h3M4 17h3m4 0h9M13 4v6M7 14v6"/></svg>
+          Filters <span class="filters-toggle__count" id="filters-count" hidden>0</span>
+          <svg class="filters-toggle__chevron" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="m3 4.5 3 3 3-3"/></svg>
+        </button>
+      </div>
       <div class="filter-bar" id="facets" role="group" aria-label="Filter papers"></div>
 
       <section class="results" id="results" aria-labelledby="results-count" tabindex="-1">

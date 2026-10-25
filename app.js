@@ -60,7 +60,8 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   const $ = (sel) => document.querySelector(sel);
   const els = {
     toolbar: $('#toolbar'), form: $('#search-form'), q: $('#q'), qClear: $('#q-clear'),
-    day: $('#day'), facets: $('#facets'), results: $('#results'),
+    day: $('#day'), daySelect: $('#day-select'), facets: $('#facets'), results: $('#results'),
+    filtersToggle: $('#filters-toggle'), filtersCount: $('#filters-count'),
     count: $('#results-count'), nowBtn: $('#now-btn'), savedBtn: $('#saved-btn'), savedCount: $('#saved-count'),
     clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
     list: $('#list'), live: $('#live'), authorProfile: $('#author-profile'),
@@ -85,7 +86,6 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   let dayOptions = [];
   const facetOptions = Object.fromEntries(FACETS.map((f) => [f.key, []]));
   const facetSelects = {};
-  const facetCaptions = {};
   let results = [];
   let terms = [];
   const sessions = new Map();
@@ -537,17 +537,16 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   function buildDays() {
     const dates = [...new Set(papers.map((p) => p._day).filter((d) => d && d !== 'undated'))].sort();
     const today = (zonedNow() || {}).date;
-    dayOptions = [{ value: 'all', label: 'All days', short: 'All' }, ...dates.map((date) => ({
+    dayOptions = [{ value: 'all', label: 'All days' }, ...dates.map((date) => ({
       value: date, label: `${dateInfo(date).short}${date === today ? ' · Today' : ''}`,
-      short: dateInfo(date).short.split(' ').slice(0, 2).join(' '),
     }))];
     if (papers.some((p) => p._day === 'undated')) dayOptions.push({ value: 'undated', label: 'No date' });
     els.day.replaceChildren();
+    els.daySelect.replaceChildren();
     for (const d of dayOptions) {
-      d.buttonEl = h('button', { type: 'button', class: 'day-nav__button', 'data-day': d.value, 'aria-pressed': 'false' },
-        h('span', { class: 'day-nav__full', 'aria-hidden': 'true' }, d.label),
-        h('span', { class: 'day-nav__short', 'aria-hidden': 'true' }, d.short || d.label));
+      d.buttonEl = h('button', { type: 'button', class: 'day-nav__button', 'data-day': d.value, 'aria-pressed': 'false' }, d.label);
       els.day.append(d.buttonEl);
+      els.daySelect.append(h('option', { value: d.value }, d.label));
     }
     els.nowBtn.hidden = !dates.includes(today);
   }
@@ -562,8 +561,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
         select.append(o.optionEl);
       }
       facetSelects[f.key] = select;
-      facetCaptions[f.key] = h('span', { class: 'facet__value', 'aria-hidden': 'true' });
-      els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__label', for: id }, f.label), select, facetCaptions[f.key]));
+      els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__label', for: id }, f.label), select));
     });
   }
 
@@ -571,11 +569,15 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     if (els.q.value !== state.q) els.q.value = state.q;
     els.qClear.hidden = !els.q.value;
     for (const d of dayOptions) d.buttonEl.setAttribute('aria-pressed', String(d.value === state.day));
+    els.daySelect.value = state.day;
     for (const f of FACETS) {
       const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
       if (facetSelects[f.key]) facetSelects[f.key].value = opt ? opt.slug : '';
-      if (facetCaptions[f.key]) facetCaptions[f.key].textContent = opt ? opt.label : ({ format: 'Type', mode: 'Mode' }[f.key] || f.label);
     }
+    const active = FACETS.filter((f) => state.filters[f.key] !== null).length;
+    els.filtersCount.textContent = active;
+    els.filtersCount.hidden = !active;
+    els.filtersToggle.setAttribute('aria-label', active ? `Filters: ${active} active` : 'Filters');
     els.savedBtn.setAttribute('aria-pressed', String(state.saved));
   }
 
@@ -1059,6 +1061,19 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       commit('filter');
     });
 
+    els.daySelect.addEventListener('change', () => {
+      state.day = els.daySelect.value;
+      state.paper = null;
+      syncControls();
+      commit('filter');
+    });
+
+    els.filtersToggle.addEventListener('click', () => {
+      const open = els.filtersToggle.getAttribute('aria-expanded') !== 'true';
+      els.filtersToggle.setAttribute('aria-expanded', String(open));
+      els.facets.classList.toggle('is-expanded', open);
+    });
+
     els.facets.addEventListener('change', (e) => {
       const t = e.target;
       const key = t.dataset.facet;
@@ -1067,7 +1082,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       state.filters[key] = opt ? opt.value : null;
       state.paper = null;
       syncControls();
-      commit('filter');
+      commit('filter', { scroll: !els.facets.classList.contains('is-expanded') });
     });
 
     els.savedBtn.addEventListener('click', () => {
