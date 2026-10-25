@@ -1,12 +1,14 @@
 import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS} from './layout.mjs';
 import {validateCatalog, sessionGroups, mapEntries, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
-import {SAVED_PAPERS_KEY, readSavedPapers} from '../saved-papers.mjs';
+import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.mjs';
+import {createAnalytics} from '../analytics.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
 
 const $ = selector => document.querySelector(selector);
 const svg = $('#floor-map');
 const stage = $('#map-stage');
+const analytics = createAnalytics();
 let selected = null, sessions = [], assignments = [], activeSession = '', catalogReady = false;
 let catalog = null;
 let finderUnavailable = false;
@@ -150,8 +152,36 @@ function renderAssignment() {
   chip.replaceChildren();
   const label = document.createElement('p');
   label.className = 'selection-card-label';
-  label.textContent = `${savedBoards.has(selected) ? '★ Saved · ' : ''}${activeSession ? `${currentSession()?.shortLabel} · ` : ''}Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
-  chip.append(label);
+  label.textContent = `${savedBoards.has(selected) ? 'Saved · ' : ''}${activeSession ? `${currentSession()?.shortLabel} · ` : ''}Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
+  const heading = document.createElement('div'); heading.className = 'selection-card-heading';
+  heading.append(label);
+  if (entry?.paperId) {
+    const isSaved = savedPapers.has(entry.paperId);
+    const save = document.createElement('button');
+    save.type = 'button'; save.id = 'selection-save'; save.className = 'selection-save';
+    save.setAttribute('aria-pressed', String(isSaved));
+    save.setAttribute('aria-label', `${isSaved ? 'Unstar' : 'Star'} ${displayTitle(entry)}`);
+    save.title = isSaved ? 'Remove saved paper' : 'Save paper';
+    const star = node('svg', {viewBox:'0 0 24 24', 'aria-hidden':'true', focusable:'false'});
+    star.append(node('path', {d:'M12 3.6l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.62 6.9 19.3l.98-5.68L3.75 9.6l5.7-.83z'}));
+    save.append(star);
+    save.addEventListener('click', () => {
+      const updated = setSavedPaper(entry.paperId, !isSaved);
+      if (updated === null) {
+        const error = document.createElement('p'); error.className = 'selection-save-error';
+        error.setAttribute('role','status'); error.textContent = 'Could not update saved papers in this browser.';
+        chip.querySelector('.selection-save-error')?.remove(); chip.append(error);
+        return;
+      }
+      savedPapers = updated;
+      analytics.track(isSaved ? 'shortlist_remove' : 'shortlist_add');
+      refreshAssignments(); renderPaperResults();
+      $('#selection-save')?.focus({preventScroll:true});
+      $('#map-status').textContent = `${isSaved ? 'Removed from' : 'Added to'} saved papers: ${displayTitle(entry)}.`;
+    });
+    heading.append(save);
+  }
+  chip.append(heading);
   const paperTitle = document.createElement('h2'); paperTitle.className = 'chip-title';
   if (entry) renderTitle(paperTitle, displayTitle(entry));
   else paperTitle.textContent = conflicts.length ? 'Conflicting handbook entries' : catalogReady ? 'No verified paper assignment' : 'Floor plan position';

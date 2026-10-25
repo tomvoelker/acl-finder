@@ -108,6 +108,7 @@ def build():
         map_app = map_app.replace(f"'./{original}'", f"'./{versioned}'")
     map_app = map_app.replace("'../math-titles.mjs'", f"'../{math_name}'")
     map_app = map_app.replace("'../saved-papers.mjs'", f"'../{saved_name}'")
+    map_app = map_app.replace("'../analytics.mjs'", f"'../{analytics_name}'")
     map_app_name = asset("map.mjs", map_app.encode(), map_output)
     map_css_name = asset("map.css", (ROOT / "poster-map/map.css").read_bytes(), map_output)
     map_html = (ROOT / "poster-map/index.html").read_text().replace('src="map.mjs"', f'src="{map_app_name}"')

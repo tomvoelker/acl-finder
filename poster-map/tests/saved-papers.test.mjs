@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {SAVED_PAPERS_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList} from '../../saved-papers.mjs';
+import {SAVED_PAPERS_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList, setSavedPaper} from '../../saved-papers.mjs';
 import {sessionGroups, mapEntries, savedAssignments} from '../catalog.mjs';
 
 test('saved papers use the finder key and tolerate malformed or unavailable storage', () => {
@@ -41,6 +41,31 @@ test('existing and explicitly emptied lists never get the default paper added ba
   assert.deepEqual([...readSavedPapers(storage)], ['someone-else']);
   assert.equal(isDefaultSavedList(null), false);
   assert.equal(isDefaultSavedList({getItem() { throw new Error('Blocked'); }}), false);
+});
+
+test('map saves merge the latest list and unstar the default without restoring it', () => {
+  let stored = null;
+  const storage = {
+    getItem: () => stored,
+    setItem(key, value) { assert.equal(key, SAVED_PAPERS_KEY); stored = value; },
+  };
+  assert.deepEqual([...setSavedPaper(DEFAULT_SAVED_PAPER_ID, false, storage)], []);
+  assert.deepEqual([...readSavedPapers(storage)], []);
+  stored = JSON.stringify(['saved-in-another-tab']);
+  assert.deepEqual([...setSavedPaper('map-paper', true, storage)], ['saved-in-another-tab','map-paper']);
+  stored = JSON.stringify(['saved-in-another-tab','map-paper','newer-tab-save']);
+  assert.deepEqual([...setSavedPaper('map-paper', false, storage)], ['saved-in-another-tab','newer-tab-save']);
+  assert.deepEqual([...readSavedPapers(storage)], ['saved-in-another-tab','newer-tab-save']);
+});
+
+test('failed map storage reads never overwrite an existing list and failed writes report failure', () => {
+  let writes = 0;
+  const blockedRead = { getItem() { throw new Error('Blocked'); }, setItem() { writes++; } };
+  assert.equal(setSavedPaper('paper', true, blockedRead), null);
+  assert.equal(writes, 0);
+  const blockedWrite = { getItem: () => '["existing"]', setItem() { throw new Error('Full'); } };
+  assert.equal(setSavedPaper('paper', true, blockedWrite), null);
+  for (const id of ['', null, 1, 'x'.repeat(80)]) assert.equal(setSavedPaper(id, true, blockedRead), null);
 });
 
 test('a blocked default localStorage getter does not prevent loading saved papers', () => {

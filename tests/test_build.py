@@ -88,6 +88,7 @@ class BuildTests(unittest.TestCase):
             map_app = (map_output / map_app_name).read_text()
             self.assertIn(f"'../{math_name}'", map_app)
             self.assertIn(f"'../{saved_name}'", map_app)
+            self.assertIn(f"'../{analytics_name}'", map_app)
             self.assertIn(f'src="../{theme_name}"', map_html)
             self.assertLess(map_html.index(theme_name), map_html.index(map_css_name), "Map theme applies before CSS")
             for name in [map_app_name, map_css_name] + re.findall(r"from './([^']+)'", map_app):
