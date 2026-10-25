@@ -30,6 +30,8 @@ A separate Cloudflare Worker records action categories in the `emnlp_finder_even
 
 The action payload contains only an allowlisted event name. It contains no search text, author names, paper IDs, shortlist contents, email addresses, visitor IDs, or page URLs. The Worker stores the category, a count, and Analytics Engine’s timestamp. It has no public read endpoint. Tracking is disabled on local and preview hosts and for browsers that send Do Not Track or Global Privacy Control. The counter does not retry failed requests, so blocked or interrupted requests can be missing. Counts are approximate usage indicators and can include forged events.
 
+Open [Analytics Engine Studio](https://dash.cloudflare.com/2935c549fd1faa5c6c59a17b5659101e/workers/analytics-engine/studio) and run [`worker/action-counts.sql`](worker/action-counts.sql) for action totals over the last seven days. The query uses sampling weights so higher traffic still produces estimated totals. Initial counts include release verification events.
+
 Collector source and deployment configuration are in `worker/`. Its origin check accepts only the production site, request bodies are limited to 128 bytes, and extra fields are rejected. Worker request logging stays disabled. Deploy collector changes separately with `npx wrangler deploy --config worker/wrangler.jsonc` after authenticating to the correct Cloudflare account. The GitHub Pages workflow deploys only the static finder.
 
 ## Schedule data
