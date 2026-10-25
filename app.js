@@ -9,6 +9,7 @@
 import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices, authorKey, indexAuthors, searchState } from './schedule-view.mjs';
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
+import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery } from './poster-view.mjs';
 
 (() => {
   const analytics = createAnalytics();
@@ -74,6 +75,7 @@ import { createAnalytics } from './analytics.mjs';
   const slugify = (s) => fold(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
 
   let conference = {};
+  let posterSessions = new Map();
   let tz = DEFAULT_TZ;
   let sourceUrl = null;
   let updatedLabel = '';
@@ -270,6 +272,8 @@ import { createAnalytics } from './analytics.mjs';
       presenterNote: text(raw.presenterNote), room: text(raw.room), session: text(raw.session),
       topic: text(raw.topic), date: validDate(raw.date), start: validTime(raw.start), end: validTime(raw.end),
       timeZone: text(raw.timeZone), status: text(raw.status), scheduleNote: text(raw.scheduleNote),
+      poster: readPosterLocation(raw, posterSessions), posterIssue: text(raw.posterLocationIssue),
+      posterClaimedBoard: Number.isInteger(raw.posterClaimedBoard) && raw.posterClaimedBoard >= 1 && raw.posterClaimedBoard <= 424 ? raw.posterClaimedBoard : null,
       sourceRow: Number.isInteger(raw.sourceRow) && raw.sourceRow > 0 ? raw.sourceRow : null,
       anthologyUrl: typeof raw.anthologyId === 'string' && /^\d{4}\.[a-z0-9-]+\.[1-9]\d*$/.test(raw.anthologyId)
         ? `https://aclanthology.org/${raw.anthologyId}/` : null,
@@ -282,7 +286,7 @@ import { createAnalytics } from './analytics.mjs';
     p._timed = p.status === 'scheduled' && !p.scheduleNote && !!p.date && !!p.start;
     p._bucket = p.status === 'desk rejected' ? 4 : p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
     p._day = p._inactive ? null : p.date || 'undated';
-    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
+    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic, p.poster ? `board ${p.poster.board} board${p.poster.board} ${p.poster.label}` : null, p.posterIssue].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);
     return p;
   }
@@ -398,6 +402,8 @@ import { createAnalytics } from './analytics.mjs';
         [p.session, p.topic].filter(Boolean).join(' — '),
         p.presenter ? `Presenter: ${p.presenter}` : null,
         `Paper ID: ${p.id}`,
+        p.poster ? `Handbook poster: ${p.poster.label}, board ${p.poster.board}, ${p.poster.date} ${p.poster.start}–${p.poster.end}, ${p.poster.room}.` : p.posterIssue,
+        p.poster ? `Poster map: ${new URL(posterMapHref(p.poster), location.href).href}` : null,
         `Budapest local time. Unofficial schedule snapshot (updated ${updatedLabel}). Check ${PROGRAM_URL} for changes.`,
       ].filter(Boolean).join('\n');
       lines.push(
@@ -578,7 +584,8 @@ import { createAnalytics } from './analytics.mjs';
   /* ---------- Filtering ---------- */
 
   function update({ typing = false, scroll = true } = {}) {
-    terms = fold(state.q).split(/\s+/).filter(Boolean);
+    const posterQuery = parsePosterQuery(state.q);
+    terms = fold(posterQuery.text).split(/\s+/).filter(Boolean);
     const n = FACETS.length;
     const dayCounts = new Map();
     const counts = FACETS.map(() => new Map());
@@ -586,7 +593,7 @@ import { createAnalytics } from './analytics.mjs';
     const authorPapers = state.author ? authors.get(state.author) || new Set() : null;
     for (const p of papers) {
       if (authorPapers && !authorPapers.has(p)) continue;
-      let m = 0;
+      let m = matchesPosterQuery(p, posterQuery.boards) ? 0 : 1;
       for (const t of terms) if (!p._hay.includes(t)) { m |= 1; break; }
       if (state.saved && !shortlist.has(p._key)) m |= 2;
       if (state.day !== 'all' && p._day !== state.day) m |= 4;
@@ -777,6 +784,12 @@ import { createAnalytics } from './analytics.mjs';
       }
       where.append(h('span', { class: `paper__room${p.room ? '' : ' is-missing'}` }, p.room || 'Room not listed'));
     }
+    if (p.poster) {
+      where.append(newTab(posterMapHref(p.poster), `Board ${p.poster.board} ↗`,
+        ` for ${p.poster.label}. Locate this poster on the map (opens in a new tab)`, 'paper__board'));
+    } else if (p.posterIssue) {
+      where.append(h('span', { class: 'paper__board-warning', title: p.posterIssue }, 'Board unconfirmed'));
+    }
     if (p.presentation && !STATUS_LIKE.has(p.presentation)) {
       where.append(h('span', { class: `fmt fmt--${FORMAT_CLASS[p.presentation] || 'other'}` }, p.presentation));
     }
@@ -808,6 +821,12 @@ import { createAnalytics } from './analytics.mjs';
     }
     if (flags.length) body.append(h('p', { class: 'paper__flags' }, flags));
 
+    if (p.poster && posterSlotDiffers(p, p.poster)) {
+      body.append(h('p', { class: 'paper__poster-note' },
+        `Handbook poster slot: ${p.poster.label} · ${dateInfo(p.poster.date).short} · ${p.poster.start}–${p.poster.end} · ${p.poster.room}. The source sheet lists different presentation details.`));
+    } else if (p.posterIssue) {
+      body.append(h('p', { class: 'paper__poster-note' }, p.posterIssue));
+    }
     const note = scheduleNote(p);
     if (note) body.append(note);
 
@@ -1107,6 +1126,7 @@ import { createAnalytics } from './analytics.mjs';
     }
     sourceUrl = safeSourceUrl(conference.sourceUrl) || safeSourceUrl(FALLBACK_SOURCE);
 
+    posterSessions = new Map((json.posterSessions || []).map(slot => [slot.id, slot]));
     papers = json.papers.map(normalize).filter(Boolean).sort(compare);
     byKey = new Map(papers.map((p) => [p._key, p]));
     authors = indexAuthors(papers);

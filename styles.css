@@ -312,6 +312,11 @@ abbr[title] { text-decoration: none; cursor: help; }
 .paper__time { font: 600 .8125rem/1.5 var(--font-ui); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .paper__time abbr { font: 500 .6875rem var(--font-ui); color: var(--muted); }
 .paper__room { color: var(--muted); }
+.paper__board { display: inline-flex; align-items: center; min-height: 32px; padding: 3px 8px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--accent-tint); color: var(--accent-strong); font-weight: 600; text-decoration: none; }
+.paper__board:hover { border-color: currentColor; }
+.paper__board-warning { color: var(--amber); font-weight: 600; }
+.paper__poster-note { margin-top: 7px; padding: 7px 9px; border-left: 2px solid var(--amber-rule); background: var(--amber-tint); color: var(--amber); font-size: .8125rem; }
+
 .paper__where .fmt { margin-top: 3px; }
 .paper__room.is-missing { font-size: .8125rem; font-weight: 500; color: var(--muted); }
 .paper__body { grid-area: body; min-width: 0; }

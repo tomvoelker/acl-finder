@@ -22,7 +22,7 @@ Save papers to a browser-local shortlist and export confirmed presentations as c
 
 ## Usage stats and contact
 
-A small LinkedIn icon in the header links to Tom Völker’s profile. The footer links to `emnlp-finder@tomvoelker.de` for questions and corrections. LinkedIn loads only after following the link. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form. The header keeps the official programme, venue, LinkedIn icon and theme control together.
+A small LinkedIn icon in the header links to Tom Völker’s profile. The footer links to `emnlp-finder@tomvoelker.de` for questions and corrections. LinkedIn loads only after following the link. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form. The header keeps the official programme, poster map, LinkedIn icon and theme control together. The map’s source notes link to the official venue information.
 
 The footer’s native **Privacy** disclosure works without JavaScript. It identifies Tom Völker as the personal operator and describes GitHub hosting, Cloudflare statistics and retention, browser storage, public programme data, email contact, transfers and visitor rights. Provider policies are linked in the notice.
 
@@ -35,6 +35,22 @@ The action payload contains only an allowlisted event name. It contains no searc
 Open [Analytics Engine Studio](https://dash.cloudflare.com/2935c549fd1faa5c6c59a17b5659101e/workers/analytics-engine/studio) and run [`worker/action-counts.sql`](worker/action-counts.sql) for action totals over the last seven days. The query uses sampling weights so higher traffic still produces estimated totals. Initial counts include release verification events.
 
 Collector source and deployment configuration are in `worker/`. Its origin check accepts only the production site, request bodies are limited to 128 bytes, and extra fields are rejected. Worker request logging stays disabled. Deploy collector changes separately with `npx wrangler deploy --config worker/wrangler.jsonc` after authenticating to the correct Cloudflare account. The GitHub Pages workflow deploys only the static finder.
+
+## Poster boards and map
+
+A **Board N** link on a paper opens its session and position on the [poster map](https://emnlp.vlkr.org/poster-map/). The header also opens the full map. Choose the session before looking up a board, because positions are reused. Board numbers and titles come from the [conference handbook](https://drive.google.com/file/d/1UGPjD7jPfax0RVaZPcb1gZhCUhK4v3ti/view), modified on 24 October 2026. The venue geometry comes from the photograph reconstructed in the map chat. It remains schematic, with the original cautions around positions 41–56.
+
+The compact catalog, `data/poster-boards.json`, contains 2,833 explicit board labels across A–G and the Industry session. It matches 2,832 paper IDs, of which 2,830 have unambiguous locations. The map shows one additional handbook title that has no matched finder ID. D and Industry share the same October 26, 11:00–12:30 slot and appear together on the map. Industry occupies boards 1–156. The handbook starts the main D list at 158. Board 311 is printed for two D papers, so neither paper receives a confirmed board badge and the map shows the conflict.
+
+The importer preserves 32 differences between the handbook and the source sheet. The finder retains the sheet’s programme and separately identifies a handbook poster slot when its time, room or presentation format differs. Calendar exports retain the programme time and include the separately labelled handbook poster information. Search accepts board numbers, for example `board 166`. Map details provide the handbook page, paper title, authors and a link back to the matching finder entry. The public map is read-only and does not load or alter old browser-local draft assignments.
+
+To reproduce the board catalog, download the original handbook PDF and run:
+
+```sh
+python3 scripts/import_handbook.py --source /path/to/handbook.pdf
+```
+
+This extraction requires `pdftotext` from Poppler. The site build uses the committed compact catalog and requires no PDF tools. Source SHA-256, modification time and physical PDF page numbers are stored with the catalog. The importer uses explicit **Board** labels, exact normalized publication or schedule titles, and narrowly reviewed aliases for glyphs missing in the PDF. It rejects unmarked physical collisions. The PDF and intermediate extraction previews stay local.
 
 ## Schedule data
 

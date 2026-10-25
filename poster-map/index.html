@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>Unofficial poster map · EMNLP 2026</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../vendor/katex-0.19.1/katex.min.css">
+  <link rel="stylesheet" href="map.css">
+  <script src="map.mjs" type="module"></script>
+  <script src="../traffic.mjs" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#board-number">Skip to board finder</a>
+  <header class="header">
+    <div class="identity">
+      <span class="map-brand"><img src="../conference-logo.png" width="136" height="24" alt="EMNLP 2026 Budapest"><span class="map-brand__ribbon">Unofficial</span></span>
+      <h1>Poster map</h1>
+      <a class="finder-link" href="../">Papers</a>
+    </div>
+    <label class="visually-hidden" for="session">Poster session</label>
+    <select id="session" class="session-select" aria-describedby="session-note" disabled><option value="">Sessions…</option></select>
+    <form id="find-form" class="finder">
+      <label class="visually-hidden" for="board-number">Find a board</label>
+      <input id="board-number" type="number" min="1" max="424" step="1" placeholder="1–424" required inputmode="numeric">
+      <button type="submit">Find</button>
+    </form>
+    <button id="open-details" type="button" aria-haspopup="dialog" aria-controls="details-panel">Details</button>
+  </header>
+  <main aria-label="Interactive poster floor plan">
+    <div id="map-stage" class="map-stage">
+      <svg id="floor-map" viewBox="0 0 1320 1280" aria-label="424 numbered poster positions" aria-describedby="map-help">
+        <title>EMNLP poster floor plan</title>
+        <desc>Paired poster positions arranged as in the venue photograph. Select a board or use the board finder. Arrow keys move between positions.</desc>
+      </svg>
+    </div>
+    <button id="selection-chip" class="selection-chip" type="button" aria-haspopup="dialog" aria-controls="details-panel" hidden></button>
+    <p id="map-help" class="map-help">Drag to move · Pinch or double-tap to zoom</p>
+    <div class="zoom-controls" role="group" aria-label="Map zoom">
+      <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+      <output id="zoom-level" aria-label="Zoom level">100%</output>
+      <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+      <button id="fit" type="button" aria-label="Fit whole map">Fit</button>
+    </div>
+    <p id="map-status" class="visually-hidden" role="status" aria-live="polite"></p>
+  </main>
+  <dialog id="details-panel" aria-labelledby="details-title">
+    <div class="panel-header">
+      <h2 id="details-title">Map details</h2>
+      <button id="close-details" type="button" aria-label="Close details">Close</button>
+    </div>
+    <div class="panel-body">
+      <section class="selection" aria-labelledby="selection-title">
+        <h3 id="selection-title">Choose a board</h3>
+        <p id="selection-location" class="muted">Select a number on the map or use the board finder.</p>
+        <p id="selection-note" class="source-note" hidden></p>
+        <div id="selection-assignment" class="assignment-detail" hidden></div>
+      </section>
+      <section class="session-panel" aria-label="Selected poster session">
+        <p id="session-note" class="muted small">Loading handbook assignments…</p>
+        <p id="assignment-count" class="data-status">Handbook assignments unavailable</p>
+      </section>
+      <section class="paper-search-panel">
+        <label for="paper-search">Find a paper in this session</label>
+        <input id="paper-search" type="search" placeholder="Title, author or paper ID" disabled autocomplete="off">
+        <div id="paper-results" class="paper-results" aria-live="polite"></div>
+      </section>
+      <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+      <details class="source-details">
+        <summary>Legend and source notes</summary>
+        <p><a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener noreferrer">Official venue information</a> · <a href="../#privacy">Privacy</a></p>
+        <div class="legend">
+          <span><i class="key empty"></i>No listing</span>
+          <span><i class="key assigned"></i>Handbook listing</span>
+          <span><i class="key source"></i>Yellow in source</span>
+          <span><i class="key review"></i>Check numbering</span>
+        </div>
+        <p>424 numbered positions, reconstructed from the supplied photograph. Spacing and face placement are schematic. Displaced labels have been aligned with the numbered rows.</p>
+        <p>Positions 41–56 have overlapping source labels and need confirmation. Both printed “Section 5” labels are retained.</p>
+        <p>The photograph’s “Poster Display TV’s” area is for demo sessions.</p>
+        <p>Yellow highlights and markers B1–B10 are reproduced without assuming their meaning. No entrance or compass direction is identified.</p>
+        <p>Paper assignments come from the conference handbook. Board numbers are reused between sessions. An unlisted board does not establish whether a paper is presenting.</p>
+        <p><a id="handbook-source" hidden>Conference handbook (PDF)</a></p>
+        <p>Drag or swipe to pan. Pinch to zoom, or double-tap to zoom in. Use Fit to see the whole map. On a trackpad, scroll to pan and pinch to zoom.</p>
+      </details>
+    </div>
+  </dialog>
+</body>
+</html>

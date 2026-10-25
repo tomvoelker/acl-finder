@@ -30,7 +30,7 @@
       <div class="masthead__actions">
         <nav class="masthead__nav" aria-label="Conference and creator links">
           <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">Official programme<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-          <a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener">Venue<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+          <a href="poster-map/">Poster map</a>
           <a class="masthead__social" title="Tom Völker on LinkedIn" href="https://www.linkedin.com/in/tom-v%C3%B6lker-0485332b9/" target="_blank" rel="noopener noreferrer" aria-label="Tom Völker on LinkedIn (opens in a new tab)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="masthead__social-icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
   <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
 </svg></a>
@@ -78,9 +78,9 @@ THE SOFTWARE.
     <div class="toolbar" id="toolbar">
       <div class="wrap toolbar__inner">
         <form class="search" id="search-form" role="search" action="./">
-          <label class="visually-hidden" for="q">Search by title, author, presenter, paper ID or topic</label>
+          <label class="visually-hidden" for="q">Search by title, author, presenter, paper ID, topic or board number</label>
           <svg class="search__icon icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 20 20"/></svg>
-          <input class="search__input" id="q" name="q" type="search" placeholder="Title, author, presenter, paper ID or topic" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="search-hint">
+          <input class="search__input" id="q" name="q" type="search" placeholder="Title, author, paper ID or board number" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="search-hint">
           <kbd class="search__kbd" aria-hidden="true">/</kbd>
           <button class="search__clear" id="q-clear" type="button" hidden>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -131,7 +131,7 @@ THE SOFTWARE.
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Unofficial schedule from the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>. Author lists from <a href="https://aclanthology.org/events/emnlp-2026/" target="_blank" rel="noopener">ACL Anthology</a>; presenters are shown in bold. Check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for changes.</p>
+      <p>Unofficial schedule from the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>. Author lists from <a href="https://aclanthology.org/events/emnlp-2026/" target="_blank" rel="noopener">ACL Anthology</a>; presenters are shown in bold. Check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for changes. Poster board numbers come from the <a href="https://drive.google.com/file/d/1UGPjD7jPfax0RVaZPcb1gZhCUhK4v3ti/view" target="_blank" rel="noopener">conference handbook</a>.</p>
       <p class="site-footer__credit">Made by Tom Völker · <a href="https://www.informatik.uni-wuerzburg.de/datascience/" target="_blank" rel="noopener">Data Science Chair, University of Würzburg</a>.</p>
       <p>Your shortlist stays in this browser. Questions or corrections? Email <a href="mailto:emnlp-finder@tomvoelker.de?subject=EMNLP%202026%20Paper%20Finder%20feedback" data-contact-link>emnlp-finder@tomvoelker.de</a>.</p>
       <details class="privacy-notice" id="privacy">
@@ -149,7 +149,7 @@ THE SOFTWARE.
           <p>The purpose is to understand usage and improve the finder. Where technical personal data is processed for this purpose, the basis is the legitimate interest in operating and improving the site under Article 6(1)(f) GDPR. Both analytics streams stay off when your browser signals Do Not Track or Global Privacy Control.</p>
 
           <h3>Browser storage and public programme data</h3>
-          <p>Your shortlist and explicit theme choice stay in this browser’s local storage until you remove them or clear site data. They are not uploaded. Search runs in your browser and its current state appears in the URL. Public paper, author and presenter information comes from the conference schedule, ACL Anthology and Underline. It remains available while this finder is online to help people find conference work, a legitimate interest under Article 6(1)(f) GDPR. Contact me for corrections or data-rights requests.</p>
+          <p>Your shortlist and explicit theme choice stay in this browser’s local storage until you remove them or clear site data. They are not uploaded. Search runs in your browser and its current state appears in the URL. Public paper, author and presenter information comes from the conference schedule and handbook, ACL Anthology and Underline. It remains available while this finder is online to help people find conference work, a legitimate interest under Article 6(1)(f) GDPR. Contact me for corrections or data-rights requests.</p>
 
           <h3>Email, external links and providers</h3>
           <p>Email contact is optional. Sending a message shares your address and message with the email services involved. I use it to answer your enquiry under Article 6(1)(f) GDPR and retain it only as long as needed to handle the enquiry and any applicable legal obligations. The LinkedIn icon is included in this page. LinkedIn receives no request from it until you follow the link.</p>

@@ -34,7 +34,8 @@ class BuildTests(unittest.TestCase):
             analytics_name = re.search(r"from './(analytics\.[a-f0-9]+\.mjs)'", app).group(1)
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
             math_name = re.search(r"from './(math-titles\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
+            poster_view_name = re.search(r"from './(poster-view\.[a-f0-9]+\.mjs)'", app).group(1)
+            for name in [poster_view_name, app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
@@ -55,14 +56,41 @@ class BuildTests(unittest.TestCase):
             publications = {paper["id"]: paper for paper in json.loads((ROOT / "data/anthology-catalog.json").read_text())["papers"]}
             self.assertIn("/lecture/162458-multi-block-diffusion-language-models", by_id["6176-MAIN"]["underlineUrl"])
             self.assertNotIn("underlineUrl", by_id["403-MAIN"])
+            catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
+            verified = {entry["paperId"]: entry for entry in catalog["entries"] if entry["paperId"] and entry["verified"]}
+            self.assertEqual(len(verified), 2830)
+            self.assertEqual(by_id["9736-FIND"]["posterBoard"], 200)
+            self.assertEqual(by_id["9736-FIND"]["posterSession"], "F")
+            self.assertEqual(by_id["4212-FIND"]["posterBoard"], 166)
+            for paper_id in ["2638-MAIN", "6137-MAIN"]:
+                self.assertNotIn("posterBoard", by_id[paper_id])
+                self.assertIn("unconfirmed", by_id[paper_id]["posterLocationIssue"])
             for paper in deployed["papers"]:
+                if paper["id"] in verified:
+                    entry = verified[paper["id"]]
+                    self.assertEqual((paper["posterBoard"], paper["posterSession"], paper["posterSourcePage"]),
+                                     (entry["board"], entry["session"], entry["boardPage"]))
+                for key in ["posterBoard", "posterSession", "posterSourcePage", "posterLocationIssue", "posterClaimedBoard"]:
+                    paper.pop(key, None)
                 if "anthologyId" in paper:
                     self.assertEqual(paper["authors"], publications[paper["anthologyId"]]["authors"])
                 paper.pop("anthologyId", None)
                 paper.pop("authors", None)
                 paper.pop("underlineUrl", None)
+            self.assertEqual(deployed.pop("posterSessions"), catalog["sessions"])
             self.assertEqual(deployed, source, "Adding paper links must not change the schedule")
-            self.assertEqual([p.name for p in (output / "data").iterdir()], ["papers.json"])
+            self.assertEqual(sorted(p.name for p in (output / "data").iterdir()), ["papers.json", "poster-boards.json"])
+            map_output = output / "poster-map"
+            map_html = (map_output / "index.html").read_text()
+            map_app_name = re.search(r'src="(map\.[a-f0-9]+\.mjs)"', map_html).group(1)
+            map_css_name = re.search(r'href="(map\.[a-f0-9]+\.css)"', map_html).group(1)
+            map_app = (map_output / map_app_name).read_text()
+            self.assertIn(f"'../{math_name}'", map_app)
+            for name in [map_app_name, map_css_name] + re.findall(r"from './([^']+)'", map_app):
+                content = (map_output / name).read_bytes()
+                self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
+            self.assertFalse((map_output / "qa.md").exists())
+            self.assertFalse((map_output / "tests").exists())
 
 
 if __name__ == "__main__":
