@@ -20,6 +20,18 @@ The finder selects the current conference day in Budapest unless the URL specifi
 
 Save papers to a browser-local shortlist and export confirmed presentations as calendar files. Missing, conflicting, withdrawn, desk-rejected, and non-presenting assignments are excluded from calendar export.
 
+## Usage stats and contact
+
+The header and footer link to `emnlp-finder@tomvoelker.de` for questions and corrections. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form.
+
+Cloudflare Web Analytics reports traffic, referrers, countries, devices, and performance for `emnlp.vlkr.org`. Its public site token lives in `traffic.mjs`. SPA tracking is disabled because filters and author pages use query-only navigation. A filter change does not count as another page load. View traffic in the [private Cloudflare dashboard](https://dash.cloudflare.com/2935c549fd1faa5c6c59a17b5659101e/web-analytics/overview?siteTag~in=ff02a94769c8425b96158f95afd66da9&excludeBots=Yes).
+
+A separate Cloudflare Worker records action categories in the `emnlp_finder_events` Analytics Engine dataset. It accepts searches, filter changes, author and schedule links, shortlist additions and removals, shortlist views, calendar exports, Anthology and Underline links, and contact clicks. A search counts after one second without typing or on submission. Submitting an already counted query does not add another count. Clearing a whole shortlist counts as one removal action. Calendar counts mean a download was started, not that the calendar app imported it.
+
+The action payload contains only an allowlisted event name. It contains no search text, author names, paper IDs, shortlist contents, email addresses, visitor IDs, or page URLs. The Worker stores the category, a count, and Analytics Engine’s timestamp. It has no public read endpoint. Tracking is disabled on local and preview hosts and for browsers that send Do Not Track or Global Privacy Control. The counter does not retry failed requests, so blocked or interrupted requests can be missing. Counts are approximate usage indicators and can include forged events.
+
+Collector source and deployment configuration are in `worker/`. Its origin check accepts only the production site, request bodies are limited to 128 bytes, and extra fields are rejected. Worker request logging stays disabled. Deploy collector changes separately with `npx wrangler deploy --config worker/wrangler.jsonc` after authenticating to the correct Cloudflare account. The GitHub Pages workflow deploys only the static finder.
+
 ## Schedule data
 
 The source is the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490), linked from the [conference program](https://2026.emnlp.org/program/). The committed snapshot was retrieved on 24 October 2026 and contains 5,603 entries across Main, Findings, Industry, Demonstrations, TACL, and Computational Linguistics.

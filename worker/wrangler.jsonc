@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "emnlp-finder-stats",
+  "main": "collector.mjs",
+  "compatibility_date": "2026-10-25",
+  "workers_dev": true,
+  "analytics_engine_datasets": [
+    { "binding": "ANALYTICS", "dataset": "emnlp_finder_events" }
+  ],
+  "observability": { "enabled": false }
+}

@@ -11,7 +11,7 @@ from import_underline import match_presentations
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
 FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
-         "math-titles.mjs", "vendor/katex-0.19.1/katex.mjs", "vendor/katex-0.19.1/katex.min.css", "vendor/katex-0.19.1/LICENSE",
+         "analytics.mjs", "traffic.mjs", "math-titles.mjs", "vendor/katex-0.19.1/katex.mjs", "vendor/katex-0.19.1/katex.min.css", "vendor/katex-0.19.1/LICENSE",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "LICENSE"]
 
@@ -52,12 +52,16 @@ def build():
     math_name = asset("math-titles.mjs", (ROOT / "math-titles.mjs").read_bytes())
     app = (ROOT / "app.js").read_text().replace("'./schedule-view.mjs'", f"'./{module_name}'")
     app = app.replace("'./math-titles.mjs'", f"'./{math_name}'")
+    analytics_name = asset("analytics.mjs", (ROOT / "analytics.mjs").read_bytes())
+    app = app.replace("'./analytics.mjs'", f"'./{analytics_name}'")
     app_name = asset("app.js", app.encode())
+    traffic_name = asset("traffic.mjs", (ROOT / "traffic.mjs").read_bytes())
     theme_name = asset("theme.js", (ROOT / "theme.js").read_bytes())
     styles_name = asset("styles.css", (ROOT / "styles.css").read_bytes())
     favicon_png = asset("favicon.png", (ROOT / "favicon.png").read_bytes())
     favicon_svg = asset("favicon.svg", (ROOT / "favicon.svg").read_bytes())
     html = (ROOT / "index.html").read_text().replace('src="app.js"', f'src="{app_name}"')
+    html = html.replace('src="traffic.mjs"', f'src="{traffic_name}"')
     html = html.replace('href="styles.css"', f'href="{styles_name}"')
     html = html.replace('src="theme.js"', f'src="{theme_name}"')
     html = html.replace('href="favicon.png"', f'href="{favicon_png}"')

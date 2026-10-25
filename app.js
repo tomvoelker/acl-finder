@@ -8,8 +8,10 @@
 
 import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices, authorKey, indexAuthors, searchState } from './schedule-view.mjs';
 import { renderTitle, titleSearchText } from './math-titles.mjs';
+import { createAnalytics } from './analytics.mjs';
 
 (() => {
+  const analytics = createAnalytics();
   const DATA_URL = 'data/papers.json';
   const PAGE_SIZE = 80;
   const NONE = '__none__';
@@ -335,6 +337,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
   function toggleSaved(p) {
     if (shortlist.has(p._key)) shortlist.delete(p._key);
     else shortlist.add(p._key);
+    analytics.track(shortlist.has(p._key) ? 'shortlist_add' : 'shortlist_remove');
     persistShortlist();
     refreshStars();
     if (state.saved) {
@@ -416,6 +419,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
     const a = h('a', { href: url, download: filename, hidden: true });
     document.body.append(a);
     a.click();
+    analytics.track('calendar_export');
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 10000);
     const skipped = list.length - events.length;
@@ -466,6 +470,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
     if (!loaded) return; // Typing before the data arrives is picked up by init().
     const url = urlFromState();
     if (url !== location.pathname + location.search) {
+      if (kind === 'filter') analytics.track('filter');
       if (kind === 'typing' && lastNav === 'typing') history.replaceState(null, '', url);
       else history.pushState(null, '', url);
     }
@@ -474,6 +479,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
   }
 
   function resetAll() {
+    analytics.cancelSearch();
     clearTimeout(typingTimer);
     Object.assign(state, blankState());
     syncControls();
@@ -485,6 +491,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
   }
 
   function openAuthor(name) {
+    analytics.cancelSearch();
     clearTimeout(typingTimer);
     Object.assign(state, blankState(), { author: authorKey(name) });
     syncControls();
@@ -494,6 +501,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
   }
 
   function openPaper(id) {
+    analytics.cancelSearch();
     clearTimeout(typingTimer);
     Object.assign(state, blankState(), { paper: id });
     syncControls();
@@ -677,6 +685,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
         type: 'button', class: 'btn btn--small',
         onclick: () => {
           if (!window.confirm(`Remove all ${saved.length} papers from your shortlist?`)) return;
+          analytics.track('shortlist_remove');
           shortlist.clear();
           persistShortlist();
           refreshStars();
@@ -978,10 +987,12 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
     els.form.addEventListener('submit', (e) => {
       e.preventDefault();
       clearTimeout(typingTimer);
+      analytics.search(els.q.value, { submit: true });
       applySearch();
       if (window.matchMedia('(max-width: 639px)').matches) els.q.blur();
     });
     els.q.addEventListener('input', () => {
+      analytics.search(els.q.value);
       if (!loaded) searchBeforeLoad = true;
       els.qClear.hidden = !els.q.value;
       clearTimeout(typingTimer);
@@ -997,6 +1008,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
       }
     });
     els.qClear.addEventListener('click', () => {
+      analytics.cancelSearch();
       els.q.value = '';
       clearTimeout(typingTimer);
       applySearch('filter');
@@ -1024,6 +1036,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
 
     els.savedBtn.addEventListener('click', () => {
       state.saved = !state.saved;
+      if (state.saved) analytics.track('shortlist_view');
       state.paper = null;
       syncControls();
       commit('filter');
@@ -1032,6 +1045,19 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
     els.nowBtn.addEventListener('click', jumpToNow);
 
     els.list.addEventListener('click', handleAction);
+    // Delegation also observes modified link clicks without changing navigation.
+    const trackLink = (e) => {
+      if (e.type === 'auxclick' && e.button !== 1) return;
+      const link = e.target.closest('a');
+      if (!link) return;
+      if (link.hasAttribute('data-contact-link')) analytics.track('contact_click');
+      else if (link.hasAttribute('data-author')) analytics.track('author_open');
+      else if (link.hasAttribute('data-permalink')) analytics.track('paper_open');
+      else if (link.hostname === 'aclanthology.org') analytics.track('anthology_open');
+      else if (link.hostname === 'underline.io') analytics.track('underline_open');
+    };
+    document.addEventListener('click', trackLink);
+    document.addEventListener('auxclick', trackLink);
     els.authorProfile.addEventListener('click', (e) => {
       const link = e.target.closest('a[data-programme]');
       if (!link || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -1050,6 +1076,7 @@ import { renderTitle, titleSearchText } from './math-titles.mjs';
     });
 
     window.addEventListener('popstate', () => {
+      analytics.cancelSearch();
       if (!loaded) return;
       clearTimeout(typingTimer);
       Object.assign(state, stateFromUrl());

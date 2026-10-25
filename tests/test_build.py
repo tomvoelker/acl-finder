@@ -29,10 +29,12 @@ class BuildTests(unittest.TestCase):
             theme_name = re.search(r'src="(theme\.[a-f0-9]+\.js)"', html).group(1)
             favicon_png = re.search(r'href="(favicon\.[a-f0-9]+\.png)"', html).group(1)
             favicon_svg = re.search(r'href="(favicon\.[a-f0-9]+\.svg)"', html).group(1)
+            traffic_name = re.search(r'src="(traffic\.[a-f0-9]+\.mjs)"', html).group(1)
             app = (output / app_name).read_text()
+            analytics_name = re.search(r"from './(analytics\.[a-f0-9]+\.mjs)'", app).group(1)
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
             math_name = re.search(r"from './(math-titles\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [app_name, css_name, module_name, math_name, theme_name, favicon_png, favicon_svg]:
+            for name in [app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
