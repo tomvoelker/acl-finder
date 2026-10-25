@@ -87,7 +87,8 @@ class BuildTests(unittest.TestCase):
                 paper.pop("oralSlotNote", None)
             self.assertEqual(deployed.pop("posterSessions"), catalog["sessions"])
             self.assertEqual(deployed, source, "Adding paper links must not change the schedule")
-            self.assertEqual(sorted(p.name for p in (output / "data").iterdir()), ["papers.json", "poster-boards.json"])
+            self.assertEqual(sorted(p.name for p in (output / "data").iterdir()), ["papers.json", "poster-boards.json", "poster-topics.json"])
+            self.assertEqual(json.loads((output / 'data/poster-topics.json').read_text()), json.loads((ROOT / 'data/poster-topics.json').read_text()))
             map_output = output / "poster-map"
             map_html = (map_output / "index.html").read_text()
             map_app_name = re.search(r'src="(map\.[a-f0-9]+\.mjs)"', map_html).group(1)

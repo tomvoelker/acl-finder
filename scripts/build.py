@@ -15,7 +15,7 @@ FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", 
          "analytics.mjs", "traffic.mjs", "poster-view.mjs", "math-titles.mjs", "vendor/katex-0.19.1/katex.mjs", "vendor/katex-0.19.1/katex.min.css", "vendor/katex-0.19.1/LICENSE",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "data/poster-boards.json",
-         "poster-map/index.html", "poster-map/map.css", "poster-map/map.mjs", "poster-map/layout.mjs", "poster-map/camera.mjs", "poster-map/catalog.mjs", "LICENSE"]
+         "poster-map/index.html", "poster-map/map.css", "poster-map/map.mjs", "poster-map/layout.mjs", "poster-map/camera.mjs", "poster-map/catalog.mjs", "poster-map/topics.mjs", "data/poster-topics.json", "LICENSE"]
 
 
 def enrich_poster_boards(data, catalog):
@@ -62,6 +62,9 @@ def build():
         paper.update(underline_presentations.get(paper["id"], {}))
     poster_catalog = load_catalog(ROOT / "data/poster-boards.json")
     enrich_poster_boards(data, poster_catalog)
+    topics = json.loads((ROOT / "data/poster-topics.json").read_text())
+    if topics["handbookSHA256"] != hashlib.sha256((ROOT / "data/poster-boards.json").read_bytes()).hexdigest():
+        raise ValueError("Poster topics are stale. Regenerate them for the current handbook before building.")
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)
@@ -103,7 +106,7 @@ def build():
     map_output = OUTPUT / "poster-map"
     map_output.mkdir()
     map_modules = {name: asset(name, (ROOT / "poster-map" / name).read_bytes(), map_output)
-                   for name in ["layout.mjs", "camera.mjs", "catalog.mjs"]}
+                   for name in ["layout.mjs", "camera.mjs", "catalog.mjs", "topics.mjs"]}
     map_app = (ROOT / "poster-map/map.mjs").read_text()
     for original, versioned in map_modules.items():
         map_app = map_app.replace(f"'./{original}'", f"'./{versioned}'")
@@ -120,6 +123,7 @@ def build():
 
     (OUTPUT / "data").mkdir()
     shutil.copy2(ROOT / "data/poster-boards.json", OUTPUT / "data/poster-boards.json")
+    shutil.copy2(ROOT / "data/poster-topics.json", OUTPUT / "data/poster-topics.json")
     (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
     for name in ["conference-logo.png", "LICENSE"]:
         destination = OUTPUT / name

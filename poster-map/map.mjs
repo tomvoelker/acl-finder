@@ -4,6 +4,7 @@ import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.
 import {createAnalytics} from '../analytics.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
+import {validateTopics, topicForEntry, topicGroups} from './topics.mjs';
 
 const $ = selector => document.querySelector(selector);
 const svg = $('#floor-map');
@@ -12,6 +13,7 @@ const analytics = createAnalytics();
 let selected = null, sessions = [], assignments = [], activeSession = '', catalogReady = false;
 let catalog = null;
 let finderUnavailable = false;
+let topics = null, topicsEnabled = false, selectedTopic = null, topicSession = '';
 const papers = new Map();
 let savedPapers = readSavedPapers(), savedBoards = new Map(), savedStops = [];
 let viewport = {width: stage.clientWidth, height: stage.clientHeight};
@@ -77,6 +79,49 @@ function currentAssignment(number) { return assignmentAt(assignments, activeSess
 function conflictingEntries(number) { return assignmentAt(assignments, activeSession, number).conflicts; }
 function currentSession() { return sessions.find(session => session.id === activeSession); }
 function currentEntries() { return assignments.filter(entry => entry.session === activeSession); }
+function currentTopic(entry) { return topicForEntry(topics, activeSession, entry); }
+function renderTopicLegend() {
+  if (topicSession !== activeSession) { selectedTopic = null; topicSession = activeSession; }
+  const groups = topicGroups(topics, activeSession, currentEntries().filter(entry => currentAssignment(entry.board)));
+  const available = groups.length > 0;
+  const selectedGroup = topicsEnabled && groups.find(group => group.id === selectedTopic);
+  $('#topic-browse').hidden = !selectedGroup;
+  if (selectedGroup) $('#topic-browse').textContent = `Browse ${selectedGroup.count} posters`;
+  $('#topics-toggle').disabled = !available;
+  $('#topics-toggle').setAttribute('aria-pressed', String(topicsEnabled && available));
+  $('#topic-legend').hidden = !topicsEnabled || !available;
+  if (topics) $('#topics-note').textContent = available ? 'Experimental · Topics are inferred; colours change by session.' : 'Topics unavailable for this session.';
+  const legend = $('#topic-legend');
+  legend.replaceChildren();
+  if (!topicsEnabled || !available) return;
+  for (const group of [{id:null, label:'All topics', count:groups.reduce((n,g) => n+g.count, 0)}, ...groups]) {
+    const button = document.createElement('button'); button.type = 'button';
+    button.className = 'topic-key'; button.dataset.topic = group.id ?? 'all';
+    button.setAttribute('aria-pressed', String(selectedTopic === group.id));
+    if (group.color) {
+      const swatch = document.createElement('span'); swatch.className = 'topic-swatch';
+      swatch.style.backgroundColor = group.color; swatch.setAttribute('aria-hidden','true'); button.append(swatch);
+    }
+    const label = document.createElement('span'); label.textContent = group.label; button.append(label);
+    const count = document.createElement('span'); count.className = 'topic-count'; count.textContent = group.count; button.append(count);
+    button.addEventListener('click', () => {
+      selectedTopic = group.id;
+      refreshAssignments(); renderPaperResults();
+      $('#topic-legend').querySelector(`[data-topic="${group.id ?? 'all'}"]`)?.focus({preventScroll:true});
+      $('#map-status').textContent = group.id === null ? 'Showing all topics.' : `Highlighted ${group.count} posters: ${group.label}. Other boards remain selectable.`;
+    });
+    legend.append(button);
+  }
+}
+function topicLabel(entry) {
+  const topic = topicsEnabled && currentTopic(entry);
+  if (!topic) return null;
+  const label = document.createElement('p'); label.className = 'paper-topic';
+  const swatch = document.createElement('span'); swatch.className = 'topic-swatch';
+  swatch.style.backgroundColor = topic.color; swatch.setAttribute('aria-hidden','true');
+  label.append(swatch, document.createTextNode(`Inferred topic: ${topic.label}`));
+  return label;
+}
 function updateHash() {
   history.replaceState(null, '', `${location.pathname}${location.search}${boardHash(activeSession, selected)}`);
 }
@@ -186,6 +231,8 @@ function renderAssignment() {
   if (entry) renderTitle(paperTitle, displayTitle(entry));
   else paperTitle.textContent = conflicts.length ? 'Conflicting handbook entries' : catalogReady ? 'No verified paper assignment' : 'Floor plan position';
   chip.append(paperTitle);
+  const topic = topicLabel(entry);
+  if (topic) { chip.append(topic); detail.append(topic.cloneNode(true)); }
   const session = currentSession();
   if (session) {
     const time = document.createElement('p'); time.className = 'selection-card-time';
@@ -204,6 +251,7 @@ function renderAssignment() {
   chip.setAttribute('aria-label', `${sessionLabel}. Selected board ${selected}${savedBoards.has(selected) ? '. Saved paper' : ''}`);
 }
 function refreshAssignments() {
+  renderTopicLegend();
   savedBoards = savedAssignments(assignments, activeSession, savedPapers);
   savedStops = savedPosterStops(assignments, sessions, savedPapers);
   for (const board of BOARDS) {
@@ -212,8 +260,17 @@ function refreshAssignments() {
     element.classList.toggle('has-paper', Boolean(entry));
     element.classList.toggle('is-saved', savedBoards.has(board.number));
     element.classList.toggle('has-conflict', conflictingEntries(board.number).length > 0);
+    const topic = topicsEnabled ? currentTopic(entry) : null;
+    element.classList.toggle('has-topic', Boolean(topic));
+    element.classList.toggle('topic-dimmed', topicsEnabled && selectedTopic !== null && topic?.id !== selectedTopic);
+    if (topic) element.style.setProperty('--topic-color', topic.color);
+    else element.style.removeProperty('--topic-color');
     element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
     element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
+    if (topic) {
+      element.setAttribute('aria-label', `${element.getAttribute('aria-label')}, inferred topic: ${topic.label}`);
+      element.querySelector('title').textContent += ` · Inferred topic: ${topic.label}`;
+    }
   }
   $('#saved-map-count').textContent = `${savedStops.length} saved ${savedStops.length === 1 ? 'poster' : 'posters'}`;
   $('#next-saved').disabled = savedStops.length === 0;
@@ -229,14 +286,21 @@ function renderPaperResults() {
   results.replaceChildren();
   if (!catalogReady) return;
   const query = searchText(titleSearchText($('#paper-search').value)).trim();
-  if (!query) return;
+  const topicFilter = topicsEnabled && selectedTopic !== null;
+  if (!query && !topicFilter) return;
+  if (topicFilter) {
+    const note = document.createElement('p');
+    note.textContent = `Inferred topic: ${topics.sessions[activeSession].groups.find(g => g.id === selectedTopic).label}. Choose All topics to clear.`;
+    results.append(note);
+  }
   const words = query.split(/\s+/);
-  const matches = currentEntries().filter(entry => (entry.verified === true || conflictingEntries(entry.board).length) && words.every(word => searchText(`${titleSearchText(displayTitle(entry))} ${displayAuthors(entry)} ${entry.paperId || ''}`).includes(word)));
+  const matches = currentEntries().filter(entry => (entry.verified === true || conflictingEntries(entry.board).length) && (!topicFilter || currentTopic(entry)?.id === selectedTopic) && words.every(word => searchText(`${titleSearchText(displayTitle(entry))} ${displayAuthors(entry)} ${entry.paperId || ''}`).includes(word)));
   if (!matches.length) {
     const note = document.createElement('p');
     note.textContent = 'No matching handbook assignment in this session.'; results.append(note); return;
   }
-  for (const entry of matches.slice(0,20)) {
+  const limit = topicFilter ? matches.length : 20;
+  for (const entry of matches.slice(0,limit)) {
     const button = document.createElement('button');
     button.type = 'button'; button.className = 'paper-result';
     const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); button.append(title);
@@ -249,7 +313,7 @@ function renderPaperResults() {
     });
     results.append(button);
   }
-  if (matches.length > 20) {
+  if (matches.length > limit) {
     const note = document.createElement('p'); note.textContent = `${matches.length} matches. Refine your search to see more.`; results.append(note);
   }
 }
@@ -468,6 +532,16 @@ $('#next-saved').addEventListener('click', () => {
   $('#map-status').textContent += ` ${slot.shortLabel}, ${slot.date}, ${slot.start}–${slot.end} Budapest time. Saved poster ${savedStops.findIndex(stop => stop.session === target.session && stop.board === target.board) + 1} of ${savedStops.length}. ${displayTitle(target.entry)}.`;
 });
 $('#paper-search').addEventListener('input',renderPaperResults);
+$('#topics-toggle').addEventListener('click', () => {
+  topicsEnabled = !topicsEnabled; selectedTopic = null;
+  refreshAssignments(); renderPaperResults();
+  $('#map-status').textContent = topicsEnabled ? 'Topic colours on. Choose a topic to highlight its posters.' : 'Topic colours off.';
+});
+$('#topic-browse').addEventListener('click', () => {
+  $('#paper-search').value = ''; renderPaperResults(); openDetails();
+  $('#paper-search').focus({preventScroll:true});
+  $('.paper-search-panel').scrollIntoView({block:'start'});
+});
 
 function readHash({reveal = true} = {}) {
   const hash = new URLSearchParams(location.hash.slice(1));
@@ -536,3 +610,11 @@ try {
   feedback(error.message);
 }
 await paperRequest;
+try {
+  const response = await fetch('../data/poster-topics.json', {cache:'no-cache'});
+  if (!response.ok) throw new Error('Topics unavailable');
+  topics = validateTopics(await response.json());
+  refreshAssignments();
+} catch {
+  $('#topics-note').textContent = 'Experimental topics unavailable. The floor plan still works.';
+}

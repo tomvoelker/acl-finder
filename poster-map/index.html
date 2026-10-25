@@ -34,6 +34,14 @@
     </button>
     <button id="open-details" type="button" aria-haspopup="dialog" aria-controls="details-panel">Details</button>
   </header>
+  <section class="topic-toolbar" aria-label="Experimental topics">
+    <div class="topic-controls">
+      <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-legend" disabled>Colour by topic</button>
+      <button id="topic-browse" type="button" hidden aria-haspopup="dialog" aria-controls="details-panel">Browse posters</button>
+      <span id="topics-note" class="topics-note">Experimental · Loading topics…</span>
+    </div>
+    <div id="topic-legend" class="topic-legend" role="group" aria-label="Highlight a topic in this session" hidden></div>
+  </section>
   <main aria-label="Interactive poster floor plan">
     <div id="map-stage" class="map-stage">
       <svg id="floor-map" viewBox="0 0 1320 1280" aria-label="424 numbered poster positions" aria-describedby="map-help">
@@ -90,6 +98,7 @@
         <p>Yellow highlights and markers B1–B10 are reproduced without assuming their meaning. No entrance or compass direction is identified.</p>
         <p>Paper assignments come from the conference handbook. Board numbers are reused between sessions. An unlisted board does not establish whether a paper is presenting.</p>
         <p>Stars show papers saved in the finder on this browser, using verified board assignments for the selected session. Conflicting or unverified assignments do not receive stars.</p>
+        <p>Experimental topics are inferred from paper titles and abstracts, with reviewed group labels. They are not official acceptance tracks. A paper can fit several topics; the map shows one approximate group. Topic colours change between sessions. Select a topic to highlight its boards, then use Browse posters to read the list.</p>
         <p><a id="handbook-source" hidden>Conference handbook (PDF)</a></p>
         <p>Drag or swipe to pan. Pinch to zoom, or double-tap to zoom in. Use Fit to see the whole map. On a trackpad, scroll to pan and pinch to zoom.</p>
       </details>

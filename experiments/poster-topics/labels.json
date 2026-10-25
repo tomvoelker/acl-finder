@@ -1,0 +1,103 @@
+{
+  "corpusSHA256": "7d50a1fa90d9de1d41450bd3d32a0483d085b9bdc223979e2af2a5cd9e216436",
+  "sessions": {
+    "A": [
+      "Adaptation & unlearning",
+      "Multilingual evaluation",
+      "Agents & tool use",
+      "Safety & prompt attacks",
+      "Visual reasoning",
+      "Model internals",
+      "Rewards & RL",
+      "Retrieval & embeddings",
+      "Reasoning & verification",
+      "Efficient generation",
+      "RAG & memory",
+      "Video & multimodal models"
+    ],
+    "B": [
+      "Safety & red teaming",
+      "Model internals & audio (mixed)",
+      "Structured QA & graphs",
+      "Evidence & fact checking",
+      "Agent learning",
+      "Reasoning internals",
+      "Vision & multimodal reasoning",
+      "Cross-lingual representations",
+      "Calibration & attribution",
+      "Text evaluation (mixed)",
+      "Agent memory & planning",
+      "Social agents & behaviour"
+    ],
+    "C": [
+      "Distillation & decoding",
+      "Spatial & visual reasoning",
+      "Multi-agent memory",
+      "Agents & workflows",
+      "Vision-language models",
+      "KV cache & compression",
+      "Agentic reasoning & RL",
+      "Adapters & MoE",
+      "Speech & audio",
+      "Agent safety",
+      "Quantization",
+      "Video understanding"
+    ],
+    "D": [
+      "Search & personalization",
+      "Reasoning & RL",
+      "Efficient inference",
+      "Text adaptation (mixed)",
+      "Safety & jailbreaks",
+      "Human & model evaluation",
+      "Multilingual NLP",
+      "RAG & evidence",
+      "Speech & dialogue",
+      "Video & vision",
+      "Language & cognition",
+      "Enterprise agents"
+    ],
+    "E": [
+      "Speech & audio",
+      "Alignment & model editing",
+      "Text detection & safeguards",
+      "Peer review & judgement",
+      "Vision & multimodal models",
+      "Privacy & leakage",
+      "Rewards & RL",
+      "Reasoning & interaction",
+      "Retrieval & ranking",
+      "Bias & culture",
+      "Safety & jailbreaks",
+      "Clinical & biomedical NLP"
+    ],
+    "F": [
+      "Cross-lingual reasoning",
+      "Clinical NLP",
+      "Dialogue & personalization",
+      "Misinformation & discourse",
+      "Memes & social stance",
+      "Vision-language models",
+      "Encoders & representations (mixed)",
+      "Agent reliability",
+      "Multilingual NLP",
+      "Harmful content",
+      "Culture & alignment",
+      "Post-training & RL"
+    ],
+    "G": [
+      "Security & adversarial attacks",
+      "Rewards & RL",
+      "Human values & alignment",
+      "Personalized dialogue",
+      "Machine translation",
+      "Coding & interactive agents",
+      "Reasoning",
+      "Judgement & bias",
+      "Efficient generation",
+      "Extraction & knowledge",
+      "Morphology & multilingual NLP",
+      "Code & formal languages"
+    ]
+  }
+}
