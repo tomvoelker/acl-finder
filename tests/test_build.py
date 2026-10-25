@@ -42,11 +42,14 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("anthologyId", by_id["6620-MAIN"])
             self.assertNotIn("authors", by_id["6620-MAIN"])
             publications = {paper["id"]: paper for paper in json.loads((ROOT / "data/anthology-catalog.json").read_text())["papers"]}
+            self.assertIn("/lecture/162458-multi-block-diffusion-language-models", by_id["6176-MAIN"]["underlineUrl"])
+            self.assertNotIn("underlineUrl", by_id["403-MAIN"])
             for paper in deployed["papers"]:
                 if "anthologyId" in paper:
                     self.assertEqual(paper["authors"], publications[paper["anthologyId"]]["authors"])
                 paper.pop("anthologyId", None)
                 paper.pop("authors", None)
+                paper.pop("underlineUrl", None)
             self.assertEqual(deployed, source, "Adding paper links must not change the schedule")
             self.assertEqual([p.name for p in (output / "data").iterdir()], ["papers.json"])
 

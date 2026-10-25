@@ -6,11 +6,13 @@ import shutil
 from pathlib import Path
 
 from import_anthology import match_papers
+from import_underline import match_presentations
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
 FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.svg", "data/papers.json",
-         "data/anthology-catalog.json", "data/anthology-overrides.json", "LICENSE"]
+         "data/anthology-catalog.json", "data/anthology-overrides.json",
+         "data/underline-catalog.json", "data/underline-overrides.json", "LICENSE"]
 
 
 def build():
@@ -24,10 +26,16 @@ def build():
     overrides = json.loads((ROOT / "data/anthology-overrides.json").read_text())
     links, _ = match_papers(data["papers"], catalog, overrides)
     publications = {paper["id"]: paper for paper in catalog["papers"]}
+    underline_catalog = json.loads((ROOT / "data/underline-catalog.json").read_text())
+    underline_overrides = json.loads((ROOT / "data/underline-overrides.json").read_text())
+    publication_titles = {pid: publications[aid]["title"] for pid, aid in links.items()}
+    underline_links, _ = match_presentations(data["papers"], underline_catalog, publication_titles, underline_overrides)
     for paper in data["papers"]:
         if paper["id"] in links:
             paper["anthologyId"] = links[paper["id"]]
             paper["authors"] = publications[paper["anthologyId"]]["authors"]
+        if paper["id"] in underline_links:
+            paper["underlineUrl"] = underline_links[paper["id"]]
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)
@@ -56,7 +64,7 @@ def build():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)
     (OUTPUT / ".nojekyll").touch()
-    print(f"Built {len(data['papers']):,} paper entries with {len(links):,} Anthology links into {OUTPUT}")
+    print(f"Built {len(data['papers']):,} paper entries with {len(links):,} Anthology links and {len(underline_links):,} Underline links into {OUTPUT}")
 
 
 if __name__ == "__main__":

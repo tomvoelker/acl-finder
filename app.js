@@ -266,6 +266,8 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       sourceRow: Number.isInteger(raw.sourceRow) && raw.sourceRow > 0 ? raw.sourceRow : null,
       anthologyUrl: typeof raw.anthologyId === 'string' && /^\d{4}\.[a-z0-9-]+\.[1-9]\d*$/.test(raw.anthologyId)
         ? `https://aclanthology.org/${raw.anthologyId}/` : null,
+      underlineUrl: typeof raw.underlineUrl === 'string' && /^https:\/\/underline\.io\/events\/535\/schedule\/sessions\/[1-9]\d*\/lecture\/[1-9]\d*-[a-z0-9_-]+$/.test(raw.underlineUrl)
+        ? raw.underlineUrl : null,
     };
     p._key = p.id || `row-${index}`;
     p._inactive = INACTIVE.has(p.status);
@@ -767,6 +769,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     }
     if (p.track) meta.append(h('span', null, p.track));
     if (p.session && !p._inactive) meta.append(h('span', null, p.session));
+    if (p.underlineUrl) meta.append(newTab(p.underlineUrl, 'Underline ↗', ' for this paper (opens in a new tab)'));
     if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Shareable schedule link to ${p.id}` }, 'Schedule link'));
     const src = sourceRowUrl(p.sourceRow);
     if (src) meta.append(newTab(src, `Sheet row ${p.sourceRow}`, ' in the source spreadsheet (opens in a new tab)'));
