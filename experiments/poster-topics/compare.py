@@ -2,6 +2,7 @@
 
 import argparse
 from collections import Counter
+import gzip
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -40,7 +41,7 @@ def clean(text):
 
 
 def read(name):
-    return json.loads((ROOT / 'data' / name).read_text())
+    return json.loads((ROOT / 'data' / name).read_text(encoding='utf-8'))
 
 
 def corpus(source):
@@ -52,8 +53,13 @@ def corpus(source):
     titles = {pid: publications[aid]['title'] for pid, aid in links.items()}
     presentations, _ = match_presentations(papers, read('underline-catalog.json'), titles, read('underline-overrides.json'))
     raw = {}
-    for path in sorted(source.glob('underline-api-page-*.json')):
-        raw.update({str(row['id']): row['attributes'] for row in json.loads(path.read_text())['data']})
+    first = json.loads((source / 'underline-api-page-1.json').read_text(encoding='utf-8'))
+    for number in range(1, first['meta']['total_pages'] + 1):
+        page = first if number == 1 else json.loads((source / f'underline-api-page-{number}.json').read_text(encoding='utf-8'))
+        for row in page['data']:
+            if str(row['id']) in raw:
+                raise ValueError(f"Duplicate Underline record: {row['id']}. Fetch a consistent snapshot.")
+            raw[str(row['id'])] = row['attributes']
     if not raw:
         raise ValueError('No saved Underline responses found')
     physical = {}
@@ -77,22 +83,26 @@ def corpus(source):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--source-dir', type=Path, required=True)
+    source = parser.add_mutually_exclusive_group()
+    source.add_argument('--source-dir', type=Path, help='Prepare a new corpus from saved Underline API pages')
+    source.add_argument('--corpus-file', type=Path, default=Path(__file__).parent / 'corpus.json.gz', help='Compressed input corpus; defaults to the committed snapshot')
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'work/topics')
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    rows = corpus(args.source_dir)
+    rows = corpus(args.source_dir) if args.source_dir else json.loads(gzip.decompress(args.corpus_file.read_bytes()))
     fingerprint = hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
     texts = [f"{r['title']}. {r['title']}. {r['abstract']}" for r in rows]
     vectorizer = TfidfVectorizer(stop_words=STOP, ngram_range=(1, 2), min_df=3, max_df=.4, sublinear_tf=True)
     tfidf = vectorizer.fit_transform(texts)
     lsa = normalize(TruncatedSVD(n_components=100, random_state=0).fit_transform(tfidf))
-    cache = args.output_dir / f'embeddings-{fingerprint[:12]}.npy'
+    embedding_key = hashlib.sha256(f'{fingerprint}:{MODEL}:{MODEL_REVISION}:title-abstract:256:normalized'.encode()).hexdigest()[:16]
+    cache = args.output_dir / f'embeddings-{embedding_key}.npy'
     if cache.exists():
         embeddings = np.load(cache)
     else:
         from sentence_transformers import SentenceTransformer
         model = SentenceTransformer(MODEL, revision=MODEL_REVISION, device='cpu')
+        model.max_seq_length = 256
         embeddings = model.encode([f"{r['title']}. {r['abstract']}" for r in rows], normalize_embeddings=True,
                                   show_progress_bar=True, batch_size=64)
         np.save(cache, embeddings)
@@ -140,11 +150,11 @@ def main():
                     paperId=rows[i]['paperId'], title=rows[i]['sourceTitle'], group=int(labels[j]),
                     margin=round(float(margins[j]), 4)) for j, i in enumerate(indexes)])
                 print(json.dumps(metric), flush=True)
-    (args.output_dir / 'candidates.json').write_text(json.dumps(candidates, ensure_ascii=False, indent=2) + '\n')
+    (args.output_dir / 'candidates.json').write_text(json.dumps(candidates, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     report = dict(corpusSHA256=fingerprint, handbookSHA256=hashlib.sha256((ROOT/'data/poster-boards.json').read_bytes()).hexdigest(),
                   model=MODEL, modelRevision=MODEL_REVISION, papers=len(rows), withAbstract=sum(bool(r['abstract']) for r in rows), metrics=metrics)
-    (args.output_dir / 'metrics.json').write_text(json.dumps(report, indent=2) + '\n')
-    (args.output_dir / 'corpus.json').write_text(json.dumps(rows, ensure_ascii=False) + '\n')
+    (args.output_dir / 'metrics.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+    (args.output_dir / 'corpus.json').write_text(json.dumps(rows, ensure_ascii=False) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

@@ -11,11 +11,11 @@ from import_underline import fetch_page
 destination = ROOT / 'work/topics-source'
 destination.mkdir(parents=True, exist_ok=True)
 first = fetch_page(1)
-(destination / 'underline-api-page-1.json').write_text(json.dumps(first))
+(destination / 'underline-api-page-1.json').write_text(json.dumps(first), encoding='utf-8')
 
 
 def save(number):
-    (destination / f'underline-api-page-{number}.json').write_text(json.dumps(fetch_page(number)))
+    (destination / f'underline-api-page-{number}.json').write_text(json.dumps(fetch_page(number)), encoding='utf-8')
 
 
 with ThreadPoolExecutor(max_workers=3) as pool:

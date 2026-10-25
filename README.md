@@ -70,6 +70,8 @@ Underline links use the public metadata for [event 535](https://underline.io/eve
 
 ## Run locally
 
+The poster map has an experimental **Colour by topic** layer. Its reviewed assignments for all sessions are committed in `data/poster-topics.json` and copied unchanged by the normal build. Deployment does not rerun clustering or require ML packages. The [topic experiment](experiments/poster-topics/README.md) includes the generator scripts, pinned Python dependencies, exact input snapshot, reviewed labels, comparison results and instructions for continuing the work on another machine. Pull these files together before deploying; if handbook assignments change, regenerate and review the topics before building.
+
 Python 3.11 or newer is sufficient; no package installation is required.
 
 ```sh
