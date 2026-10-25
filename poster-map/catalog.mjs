@@ -60,6 +60,30 @@ export function savedAssignments(entries, session, savedPapers) {
   return saved;
 }
 
+export function savedPosterStops(entries, sessions, savedIds) {
+  const saved = new Set(savedIds);
+  const physicalSessions = new Map(sessions.map(session => [session.id, session]));
+  const stops = [];
+  for (const session of sessions) {
+    for (const [board, entry] of savedAssignments(entries, session.id, saved)) {
+      stops.push({session:session.id, board, entry});
+    }
+  }
+  const compare = (a,b) => a < b ? -1 : a > b ? 1 : 0;
+  return stops.sort((a,b) => {
+    const first = physicalSessions.get(a.session), second = physicalSessions.get(b.session);
+    return compare(first.date,second.date) || compare(first.start,second.start) ||
+      a.board-b.board || compare(a.session,b.session);
+  });
+}
+
+export function nextSavedPoster(stops, currentSession, selectedBoard) {
+  if (!stops.length) return null;
+  const current = stops.findIndex(stop => stop.session === currentSession && stop.board === selectedBoard);
+  if (current !== -1) return stops[(current+1) % stops.length];
+  return stops.find(stop => stop.session === currentSession) || stops[0];
+}
+
 export function defaultSession(sessions, now = new Date()) {
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Budapest', year: 'numeric', month: '2-digit', day: '2-digit',

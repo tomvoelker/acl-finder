@@ -364,6 +364,7 @@ abbr[title] { text-decoration: none; cursor: help; }
 .paper__meta > a, .paper__meta > .linkish { display: inline-flex; align-items: center; min-height: 32px; }
 .paper__meta .paper__details > summary { padding-block: 6px; }
 .paper__meta a:hover, .linkish:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
+.paper__default-save { margin-top: 6px; font-size: .75rem; color: var(--muted); }
 .paper.is-inactive .paper__title { color: var(--ink-2); }
 
 .flag {

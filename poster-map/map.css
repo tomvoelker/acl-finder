@@ -133,7 +133,11 @@ main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .board.is-saved .saved-marker { display: inline; }
 .saved-marker circle { fill: var(--saved-badge); stroke: var(--surface); stroke-width: 1.2; }
 .board .saved-marker .saved-star { fill: white; font-size: 12px; font-weight: 750; }
-.saved-map-key { position: absolute; top: 12px; left: max(12px, env(safe-area-inset-left)); margin: 0; padding: 8px 11px; border: 1px solid var(--saved-border); border-radius: 7px; color: var(--saved-ink); background: var(--surface); font-size: 12px; font-weight: 650; pointer-events: none; }
+.saved-map-key { position: absolute; top: 12px; left: max(12px, env(safe-area-inset-left)); display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0; padding: 8px 11px; border: 1px solid var(--saved-border); border-radius: 7px; color: var(--saved-ink); background: var(--surface); font-size: 12px; font-weight: 650; }
+.saved-map-key:not(:disabled):hover { background: var(--saved-fill); border-color: var(--saved-rule); }
+.saved-map-key:disabled { cursor: default; opacity: .65; }
+.saved-map-key:disabled .saved-map-next { display: none; }
+.saved-map-next { font-weight: 500; }
 .saved-map-key > span:first-child { font-size: 16px; }
 .assignment-detail .saved-paper-label { color: var(--saved-ink); font-weight: 750; }
 .marker rect { fill: var(--surface); stroke: var(--marker-rule); stroke-width: 1.4; }

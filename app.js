@@ -10,7 +10,7 @@ import { conferenceNow, initialDay, sessionKey, presenterAuthorIndices, authorKe
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
 import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
-import { SAVED_PAPERS_KEY as STORAGE_KEY, readSavedPapers } from './saved-papers.mjs';
+import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList } from './saved-papers.mjs';
 
 (() => {
   const analytics = createAnalytics();
@@ -97,6 +97,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, readSavedPapers } from './saved-papers
   let loaded = false;
   let searchBeforeLoad = false;
   let shortlist = readSavedPapers();
+  let defaultSavedList = isDefaultSavedList();
   let storageWarned = false;
 
   const blankState = () => ({
@@ -332,6 +333,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, readSavedPapers } from './saved-papers
   /* ---------- Shortlist ---------- */
 
   function persistShortlist() {
+    defaultSavedList = false;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify([...shortlist]));
     } catch {
@@ -934,6 +936,9 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, readSavedPapers } from './saved-papers
     if (note) detailsBody.append(note);
     if (detailsBody.children.length) meta.append(h('details', { class: 'paper__details' }, h('summary', null, 'Details'), detailsBody));
     body.append(meta);
+    if (state.saved && defaultSavedList && p._key === DEFAULT_SAVED_PAPER_ID) {
+      body.append(h('p', { class: 'paper__default-save' }, 'Saved by default. Unstar to remove.'));
+    }
     li.append(where, body);
     if (p.id) li.append(starButton(p));
     return li;
@@ -1241,6 +1246,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, readSavedPapers } from './saved-papers
     window.addEventListener('storage', (e) => {
       if (e.key !== STORAGE_KEY && e.key !== null) return;
       shortlist = readSavedPapers();
+      defaultSavedList = isDefaultSavedList();
       refreshStars();
       if (state.saved) update({ scroll: false });
     });

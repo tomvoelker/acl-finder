@@ -1,5 +1,5 @@
 import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS} from './layout.mjs';
-import {validateCatalog, sessionGroups, mapEntries, assignmentAt, savedAssignments, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
+import {validateCatalog, sessionGroups, mapEntries, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
 import {SAVED_PAPERS_KEY, readSavedPapers} from '../saved-papers.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
@@ -11,7 +11,7 @@ let selected = null, sessions = [], assignments = [], activeSession = '', catalo
 let catalog = null;
 let finderUnavailable = false;
 const papers = new Map();
-let savedPapers = readSavedPapers(), savedBoards = new Map();
+let savedPapers = readSavedPapers(), savedBoards = new Map(), savedStops = [];
 let viewport = {width: stage.clientWidth, height: stage.clientHeight};
 let view = fitView(MAP, viewport);
 // Start with legible positions on a phone. Fit remains available for the overview.
@@ -175,6 +175,7 @@ function renderAssignment() {
 }
 function refreshAssignments() {
   savedBoards = savedAssignments(assignments, activeSession, savedPapers);
+  savedStops = savedPosterStops(assignments, sessions, savedPapers);
   for (const board of BOARDS) {
     const element = elements.get(board.number);
     const entry = currentAssignment(board.number);
@@ -184,7 +185,10 @@ function refreshAssignments() {
     element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
     element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
   }
-  $('#saved-map-count').textContent = `${savedBoards.size} saved ${savedBoards.size === 1 ? 'paper' : 'papers'} in this session`;
+  $('#saved-map-count').textContent = `${savedStops.length} saved ${savedStops.length === 1 ? 'poster' : 'posters'}`;
+  $('#next-saved').disabled = savedStops.length === 0;
+  $('#next-saved').title = savedStops.length ? 'Jump through saved posters across all sessions' : 'No saved papers have a confirmed poster board';
+  $('#next-saved').setAttribute('aria-label', savedStops.length ? `Next saved poster. ${savedStops.length} across all poster sessions.` : 'No saved posters with confirmed boards');
   const session = currentSession();
   $('#assignment-count').textContent = session ? `${currentEntries().filter(entry => currentAssignment(entry.board)).length} verified handbook assignments · ${session.room || 'Room not listed'}` : 'Handbook assignments unavailable';
   $('#session-note').textContent = session ? `${session.label} · ${session.date} · ${session.start}–${session.end} Budapest time. Boards are reused each session.` : 'The complete floor plan remains available.';
@@ -420,6 +424,18 @@ $('#find-form').addEventListener('submit', event => {
 $('#session').addEventListener('change', () => {
   activeSession = $('#session').value; $('#paper-search').value = '';
   refreshAssignments(); renderPaperResults(); updateHash(); feedback('');
+});
+$('#next-saved').addEventListener('click', () => {
+  const target = nextSavedPoster(savedStops, activeSession, selected);
+  if (!target) return;
+  activeSession = target.session;
+  $('#session').value = activeSession;
+  $('#session').title = currentSession()?.label || 'Poster session';
+  $('#paper-search').value = '';
+  refreshAssignments();
+  selectBoard(target.board, {reveal:true});
+  const slot = currentSession();
+  $('#map-status').textContent += ` ${slot.shortLabel}, ${slot.date}, ${slot.start}–${slot.end} Budapest time. Saved poster ${savedStops.findIndex(stop => stop.session === target.session && stop.board === target.board) + 1} of ${savedStops.length}. ${displayTitle(target.entry)}.`;
 });
 $('#paper-search').addEventListener('input',renderPaperResults);
 

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {SAVED_PAPERS_KEY, readSavedPapers} from '../../saved-papers.mjs';
+import {SAVED_PAPERS_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList} from '../../saved-papers.mjs';
 import {sessionGroups, mapEntries, savedAssignments} from '../catalog.mjs';
 
 test('saved papers use the finder key and tolerate malformed or unavailable storage', () => {
@@ -11,11 +11,36 @@ test('saved papers use the finder key and tolerate malformed or unavailable stor
     return JSON.stringify(['paper-a', 'paper-a', 3, null, {}, 'x'.repeat(80), 'valid']);
   }};
   assert.deepEqual([...readSavedPapers(storage)], ['paper-a', 'valid']);
-  for (const raw of [null, '', '{bad', '{}', '42', 'null']) {
+  for (const raw of ['', '{bad', '{}', '42', 'null']) {
     assert.deepEqual([...readSavedPapers({getItem: () => raw})], []);
   }
   assert.deepEqual([...readSavedPapers({getItem() { throw new Error('Blocked'); }})], []);
   assert.deepEqual([...readSavedPapers(null)], []);
+});
+
+test('a missing saved list starts with the authors poster without writing storage', () => {
+  const storage = { getItem: () => null };
+  assert.equal(isDefaultSavedList(storage), true);
+  assert.deepEqual([...readSavedPapers(storage)], [DEFAULT_SAVED_PAPER_ID]);
+  const catalog = JSON.parse(readFileSync(new URL('../../data/poster-boards.json',import.meta.url),'utf8'));
+  const entry = catalog.entries.find(entry => entry.paperId === DEFAULT_SAVED_PAPER_ID);
+  assert.equal(entry.verified, true);
+  assert.equal(entry.session, 'F');
+  assert.equal(entry.board, 200);
+});
+
+test('existing and explicitly emptied lists never get the default paper added back', () => {
+  let stored = null;
+  const storage = { getItem: () => stored };
+  const saved = readSavedPapers(storage);
+  saved.delete(DEFAULT_SAVED_PAPER_ID);
+  stored = JSON.stringify([...saved]);
+  assert.equal(isDefaultSavedList(storage), false);
+  assert.deepEqual([...readSavedPapers(storage)], []);
+  stored = JSON.stringify(['someone-else']);
+  assert.deepEqual([...readSavedPapers(storage)], ['someone-else']);
+  assert.equal(isDefaultSavedList(null), false);
+  assert.equal(isDefaultSavedList({getItem() { throw new Error('Blocked'); }}), false);
 });
 
 test('a blocked default localStorage getter does not prevent loading saved papers', () => {
