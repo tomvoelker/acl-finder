@@ -1,5 +1,5 @@
 // Inferred groups are scoped to one physical session, never official research areas.
-export const TOPIC_COLORS = ['#88b9e0', '#edb270', '#91c99a', '#ccabe2', '#e69caa', '#7fc9c7', '#d5c875', '#a5b0e1', '#bfbd9a', '#d7a88b', '#92bac4', '#c4b1c6'];
+export const TOPIC_COLORS = ['#88b9e0', '#edb270', '#91c99a', '#ccabe2', '#e69caa', '#7fc9c7', '#d5c875', '#8088d0', '#bfbd9a', '#d7a88b', '#bbdb68', '#c4b1c6'];
 
 export function validateTopics(data) {
   if (data?.version !== 1 || !data.sessions || typeof data.sessions !== 'object') throw new Error('Invalid topic dataset');
@@ -12,7 +12,7 @@ export function validateTopics(data) {
     }
     const boards = new Set();
     for (const entry of session.assignments) {
-      if (!Number.isInteger(entry.board) || entry.board < 1 || entry.board > 424 || boards.has(entry.board) || !ids.has(entry.group) || typeof entry.title !== 'string') throw new Error('Invalid topic assignment');
+      if (!Number.isInteger(entry.board) || entry.board < 1 || entry.board > 424 || boards.has(entry.board) || !ids.has(entry.group) || typeof entry.title !== 'string' || !Number.isFinite(entry.margin)) throw new Error('Invalid topic assignment');
       boards.add(entry.board);
     }
   }
@@ -25,7 +25,7 @@ export function topicForEntry(data, session, entry) {
   const assignment = topics?.assignments.find(row => row.board === entry.board && row.paperId === entry.paperId && row.title === entry.title);
   if (!assignment) return null;
   const group = topics.groups.find(group => group.id === assignment.group);
-  return group ? {...group, color:TOPIC_COLORS[group.id]} : null;
+  return group ? {...group, color:TOPIC_COLORS[group.id], margin:assignment.margin} : null;
 }
 
 export function topicGroups(data, session, entries) {
@@ -35,5 +35,13 @@ export function topicGroups(data, session, entries) {
     if (topic) counts.set(topic.id, (counts.get(topic.id) || 0) + 1);
   }
   return (data?.sessions[session]?.groups || []).filter(group => counts.has(group.id))
-    .map(group => ({...group, count:counts.get(group.id), color:TOPIC_COLORS[group.id]}));
+    .map(group => ({...group, count:counts.get(group.id), color:TOPIC_COLORS[group.id]}))
+    .sort((a,b) => Number(a.label.endsWith('(mixed)')) - Number(b.label.endsWith('(mixed)')) || a.label.localeCompare(b.label, 'en'));
+}
+
+export function topicEntries(data, session, entries, groupId) {
+  return entries.map(entry => ({entry, topic:topicForEntry(data, session, entry)}))
+    .filter(row => row.topic?.id === groupId)
+    .sort((a,b) => b.topic.margin - a.topic.margin || a.entry.board - b.entry.board)
+    .map(row => row.entry);
 }

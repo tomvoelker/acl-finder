@@ -21,7 +21,7 @@ Smallest assignment margins (often ambiguous):
 - Interference-Aware Composition of Steering Vectors
 - In-Context Learning Beyond Copying: A Training-Time Analysis of Abstractive ICL
 
-### Multilingual evaluation (42)
+### Multilingual evaluation (mixed) (42)
 
 Terms: chinese, cultural, resource, translation, human, legal, judge, evaluating
 
@@ -346,7 +346,7 @@ Smallest assignment margins (often ambiguous):
 - Lost in Interpretation: The Plausibility-Faithfulness Trade-off in Cross-Lingual Explanations
 - Interleaved Speech Language Models Latently Work In Text
 
-### Calibration & attribution (11)
+### Calibration & adaptation (mixed) (11)
 
 Terms: calibration, noise, attribution, point, estimation, race, discipline, estimator
 
@@ -501,7 +501,7 @@ Smallest assignment margins (often ambiguous):
 - MIRAGE: Stealthy Visual Prompt Injection for Vulnerability Detection in Web Agents
 - A Geometry-Aware Depth Function for Robust Unsupervised Textual Anomaly Detection
 
-### KV cache & compression (48)
+### Efficiency & long context (48)
 
 Terms: kv, cache, compression, long context, eviction, attention, token, context inference
 
@@ -845,7 +845,7 @@ Smallest assignment margins (often ambiguous):
 - Vision-Braille: A Curriculum Learning Toolkit and Braille-Chinese Corpus for Braille Translation
 - Fortifying Hallucination Detection Under Distribution Shift in Short-Form QA
 
-### Alignment & model editing (42)
+### Alignment & model internals (42)
 
 Terms: unlearning, inference time, lms, regularized, alignment, layer, shared, diffusion
 
@@ -862,7 +862,7 @@ Smallest assignment margins (often ambiguous):
 - Active Learners as Efﬁcient PRP Rerankers
 - Beyond Output-Level Correction: Tracing Positional Bias to Early-Layer Commitment in Transformer Multiple-Choice Evaluation
 
-### Text detection & safeguards (30)
+### Text detection & safeguards (mixed) (30)
 
 Terms: korean, generated text, text detection, sentence, detoxification, toxicity, ai generated, content
 
@@ -1204,7 +1204,7 @@ Smallest assignment margins (often ambiguous):
 - Psychologically Potent, Computationally Invisible: LLMs Generate Social-Comparison-Eliciting Posts They Fail to Detect
 - HarmReduction: Benchmarking LLMs in Harm Reduction Information Provision to Support People Who Use Drugs
 
-### Culture & alignment (36)
+### Evaluation & alignment (mixed) (36)
 
 Terms: preference, cultural, alignment, culture, diversity, preferences, tuning, objectives
 

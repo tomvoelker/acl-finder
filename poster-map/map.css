@@ -135,21 +135,29 @@ main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .board .saved-marker .saved-star { fill: white; font-size: 12px; font-weight: 750; }
 .board.has-topic:not(.selected):not(:focus-visible) > rect { fill: var(--topic-color); stroke: #505967; }
 .board.has-topic:not(.selected):not(:focus-visible) > text { fill: #202733; }
+.board.has-topic.source-yellow:not(.selected):not(:focus-visible) > rect { stroke: var(--source-rule); stroke-width: 2.5; }
 .board.has-topic.is-saved:not(.selected):not(:focus-visible) > rect { stroke: var(--saved-rule); }
-.board.topic-dimmed { opacity: .2; }
-.board.topic-dimmed.selected, .board.topic-dimmed:focus-visible, .board.topic-dimmed:hover { opacity: 1; }
-.topic-toolbar { flex: none; padding: 8px 16px; border-bottom: 1px solid var(--rule); background: var(--surface); }
-.topic-controls { display: flex; align-items: center; gap: 12px; }
-#topics-toggle { min-height: 36px; padding-block: 7px; white-space: nowrap; }
-#topic-browse { white-space: nowrap; }
+.board.has-topic.needs-review:not(.selected):not(:focus-visible) > rect { stroke: var(--review); }
+@media (hover: hover) { .board.has-topic:hover:not(.selected):not(:focus-visible) > rect { stroke: var(--accent); stroke-width: 2.5; } }
+.board.topic-dimmed > rect, .board.topic-dimmed > text { opacity: .2; }
+.board.topic-dimmed:is(.selected, :focus-visible, :hover) > rect,
+.board.topic-dimmed:is(.selected, :focus-visible, :hover) > text { opacity: 1; }
+.topic-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; flex: none; padding: 8px 16px; border-bottom: 1px solid var(--rule); background: var(--surface); }
+#topics-toggle, #topic-browse { white-space: nowrap; }
 #topics-toggle[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--hover); }
-.topics-note { color: var(--muted); font-size: 11px; line-height: 1.4; }
-.topic-legend { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 8px; max-height: 144px; overflow-y: auto; }
-.topic-key { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 9px; font-size: 12px; font-weight: 500; }
+.topics-note { color: var(--muted); font-size: 11px; line-height: 1.4; white-space: nowrap; }
+.topic-legend { display: contents; }
+.topic-key { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; font-size: 12px; font-weight: 500; }
+@media (pointer: fine) and (min-width: 641px) {
+  .topic-toolbar button { min-height: 28px; padding: 4px 6px; font-size: 11px; }
+}
 .topic-key[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); color: var(--ink); }
 .topic-swatch { display: inline-block; flex: none; width: 11px; height: 11px; border-radius: 3px; border: 1px solid #505967; }
 .topic-count { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .paper-topic { display: flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+.topic-navigation { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 11px; color: var(--muted); }
+.topic-navigation span { margin-right: auto; }
+.topic-navigation button { padding-inline: 8px; font-size: 12px; }
 .saved-map-key { position: absolute; top: 12px; left: max(12px, env(safe-area-inset-left)); display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0; padding: 8px 11px; border: 1px solid var(--saved-border); border-radius: 7px; color: var(--saved-ink); background: var(--surface); font-size: 12px; font-weight: 650; }
 .saved-map-key:not(:disabled):hover { background: var(--saved-fill); border-color: var(--saved-rule); }
 .saved-map-key:disabled { cursor: default; opacity: .65; }
@@ -201,6 +209,11 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
 .paper-result { font-size: 12px; line-height: 1.5; text-align: left; font-weight: 500; white-space: normal; }
 .paper-result small { display: block; color: var(--muted); font-size: 11px; }
 .paper-results p { font-size: 11px; color: var(--muted); margin: 5px 0; }
+.topic-list .selection, .topic-list .session-panel, .topic-list .source-details, .topic-list .feedback { display: none; }
+.topic-list .paper-results { max-height: none; overflow: visible; }
+.topic-list .paper-result { font-size: 14px; padding: 12px; }
+.topic-list .paper-result small { margin-top: 5px; }
+@media (min-width: 641px) { #details-panel.topic-list { inset: 6dvh 0 auto; margin-inline: auto; width: 680px; height: 88dvh; } }
 .assignment-detail { border-left: 3px solid var(--assigned-rule); padding-left: 11px; margin-top: 16px; }
 .assignment-detail strong { font-size: 12px; line-height: 1.55; display: block; }
 .assignment-detail p { font-size: 11px; color: var(--muted); margin-top: 5px; }
@@ -216,11 +229,12 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
 .key.review { border: 1px dashed var(--review); }
 .key.saved { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-color: var(--saved-rule); background: var(--saved-badge); color: white; font-style: normal; font-size: 12px; }
 @media (max-width: 640px) {
-  .topic-toolbar { padding: 6px 10px; }
-  .topic-controls { gap: 6px 8px; flex-wrap: wrap; }
-  .topics-note { font-size: 10px; flex: 1; }
-  #topic-browse:not([hidden]) ~ .topics-note { flex-basis: 100%; }
-  .topic-legend { flex-wrap: nowrap; max-height: none; overflow-x: auto; padding-bottom: 3px; }
+  .topic-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; padding: 6px 10px; }
+  #topics-toggle { grid-column: 1; grid-row: 1; justify-self: start; }
+  .topics-note { grid-column: 2; grid-row: 1; font-size: 10px; }
+  #topic-browse { grid-column: 2; grid-row: 2; padding-inline: 8px; font-size: 12px; }
+  .topic-legend { display: flex; grid-column: 1 / -1; grid-row: 2; gap: 6px; min-width: 0; overflow-x: auto; padding: 2px 2px 4px; }
+  .topic-toolbar:has(#topic-browse:not([hidden])) .topic-legend { grid-column: 1; }
   .topic-key { flex: none; min-height: 44px; }
   .header { min-height: 56px; gap: 4px; padding-inline: max(10px, env(safe-area-inset-left)) max(10px, env(safe-area-inset-right)); }
   .identity { gap: 7px; }

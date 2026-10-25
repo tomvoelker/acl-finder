@@ -35,12 +35,10 @@
     <button id="open-details" type="button" aria-haspopup="dialog" aria-controls="details-panel">Details</button>
   </header>
   <section class="topic-toolbar" aria-label="Experimental topics">
-    <div class="topic-controls">
-      <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-legend" disabled>Colour by topic</button>
-      <button id="topic-browse" type="button" hidden aria-haspopup="dialog" aria-controls="details-panel">Browse posters</button>
-      <span id="topics-note" class="topics-note">Experimental · Loading topics…</span>
-    </div>
+    <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-legend" disabled>Colour by topic</button>
     <div id="topic-legend" class="topic-legend" role="group" aria-label="Highlight a topic in this session" hidden></div>
+    <button id="topic-browse" type="button" hidden aria-haspopup="dialog" aria-controls="details-panel">Browse posters</button>
+    <span id="topics-note" class="topics-note" title="Approximate groups inferred from paper titles and abstracts. Colours change by session.">Loading topics…</span>
   </section>
   <main aria-label="Interactive poster floor plan">
     <div id="map-stage" class="map-stage">
@@ -62,7 +60,7 @@
   </main>
   <dialog id="details-panel" aria-labelledby="details-title">
     <div class="panel-header">
-      <h2 id="details-title">Map details</h2>
+      <h2 id="details-title" tabindex="-1">Map details</h2>
       <button id="close-details" type="button" aria-label="Close details">Close</button>
     </div>
     <div class="panel-body">

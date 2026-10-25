@@ -119,8 +119,11 @@ def main():
                 labels = fit.labels_
                 centers = normalize(fit.cluster_centers_)
                 similarities = np.asarray(x @ centers.T)
-                sorted_sim = np.sort(similarities, axis=1)
-                margins = sorted_sim[:, -1] - sorted_sim[:, -2]
+                # KMeans uses Euclidean distance; after normalizing the centers,
+                # a boundary paper can prefer another center by cosine similarity.
+                alternatives = similarities.copy()
+                alternatives[np.arange(len(labels)), labels] = -np.inf
+                margins = similarities[np.arange(len(labels)), labels] - alternatives.max(axis=1)
                 sizes = np.bincount(labels, minlength=k)
                 metric = dict(method=method, session=session, k=k, papers=len(indexes),
                               silhouette=round(float(silhouette_score(x, labels, metric='cosine')), 4),

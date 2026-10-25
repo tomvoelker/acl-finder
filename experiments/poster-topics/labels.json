@@ -3,7 +3,7 @@
   "sessions": {
     "A": [
       "Adaptation & unlearning",
-      "Multilingual evaluation",
+      "Multilingual evaluation (mixed)",
       "Agents & tool use",
       "Safety & prompt attacks",
       "Visual reasoning",
@@ -24,7 +24,7 @@
       "Reasoning internals",
       "Vision & multimodal reasoning",
       "Cross-lingual representations",
-      "Calibration & attribution",
+      "Calibration & adaptation (mixed)",
       "Text evaluation (mixed)",
       "Agent memory & planning",
       "Social agents & behaviour"
@@ -35,7 +35,7 @@
       "Multi-agent memory",
       "Agents & workflows",
       "Vision-language models",
-      "KV cache & compression",
+      "Efficiency & long context",
       "Agentic reasoning & RL",
       "Adapters & MoE",
       "Speech & audio",
@@ -59,8 +59,8 @@
     ],
     "E": [
       "Speech & audio",
-      "Alignment & model editing",
-      "Text detection & safeguards",
+      "Alignment & model internals",
+      "Text detection & safeguards (mixed)",
       "Peer review & judgement",
       "Vision & multimodal models",
       "Privacy & leakage",
@@ -82,7 +82,7 @@
       "Agent reliability",
       "Multilingual NLP",
       "Harmful content",
-      "Culture & alignment",
+      "Evaluation & alignment (mixed)",
       "Post-training & RL"
     ],
     "G": [

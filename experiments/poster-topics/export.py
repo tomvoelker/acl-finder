@@ -29,7 +29,7 @@ def export(input_dir, root=ROOT):
             raise ValueError('Expected 12 reviewed groups per session')
         groups = [{**g, 'label': names[g['id']]} for g in candidate['groups']]
         data['sessions'][session] = dict(groups=[{k:g[k] for k in ['id', 'label', 'keywords']} for g in groups],
-                                         assignments=assignments[session])
+                                         assignments=[{**a, 'margin': source['margin']} for a, source in zip(assignments[session], candidate['assignments'])])
         review.append(f'## Session {session}\n')
         for g in groups:
             review.append(f"### {g['label']} ({g['count']})\n\nTerms: {', '.join(g['keywords'])}\n")

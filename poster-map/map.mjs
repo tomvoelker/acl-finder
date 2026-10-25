@@ -4,7 +4,7 @@ import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.
 import {createAnalytics} from '../analytics.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
-import {validateTopics, topicForEntry, topicGroups} from './topics.mjs';
+import {validateTopics, topicForEntry, topicGroups, topicEntries} from './topics.mjs';
 
 const $ = selector => document.querySelector(selector);
 const svg = $('#floor-map');
@@ -69,9 +69,15 @@ function zoom(factor, anchor = {x:0.5,y:0.5}, animate = false) {
   if (animate) transitionTo(target);
   else { stopMotion(); view = target; applyView(); }
 }
-function openDetails() {
+function openDetails({topic = false} = {}) {
   stopMotion();
-  if (!$('#details-panel').open) $('#details-panel').showModal();
+  const panel = $('#details-panel');
+  panel.classList.toggle('topic-list', topic);
+  $('#details-title').textContent = topic ? topics.sessions[activeSession].groups.find(g => g.id === selectedTopic).label : 'Map details';
+  $('.paper-search-panel label').textContent = topic ? 'Search within this topic' : 'Find a paper in this session';
+  if (!panel.open) panel.showModal();
+  $('.panel-body').scrollTop = 0;
+  if (topic) $('#details-title').focus({preventScroll:true});
 }
 function displayTitle(entry) { return papers.get(entry.paperId)?.title || entry.title; }
 function displayAuthors(entry) { return papers.get(entry.paperId)?.authors?.join(', ') || authorsText(entry); }
@@ -90,7 +96,7 @@ function renderTopicLegend() {
   $('#topics-toggle').disabled = !available;
   $('#topics-toggle').setAttribute('aria-pressed', String(topicsEnabled && available));
   $('#topic-legend').hidden = !topicsEnabled || !available;
-  if (topics) $('#topics-note').textContent = available ? 'Experimental · Topics are inferred; colours change by session.' : 'Topics unavailable for this session.';
+  if (topics) $('#topics-note').textContent = available ? 'Inferred · not official tracks' : 'Topics unavailable for this session.';
   const legend = $('#topic-legend');
   legend.replaceChildren();
   if (!topicsEnabled || !available) return;
@@ -107,7 +113,9 @@ function renderTopicLegend() {
     button.addEventListener('click', () => {
       selectedTopic = group.id;
       refreshAssignments(); renderPaperResults();
-      $('#topic-legend').querySelector(`[data-topic="${group.id ?? 'all'}"]`)?.focus({preventScroll:true});
+      const activeKey = $('#topic-legend').querySelector(`[data-topic="${group.id ?? 'all'}"]`);
+      activeKey?.focus({preventScroll:true});
+      if (matchMedia('(max-width: 640px)').matches) activeKey?.scrollIntoView({block:'nearest', inline:'center'});
       $('#map-status').textContent = group.id === null ? 'Showing all topics.' : `Highlighted ${group.count} posters: ${group.label}. Other boards remain selectable.`;
     });
     legend.append(button);
@@ -233,6 +241,26 @@ function renderAssignment() {
   chip.append(paperTitle);
   const topic = topicLabel(entry);
   if (topic) { chip.append(topic); detail.append(topic.cloneNode(true)); }
+  if (topicsEnabled && selectedTopic !== null) {
+    const members = topicEntries(topics, activeSession, currentEntries(), selectedTopic);
+    const index = members.findIndex(row => row.board === selected);
+    const navigation = document.createElement('div'); navigation.className = 'topic-navigation';
+    const position = document.createElement('span');
+    position.textContent = index < 0 ? 'Outside highlighted topic' : `${index + 1} of ${members.length} in topic`;
+    navigation.append(position);
+    for (const [step, text] of [[-1,'← Previous'], [1,'Next →']]) {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = text;
+      button.id = step < 0 ? 'topic-previous' : 'topic-next';
+      button.setAttribute('aria-label', step < 0 ? 'Previous poster in topic' : 'Next poster in topic');
+      button.addEventListener('click', () => {
+        const next = index < 0 ? (step < 0 ? members.length - 1 : 0) : (index + step + members.length) % members.length;
+        selectBoard(members[next].board, {reveal:true});
+        $(`#${button.id}`).focus({preventScroll:true});
+      });
+      navigation.append(button);
+    }
+    chip.append(navigation);
+  }
   const session = currentSession();
   if (session) {
     const time = document.createElement('p'); time.className = 'selection-card-time';
@@ -288,16 +316,17 @@ function renderPaperResults() {
   const query = searchText(titleSearchText($('#paper-search').value)).trim();
   const topicFilter = topicsEnabled && selectedTopic !== null;
   if (!query && !topicFilter) return;
+  const words = query.split(/\s+/);
+  const entries = topicFilter ? topicEntries(topics, activeSession, currentEntries(), selectedTopic) : currentEntries();
+  const matches = entries.filter(entry => (entry.verified === true || conflictingEntries(entry.board).length) && words.every(word => searchText(`${titleSearchText(displayTitle(entry))} ${displayAuthors(entry)} ${entry.paperId || ''}`).includes(word)));
   if (topicFilter) {
     const note = document.createElement('p');
-    note.textContent = `Inferred topic: ${topics.sessions[activeSession].groups.find(g => g.id === selectedTopic).label}. Choose All topics to clear.`;
+    note.textContent = `${matches.length} posters · strongest matches first · inferred grouping`;
     results.append(note);
   }
-  const words = query.split(/\s+/);
-  const matches = currentEntries().filter(entry => (entry.verified === true || conflictingEntries(entry.board).length) && (!topicFilter || currentTopic(entry)?.id === selectedTopic) && words.every(word => searchText(`${titleSearchText(displayTitle(entry))} ${displayAuthors(entry)} ${entry.paperId || ''}`).includes(word)));
   if (!matches.length) {
     const note = document.createElement('p');
-    note.textContent = 'No matching handbook assignment in this session.'; results.append(note); return;
+    note.textContent = topicFilter ? 'No matching paper in this topic. Close this list and choose All topics to search the whole session.' : 'No matching handbook assignment in this session.'; results.append(note); return;
   }
   const limit = topicFilter ? matches.length : 20;
   for (const entry of matches.slice(0,limit)) {
@@ -305,11 +334,12 @@ function renderPaperResults() {
     button.type = 'button'; button.className = 'paper-result';
     const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); button.append(title);
     const meta = document.createElement('small');
-    meta.textContent = `Board ${entry.board}${savedBoards.has(entry.board) ? ' · ★ Saved' : ''}${conflictingEntries(entry.board).length ? ' · Conflicting entries' : ''}${displayAuthors(entry) ? ` · ${displayAuthors(entry)}` : ''}`;
+    meta.textContent = `Board ${entry.board}${topicFilter && currentTopic(entry).margin < .02 ? ' · Loose fit' : ''}${savedBoards.has(entry.board) ? ' · ★ Saved' : ''}${conflictingEntries(entry.board).length ? ' · Conflicting entries' : ''}${displayAuthors(entry) ? ` · ${displayAuthors(entry)}` : ''}`;
     button.append(meta);
     button.addEventListener('click', () => {
       selectBoard(entry.board, {reveal:true});
-      $('.panel-body').scrollTop = 0;
+      if ($('#details-panel').classList.contains('topic-list')) $('#details-panel').close();
+      else $('.panel-body').scrollTop = 0;
     });
     results.append(button);
   }
@@ -538,9 +568,7 @@ $('#topics-toggle').addEventListener('click', () => {
   $('#map-status').textContent = topicsEnabled ? 'Topic colours on. Choose a topic to highlight its posters.' : 'Topic colours off.';
 });
 $('#topic-browse').addEventListener('click', () => {
-  $('#paper-search').value = ''; renderPaperResults(); openDetails();
-  $('#paper-search').focus({preventScroll:true});
-  $('.paper-search-panel').scrollIntoView({block:'start'});
+  $('#paper-search').value = ''; renderPaperResults(); openDetails({topic:true});
 });
 
 function readHash({reveal = true} = {}) {
