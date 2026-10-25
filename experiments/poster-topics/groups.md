@@ -1,6 +1,6 @@
 # Poster topic inspection
 
-Automatically selected examples, with manually reviewed group labels. These are inferred groups, not acceptance tracks.
+Automatically selected examples, with manually reviewed group labels. These are inferred groups, not acceptance tracks. A paper can be close to its centroid and still have a small margin when another centroid is also close, so the two example lists can overlap.
 
 ## Session A
 
@@ -792,7 +792,7 @@ Smallest assignment margins (often ambiguous):
 - Breaking Bored? SciMemeX: Towards Automatic Generation of Scientiﬁc Memes from Research Articles
 - Harm or Humor: A Multimodal, Multilingual Benchmark for Overt and Covert Harmful Humor
 
-### Language & cognition (37)
+### Language & cognition (mixed) (37)
 
 Terms: surprisal, sentence processing, reading, human sentence, syntactic, tokenization, transformer, pruning
 
@@ -947,7 +947,7 @@ Smallest assignment margins (often ambiguous):
 - Evaluating Demographics Effect in Policy-Governed Tool-Using Agents Across Real-World Service Domains
 - Toward Latent Language Model Skills Steering and Optimization: An Empirical Study
 
-### Reasoning & interaction (43)
+### Reasoning & interaction (mixed) (43)
 
 Terms: reasoning, factual, human, user, conversations, memory, preferences, news
 
@@ -1034,7 +1034,7 @@ Smallest assignment margins (often ambiguous):
 
 ## Session F
 
-### Cross-lingual reasoning (49)
+### Reasoning & QA (49)
 
 Terms: reasoning, legal, english, qa, question, answering, multilingual, answer
 

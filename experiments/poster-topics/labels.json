@@ -54,7 +54,7 @@
       "RAG & evidence",
       "Speech & dialogue",
       "Video & vision",
-      "Language & cognition",
+      "Language & cognition (mixed)",
       "Enterprise agents"
     ],
     "E": [
@@ -65,14 +65,14 @@
       "Vision & multimodal models",
       "Privacy & leakage",
       "Rewards & RL",
-      "Reasoning & interaction",
+      "Reasoning & interaction (mixed)",
       "Retrieval & ranking",
       "Bias & culture",
       "Safety & jailbreaks",
       "Clinical & biomedical NLP"
     ],
     "F": [
-      "Cross-lingual reasoning",
+      "Reasoning & QA",
       "Clinical NLP",
       "Dialogue & personalization",
       "Misinformation & discourse",

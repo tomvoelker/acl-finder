@@ -1,6 +1,6 @@
 # Experimental poster topics
 
-This branch adds approximate topic groups to the poster map. They help browse a session; they are **not official research areas**, and individual assignments can be wrong. The live site is unchanged.
+The poster map offers approximate topic groups as an optional layer, off by default. They help browse a session; they are **not official research areas**, and individual assignments can be wrong.
 
 ## What the prototype does
 
@@ -34,7 +34,7 @@ There are still clear failures. B combines audio and model-internals papers. F h
 
 ## Build and deploy without changing groups
 
-The checked-in `data/poster-topics.json` contains the reviewed assignments for **all seven physical sessions**. `scripts/build.py` copies this file into the deployed site. Ordinary builds do not fetch abstracts, recluster papers, or require machine-learning dependencies. A colleague can pull this branch (or main after merge) and use the existing build/deploy commands; the same assignments will be published. The build refuses a changed handbook with stale topics instead of silently dropping the layer.
+The checked-in `data/poster-topics.json` contains the reviewed assignments for **all seven physical sessions**. `scripts/build.py` copies this file into the deployed site. Ordinary builds do not fetch abstracts, recluster papers, or require machine-learning dependencies. A colleague can pull main and use the existing build/deploy commands; the same assignments will be published. The build refuses a changed handbook with stale topics instead of silently dropping the layer.
 
 ## Reproduce the experiment
 

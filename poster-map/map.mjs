@@ -74,7 +74,6 @@ function openDetails({topic = false} = {}) {
   const panel = $('#details-panel');
   panel.classList.toggle('topic-list', topic);
   $('#details-title').textContent = topic ? topics.sessions[activeSession].groups.find(g => g.id === selectedTopic).label : 'Map details';
-  $('.paper-search-panel label').textContent = topic ? 'Search within this topic' : 'Find a paper in this session';
   if (!panel.open) panel.showModal();
   $('.panel-body').scrollTop = 0;
   if (topic) $('#details-title').focus({preventScroll:true});
@@ -315,6 +314,7 @@ function renderPaperResults() {
   if (!catalogReady) return;
   const query = searchText(titleSearchText($('#paper-search').value)).trim();
   const topicFilter = topicsEnabled && selectedTopic !== null;
+  $('.paper-search-panel label').textContent = topicFilter ? 'Search within the highlighted topic' : 'Find a paper in this session';
   if (!query && !topicFilter) return;
   const words = query.split(/\s+/);
   const entries = topicFilter ? topicEntries(topics, activeSession, currentEntries(), selectedTopic) : currentEntries();

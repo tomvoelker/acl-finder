@@ -20,3 +20,9 @@ Claude Opus 5.5 at xhigh reviewed the initial experiment on 25 October 2026. It 
 The input snapshot, pinned dependencies, comparison/export scripts and generated dataset are committed together. Normal builds preserve the checked-in groups and need no ML dependencies. A stale handbook stops the build rather than silently discarding topics.
 
 The remaining limitations are inherent to this experiment: low separation, forced single membership, occasional mismatches, and title/abstract truncation. These are documented in README.md and the UI labels the layer as inferred, not official tracks. This review does not certify every paper assignment as correct.
+
+## Final release review
+
+Claude Opus 5.5 at xhigh approved commit b011ea5 for optional release across all seven sessions, with no material blockers. The coordinator also approved it after browser verification. See [the final review](final-review.md) for the scope and remaining limitations.
+
+Before release, three non-blocking label suggestions were applied (F “Reasoning & QA”, E “Reasoning & interaction (mixed)”, D “Language & cognition (mixed)”). The regular Details search label now correctly describes the active topic filter. The generated inspection report explains why centroid-near and boundary examples can overlap. No assignments, clustering parameters, or layout changed after approval.

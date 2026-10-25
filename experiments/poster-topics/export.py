@@ -37,7 +37,7 @@ def export(input_dir, root=ROOT):
             review.append('Smallest assignment margins (often ambiguous):\n\n' + '\n'.join(f'- {t}' for t in g['borderline']) + '\n')
     (root / 'data/poster-topics.json').write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     (root / 'experiments/poster-topics' / 'metrics.json').write_text(json.dumps(metrics, indent=2) + '\n', encoding='utf-8')
-    (root / 'experiments/poster-topics' / 'groups.md').write_text('# Poster topic inspection\n\nAutomatically selected examples, with manually reviewed group labels. These are inferred groups, not acceptance tracks.\n\n' + '\n'.join(review), encoding='utf-8')
+    (root / 'experiments/poster-topics' / 'groups.md').write_text('# Poster topic inspection\n\nAutomatically selected examples, with manually reviewed group labels. These are inferred groups, not acceptance tracks. A paper can be close to its centroid and still have a small margin when another centroid is also close, so the two example lists can overlap.\n\n' + '\n'.join(review), encoding='utf-8')
     print(f"Exported {sum(len(s['assignments']) for s in data['sessions'].values())} poster assignments")
 
 
