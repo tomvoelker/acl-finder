@@ -27,9 +27,11 @@ class BuildTests(unittest.TestCase):
             app_name = re.search(r'src="(app\.[a-f0-9]+\.js)"', html).group(1)
             css_name = re.search(r'href="(styles\.[a-f0-9]+\.css)"', html).group(1)
             theme_name = re.search(r'src="(theme\.[a-f0-9]+\.js)"', html).group(1)
+            favicon_png = re.search(r'href="(favicon\.[a-f0-9]+\.png)"', html).group(1)
+            favicon_svg = re.search(r'href="(favicon\.[a-f0-9]+\.svg)"', html).group(1)
             app = (output / app_name).read_text()
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [app_name, css_name, module_name, theme_name]:
+            for name in [app_name, css_name, module_name, theme_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)

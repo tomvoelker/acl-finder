@@ -10,7 +10,7 @@ from import_underline import match_presentations
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
-FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.png", "conference-logo.png", "data/papers.json",
+FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "LICENSE"]
 
@@ -52,14 +52,18 @@ def build():
     app_name = asset("app.js", app.encode())
     theme_name = asset("theme.js", (ROOT / "theme.js").read_bytes())
     styles_name = asset("styles.css", (ROOT / "styles.css").read_bytes())
+    favicon_png = asset("favicon.png", (ROOT / "favicon.png").read_bytes())
+    favicon_svg = asset("favicon.svg", (ROOT / "favicon.svg").read_bytes())
     html = (ROOT / "index.html").read_text().replace('src="app.js"', f'src="{app_name}"')
     html = html.replace('href="styles.css"', f'href="{styles_name}"')
     html = html.replace('src="theme.js"', f'src="{theme_name}"')
+    html = html.replace('href="favicon.png"', f'href="{favicon_png}"')
+    html = html.replace('href="favicon.svg"', f'href="{favicon_svg}"')
     (OUTPUT / "index.html").write_text(html)
 
     (OUTPUT / "data").mkdir()
     (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
-    for name in ["favicon.png", "conference-logo.png", "LICENSE"]:
+    for name in ["conference-logo.png", "LICENSE"]:
         destination = OUTPUT / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)
