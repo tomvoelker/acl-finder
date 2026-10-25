@@ -22,7 +22,7 @@ Save papers to a browser-local shortlist and export confirmed presentations as c
 
 ## Usage stats and contact
 
-The footer links to Tom Völker’s LinkedIn profile with a local Bootstrap icon and to `emnlp-finder@tomvoelker.de` for questions and corrections. LinkedIn loads only after following the link. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form. The header keeps only the official programme, venue and theme controls.
+A small LinkedIn icon in the header links to Tom Völker’s profile. The footer links to `emnlp-finder@tomvoelker.de` for questions and corrections. LinkedIn loads only after following the link. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form. The header keeps the official programme, venue, LinkedIn icon and theme control together.
 
 The footer’s native **Privacy** disclosure works without JavaScript. It identifies Tom Völker as the personal operator and describes GitHub hosting, Cloudflare statistics and retention, browser storage, public programme data, email contact, transfers and visitor rights. Provider policies are linked in the notice.
 
