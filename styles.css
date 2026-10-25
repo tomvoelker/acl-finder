@@ -407,6 +407,16 @@ mark {
 .site-footer a { color: var(--ink-2); }
 .site-footer a:hover { color: var(--accent-strong); }
 .site-footer p + p { margin-top: 8px; }
+.footer-linkedin { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.footer-linkedin__icon { flex: none; width: 14px; height: 14px; fill: currentColor; }
+.privacy-notice { margin-top: 10px; }
+.privacy-notice > summary { width: fit-content; padding-block: 3px; color: var(--ink-2); cursor: pointer; text-decoration: underline; text-underline-offset: .18em; }
+.privacy-notice > summary:hover { color: var(--accent-strong); }
+.privacy-notice__content { max-width: 78ch; margin-top: 16px; color: var(--ink-2); overflow-wrap: anywhere; }
+.privacy-notice__content h2 { font-size: 1.125rem; color: var(--ink); }
+.privacy-notice__content h3 { margin-top: 18px; font-size: .875rem; color: var(--ink); }
+.privacy-notice__content h2 + p, .privacy-notice__content h3 + p { margin-top: 6px; }
+
 
 /* ---------- Responsive ---------- */
 @media (max-width: 959px) {

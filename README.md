@@ -22,7 +22,9 @@ Save papers to a browser-local shortlist and export confirmed presentations as c
 
 ## Usage stats and contact
 
-The header and footer link to `emnlp-finder@tomvoelker.de` for questions and corrections. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form.
+The footer links to Tom Völker’s LinkedIn profile with a local Bootstrap icon and to `emnlp-finder@tomvoelker.de` for questions and corrections. LinkedIn loads only after following the link. Contact opens the visitor’s email app with a subject and no message body. There is no hosted contact form. The header keeps only the official programme, venue and theme controls.
+
+The footer’s native **Privacy** disclosure works without JavaScript. It identifies Tom Völker as the personal operator and describes GitHub hosting, Cloudflare statistics and retention, browser storage, public programme data, email contact, transfers and visitor rights. Provider policies are linked in the notice.
 
 Cloudflare Web Analytics reports traffic, referrers, countries, devices, and performance for `emnlp.vlkr.org`. Its public site token lives in `traffic.mjs`. SPA tracking is disabled because filters and author pages use query-only navigation. A filter change does not count as another page load. View traffic in the [private Cloudflare dashboard](https://dash.cloudflare.com/2935c549fd1faa5c6c59a17b5659101e/web-analytics/overview?siteTag~in=ff02a94769c8425b96158f95afd66da9&excludeBots=Yes).
 
