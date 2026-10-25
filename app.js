@@ -507,8 +507,8 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     if (papers.some((p) => p._day === 'undated')) dayOptions.push({ value: 'undated', label: 'No date' });
     els.day.replaceChildren();
     for (const d of dayOptions) {
-      d.optionEl = h('option', { value: d.value }, d.label);
-      els.day.append(d.optionEl);
+      d.buttonEl = h('button', { type: 'button', class: 'day-nav__button', 'data-day': d.value, 'aria-pressed': 'false' }, d.label);
+      els.day.append(d.buttonEl);
     }
     els.nowBtn.hidden = !dates.includes(today);
   }
@@ -530,7 +530,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   function syncControls() {
     if (els.q.value !== state.q) els.q.value = state.q;
     els.qClear.hidden = !els.q.value;
-    els.day.value = state.day;
+    for (const d of dayOptions) d.buttonEl.setAttribute('aria-pressed', String(d.value === state.day));
     for (const f of FACETS) {
       const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
       if (facetSelects[f.key]) facetSelects[f.key].value = opt ? opt.slug : '';
@@ -565,7 +565,10 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
         if (sel !== null && sel !== p._f[j]) m |= 8 << j;
       }
       if (m === 0) matched.push(p);
-      if ((m & ~4) === 0 && p._day) dayCounts.set(p._day, (dayCounts.get(p._day) || 0) + 1);
+      if ((m & ~4) === 0) {
+        dayCounts.set('all', (dayCounts.get('all') || 0) + 1);
+        if (p._day) dayCounts.set(p._day, (dayCounts.get(p._day) || 0) + 1);
+      }
       for (let j = 0; j < n; j++) {
         if ((m & ~(8 << j)) === 0) counts[j].set(p._f[j], (counts[j].get(p._f[j]) || 0) + 1);
       }
@@ -586,7 +589,9 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   function renderDayCounts(dayCounts) {
     for (const d of dayOptions) {
       const c = dayCounts.get(d.value) || 0;
-      d.optionEl.textContent = d.value === 'all' ? d.label : `${d.label} (${fmtNum(c)})`;
+      const label = `${d.label}: ${plural(c, 'paper', 'papers')}`;
+      d.buttonEl.setAttribute('aria-label', label);
+      d.buttonEl.title = label;
     }
   }
 
@@ -949,9 +954,12 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       els.q.focus();
     });
 
-    els.day.addEventListener('change', (e) => {
-      state.day = e.target.value;
+    els.day.addEventListener('click', (e) => {
+      const button = e.target.closest('button[data-day]');
+      if (!button || !els.day.contains(button)) return;
+      state.day = button.dataset.day;
       state.paper = null;
+      syncControls();
       commit('filter');
     });
 

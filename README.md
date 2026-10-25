@@ -2,13 +2,13 @@
 
 An unofficial paper and presentation finder for EMNLP 2026 in Budapest. The main-conference schedule covers 25–27 October at HUNGEXPO. The full conference runs 24–29 October.
 
-**Live site:** [tomvoelker.de/acl-finder](http://tomvoelker.de/acl-finder/)
+**Live site:** [emnlp.vlkr.org](https://emnlp.vlkr.org/)
 
 Search by title, author, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Click a paper title to open its ACL Anthology page. Use **Schedule link** to share its presentation details; filters can also be shared through the URL.
 
 Each **Underline ↗** link opens that paper’s own presentation page, where Underline provides its available video, slides, or poster. Underline may require your conference login for those materials.
 
-The header’s **Theme** control offers Auto, Light, and Dark. Auto follows the system colour preference; explicit choices are saved in this browser and applied before the page renders. The palette draws on the supplied navy, cornflower, coral, and sand references without university logos or seals.
+The header’s theme button cycles through Auto, Light, and Dark. Its icon and label show the current choice. Auto follows the system colour preference; explicit choices are saved in this browser and applied before the page renders. White and cool gray surfaces, charcoal text, and restrained red accents follow the [conference website](https://2026.emnlp.org/). The header logo and favicon come from its [official logo](https://2026.emnlp.org/assets/images/logos/emnlp_2026_logo_v1.png). The finder remains unofficial. Day buttons above the filters switch between conference days, all days, and papers without a date.
 
 Full author lists appear in publication order. Presenters whose names match are bold and labelled within the list. Otherwise, the spreadsheet's presenter entry appears separately in bold, including when author metadata is unavailable. Name differences and ambiguous matches are not guessed.
 

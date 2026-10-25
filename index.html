@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>EMNLP 2026 Paper Finder · Unofficial Budapest schedule</title>
   <meta name="description" content="Unofficial, searchable schedule of EMNLP 2026 presentations in Budapest. Find papers by title, author, presenter, paper ID or topic and filter by day, track, format, attendance and room.">
-  <meta name="theme-color" content="#02246c">
+  <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light dark">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.png" type="image/png">
   <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" type="module"></script>
@@ -18,19 +18,8 @@
   <header class="masthead">
     <div class="wrap masthead__inner">
       <a class="brand" href="./">
-        <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-          <rect width="64" height="64" rx="14" fill="#02246c"/>
-          <rect x="13" y="15" width="11" height="7" rx="2" fill="#ed6a5b"/>
-          <rect x="28" y="15" width="23" height="7" rx="2" fill="#ffffff"/>
-          <rect x="13" y="28.5" width="11" height="7" rx="2" fill="#ffffff" fill-opacity=".45"/>
-          <rect x="28" y="28.5" width="16" height="7" rx="2" fill="#ffffff"/>
-          <rect x="13" y="42" width="11" height="7" rx="2" fill="#ffffff" fill-opacity=".45"/>
-          <rect x="28" y="42" width="20" height="7" rx="2" fill="#ffffff"/>
-        </svg>
-        <span class="brand__text">
-          <span class="brand__name">EMNLP 2026 <em>Paper Finder</em></span>
-          <span class="brand__meta">Budapest · HUNGEXPO · 24–29 October 2026</span>
-        </span>
+        <img class="brand__logo" src="conference-logo.png" width="190" height="33" alt="EMNLP 2026 Budapest">
+        <span class="brand__name">Paper Finder</span>
       </a>
       <div class="masthead__actions">
         <nav class="masthead__nav" aria-label="Official conference links">
@@ -38,17 +27,39 @@
           <a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener">Venue<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
           <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Source sheet<span class="ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
         </nav>
-        <label class="theme-picker" hidden>
-          <span>Theme</span>
-          <select id="theme" class="select" aria-label="Colour theme">
-            <option value="auto">Auto</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        </label>
+        <!-- Theme icons: https://github.com/twbs/icons
+The MIT License (MIT)
+
+Copyright (c) 2019-2024 The Bootstrap Authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+        -->
+        <button id="theme" class="theme-toggle" type="button" data-mode="auto" hidden aria-label="Theme: Auto">
+          <svg class="theme-toggle__icon theme-toggle__icon--auto" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/></svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--light" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--dark" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/></svg>
+          <span data-theme-label>Auto</span>
+        </button>
       </div>
     </div>
     <div class="wrap notice">
+      <p class="brand__meta">Budapest · HUNGEXPO · 24–29 October 2026</p>
       <p>
         Unofficial · Updated <time data-updated datetime="2026-10-24">24 Oct 2026</time> ·
         <strong>All times: Budapest, CET (UTC+1).</strong>
@@ -74,12 +85,8 @@
     </div>
 
     <div class="wrap">
-      <div class="filter-bar" id="facets" role="group" aria-label="Filter papers">
-        <div class="facet">
-          <label class="facet__label" for="day">Day</label>
-          <select class="select" id="day" name="day"><option value="all">All days</option></select>
-        </div>
-      </div>
+      <div class="day-nav" id="day" role="group" aria-label="Conference day"></div>
+      <div class="filter-bar" id="facets" role="group" aria-label="Filter papers"></div>
 
       <section class="results" id="results" aria-labelledby="results-count" tabindex="-1">
         <div class="results__bar">

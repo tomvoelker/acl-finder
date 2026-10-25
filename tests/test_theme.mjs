@@ -10,8 +10,13 @@ function page({ dark = false, saved = null, storageBlocked = false } = {}) {
   const values = new Map(saved === null ? [] : [[key, saved]]);
   const events = {};
   const root = { dataset: {} };
-  const picker = { hidden: true };
-  const control = { value: 'auto', closest: () => picker, addEventListener: (_, fn) => { events.select = fn; } };
+  const label = { textContent: '' };
+  const control = {
+    hidden: true, dataset: {}, attributes: {},
+    querySelector: () => label,
+    setAttribute(name, value) { this.attributes[name] = value; },
+    addEventListener: (type, fn) => { events[type] = fn; },
+  };
   const system = { matches: dark, addEventListener: (_, fn) => { events.system = fn; } };
   const localStorage = {
     getItem(k) { if (storageBlocked) throw new Error('Storage blocked'); return values.get(k) ?? null; },
@@ -28,20 +33,22 @@ function page({ dark = false, saved = null, storageBlocked = false } = {}) {
     },
   });
   return {
-    root, picker, control, values,
+    root, label, control, values,
     ready: () => events.ready(),
     systemChange(dark) { system.matches = dark; events.system(); },
-    choose(value) { control.value = value; events.select(); },
+    click: () => events.click(),
   };
 }
 
 test('system theme applies before DOM readiness and follows system changes in Auto', () => {
   const p = page({ dark: true });
   assert.equal(p.root.dataset.theme, 'dark');
-  assert.equal(p.picker.hidden, true);
+  assert.equal(p.control.hidden, true);
   p.ready();
-  assert.equal(p.picker.hidden, false);
-  assert.equal(p.control.value, 'auto');
+  assert.equal(p.control.hidden, false);
+  assert.equal(p.control.dataset.mode, 'auto');
+  assert.equal(p.label.textContent, 'Auto');
+  assert.match(p.control.attributes['aria-label'], /Auto \(system\).*Switch to Light/);
   p.systemChange(false);
   assert.equal(p.root.dataset.theme, 'light');
 });
@@ -51,7 +58,8 @@ test('saved theme overrides the system on first paint and subsequent system chan
     const p = page({ saved, dark });
     assert.equal(p.root.dataset.theme, saved);
     p.ready();
-    assert.equal(p.control.value, saved);
+    assert.equal(p.control.dataset.mode, saved);
+    assert.equal(p.label.textContent, saved === 'light' ? 'Light' : 'Dark');
     p.systemChange(!dark);
     p.systemChange(dark);
     assert.equal(p.root.dataset.theme, saved);
@@ -61,11 +69,18 @@ test('saved theme overrides the system on first paint and subsequent system chan
 test('manual choices persist; switching back to Auto removes the override', () => {
   const p = page({ dark: false });
   p.ready();
-  p.choose('dark');
+  p.click();
+  assert.equal(p.root.dataset.theme, 'light');
+  assert.equal(p.values.get(key), 'light');
+  assert.equal(p.label.textContent, 'Light');
+  assert.match(p.control.title, /Switch to Dark/);
+  p.click();
   assert.equal(p.root.dataset.theme, 'dark');
   assert.equal(p.values.get(key), 'dark');
+  assert.equal(p.label.textContent, 'Dark');
+  assert.match(p.control.attributes['aria-label'], /Theme: Dark.*Switch to Auto/);
   assert.equal(page({ saved: p.values.get(key) }).root.dataset.theme, 'dark');
-  p.choose('auto');
+  p.click();
   assert.equal(p.values.has(key), false);
   assert.equal(p.root.dataset.theme, 'light');
   p.systemChange(true);
@@ -76,9 +91,11 @@ test('theme control works without storage, and invalid saved choices use the sys
   const p = page({ dark: true, storageBlocked: true });
   assert.equal(p.root.dataset.theme, 'dark');
   p.ready();
-  p.choose('light');
+  p.click();
   assert.equal(p.root.dataset.theme, 'light');
-  p.choose('auto');
+  p.click();
+  assert.equal(p.root.dataset.theme, 'dark');
+  p.click();
   assert.equal(p.root.dataset.theme, 'dark');
   assert.equal(page({ saved: 'unexpected', dark: true }).root.dataset.theme, 'dark');
 });

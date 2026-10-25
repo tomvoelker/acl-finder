@@ -10,7 +10,7 @@ from import_underline import match_presentations
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
-FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.svg", "data/papers.json",
+FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.png", "conference-logo.png", "data/papers.json",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "LICENSE"]
 
@@ -59,7 +59,7 @@ def build():
 
     (OUTPUT / "data").mkdir()
     (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
-    for name in ["favicon.svg", "LICENSE"]:
+    for name in ["favicon.png", "conference-logo.png", "LICENSE"]:
         destination = OUTPUT / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)

@@ -2,6 +2,8 @@
 (() => {
   const key = 'emnlp2026-finder.theme';
   const system = window.matchMedia('(prefers-color-scheme: dark)');
+  const choices = ['auto', 'light', 'dark'];
+  const labels = { auto: 'Auto', light: 'Light', dark: 'Dark' };
   let choice = 'auto';
   try {
     const saved = localStorage.getItem(key);
@@ -16,11 +18,21 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const control = document.querySelector('#theme');
-    control.value = choice;
-    control.closest('.theme-picker').hidden = false;
-    control.addEventListener('change', () => {
-      choice = control.value;
+    const label = control.querySelector('[data-theme-label]');
+    function updateControl() {
+      const next = choices[(choices.indexOf(choice) + 1) % choices.length];
+      control.dataset.mode = choice;
+      label.textContent = labels[choice];
+      const description = `Theme: ${labels[choice]}${choice === 'auto' ? ' (system)' : ''}. Switch to ${labels[next]}.`;
+      control.setAttribute('aria-label', description);
+      control.title = description;
+    }
+    updateControl();
+    control.hidden = false;
+    control.addEventListener('click', () => {
+      choice = choices[(choices.indexOf(choice) + 1) % choices.length];
       apply();
+      updateControl();
       try {
         if (choice === 'auto') localStorage.removeItem(key);
         else localStorage.setItem(key, choice);
