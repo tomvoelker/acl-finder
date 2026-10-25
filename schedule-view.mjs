@@ -20,19 +20,28 @@ export function sessionKey(paper) {
   ]);
 }
 
-export function expandSessions(state) {
-  return !!(state.q.trim() || state.saved || state.paper || state.author || Object.values(state.filters).some((value) => value !== null));
-}
-
 export function searchState(state, query) {
   return {
     ...state,
-    ...(state.author ? {
+    ...(state.author || state.view === 'posters' ? {
       day: 'all', saved: false,
       filters: Object.fromEntries(Object.keys(state.filters).map((key) => [key, null])),
     } : {}),
-    q: query, paper: null, author: null,
+    q: query, paper: null, author: null, view: 'programme', posterSession: null,
   };
+}
+
+// A page replaces the previous page. DOM size never grows with the result count.
+export const RESULT_PAGE_SIZE = 16;
+export function resultPage(items, page = 0) {
+  const pages = Math.max(1, Math.ceil(items.length / RESULT_PAGE_SIZE));
+  const current = Math.max(0, Math.min(pages - 1, Math.trunc(page) || 0));
+  const start = current * RESULT_PAGE_SIZE;
+  return { items: items.slice(start, start + RESULT_PAGE_SIZE), page: current, pages, start };
+}
+
+export function posterBrowsing(state) {
+  return state.view === 'posters' && !state.q.trim() && !state.author && !state.paper && !state.saved;
 }
 
 // Use publication names, preserving accents and case. These are name-based

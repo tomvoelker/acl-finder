@@ -73,7 +73,7 @@ THE SOFTWARE.
         <form class="search" id="search-form" role="search" action="./">
           <label class="visually-hidden" for="q">Search by title, author, presenter, paper ID, topic or board number</label>
           <svg class="search__icon icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 20 20"/></svg>
-          <input class="search__input" id="q" name="q" type="search" placeholder="Title, author, paper ID or board number" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="search-hint">
+          <input class="search__input" id="q" name="q" type="search" placeholder="Search papers, authors or poster boards" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-describedby="search-hint">
           <kbd class="search__kbd" aria-hidden="true">/</kbd>
           <button class="search__clear" id="q-clear" type="button" hidden>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -105,13 +105,14 @@ THE SOFTWARE.
         <div class="results__bar">
           <h2 class="results__count" id="results-count" tabindex="-1">Loading schedule…</h2>
           <div class="results__tools">
+            <a class="browse-link" id="browse-link" href="?view=programme&amp;day=all">Full programme</a>
             <button class="pill" id="now-btn" type="button" aria-label="Jump to now" title="Jump to now" hidden>
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 7.5V12l3 2"/></svg>
               <span class="now-label">Jump to now</span>
             </button>
-            <button class="pill pill--saved" id="saved-btn" type="button" aria-pressed="false">
+            <button class="saved-toggle" id="saved-btn" type="button" aria-label="Saved papers" title="Saved papers" aria-pressed="false">
               <svg class="icon icon--star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.6l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.62 6.9 19.3l.98-5.68L3.75 9.6l5.7-.83z"/></svg>
-              <span class="shortlist-label">Shortlist</span> <span class="pill__count" id="saved-count">0</span>
+              <span class="pill__count" id="saved-count">0</span>
             </button>
             <button class="pill pill--quiet" id="clear-all" type="button" hidden>Clear all</button>
           </div>
@@ -136,10 +137,16 @@ THE SOFTWARE.
 
   <footer class="site-footer">
     <div class="wrap">
+      <p>Unofficial finder by Tom Völker · <a href="mailto:emnlp-finder@tomvoelker.de?subject=EMNLP%202026%20Paper%20Finder%20feedback" data-contact-link>Contact</a></p>
+      <details class="privacy-notice" id="about">
+        <summary>About &amp; sources</summary>
+        <div class="privacy-notice__content">
       <p>All times: Budapest, CET (UTC+1). Schedule updated <time data-updated datetime="2026-10-24">24 Oct 2026</time>.</p>
       <p>Unofficial schedule from the <a href="https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490" data-source-link target="_blank" rel="noopener">Author Presentations sheet</a>. Author lists from <a href="https://aclanthology.org/events/emnlp-2026/" target="_blank" rel="noopener">ACL Anthology</a>; presenters are shown in bold. Check the <a href="https://2026.emnlp.org/program/" target="_blank" rel="noopener">official programme</a> for changes. Poster board numbers come from the <a href="https://drive.google.com/file/d/1UGPjD7jPfax0RVaZPcb1gZhCUhK4v3ti/view" target="_blank" rel="noopener">conference handbook</a>.</p>
       <p class="site-footer__credit">Made by Tom Völker · <a href="https://www.informatik.uni-wuerzburg.de/datascience/" target="_blank" rel="noopener">Data Science Chair, University of Würzburg</a>.</p>
-      <p>Your shortlist stays in this browser. Questions or corrections? Email <a href="mailto:emnlp-finder@tomvoelker.de?subject=EMNLP%202026%20Paper%20Finder%20feedback" data-contact-link>emnlp-finder@tomvoelker.de</a>.</p>
+          <p>Saved papers stay in this browser.</p>
+        </div>
+      </details>
       <details class="privacy-notice" id="privacy">
         <summary>Privacy</summary>
         <div class="privacy-notice__content">

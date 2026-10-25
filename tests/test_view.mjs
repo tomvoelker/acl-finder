@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices } from '../schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, posterBrowsing, resultPage, RESULT_PAGE_SIZE, presenterAuthorIndices } from '../schedule-view.mjs';
 
 const days = ['all', '2026-10-25', '2026-10-26', '2026-10-27', 'undated'];
 const empty = { q: '', day: '2026-10-25', saved: false, paper: null, filters: { track: null, room: null } };
@@ -27,12 +27,54 @@ test('outside the schedule defaults to All days; invalid URL days do not hide re
   assert.equal(initialDay('invalid', days, '2026-10-26'), '2026-10-26');
 });
 
-test('browsing days stays collapsed; searches, facets, shortlist and paper links expand', () => {
-  assert.equal(expandSessions(empty), false);
-  assert.equal(expandSessions({ ...empty, day: 'all', q: '   ' }), false);
-  for (const change of [{ q: 'german' }, { saved: true }, { paper: '9736-FIND' }, { filters: { room: 'Hall H' } }]) {
-    assert.equal(expandSessions({ ...empty, ...change }), true);
+test('poster browsing applies only to an unsearched poster view', () => {
+  const landing = { ...empty, view: 'posters', author: null, posterSession: null };
+  assert.equal(posterBrowsing(landing), true);
+  assert.equal(posterBrowsing({ ...landing, q: '   ', day: 'all', posterSession: 'A' }), true);
+  assert.equal(posterBrowsing({ ...landing, filters: { room: 'Hall H' } }), true);
+  for (const change of [{ view: 'programme' }, { q: 'german' }, { saved: true },
+    { paper: '9736-FIND' }, { author: 'Tom Völker' }]) {
+    assert.equal(posterBrowsing({ ...landing, ...change }), false);
   }
+});
+
+test('result pages have bounded sizes and correct boundaries', () => {
+  assert.equal(RESULT_PAGE_SIZE, 16);
+  for (const count of [0, 1, 15, 16, 17, 32, 33]) {
+    const items = Array.from({ length: count }, (_, i) => i);
+    const pages = Math.max(1, Math.ceil(count / RESULT_PAGE_SIZE));
+    const first = resultPage(items);
+    assert.deepEqual(first, { items: items.slice(0, RESULT_PAGE_SIZE), page: 0, pages, start: 0 });
+    const last = resultPage(items, pages - 1);
+    assert.equal(last.start, (pages - 1) * RESULT_PAGE_SIZE);
+    assert.equal(last.items.length, count ? count - last.start : 0);
+    assert.ok(last.items.length <= RESULT_PAGE_SIZE);
+  }
+});
+
+test('paging replaces slices without losing or duplicating papers', () => {
+  const items = Array.from({ length: 5603 }, (_, id) => ({ id }));
+  const snapshot = items.slice();
+  const { pages } = resultPage(items);
+  const seen = [];
+  for (let page = 0; page < pages; page++) {
+    const result = resultPage(items, page);
+    assert.equal(result.page, page);
+    assert.equal(result.start, page * RESULT_PAGE_SIZE);
+    assert.ok(result.items.length <= RESULT_PAGE_SIZE);
+    seen.push(...result.items);
+  }
+  assert.deepEqual(seen, items);
+  assert.equal(new Set(seen).size, items.length);
+  assert.deepEqual(items, snapshot, 'The source collection is not mutated');
+});
+
+test('invalid and out-of-range pages stay inside available bounds', () => {
+  const items = Array.from({ length: RESULT_PAGE_SIZE * 2 + 1 }, (_, i) => i);
+  for (const page of [-100, -1, NaN, -Infinity]) assert.equal(resultPage(items, page).page, 0);
+  for (const page of [3, 100, Infinity]) assert.equal(resultPage(items, page).page, 2);
+  assert.equal(resultPage(items, 1.9).page, 1);
+  assert.deepEqual(resultPage([], 100), { items: [], page: 0, pages: 1, start: 0 });
 });
 
 test('parallel sessions stay separate by topic and room as well as date, time and session label', () => {

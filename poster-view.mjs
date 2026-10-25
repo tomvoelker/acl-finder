@@ -30,3 +30,24 @@ export function parsePosterQuery(query) {
 export function matchesPosterQuery(paper, boards) {
   return boards.every(board => board === (paper.poster?.board ?? paper.posterClaimedBoard));
 }
+
+// A handbook slot is independent of the presentation format in the source sheet.
+// Inactive entries remain searchable, but are not advertised as posters to attend.
+export function posterBrowseDay(paper) {
+  if (paper._inactive) return null;
+  if (paper.poster) return paper.poster.date;
+  return paper.presentation === 'Poster' || paper.posterIssue ? paper._day : null;
+}
+
+export function posterGroups(papers) {
+  const groups = new Map();
+  for (const paper of papers) {
+    if (!posterBrowseDay(paper)) continue;
+    const key = paper.poster?.id || 'unconfirmed';
+    if (!groups.has(key)) groups.set(key, { slot: paper.poster || null, papers: [] });
+    groups.get(key).papers.push(paper);
+  }
+  return [...groups].sort(([a, ga], [b, gb]) =>
+    a === 'unconfirmed' ? 1 : b === 'unconfirmed' ? -1 :
+      ga.slot.date.localeCompare(gb.slot.date) || ga.slot.start.localeCompare(gb.slot.start) || a.localeCompare(b));
+}

@@ -6,15 +6,14 @@
  */
 'use strict';
 
-import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices, authorKey, indexAuthors, searchState } from './schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, presenterAuthorIndices, authorKey, indexAuthors, searchState, resultPage, RESULT_PAGE_SIZE, posterBrowsing } from './schedule-view.mjs';
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
-import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery } from './poster-view.mjs';
+import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
 
 (() => {
   const analytics = createAnalytics();
   const DATA_URL = 'data/papers.json';
-  const PAGE_SIZE = 80;
   const NONE = '__none__';
   const STORAGE_KEY = 'emnlp2026-finder.shortlist.v1';
   const DEFAULT_TZ = 'Europe/Budapest';
@@ -33,7 +32,6 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   const INACTIVE = new Set(['not presenting', 'withdrawn', 'desk rejected']);
   const STATUS_LIKE = new Set(['Not presenting', 'Withdrawn', 'Desk rejected']);
   const IMPLIED_MODE = { Oral: 'In person', Poster: 'In person', Demo: 'In person', Virtual: 'Virtual', 'Virtual demo': 'Virtual' };
-  const FORMAT_CLASS = { Oral: 'oral', Poster: 'poster', Demo: 'demo', Virtual: 'virtual', 'Virtual demo': 'virtual' };
   const FORMAT_RANK = { Oral: 0, Demo: 1, Poster: 2, 'Virtual demo': 3, Virtual: 4 };
 
   const FACETS = [
@@ -63,7 +61,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     day: $('#day'), daySelect: $('#day-select'), facets: $('#facets'), results: $('#results'),
     filtersToggle: $('#filters-toggle'), filtersCount: $('#filters-count'),
     count: $('#results-count'), nowBtn: $('#now-btn'), savedBtn: $('#saved-btn'), savedCount: $('#saved-count'),
-    clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
+    clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'), browseLink: $('#browse-link'),
     list: $('#list'), live: $('#live'), authorProfile: $('#author-profile'),
   };
 
@@ -81,6 +79,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   let sourceUrl = null;
   let updatedLabel = '';
   let papers = [];
+  let posterOrderedPapers = [];
   let byKey = new Map();
   let authors = new Map();
   let dayOptions = [];
@@ -92,6 +91,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   const sessionOpen = new Map();
   let lastNav = null;
   let typingTimer = null;
+  let renderTicket = 0;
   let announceTimer = null;
   let loaded = false;
   let searchBeforeLoad = false;
@@ -99,7 +99,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   let storageWarned = false;
 
   const blankState = () => ({
-    q: '', day: 'all', saved: false, paper: null, author: null,
+    q: '', day: 'all', saved: false, paper: null, author: null, view: 'posters', posterSession: null,
     filters: Object.fromEntries(FACETS.map((f) => [f.key, null])),
   });
   const state = blankState();
@@ -139,6 +139,10 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   // per character so match offsets map back onto the original string.
   function highlightInto(el, text, words) {
     if (!words.length) { el.textContent = text; return; }
+    // Most author names do not match the query. Avoid allocating a per-character
+    // Unicode offset map unless this string will actually contain a highlight.
+    const searchable = fold(text);
+    if (!words.some(word => searchable.includes(word))) { el.textContent = text; return; }
     let folded = '';
     const origin = [];
     for (let i = 0; i < text.length;) {
@@ -309,6 +313,12 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     return c || nat(a.title, b.title) || nat(a.id, b.id);
   }
 
+  function comparePosterFirst(a, b) {
+    return (a._inactive ? 2 : a.poster ? 0 : 1) - (b._inactive ? 2 : b.poster ? 0 : 1) ||
+      str(a.poster?.date, b.poster?.date) || str(a.poster?.start, b.poster?.start) ||
+      (a.poster?.board || 0) - (b.poster?.board || 0) || compare(a, b);
+  }
+
   const calCache = new Map();
   function calendarEligible(p) {
     if (calCache.has(p._key)) return calCache.get(p._key);
@@ -350,12 +360,13 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       update({ scroll: false });
       els.count.focus({ preventScroll: true });
     }
-    announce(shortlist.has(p._key) ? `Saved ${p.id} to your shortlist.` : `Removed ${p.id} from your shortlist.`);
+    announce(shortlist.has(p._key) ? `Saved ${p.title}.` : `Removed ${p.title} from saved papers.`);
   }
 
   function refreshStars() {
     for (const btn of document.querySelectorAll('.star[data-key]')) {
       btn.setAttribute('aria-pressed', String(shortlist.has(btn.dataset.key)));
+      btn.title = shortlist.has(btn.dataset.key) ? 'Remove saved paper' : 'Save paper';
     }
     els.savedCount.textContent = fmtNum(savedPapers().length);
     if (state.saved) renderShortlistBar();
@@ -364,7 +375,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   function starButton(p) {
     return h('button', {
       type: 'button', class: 'star', 'data-action': 'star', 'data-key': p._key,
-      'aria-pressed': String(shortlist.has(p._key)), 'aria-label': `Shortlist ${p.id}`, title: 'Save to shortlist',
+      'aria-pressed': String(shortlist.has(p._key)), 'aria-label': `Save ${p.title}`, title: shortlist.has(p._key) ? 'Remove saved paper' : 'Save paper',
     }, icon('star'));
   }
 
@@ -440,17 +451,22 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     const params = new URLSearchParams(location.search);
     const s = blankState();
     const paper = text(params.get('paper'));
-    if (paper) { s.paper = paper.slice(0, 64); return s; }
+    if (paper) { s.paper = paper.slice(0, 64); s.view = 'programme'; return s; }
     s.author = authorKey((params.get('author') || '').slice(0, 512)) || null;
     s.q = (params.get('q') || '').slice(0, 200);
-    s.day = initialDay(params.get('day'), dayOptions.map((d) => d.value), s.author ? null : zonedNow()?.date);
     s.saved = params.get('saved') === '1';
+    s.posterSession = posterSessions.has(params.get('poster')) || params.get('poster') === 'unconfirmed' ? params.get('poster') : null;
     for (const f of FACETS) {
       const raw = params.get(f.param);
       if (!raw) continue;
       const opt = facetOptions[f.key].find((o) => o.slug === raw);
       if (opt) s.filters[f.key] = opt.value;
     }
+    s.view = params.get('view') === 'programme' || s.author || s.q.trim() || s.saved ||
+      (params.get('view') !== 'posters' && !s.posterSession && FACETS.some(f => params.has(f.param))) ? 'programme' : 'posters';
+    s.day = initialDay(params.get('day'), dayOptions.map((d) => d.value),
+      s.author || s.q.trim() || s.saved || s.posterSession ? null : zonedNow()?.date);
+    if (s.view !== 'posters') s.posterSession = null;
     return s.author && s.q.trim() ? searchState(s, s.q) : s;
   }
 
@@ -459,6 +475,8 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     if (state.paper) {
       params.set('paper', state.paper);
     } else {
+      if (state.view === 'programme' || FACETS.some(f => state.filters[f.key] !== null)) params.set('view', state.view);
+      if (state.posterSession) params.set('poster', state.posterSession);
       if (state.author) params.set('author', state.author);
       if (state.q.trim()) params.set('q', state.q.trim());
       // Keep an explicit choice of All days when the page is reopened during the conference.
@@ -501,7 +519,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   function openAuthor(name) {
     analytics.cancelSearch();
     clearTimeout(typingTimer);
-    Object.assign(state, blankState(), { author: authorKey(name) });
+    Object.assign(state, blankState(), { author: authorKey(name), view: 'programme' });
     syncControls();
     commit('nav', { scroll: false });
     els.authorProfile.scrollIntoView({ block: 'start' });
@@ -511,7 +529,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   function openPaper(id) {
     analytics.cancelSearch();
     clearTimeout(typingTimer);
-    Object.assign(state, blankState(), { paper: id });
+    Object.assign(state, blankState(), { paper: id, view: 'programme' });
     syncControls();
     commit('nav', { scroll: 'force' });
     els.count.focus({ preventScroll: true });
@@ -593,6 +611,8 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   /* ---------- Filtering ---------- */
 
   function update({ typing = false, scroll = true } = {}) {
+    const ticket = ++renderTicket;
+    const browsingPosters = posterBrowsing(state);
     const posterQuery = parsePosterQuery(state.q);
     terms = fold(posterQuery.text).split(/\s+/).filter(Boolean);
     const n = FACETS.length;
@@ -600,12 +620,15 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     const counts = FACETS.map(() => new Map());
     const matched = [];
     const authorPapers = state.author ? authors.get(state.author) || new Set() : null;
-    for (const p of papers) {
+    for (const p of (state.q.trim() || state.author || state.saved || browsingPosters ? posterOrderedPapers : papers)) {
       if (authorPapers && !authorPapers.has(p)) continue;
+      const day = browsingPosters ? posterBrowseDay(p) : p._day;
+      if (browsingPosters && !day) continue;
+      if (browsingPosters && state.posterSession && (p.poster?.id || 'unconfirmed') !== state.posterSession) continue;
       let m = matchesPosterQuery(p, posterQuery.boards) ? 0 : 1;
       for (const t of terms) if (!p._hay.includes(t)) { m |= 1; break; }
       if (state.saved && !shortlist.has(p._key)) m |= 2;
-      if (state.day !== 'all' && p._day !== state.day) m |= 4;
+      if (state.day !== 'all' && day !== state.day) m |= 4;
       for (let j = 0; j < n; j++) {
         const sel = state.filters[FACETS[j].key];
         if (sel !== null && sel !== p._f[j]) m |= 8 << j;
@@ -613,7 +636,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       if (m === 0) matched.push(p);
       if ((m & ~4) === 0) {
         dayCounts.set('all', (dayCounts.get('all') || 0) + 1);
-        if (p._day) dayCounts.set(p._day, (dayCounts.get(p._day) || 0) + 1);
+        if (day) dayCounts.set(day, (dayCounts.get(day) || 0) + 1);
       }
       for (let j = 0; j < n; j++) {
         if ((m & ~(8 << j)) === 0) counts[j].set(p._f[j], (counts[j].get(p._f[j]) || 0) + 1);
@@ -628,9 +651,19 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     renderAuthorProfile();
     renderBanner(focus);
     if (state.saved) renderShortlistBar(); else els.shortlistBar.hidden = true;
-    renderList();
-    if (scroll) scrollToResults(scroll === 'force');
-    announce(state.paper ? (focus ? `Showing paper ${focus.id}.` : 'Paper not found.') : `${plural(results.length, 'paper', 'papers')} found.`, typing ? 800 : 150);
+    const paint = () => {
+      if (ticket !== renderTicket) return;
+      renderList();
+      // Typing keeps focus and scroll still. Layout reads here previously
+      // doubled the time spent blocking the input after each search.
+      if (scroll && !typing) scrollToResults(scroll === 'force');
+      announce(state.paper ? (focus ? 'Showing shared paper.' : 'Paper not found.') : `${plural(results.length, 'paper', 'papers')} found.`, typing ? 800 : 150);
+    };
+    if (typing) {
+      els.list.setAttribute('aria-busy', 'true');
+      // Give input events a turn between matching and building the next page.
+      setTimeout(paint, 0);
+    } else paint();
   }
 
   function renderDayCounts(dayCounts) {
@@ -653,7 +686,12 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
 
   function renderSummary() {
     const total = state.author ? authors.get(state.author)?.size || 0 : papers.length;
-    if (state.paper) {
+    const browsingPosters = posterBrowsing(state);
+    if (browsingPosters && !state.posterSession) {
+      els.count.textContent = 'Poster sessions';
+    } else if (browsingPosters && state.posterSession !== 'unconfirmed') {
+      els.count.textContent = posterSessions.get(state.posterSession)?.label.replace(/session\s+/i, '') || 'Posters';
+    } else if (state.paper) {
       els.count.replaceChildren('Shared paper');
     } else if (state.saved) {
       els.count.replaceChildren(h('span', { class: 'results__num' }, fmtNum(results.length)), ' saved');
@@ -665,7 +703,11 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       }
     }
     els.savedCount.textContent = fmtNum(savedPapers().length);
-    els.clearAll.hidden = !state.q.trim() && state.day === 'all' && !state.saved && !state.paper && !state.author &&
+    els.browseLink.textContent = browsingPosters ? (state.posterSession ? 'All sessions' : 'Full programme') : 'Posters';
+    els.browseLink.href = browsingPosters && !state.posterSession ? '?view=programme&day=all' : '?day=all';
+    els.nowBtn.hidden = browsingPosters || !!state.q.trim() || !!state.author || !!state.saved || !!state.paper ||
+      FACETS.some(f => state.filters[f.key] !== null) || !dayOptions.some(d => d.value === zonedNow()?.date);
+    els.clearAll.hidden = !state.q.trim() && (browsingPosters || state.day === 'all') && !state.saved && !state.paper && !state.author &&
       FACETS.every((f) => state.filters[f.key] === null);
   }
 
@@ -679,14 +721,14 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
         h('p', { class: 'author-profile__label' }, 'Author'),
         h('h1', { id: 'author-name', tabindex: '-1' }, state.author),
         h('p', { class: 'author-profile__meta' }, `${plural(count, 'paper', 'papers')} in the conference programme`)),
-      h('a', { class: 'btn btn--small', href: `${location.pathname}?day=all`, 'data-programme': '' }, 'All conference papers'));
+      h('a', { class: 'btn btn--small', href: `${location.pathname}?view=programme&day=all`, 'data-programme': '' }, 'All conference papers'));
   }
 
   function renderBanner(focus) {
     if (!state.paper) { els.banner.hidden = true; return; }
     els.banner.replaceChildren(
-      h('p', null, focus ? `Showing one paper from a shared link (${focus.id}).` : `No paper with ID “${state.paper}” is in this snapshot.`),
-      h('button', { type: 'button', class: 'btn btn--small', onclick: resetAll }, 'Show all papers'));
+      h('p', null, focus ? 'Shared presentation' : `No paper with ID “${state.paper}” is in this snapshot.`),
+      h('button', { type: 'button', class: 'btn btn--small', onclick: resetAll }, 'Poster sessions'));
     els.banner.hidden = false;
   }
 
@@ -713,49 +755,115 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
 
   /* ---------- Programme list ---------- */
 
+  function openPoster(id) {
+    analytics.cancelSearch();
+    clearTimeout(typingTimer);
+    Object.assign(state, blankState(), { posterSession: id });
+    syncControls();
+    commit('filter', { scroll: false });
+    els.count.focus({ preventScroll: true });
+  }
+
+  function renderPosterHome() {
+    const grid = h('div', { class: 'poster-sessions' });
+    const now = zonedNow();
+    let previousDay = null;
+    for (const [id, group] of posterGroups(results)) {
+      const slot = group.slot;
+      const date = slot?.date || 'unconfirmed';
+      if (date !== previousDay) {
+        grid.append(h('h3', { class: 'poster-sessions__day' }, slot ? dateInfo(date).short : 'Other posters'));
+        previousDay = date;
+      }
+      const href = `?${new URLSearchParams({ poster: id })}`;
+      const card = h('article', { class: 'poster-session' });
+      const name = slot?.label || 'Board unconfirmed';
+      const heading = h('h4', null, h('a', { href, 'data-poster': id }, name));
+      const running = slot && now && slot.date === now.date && slot.start <= now.time && now.time < slot.end;
+      if (running) heading.append(h('span', { class: 'flag flag--accent' }, 'Now'));
+      card.append(heading,
+        h('p', { class: 'poster-session__time' }, slot ? `${slot.start}–${slot.end} CET · ${slot.room}` : 'Poster entries without a confirmed board'),
+        h('p', { class: 'poster-session__links' },
+          h('a', { href, 'data-poster': id }, `Browse ${plural(group.papers.length, 'paper', 'papers')} →`),
+          slot ? newTab(`poster-map/#${new URLSearchParams({ session: id })}`, 'Open map ↗', ` for ${name} (opens in a new tab)`) : null));
+      grid.append(card);
+    }
+    if (!grid.children.length) {
+      grid.append(h('div', { class: 'state' }, h('h3', null, 'No poster sessions match'),
+        h('p', null, 'Choose another day or clear the filters.'),
+        h('button', { type: 'button', class: 'btn', onclick: resetAll }, 'All poster sessions')));
+    }
+    els.list.append(grid);
+  }
+
+  // Only this page is materialized. Search never expands every programme group.
+  function renderPaperPage(host, items, requestedPage = 0) {
+    const page = resultPage(items, requestedPage);
+    const list = h('ul', { class: 'papers' });
+    const now = zonedNow();
+    for (const paper of page.items) list.append(paperRow(paper, now));
+    const fragment = document.createDocumentFragment();
+    fragment.append(list);
+    if (page.pages > 1) {
+      const navigate = next => {
+        renderPaperPage(host, items, next);
+        (host.closest('.session') || els.results).scrollIntoView({ block: 'start' });
+        host.querySelector('.paper__title')?.focus({ preventScroll: true });
+        announce(`Papers ${next * RESULT_PAGE_SIZE + 1}–${Math.min(items.length, (next + 1) * RESULT_PAGE_SIZE)} of ${fmtNum(items.length)}.`, 50);
+      };
+      fragment.append(h('nav', { class: 'pagination', 'aria-label': 'Paper results pages' },
+        h('p', null, `${fmtNum(page.start + 1)}–${fmtNum(page.start + page.items.length)} of ${fmtNum(items.length)}`),
+        h('button', { type: 'button', class: 'btn btn--small', disabled: page.page === 0, onclick: () => navigate(page.page - 1) }, '← Previous'),
+        h('button', { type: 'button', class: 'btn btn--small', disabled: page.page + 1 === page.pages, onclick: () => navigate(page.page + 1) }, 'Next →')));
+    }
+    host.replaceChildren(fragment);
+  }
+
   function renderList() {
     els.list.removeAttribute('aria-busy');
     els.list.replaceChildren();
     sessions.clear();
+    if (posterBrowsing(state) && !state.posterSession) {
+      renderPosterHome();
+      return;
+    }
     if (!results.length) {
       els.list.append(emptyState());
       return;
     }
+    const flat = posterBrowsing(state) || state.q.trim() || state.author || state.saved || state.paper || FACETS.some(f => state.filters[f.key] !== null);
+    if (flat) {
+      renderPaperPage(els.list, results);
+      return;
+    }
     for (const p of results) {
       const key = sessionKey(p);
-      if (!sessions.has(key)) sessions.set(key, { papers: [], rendered: 0 });
+      if (!sessions.has(key)) sessions.set(key, { papers: [] });
       sessions.get(key).papers.push(p);
     }
-    const expand = expandSessions(state);
     let first = true;
+    let opened = false;
     for (const [key, group] of sessions) {
-      const open = !!state.paper || (sessionOpen.get(key) ?? (expand || first));
+      const open = !opened && (sessionOpen.get(key) ?? first);
+      opened ||= open;
       first = false;
       const p = group.papers[0];
       const title = h('h3', { class: 'session__title' });
-      if (p._inactive) {
-        title.append(STATUS_LABELS[p.status]);
-      } else {
-        title.append(h('span', { class: 'session__topic' }, p.topic || 'Topic not listed'));
-        title.append(h('span', { class: 'session__room' }, p.room || 'Room not listed'));
-        title.append(h('span', { class: 'session__date' }, p.date ? dateInfo(p.date).short : 'No date listed'));
-        title.append(h('span', { class: 'session__time' }, p._timed ? timeRange(p) : 'Time not confirmed'));
+      if (p._inactive) title.append(STATUS_LABELS[p.status]);
+      else {
+        title.append(h('span', { class: 'session__topic' }, p.topic || 'Topic not listed'),
+          h('span', { class: 'session__room' }, p.room || 'Room not listed'),
+          h('span', { class: 'session__date' }, p.date ? dateInfo(p.date).short : 'No date listed'),
+          h('span', { class: 'session__time' }, p._timed ? timeRange(p) : 'Time not confirmed'));
         if (p._timed) {
           const zone = zoneLabel(p.date, p.start);
           title.append(h('abbr', { class: 'session__zone', title: zone.title }, zone.abbr));
         }
-        if (p.session) title.append(h('span', { class: 'session__name' }, p.session));
       }
       const summary = h('summary', { class: 'session__header' }, title,
         h('span', { class: 'session__count' }, plural(group.papers.length, 'paper', 'papers')));
-      group.list = h('ul', { class: 'papers' });
-      group.status = h('p', { class: 'more__status' });
-      group.button = h('button', { type: 'button', class: 'btn', onclick: () => {
-        renderMore(group);
-        announce(group.status.textContent, 50);
-      } });
-      group.more = h('div', { class: 'more' }, group.status, group.button);
-      group.details = h('details', { class: 'session', open }, summary, group.list, group.more);
+      group.list = h('div');
+      group.details = h('details', { class: 'session', open }, summary, group.list);
       let observedOpen = open;
       group.details.addEventListener('toggle', () => {
         if (!group.details.isConnected) return;
@@ -763,53 +871,35 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
           sessionOpen.set(key, group.details.open);
           observedOpen = group.details.open;
         }
-        if (group.details.open && !group.rendered) renderMore(group);
+        if (group.details.open) {
+          for (const other of sessions.values()) if (other !== group) { other.details.open = false; other.list.replaceChildren(); }
+          if (!group.list.children.length) renderPaperPage(group.list, group.papers);
+        } else group.list.replaceChildren();
       });
-      if (open) renderMore(group);
+      if (open) renderPaperPage(group.list, group.papers);
       els.list.append(group.details);
     }
   }
 
-  function renderMore(group) {
-    const end = Math.min(group.papers.length, group.rendered + PAGE_SIZE);
-    const now = zonedNow();
-    for (let i = group.rendered; i < end; i++) {
-      const p = group.papers[i];
-      const row = paperRow(p, now);
-      group.list.append(row);
-    }
-    group.rendered = end;
-    group.status.textContent = `Showing ${fmtNum(end)} of ${plural(group.papers.length, 'paper', 'papers')} in this session`;
-    const remaining = group.papers.length - end;
-    group.more.hidden = remaining <= 0;
-    group.button.textContent = `Show ${fmtNum(Math.min(PAGE_SIZE, remaining))} more`;
-  }
-
   function paperRow(p, now) {
     const li = h('li', { class: `paper${p._inactive ? ' is-inactive' : ''}` });
-
     const where = h('div', { class: 'paper__where' });
-    if (p._inactive) {
-      where.append(h('span', { class: 'paper__date is-missing' }, STATUS_LABELS[p.status]));
-    } else {
-      where.append(h('span', { class: 'paper__date' }, p.date ? dateInfo(p.date).short : 'Date not listed'));
-      if (p._timed) {
-        const zone = zoneLabel(p.date, p.start);
-        where.append(h('span', { class: 'paper__time' }, timeRange(p),
-          zone ? h('abbr', { title: zone.title }, ` ${zone.abbr}`) : null));
-      } else {
-        where.append(h('span', { class: 'is-missing' }, 'Time not confirmed'));
-      }
-      where.append(h('span', { class: `paper__room${p.room ? '' : ' is-missing'}` }, p.room || 'Room not listed'));
-    }
-    if (p.poster) {
-      where.append(newTab(posterMapHref(p.poster), `Board ${p.poster.board} ↗`,
-        ` for ${p.poster.label}. Locate this poster on the map (opens in a new tab)`, 'paper__board'));
-    } else if (p.posterIssue) {
-      where.append(h('span', { class: 'paper__board-warning', title: p.posterIssue }, 'Board unconfirmed'));
-    }
-    if (p.presentation && !STATUS_LIKE.has(p.presentation)) {
-      where.append(h('span', { class: `fmt fmt--${FORMAT_CLASS[p.presentation] || 'other'}` }, p.presentation));
+    const poster = !p._inactive && p.poster;
+    const slot = poster || p;
+    if (p._inactive) where.append(h('span', { class: 'is-missing' }, STATUS_LABELS[p.status]));
+    else {
+      if (poster) where.append(newTab(posterMapHref(poster), `Board ${poster.board} ↗`,
+        ` for ${poster.label}. Locate this poster on the map (opens in a new tab)`, 'paper__board'));
+      else if (p.presentation === 'Poster' || p.posterIssue) where.append(h('span', { class: 'paper__board-warning' }, 'Board unconfirmed'));
+      const label = poster ? poster.label.replace(/session\s+/i, '') : p.presentation && !STATUS_LIKE.has(p.presentation) ? p.presentation : null;
+      if (label) where.append(h('span', { class: 'paper__slot-type' }, label));
+      if (slot.date) where.append(h('span', { class: 'paper__date' }, dateInfo(slot.date).short));
+      if (poster || p._timed) {
+        const zone = zoneLabel(slot.date, slot.start);
+        where.append(h('span', { class: 'paper__time' }, timeRange(slot), h('abbr', { title: zone.title }, ` ${zone.abbr}`)));
+      } else where.append(h('span', { class: 'is-missing' }, 'Time unconfirmed'));
+      if (slot.room) where.append(h('span', { class: 'paper__room' }, slot.room));
+      if ((poster || p._timed) && now && slot.date === now.date && slot.start <= now.time && now.time < slot.end) where.append(h('span', { class: 'flag flag--accent' }, 'Now'));
     }
 
     const body = h('div', { class: 'paper__body' });
@@ -819,52 +909,29 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     title.append(p.anthologyUrl ? newTab(p.anthologyUrl,
       [titleText, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
       ' on ACL Anthology (opens in a new tab)') : titleText);
-    body.append(title);
+    body.append(title, ...peopleLines(p, 'paper__people', terms));
 
-    body.append(...peopleLines(p, 'paper__people', terms));
-
-    if (p.topic && !p._inactive) {
-      const topic = h('p', { class: 'paper__topic' });
-      highlightInto(topic, p.topic, terms);
-      body.append(topic);
-    }
-
-    const flags = [];
-    if (now && p._timed && p.end && p.date === now.date && p.start <= now.time && now.time < p.end) {
-      flags.push(h('span', { class: 'flag flag--accent' }, 'Now'));
-    }
-    if (!p._inactive && IMPLIED_MODE[p.presentation] !== p.mode) {
-      if (p.mode && !STATUS_LIKE.has(p.mode)) flags.push(h('span', { class: `flag${p.mode === 'Virtual' ? ' flag--virtual' : ''}` }, `Attendance: ${p.mode}`));
-      else if (!p.mode) flags.push(h('span', { class: 'flag' }, 'Attendance not listed'));
-    }
-    if (flags.length) body.append(h('p', { class: 'paper__flags' }, flags));
-
-    if (p.poster && posterSlotDiffers(p, p.poster)) {
-      body.append(h('p', { class: 'paper__poster-note' },
-        `Handbook poster slot: ${p.poster.label} · ${dateInfo(p.poster.date).short} · ${p.poster.start}–${p.poster.end} · ${p.poster.room}. The source sheet lists different presentation details.`));
-    } else if (p.posterIssue) {
-      body.append(h('p', { class: 'paper__poster-note' }, p.posterIssue));
-    }
-    const note = scheduleNote(p);
-    if (note) body.append(note);
-
-    const meta = h('p', { class: 'paper__meta' });
-    if (p.id) {
-      const id = h('span', { class: 'paper__id' });
-      highlightInto(id, p.id, terms);
-      meta.append(id);
-    }
-    if (p.track) meta.append(h('span', null, p.track));
-    if (p.session && !p._inactive) meta.append(h('span', null, p.session));
+    const meta = h('div', { class: 'paper__meta' });
     if (p.underlineUrl) meta.append(newTab(p.underlineUrl, 'Underline ↗', ' for this paper (opens in a new tab)'));
-    if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Shareable schedule link to ${p.id}` }, 'Schedule link'));
-    const src = sourceRowUrl(p.sourceRow);
-    if (src) meta.append(newTab(src, `Sheet row ${p.sourceRow}`, ' in the source spreadsheet (opens in a new tab)'));
-    if (calendarEligible(p)) {
-      meta.append(h('button', { type: 'button', class: 'linkish', 'data-action': 'ics', 'data-key': p._key, 'aria-label': `Add ${p.id} to calendar (.ics file)` }, 'Add to calendar'));
-    }
-    body.append(meta);
+    if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Share presentation details for ${p.title}` }, 'Share'));
+    if (calendarEligible(p) && !(poster && posterSlotDiffers(p, poster))) meta.append(h('button', {
+      type: 'button', class: 'linkish', 'data-action': 'ics', 'data-key': p._key,
+      'aria-label': `Add programme presentation for ${p.title} to calendar (.ics file)`,
+    }, 'Calendar'));
 
+    const detailsBody = h('div', { class: 'paper__details-body' });
+    if (p.track || p.topic) detailsBody.append(h('p', null, [p.track, p.topic].filter(Boolean).join(' · ')));
+    if (poster && posterSlotDiffers(p, poster)) {
+      detailsBody.append(h('p', null, 'The handbook poster slot is shown above. ',
+        p._inactive ? '' : `Programme entry: ${[p.presentation, p.date ? dateInfo(p.date).short : null, p._timed ? timeRange(p) : 'Time unconfirmed', p.room, p.mode].filter(Boolean).join(' · ')}.`));
+      if (calendarEligible(p)) detailsBody.append(h('button', { type: 'button', class: 'linkish', 'data-action': 'ics', 'data-key': p._key }, 'Calendar for programme entry'));
+    }
+    if (p.posterIssue) detailsBody.append(h('p', { class: 'note' }, p.posterIssue));
+    if (p.mode && IMPLIED_MODE[p.presentation] !== p.mode && !STATUS_LIKE.has(p.mode)) detailsBody.append(h('p', null, `Presenter attendance: ${p.mode}.`));
+    const note = scheduleNote(p);
+    if (note) detailsBody.append(note);
+    if (detailsBody.children.length) meta.append(h('details', { class: 'paper__details' }, h('summary', null, 'Details'), detailsBody));
+    body.append(meta);
     li.append(where, body);
     if (p.id) li.append(starButton(p));
     return li;
@@ -933,7 +1000,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     const lines = [];
     const presenters = presenterAuthorIndices(p.authors, p.presenter);
     if (p.authors.length) {
-      const authors = h('p', { class: className }, h('span', { class: 'paper__label' }, 'Authors'));
+      const authors = h('p', { class: className }, h('span', { class: 'visually-hidden' }, 'Authors: '));
       p.authors.forEach((author, i) => {
         if (i) authors.append(' · ');
         const isPresenter = presenters.includes(i);
@@ -941,7 +1008,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
           'aria-label': `All conference papers by ${author}` });
         highlightInto(name, author, searchTerms);
         authors.append(isPresenter ? h('strong', null, name) : name);
-        if (isPresenter) authors.append(h('span', { class: 'paper__aside' }, ' (presenter)'));
+        if (isPresenter) authors.append(h('span', { class: 'visually-hidden' }, ' (presenter)'));
       });
       lines.push(authors);
     }
@@ -966,6 +1033,12 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   }
 
   function handleAction(e) {
+    const poster = e.target.closest('a[data-poster]');
+    if (poster && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault();
+      openPoster(poster.dataset.poster);
+      return;
+    }
     const btn = e.target.closest('[data-action]');
     if (btn) {
       const p = byKey.get(btn.dataset.key);
@@ -1015,7 +1088,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     }
     const group = sessions.get(sessionKey(results[idx]));
     group.details.open = true;
-    if (!group.rendered) renderMore(group);
+    if (!group.list.children.length) renderPaperPage(group.list, group.papers);
     group.details.scrollIntoView({ block: 'start' });
     group.details.querySelector('summary').focus({ preventScroll: true });
   }
@@ -1029,6 +1102,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       if (window.matchMedia('(max-width: 639px)').matches) els.q.blur();
     });
     els.q.addEventListener('input', () => {
+      ++renderTicket;
       analytics.search(els.q.value);
       if (!loaded) searchBeforeLoad = true;
       els.qClear.hidden = !els.q.value;
@@ -1056,6 +1130,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       const button = e.target.closest('button[data-day]');
       if (!button || !els.day.contains(button)) return;
       state.day = button.dataset.day;
+      state.posterSession = null;
       state.paper = null;
       syncControls();
       commit('filter');
@@ -1063,6 +1138,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
 
     els.daySelect.addEventListener('change', () => {
       state.day = els.daySelect.value;
+      state.posterSession = null;
       state.paper = null;
       syncControls();
       commit('filter');
@@ -1086,7 +1162,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     });
 
     els.savedBtn.addEventListener('click', () => {
-      state.saved = !state.saved;
+      Object.assign(state, blankState(), { saved: !state.saved, view: state.saved ? 'posters' : 'programme' });
       if (state.saved) analytics.track('shortlist_view');
       state.paper = null;
       syncControls();
@@ -1094,6 +1170,15 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     });
     els.clearAll.addEventListener('click', () => { resetAll(); els.q.focus({ preventScroll: true }); });
     els.nowBtn.addEventListener('click', jumpToNow);
+    els.browseLink.addEventListener('click', e => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      analytics.cancelSearch();
+      clearTimeout(typingTimer);
+      Object.assign(state, blankState(), { view: posterBrowsing(state) && !state.posterSession ? 'programme' : 'posters' });
+      syncControls();
+      commit('filter', { scroll: false });
+    });
 
     els.list.addEventListener('click', handleAction);
     // Delegation also observes modified link clicks without changing navigation.
@@ -1113,7 +1198,9 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       const link = e.target.closest('a[data-programme]');
       if (!link || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
-      resetAll();
+      Object.assign(state, blankState(), { view: 'programme' });
+      syncControls();
+      commit('nav');
       els.count.focus({ preventScroll: true });
     });
 
@@ -1160,6 +1247,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
 
     posterSessions = new Map((json.posterSessions || []).map(slot => [slot.id, slot]));
     papers = json.papers.map(normalize).filter(Boolean).sort(compare);
+    posterOrderedPapers = [...papers].sort(comparePosterFirst);
     byKey = new Map(papers.map((p) => [p._key, p]));
     authors = indexAuthors(papers);
 

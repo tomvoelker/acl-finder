@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { authorKey, indexAuthors, expandSessions } from '../schedule-view.mjs';
+import { authorKey, indexAuthors, posterBrowsing } from '../schedule-view.mjs';
 
 test('author pages group a full publication name across days and tracks', () => {
   const papers = [
@@ -35,6 +35,8 @@ test('duplicate author credits count each paper once; absent authors are not inf
   assert.equal(index.has('Another Person'), false);
 });
 
-test('an author page opens its matching sessions without requiring another filter', () => {
-  assert.equal(expandSessions({ q: '', saved: false, paper: null, author: 'Tom Völker', filters: {} }), true);
+test('author pages bypass poster browsing regardless of their incoming view', () => {
+  for (const view of ['posters', 'programme']) {
+    assert.equal(posterBrowsing({ view, q: '', saved: false, paper: null, author: 'Tom Völker', filters: {} }), false);
+  }
 });
