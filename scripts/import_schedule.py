@@ -164,7 +164,7 @@ def build_dataset(rows, updated_at):
             "name": "EMNLP 2026", "location": "Budapest, Hungary", "timezone": TIME_ZONE,
             "startDate": "2026-10-25", "endDate": "2026-10-27",
             "sourceUrl": SOURCE_URL, "sourceSheet": "Author Presentations",
-            "updatedAt": updated_at, "featuredPaperId": "9736-FIND",
+            "updatedAt": updated_at,
             "timeNote": "All times are Budapest local time (CET, UTC+1) during the main conference.",
             "dataNote": "The source lists presenters, not complete author lists. It does not include abstracts. Missing assignments remain unknown.",
         },

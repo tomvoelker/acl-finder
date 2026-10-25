@@ -122,10 +122,10 @@ class SourceSnapshotTests(unittest.TestCase):
         self.assertEqual(self.dataset, self.committed)
         self.assertEqual(self.audit, json.loads((ROOT / "data/audit.json").read_text(encoding="utf-8")))
 
-    def test_featured_paper_has_the_source_assignment(self):
-        featured_id = self.dataset["conference"]["featuredPaperId"]
-        paper = self.papers[featured_id]
-        row = list(next(row for row in self.rows[1:] if row[0] == featured_id))
+    def test_sample_paper_has_the_source_assignment(self):
+        paper_id = "9736-FIND"
+        paper = self.papers[paper_id]
+        row = list(next(row for row in self.rows[1:] if row[0] == paper_id))
         row += [""] * (len(HEADER) - len(row))
         self.assertEqual(paper["title"], row[1].strip())
         self.assertEqual((paper["date"], paper["start"], paper["end"]), parse_schedule(*row[8:11]))

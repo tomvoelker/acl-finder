@@ -14,7 +14,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   const STORAGE_KEY = 'emnlp2026-finder.shortlist.v1';
   const DEFAULT_TZ = 'Europe/Budapest';
   const PROGRAM_URL = 'https://2026.emnlp.org/program/';
-  const REPO_URL = 'https://github.com/LSX-UniWue/some-assembly-required';
   const FALLBACK_SOURCE = 'https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490';
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -54,7 +53,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
 
   const $ = (sel) => document.querySelector(sel);
   const els = {
-    featured: $('#featured'), toolbar: $('#toolbar'), form: $('#search-form'), q: $('#q'), qClear: $('#q-clear'),
+    toolbar: $('#toolbar'), form: $('#search-form'), q: $('#q'), qClear: $('#q-clear'),
     day: $('#day'), facets: $('#facets'), results: $('#results'),
     count: $('#results-count'), nowBtn: $('#now-btn'), savedBtn: $('#saved-btn'), savedCount: $('#saved-count'),
     clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
@@ -73,7 +72,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   let tz = DEFAULT_TZ;
   let sourceUrl = null;
   let updatedLabel = '';
-  let featuredId = null;
   let papers = [];
   let byKey = new Map();
   let dayOptions = [];
@@ -711,7 +709,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   }
 
   function paperRow(p, now) {
-    const li = h('li', { class: `paper${p._inactive ? ' is-inactive' : ''}${p.id && p.id === featuredId ? ' is-featured' : ''}` });
+    const li = h('li', { class: `paper${p._inactive ? ' is-inactive' : ''}` });
 
     const where = h('div', { class: 'paper__where' });
     if (p._inactive) {
@@ -752,7 +750,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     if (now && p._timed && p.end && p.date === now.date && p.start <= now.time && now.time < p.end) {
       flags.push(h('span', { class: 'flag flag--accent' }, 'Now'));
     }
-    if (p.id && p.id === featuredId) flags.push(h('span', { class: 'flag flag--accent' }, 'Our paper · come say hello'));
     if (!p._inactive && IMPLIED_MODE[p.presentation] !== p.mode) {
       if (p.mode && !STATUS_LIKE.has(p.mode)) flags.push(h('span', { class: `flag${p.mode === 'Virtual' ? ' flag--virtual' : ''}` }, `Attendance: ${p.mode}`));
       else if (!p.mode) flags.push(h('span', { class: 'flag' }, 'Attendance not listed'));
@@ -861,29 +858,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       lines.push(presenter);
     }
     return lines;
-  }
-
-  /* ---------- Featured paper ---------- */
-
-  function renderFeatured() {
-    const p = featuredId && byKey.get(featuredId);
-    if (!p) { els.featured.hidden = true; return; }
-    const when = p._timed ? `${dateInfo(p.date).short}, ${timeRange(p)} ${zoneLabel(p.date, p.start)?.abbr || ''}` :
-      p._inactive ? STATUS_LABELS[p.status] : 'Time not confirmed';
-    const details = [when, !p._inactive ? p.room : null].filter(Boolean).join(' · ');
-    els.featured.replaceChildren(
-      h('div', null,
-        h('p', { class: 'featured__kicker' }, 'Our paper · Come say hello'),
-        h('h2', { class: 'featured__title' }, p.anthologyUrl
-          ? newTab(p.anthologyUrl, [p.title || p.id, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
-            ' on ACL Anthology (opens in a new tab)')
-          : p.title || p.id),
-        ...peopleLines(p, 'featured__details'),
-        h('p', { class: 'featured__details' }, details, ' · ',
-          h('a', { href: permalinkHref(p.id), 'data-permalink': p.id }, 'Schedule link'), ' · ',
-          newTab(REPO_URL, 'Code ↗', ' on GitHub (opens in a new tab)'))),
-      starButton(p));
-    els.featured.hidden = false;
   }
 
   /* ---------- Interaction ---------- */
@@ -998,7 +972,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     els.nowBtn.addEventListener('click', jumpToNow);
 
     els.list.addEventListener('click', handleAction);
-    els.featured.addEventListener('click', handleAction);
 
     document.addEventListener('keydown', (e) => {
       if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1039,7 +1012,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       try { new Intl.DateTimeFormat('en', { timeZone: zone }); tz = zone; } catch { tz = DEFAULT_TZ; }
     }
     sourceUrl = safeSourceUrl(conference.sourceUrl) || safeSourceUrl(FALLBACK_SOURCE);
-    featuredId = text(conference.featuredPaperId);
 
     papers = json.papers.map(normalize).filter(Boolean).sort(compare);
     byKey = new Map(papers.map((p) => [p._key, p]));
@@ -1048,7 +1020,6 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     buildOptions();
     buildDays();
     buildFacets();
-    renderFeatured();
 
     const typedEarly = els.q.value;
     Object.assign(state, stateFromUrl());

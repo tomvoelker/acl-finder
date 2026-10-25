@@ -22,8 +22,6 @@ The sheet provides **presenter names**, not complete author lists or abstracts. 
 
 Times remain in **Europe/Budapest**. The main-conference dates use CET (UTC+1); daylight saving time ends on 25 October. The spreadsheet’s workbook timezone setting is not used to convert presentation times.
 
-The featured paper is **Some Assembly Required: Pointer-Decoded Seq2Seq Models for German Without a Native Seq2Seq Backbone** (`9736-FIND`). Its presentation details come from the same dataset as every other paper.
-
 Publication links come from the [EMNLP 2026 proceedings](https://aclanthology.org/events/emnlp-2026/) and the TACL and Computational Linguistics volumes. The metadata snapshot was retrieved on 24 October 2026. It matches 5,584 schedule entries; 19 entries without a verified match remain unlinked. Titles are matched within each track after normalizing typography and TeX. Reviewed title changes are recorded in `data/anthology-overrides.json`, and `data/anthology-audit.json` lists unmatched entries. The publication metadata does not alter presentation details.
 
 ## Run locally

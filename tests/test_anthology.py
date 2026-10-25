@@ -90,7 +90,7 @@ class AnthologyTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Multiple schedule entries"):
             match_papers([paper(), paper("2-MAIN")], catalog(("2026.emnlp-main.1", "A paper")), {})
 
-    def test_committed_audit_is_reproducible_and_featured_paper_is_correct(self):
+    def test_committed_audit_is_reproducible_and_sample_link_is_correct(self):
         read = lambda name: json.loads((ROOT / "data" / name).read_text())
         links, audit = match_papers(read("papers.json")["papers"], read("anthology-catalog.json"), read("anthology-overrides.json"))
         self.assertEqual(audit, read("anthology-audit.json"))
