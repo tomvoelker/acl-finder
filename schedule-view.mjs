@@ -21,7 +21,28 @@ export function sessionKey(paper) {
 }
 
 export function expandSessions(state) {
-  return !!(state.q.trim() || state.saved || state.paper || Object.values(state.filters).some((value) => value !== null));
+  return !!(state.q.trim() || state.saved || state.paper || state.author || Object.values(state.filters).some((value) => value !== null));
+}
+
+// Use publication names, preserving accents and case. These are name-based
+// pages, not inferred identities or matches against the presenter field.
+export function authorKey(name) {
+  return name.normalize('NFC').trim().replace(/\s+/gu, ' ');
+}
+
+export function indexAuthors(papers) {
+  const index = new Map();
+  for (const paper of papers) {
+    const seen = new Set();
+    for (const name of paper.authors) {
+      const key = authorKey(name);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      if (!index.has(key)) index.set(key, new Set());
+      index.get(key).add(paper);
+    }
+  }
+  return index;
 }
 
 export function presenterAuthorIndices(authors, presenter) {

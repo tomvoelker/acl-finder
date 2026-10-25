@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices } from './schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices, authorKey, indexAuthors } from './schedule-view.mjs';
 
 (() => {
   const DATA_URL = 'data/papers.json';
@@ -16,6 +16,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   const PROGRAM_URL = 'https://2026.emnlp.org/program/';
   const FALLBACK_SOURCE = 'https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490';
   const SVG_NS = 'http://www.w3.org/2000/svg';
+  const PAGE_TITLE = document.title;
 
   const STATUS_LABELS = {
     scheduled: 'Scheduled',
@@ -57,7 +58,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     day: $('#day'), facets: $('#facets'), results: $('#results'),
     count: $('#results-count'), nowBtn: $('#now-btn'), savedBtn: $('#saved-btn'), savedCount: $('#saved-count'),
     clearAll: $('#clear-all'), shortlistBar: $('#shortlist-bar'), banner: $('#paper-banner'),
-    list: $('#list'), live: $('#live'),
+    list: $('#list'), live: $('#live'), authorProfile: $('#author-profile'),
   };
 
   const collator = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
@@ -74,6 +75,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   let updatedLabel = '';
   let papers = [];
   let byKey = new Map();
+  let authors = new Map();
   let dayOptions = [];
   const facetOptions = Object.fromEntries(FACETS.map((f) => [f.key, []]));
   const facetSelects = {};
@@ -88,7 +90,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   let storageWarned = false;
 
   const blankState = () => ({
-    q: '', day: 'all', saved: false, paper: null,
+    q: '', day: 'all', saved: false, paper: null, author: null,
     filters: Object.fromEntries(FACETS.map((f) => [f.key, null])),
   });
   const state = blankState();
@@ -424,8 +426,9 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     const s = blankState();
     const paper = text(params.get('paper'));
     if (paper) { s.paper = paper.slice(0, 64); return s; }
+    s.author = authorKey((params.get('author') || '').slice(0, 512)) || null;
     s.q = (params.get('q') || '').slice(0, 200);
-    s.day = initialDay(params.get('day'), dayOptions.map((d) => d.value), zonedNow()?.date);
+    s.day = initialDay(params.get('day'), dayOptions.map((d) => d.value), s.author ? null : zonedNow()?.date);
     s.saved = params.get('saved') === '1';
     for (const f of FACETS) {
       const raw = params.get(f.param);
@@ -441,9 +444,10 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     if (state.paper) {
       params.set('paper', state.paper);
     } else {
+      if (state.author) params.set('author', state.author);
       if (state.q.trim()) params.set('q', state.q.trim());
       // Keep an explicit choice of All days when the page is reopened during the conference.
-      params.set('day', state.day);
+      if (!state.author || state.day !== 'all') params.set('day', state.day);
       for (const f of FACETS) {
         const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
         if (opt) params.set(f.param, opt.slug);
@@ -466,11 +470,27 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     update({ typing: kind === 'typing', ...opts });
   }
 
-  function resetAll() {
+  function resetFilters(author) {
     clearTimeout(typingTimer);
-    Object.assign(state, blankState());
+    Object.assign(state, blankState(), { author });
     syncControls();
     commit('filter');
+  }
+
+  function resetAll() { resetFilters(null); }
+  function clearFilters() { resetFilters(state.author); }
+
+  function authorHref(name) {
+    return `${location.pathname}?${new URLSearchParams({ author: authorKey(name) })}`;
+  }
+
+  function openAuthor(name) {
+    clearTimeout(typingTimer);
+    Object.assign(state, blankState(), { author: authorKey(name) });
+    syncControls();
+    commit('nav', { scroll: false });
+    els.authorProfile.scrollIntoView({ block: 'start' });
+    $('#author-name').focus({ preventScroll: true });
   }
 
   function openPaper(id) {
@@ -555,7 +575,9 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     const dayCounts = new Map();
     const counts = FACETS.map(() => new Map());
     const matched = [];
+    const authorPapers = state.author ? authors.get(state.author) || new Set() : null;
     for (const p of papers) {
+      if (authorPapers && !authorPapers.has(p)) continue;
       let m = 0;
       for (const t of terms) if (!p._hay.includes(t)) { m |= 1; break; }
       if (state.saved && !shortlist.has(p._key)) m |= 2;
@@ -579,6 +601,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     renderDayCounts(dayCounts);
     renderFacetCounts(counts);
     renderSummary();
+    renderAuthorProfile();
     renderBanner(focus);
     if (state.saved) renderShortlistBar(); else els.shortlistBar.hidden = true;
     renderList();
@@ -605,7 +628,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   }
 
   function renderSummary() {
-    const total = papers.length;
+    const total = state.author ? authors.get(state.author)?.size || 0 : papers.length;
     if (state.paper) {
       els.count.replaceChildren('Shared paper');
     } else if (state.saved) {
@@ -618,8 +641,22 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       }
     }
     els.savedCount.textContent = fmtNum(savedPapers().length);
+    els.clearAll.textContent = state.author ? 'Clear filters' : 'Clear all';
     els.clearAll.hidden = !state.q.trim() && state.day === 'all' && !state.saved && !state.paper &&
       FACETS.every((f) => state.filters[f.key] === null);
+  }
+
+  function renderAuthorProfile() {
+    document.title = state.author ? `${state.author} · EMNLP 2026 Paper Finder` : PAGE_TITLE;
+    els.authorProfile.hidden = !state.author;
+    if (!state.author) return;
+    const count = authors.get(state.author)?.size || 0;
+    els.authorProfile.replaceChildren(
+      h('div', { class: 'author-profile__heading' },
+        h('p', { class: 'author-profile__label' }, 'Author'),
+        h('h1', { id: 'author-name', tabindex: '-1' }, state.author),
+        h('p', { class: 'author-profile__meta' }, `${plural(count, 'paper', 'papers')} in the conference programme`)),
+      h('a', { class: 'btn btn--small', href: `${location.pathname}?day=all`, 'data-programme': '' }, 'All conference papers'));
   }
 
   function renderBanner(focus) {
@@ -821,16 +858,21 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
         sourceUrl ? newTab(sourceUrl.href, 'Open source sheet', null, 'btn') : null,
       ]);
     }
+    if (state.author && !authors.has(state.author)) {
+      return box('Author not found', `No papers are listed under “${state.author}” in the available author metadata.`, [
+        h('button', { type: 'button', class: 'btn btn--ink', onclick: resetAll }, 'Show all conference papers'),
+      ]);
+    }
     if (state.saved && savedPapers().length === 0) {
       return box('Your shortlist is empty', 'Tap the star next to any paper to keep it here. The shortlist stays in this browser only.', [
-        h('button', { type: 'button', class: 'btn btn--ink', onclick: () => { state.saved = false; syncControls(); commit('filter'); } }, 'Browse all papers'),
+        h('button', { type: 'button', class: 'btn btn--ink', onclick: () => { state.saved = false; syncControls(); commit('filter'); } }, state.author ? 'Browse this author’s papers' : 'Browse all papers'),
       ]);
     }
     const q = state.q.trim();
     return box('No papers match',
       q ? `Nothing matches “${q}” with the current filters. Try fewer or different words, a paper ID such as 1234-MAIN, or remove a filter.`
         : 'No papers match this combination of filters. Remove one to see more.',
-      [h('button', { type: 'button', class: 'btn btn--ink', onclick: resetAll }, 'Clear search and filters')]);
+      [h('button', { type: 'button', class: 'btn btn--ink', onclick: clearFilters }, 'Clear search and filters')]);
   }
 
   function skeleton() {
@@ -850,9 +892,10 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       p.authors.forEach((author, i) => {
         if (i) authors.append(' · ');
         const isPresenter = presenters.includes(i);
-        const name = h(isPresenter ? 'strong' : 'span');
+        const name = h('a', { class: 'author-link', href: authorHref(author), 'data-author': authorKey(author),
+          'aria-label': `All conference papers by ${author}` });
         highlightInto(name, author, searchTerms);
-        authors.append(name);
+        authors.append(isPresenter ? h('strong', null, name) : name);
         if (isPresenter) authors.append(h('span', { class: 'paper__aside' }, ' (presenter)'));
       });
       lines.push(authors);
@@ -877,6 +920,12 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       if (!p) return;
       if (btn.dataset.action === 'star') toggleSaved(p);
       else if (btn.dataset.action === 'ics') downloadIcs([p], `emnlp2026-${p.id.replace(/[^A-Za-z0-9-]/g, '')}.ics`);
+      return;
+    }
+    const author = e.target.closest('a[data-author]');
+    if (author && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault();
+      openAuthor(author.dataset.author);
       return;
     }
     const link = e.target.closest('a[data-permalink]');
@@ -979,10 +1028,17 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       syncControls();
       commit('filter');
     });
-    els.clearAll.addEventListener('click', () => { resetAll(); els.q.focus({ preventScroll: true }); });
+    els.clearAll.addEventListener('click', () => { clearFilters(); els.q.focus({ preventScroll: true }); });
     els.nowBtn.addEventListener('click', jumpToNow);
 
     els.list.addEventListener('click', handleAction);
+    els.authorProfile.addEventListener('click', (e) => {
+      const link = e.target.closest('a[data-programme]');
+      if (!link || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      resetAll();
+      els.count.focus({ preventScroll: true });
+    });
 
     document.addEventListener('keydown', (e) => {
       if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1026,6 +1082,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
 
     papers = json.papers.map(normalize).filter(Boolean).sort(compare);
     byKey = new Map(papers.map((p) => [p._key, p]));
+    authors = indexAuthors(papers);
 
     applyMeta();
     buildOptions();

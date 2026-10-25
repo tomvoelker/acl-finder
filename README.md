@@ -6,6 +6,8 @@ An unofficial paper and presentation finder for EMNLP 2026 in Budapest. The main
 
 Search by title, author, presenter, paper ID, or topic. Combine day, track, format, attendance, room, and schedule filters. Click a paper title to open its ACL Anthology page. Use **Schedule link** to share its presentation details; filters can also be shared through the URL.
 
+Click an author’s name to see their papers across all conference days and tracks. Author views have shareable URLs and support the same search, filters, shortlist, and calendar links. **Clear filters** keeps the author selected; **All conference papers** returns to the full programme. Pages group full names as credited in the available publication metadata. Spelling variants are kept separate, and people with identical names share a page. Presenter-only entries do not establish authorship.
+
 Each **Underline ↗** link opens that paper’s own presentation page, where Underline provides its available video, slides, or poster. Underline may require your conference login for those materials.
 
 The header’s theme button cycles through Auto, Light, and Dark. Its icon and label show the current choice. Auto follows the system colour preference; explicit choices are saved in this browser and applied before the page renders. White and cool gray surfaces, charcoal text, and restrained red accents follow the [conference website](https://2026.emnlp.org/). The header logo and favicon come from its [official logo](https://2026.emnlp.org/assets/images/logos/emnlp_2026_logo_v1.png). The finder remains unofficial. Day buttons above the filters switch between conference days, all days, and papers without a date.
