@@ -3,14 +3,14 @@ import test from 'node:test';
 import { searchState } from '../schedule-view.mjs';
 
 const authorView = {
-  view: 'posters', posterSession: 'A', author: 'Yulan He', q: '', day: '2026-10-26', saved: true, paper: null,
+  view: 'posters', posterSession: 'A', author: 'Yulan He', q: '', day: '2026-10-26', saved: true, paper: null, shared: null,
   filters: { track: 'Main conference', format: 'Oral', room: 'F7' },
 };
 
 test('starting a main search leaves the author view and its constraints', () => {
   const next = searchState(authorView, 'multi-block diffusion');
   assert.deepEqual(next, {
-    view: 'programme', posterSession: null, author: null, q: 'multi-block diffusion', day: 'all', saved: false, paper: null,
+    view: 'programme', posterSession: null, author: null, q: 'multi-block diffusion', day: 'all', saved: false, paper: null, shared: null,
     filters: { track: null, format: null, room: null },
   });
   assert.equal(authorView.author, 'Yulan He', 'The previous state is not mutated');
@@ -59,4 +59,14 @@ test('a poster filter deliberately selected during a search survives further typ
   assert.equal(next.view, 'posters');
   assert.equal(next.day, current.day);
   assert.equal(next.q, 'diffusion');
+});
+
+test('searching a shared list retains its snapshot and deliberately selected poster filter', () => {
+  const shared = { ids: ['843-MAIN'], error: null, hash: '#list=v1;MAIN:nf' };
+  const current = { ...authorView, author: null, shared };
+  const next = searchState(current, 'PRISM');
+  assert.equal(next.shared, shared);
+  assert.equal(next.saved, true);
+  assert.equal(next.day, current.day);
+  assert.deepEqual(next.filters, current.filters);
 });

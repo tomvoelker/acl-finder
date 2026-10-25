@@ -21,11 +21,12 @@ export function sessionKey(paper) {
 }
 
 export function searchState(state, query) {
-  const leaveScope = state.author || (state.view === 'posters' && !state.q.trim());
+  const leaveScope = state.author || (!state.shared && state.view === 'posters' && !state.q.trim());
   return {
     ...state,
     ...(leaveScope ? {
       day: 'all', saved: false,
+      shared: null,
       filters: Object.fromEntries(Object.keys(state.filters).map((key) => [key, null])),
     } : {}),
     q: query, paper: null, author: null, view: leaveScope ? 'programme' : state.view, posterSession: null,

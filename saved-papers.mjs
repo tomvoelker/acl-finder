@@ -45,3 +45,20 @@ export function setSavedPaper(paperId, shouldSave, storage) {
     return null;
   }
 }
+
+export function addSavedPapers(paperIds, storage) {
+  try {
+    const ids = [...paperIds];
+    if (ids.some(id => typeof id !== 'string' || !id || id.length >= 80)) return null;
+    const source = storage === undefined ? globalThis.localStorage : storage;
+    const stored = source.getItem(SAVED_PAPERS_KEY);
+    // A shared list replaces the virtual starter on a new device, while real
+    // local choices are merged rather than overwritten.
+    const saved = stored === null ? new Set() : decodeSavedPapers(stored);
+    for (const id of ids) saved.add(id);
+    source.setItem(SAVED_PAPERS_KEY, JSON.stringify([...saved]));
+    return saved;
+  } catch {
+    return null;
+  }
+}

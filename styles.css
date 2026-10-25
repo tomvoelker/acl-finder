@@ -297,6 +297,14 @@ abbr[title] { text-decoration: none; cursor: help; }
   background: var(--panel); border-left: 3px solid var(--accent);
 }
 .banner p { flex: 1 1 260px; }
+.saved-share { font-size: .8125rem; }
+.saved-share > summary { padding: 9px 11px; cursor: pointer; border: 1px solid var(--control-rule); border-radius: var(--radius); color: var(--ink); }
+.saved-share[open] { flex: 1 1 100%; }
+.saved-share[open] > summary { width: fit-content; }
+.saved-share__body { display: grid; gap: 10px; padding-top: 12px; }
+.saved-share__url { min-width: 0; height: 44px; font-size: 1rem; background-image: none; padding-inline: 10px; }
+.saved-share__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.saved-share__body p, .shared-list__missing { font-size: .8125rem; color: var(--muted); }
 
 /* ---------- Programme list ---------- */
 .session { border-bottom: 1px solid var(--rule); scroll-margin-top: var(--toolbar-h); }

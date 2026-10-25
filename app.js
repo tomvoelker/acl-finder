@@ -10,7 +10,8 @@ import { conferenceNow, initialDay, sessionKey, presenterAuthorIndices, authorKe
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
 import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
-import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList } from './saved-papers.mjs';
+import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList, addSavedPapers } from './saved-papers.mjs';
+import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
 
 (() => {
   const analytics = createAnalytics();
@@ -95,13 +96,14 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
   let renderTicket = 0;
   let announceTimer = null;
   let loaded = false;
+  let hydratedUrl = null;
   let searchBeforeLoad = false;
   let shortlist = readSavedPapers();
   let defaultSavedList = isDefaultSavedList();
   let storageWarned = false;
 
   const blankState = () => ({
-    q: '', day: 'all', saved: false, paper: null, author: null, view: 'posters', posterSession: null,
+    q: '', day: 'all', saved: false, paper: null, author: null, view: 'posters', posterSession: null, shared: null,
     filters: Object.fromEntries(FACETS.map((f) => [f.key, null])),
   });
   const state = blankState();
@@ -444,11 +446,13 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
   function stateFromUrl() {
     const params = new URLSearchParams(location.search);
     const s = blankState();
+    const shared = readSharedList(location.hash);
+    if (shared) s.shared = { ...shared, hash: location.hash };
     const paper = text(params.get('paper'));
-    if (paper) { s.paper = paper.slice(0, 64); s.view = 'programme'; return s; }
-    s.author = authorKey((params.get('author') || '').slice(0, 512)) || null;
+    if (paper && !shared) { s.paper = paper.slice(0, 64); s.view = 'programme'; return s; }
+    s.author = shared ? null : authorKey((params.get('author') || '').slice(0, 512)) || null;
     s.q = (params.get('q') || '').slice(0, 200);
-    s.saved = params.get('saved') === '1';
+    s.saved = !!shared || params.get('saved') === '1';
     s.posterSession = posterSessions.has(params.get('poster')) || params.get('poster') === 'unconfirmed' ? params.get('poster') : null;
     for (const f of FACETS) {
       const raw = params.get(f.param);
@@ -486,19 +490,20 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
       if (state.saved) params.set('saved', '1');
     }
     const qs = params.toString();
-    return location.pathname + (qs ? `?${qs}` : '');
+    return location.pathname + (qs ? `?${qs}` : '') + (state.shared?.hash || '');
   }
 
   // Discrete changes push a history entry; consecutive keystrokes share one.
   function commit(kind, opts = {}) {
     if (!loaded) return; // Typing before the data arrives is picked up by init().
     const url = urlFromState();
-    if (url !== location.pathname + location.search) {
+    if (url !== location.pathname + location.search + location.hash) {
       if (kind === 'filter') analytics.track('filter');
       if (kind === 'typing' && lastNav === 'typing') history.replaceState(null, '', url);
       else history.pushState(null, '', url);
     }
     lastNav = kind;
+    hydratedUrl = location.href;
     update({ typing: kind === 'typing', ...opts });
   }
 
@@ -597,7 +602,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
     els.filtersCount.textContent = active;
     els.filtersCount.hidden = !active;
     els.filtersToggle.setAttribute('aria-label', active ? `Filters: ${active} active` : 'Filters');
-    els.savedBtn.setAttribute('aria-pressed', String(state.saved));
+    els.savedBtn.setAttribute('aria-pressed', String(state.saved && !state.shared));
   }
 
   function applyMeta() {
@@ -622,6 +627,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
     const counts = FACETS.map(() => new Map());
     const matched = [];
     const authorPapers = state.author ? authors.get(state.author) || new Set() : null;
+    const savedSelection = state.shared ? new Set(state.shared.ids || []) : shortlist;
     for (const p of (state.q.trim() || state.author || state.saved || browsingPosters ? posterOrderedPapers : papers)) {
       if (authorPapers && !authorPapers.has(p)) continue;
       const day = withinPosters ? posterBrowseDay(p) : p._day;
@@ -629,7 +635,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
       if (withinPosters && state.posterSession && (p.poster?.id || 'unconfirmed') !== state.posterSession) continue;
       let m = matchesPosterQuery(p, posterQuery.boards) ? 0 : 1;
       for (const t of terms) if (!p._hay.includes(t)) { m |= 1; break; }
-      if (state.saved && !shortlist.has(p._key)) m |= 2;
+      if (state.saved && !savedSelection.has(p._key)) m |= 2;
       if (state.day !== 'all' && day !== state.day) m |= 4;
       for (let j = 0; j < n; j++) {
         const sel = state.filters[FACETS[j].key];
@@ -690,7 +696,9 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
   function renderSummary() {
     const total = state.author ? authors.get(state.author)?.size || 0 : papers.length;
     const browsingPosters = posterBrowsing(state);
-    if (browsingPosters && !state.posterSession) {
+    if (state.shared) {
+      els.count.replaceChildren(h('span', { class: 'results__num' }, fmtNum(results.length)), results.length === 1 ? ' shared paper' : ' shared papers');
+    } else if (browsingPosters && !state.posterSession) {
       els.count.textContent = 'Poster sessions';
     } else if (browsingPosters && state.posterSession !== 'unconfirmed') {
       els.count.textContent = posterSessions.get(state.posterSession)?.label.replace(/session\s+/i, '') || 'Posters';
@@ -737,10 +745,12 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
   }
 
   function renderShortlistBar() {
+    if (state.shared) { renderSharedListBar(); return; }
     const saved = savedPapers();
     const eligible = saved.filter(calendarEligible).length;
     els.shortlistBar.replaceChildren(...[
       h('p', null, `Saved in this browser only. ${saved.length ? `${plural(eligible, 'paper has', 'papers have')} a confirmed time for your calendar.` : ''}`),
+      saved.length ? shareListControl([...shortlist]) : null,
       eligible ? h('button', { type: 'button', class: 'btn btn--small btn--ink', onclick: () => downloadIcs(saved, 'emnlp2026-shortlist.ics') },
         icon('cal'), 'Download .ics') : null,
       saved.length ? h('button', {
@@ -754,6 +764,73 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
           update({ scroll: false });
         },
       }, 'Clear shortlist') : null].filter(Boolean));
+    els.shortlistBar.hidden = false;
+  }
+
+  function shareListControl(ids) {
+    const body = h('div', { class: 'saved-share__body' });
+    const disclosure = h('details', { class: 'saved-share' }, h('summary', null, 'Share list'), body);
+    disclosure.addEventListener('toggle', () => {
+      if (!disclosure.open || body.children.length || !disclosure.isConnected) return;
+      let url;
+      try { url = buildSavedListUrl(location.href, ids); }
+      catch { body.append(h('p', { role: 'status' }, 'This saved list could not be turned into a link.')); return; }
+      const field = h('input', { class: 'select saved-share__url', type: 'url', readonly: true, value: url, 'aria-label': 'Shared saved-list link' });
+      const status = h('p', { class: 'saved-share__status', role: 'status' });
+      const copy = h('button', { type: 'button', class: 'btn btn--small', onclick: async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          copy.textContent = 'Copied';
+          status.textContent = 'Link copied. Open it on your other device.';
+        } catch {
+          field.focus(); field.select();
+          status.textContent = 'Select and copy the link above.';
+        }
+      } }, 'Copy link');
+      const actions = h('div', { class: 'saved-share__actions' }, copy);
+      if (typeof navigator.share === 'function') actions.append(h('button', {
+        type: 'button', class: 'btn btn--small', onclick: async () => {
+          try { await navigator.share({ title: 'EMNLP 2026 saved papers', url }); }
+          catch (error) { if (error?.name !== 'AbortError') status.textContent = 'Use Copy link to share this list.'; }
+        },
+      }, 'Share…'));
+      body.append(field, actions,
+        h('p', null, 'A snapshot of this list. Open the link on your phone, then choose Save on this device.'), status);
+    });
+    return disclosure;
+  }
+
+  function renderSharedListBar() {
+    const shared = state.shared;
+    if (shared.error) {
+      els.shortlistBar.replaceChildren(h('p', { role: 'alert' }, `This shared list could not be opened. ${shared.error}`),
+        h('button', { type: 'button', class: 'btn btn--small', onclick: resetAll }, 'Back to papers'));
+    } else {
+      const missing = shared.ids.filter(id => !byKey.has(id)).length;
+      const alreadySaved = !defaultSavedList && shared.ids.every(id => shortlist.has(id));
+      const message = alreadySaved ? 'These papers are saved on this device.' : 'Save this shared list on your device to use its stars on the map. Existing picks are kept.';
+      els.shortlistBar.replaceChildren(...[h('p', null, message),
+        h('button', { type: 'button', class: 'btn btn--small btn--ink', disabled: alreadySaved, onclick: () => {
+          const updated = addSavedPapers(shared.ids);
+          if (updated === null) {
+            const error = h('p', { role: 'status' }, 'Could not save this list in this browser.');
+            els.shortlistBar.append(error);
+            return;
+          }
+          shortlist = updated; defaultSavedList = false;
+          if (shared.ids.length) analytics.track('shortlist_add');
+          Object.assign(state, blankState(), { saved: true, view: 'programme' });
+          syncControls();
+          commit('nav', { scroll: false });
+          announce('Shared papers saved on this device.', 50);
+        } }, alreadySaved ? 'Already saved' : 'Save on this device'),
+        h('button', { type: 'button', class: 'btn btn--small', onclick: () => {
+          Object.assign(state, blankState(), { saved: true, view: 'programme' });
+          syncControls(); commit('nav', { scroll: false });
+        } }, 'My saved papers'),
+        shared.ids.length ? shareListControl(shared.ids) : null,
+        missing ? h('p', { class: 'shared-list__missing' }, `${plural(missing, 'paper is', 'papers are')} not in this programme snapshot.`) : null].filter(Boolean));
+    }
     els.shortlistBar.hidden = false;
   }
 
@@ -936,7 +1013,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
     if (note) detailsBody.append(note);
     if (detailsBody.children.length) meta.append(h('details', { class: 'paper__details' }, h('summary', null, 'Details'), detailsBody));
     body.append(meta);
-    if (state.saved && defaultSavedList && p._key === DEFAULT_SAVED_PAPER_ID) {
+    if (state.saved && !state.shared && defaultSavedList && p._key === DEFAULT_SAVED_PAPER_ID) {
       body.append(h('p', { class: 'paper__default-save' }, 'Saved by default. Unstar to remove.'));
     }
     li.append(where, body);
@@ -981,6 +1058,11 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
       return box('Author not found', `No papers are listed under “${state.author}” in the available author metadata.`, [
         h('button', { type: 'button', class: 'btn btn--ink', onclick: resetAll }, 'Show all conference papers'),
       ]);
+    }
+    if (state.shared) {
+      if (!state.shared.error && state.shared.ids.length === 0) return box('This shared list is empty', 'Open My saved papers to see the papers saved on this device.', []);
+      return box(state.shared.error ? 'Invalid shared list' : 'No shared papers match',
+        state.shared.error ? 'Check that you copied the complete link.' : 'Try clearing the filters. Some papers may be missing from this programme snapshot.', []);
     }
     if (state.saved && savedPapers().length === 0) {
       return box('Your shortlist is empty', 'Tap the star next to any paper to keep it here. The shortlist stays in this browser only.', [
@@ -1182,7 +1264,8 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
     });
 
     els.savedBtn.addEventListener('click', () => {
-      Object.assign(state, blankState(), { saved: !state.saved, view: state.saved ? 'posters' : 'programme' });
+      const openSaved = !!state.shared || !state.saved;
+      Object.assign(state, blankState(), { saved: openSaved, view: openSaved ? 'programme' : 'posters' });
       if (state.saved) analytics.track('shortlist_view');
       state.paper = null;
       syncControls();
@@ -1233,14 +1316,28 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
       els.q.select();
     });
 
-    window.addEventListener('popstate', () => {
+    document.querySelector('.skip-link').addEventListener('click', e => {
+      if (!state.shared && !readSharedList(location.hash)) return;
+      e.preventDefault();
+      els.results.scrollIntoView({ block: 'start' });
+      els.results.focus({ preventScroll: true });
+    });
+
+    const restoreLocation = () => {
       analytics.cancelSearch();
-      if (!loaded) return;
+      if (!loaded || hydratedUrl === location.href) return;
       clearTimeout(typingTimer);
       Object.assign(state, stateFromUrl());
+      hydratedUrl = location.href;
       syncControls();
       lastNav = null;
       update({ scroll: false });
+    };
+    window.addEventListener('popstate', restoreLocation);
+    window.addEventListener('hashchange', () => {
+      if (!loaded) return;
+      if (!readSharedList(location.hash) && !state.shared) return;
+      restoreLocation();
     });
 
     window.addEventListener('storage', (e) => {
@@ -1287,6 +1384,7 @@ import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPaper
     searchBeforeLoad = false;
     syncControls();
     loaded = true;
+    hydratedUrl = location.href;
     if (hasEarlySearch) commit('typing', { scroll: false });
     else update({ scroll: false });
   }

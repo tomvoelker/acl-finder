@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {SAVED_PAPERS_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList, setSavedPaper} from '../../saved-papers.mjs';
+import {SAVED_PAPERS_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList, setSavedPaper, addSavedPapers} from '../../saved-papers.mjs';
 import {sessionGroups, mapEntries, savedAssignments} from '../catalog.mjs';
 
 test('saved papers use the finder key and tolerate malformed or unavailable storage', () => {
@@ -66,6 +66,26 @@ test('failed map storage reads never overwrite an existing list and failed write
   const blockedWrite = { getItem: () => '["existing"]', setItem() { throw new Error('Full'); } };
   assert.equal(setSavedPaper('paper', true, blockedWrite), null);
   for (const id of ['', null, 1, 'x'.repeat(80)]) assert.equal(setSavedPaper(id, true, blockedRead), null);
+});
+
+test('shared list import uses the exact list on new devices and merges real existing picks', () => {
+  let stored = null;
+  const storage = { getItem: () => stored, setItem(key, value) { assert.equal(key, SAVED_PAPERS_KEY); stored = value; } };
+  assert.deepEqual([...addSavedPapers(['843-MAIN','156-MAIN'], storage)], ['843-MAIN','156-MAIN']);
+  assert.equal(readSavedPapers(storage).has(DEFAULT_SAVED_PAPER_ID), false, 'Import does not inject the virtual starter');
+  stored = '["local-paper","843-MAIN"]';
+  assert.deepEqual([...addSavedPapers(['843-MAIN','156-MAIN'], storage)], ['local-paper','843-MAIN','156-MAIN']);
+  assert.deepEqual([...readSavedPapers(storage)], ['local-paper','843-MAIN','156-MAIN']);
+});
+
+test('failed or invalid shared imports leave existing saved papers untouched', () => {
+  let stored = '["local-paper"]';
+  const storage = { getItem: () => stored, setItem(_, value) { stored = value; } };
+  assert.equal(addSavedPapers(['valid', null], storage), null);
+  assert.equal(stored, '["local-paper"]');
+  assert.equal(addSavedPapers(['paper'], {getItem() { throw new Error('Blocked'); }}), null);
+  assert.equal(addSavedPapers(['paper'], {getItem:()=>stored, setItem() { throw new Error('Full'); }}), null);
+  assert.equal(stored, '["local-paper"]');
 });
 
 test('a blocked default localStorage getter does not prevent loading saved papers', () => {
