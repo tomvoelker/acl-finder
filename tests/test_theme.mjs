@@ -10,10 +10,8 @@ function page({ dark = false, saved = null, storageBlocked = false } = {}) {
   const values = new Map(saved === null ? [] : [[key, saved]]);
   const events = {};
   const root = { dataset: {} };
-  const label = { textContent: '' };
   const control = {
     hidden: true, dataset: {}, attributes: {},
-    querySelector: () => label,
     setAttribute(name, value) { this.attributes[name] = value; },
     addEventListener: (type, fn) => { events[type] = fn; },
   };
@@ -33,7 +31,7 @@ function page({ dark = false, saved = null, storageBlocked = false } = {}) {
     },
   });
   return {
-    root, label, control, values,
+    root, control, values,
     ready: () => events.ready(),
     systemChange(dark) { system.matches = dark; events.system(); },
     click: () => events.click(),
@@ -47,7 +45,6 @@ test('system theme applies before DOM readiness and follows system changes in Au
   p.ready();
   assert.equal(p.control.hidden, false);
   assert.equal(p.control.dataset.mode, 'auto');
-  assert.equal(p.label.textContent, 'Auto');
   assert.match(p.control.attributes['aria-label'], /Auto \(system\).*Switch to Light/);
   p.systemChange(false);
   assert.equal(p.root.dataset.theme, 'light');
@@ -59,7 +56,7 @@ test('saved theme overrides the system on first paint and subsequent system chan
     assert.equal(p.root.dataset.theme, saved);
     p.ready();
     assert.equal(p.control.dataset.mode, saved);
-    assert.equal(p.label.textContent, saved === 'light' ? 'Light' : 'Dark');
+    assert.match(p.control.attributes['aria-label'], new RegExp(`Theme: ${saved === 'light' ? 'Light' : 'Dark'}`));
     p.systemChange(!dark);
     p.systemChange(dark);
     assert.equal(p.root.dataset.theme, saved);
@@ -72,12 +69,11 @@ test('manual choices persist; switching back to Auto removes the override', () =
   p.click();
   assert.equal(p.root.dataset.theme, 'light');
   assert.equal(p.values.get(key), 'light');
-  assert.equal(p.label.textContent, 'Light');
+  assert.match(p.control.attributes['aria-label'], /Theme: Light/);
   assert.match(p.control.title, /Switch to Dark/);
   p.click();
   assert.equal(p.root.dataset.theme, 'dark');
   assert.equal(p.values.get(key), 'dark');
-  assert.equal(p.label.textContent, 'Dark');
   assert.match(p.control.attributes['aria-label'], /Theme: Dark.*Switch to Auto/);
   assert.equal(page({ saved: p.values.get(key) }).root.dataset.theme, 'dark');
   p.click();

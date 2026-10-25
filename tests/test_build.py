@@ -31,10 +31,17 @@ class BuildTests(unittest.TestCase):
             favicon_svg = re.search(r'href="(favicon\.[a-f0-9]+\.svg)"', html).group(1)
             app = (output / app_name).read_text()
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [app_name, css_name, module_name, theme_name, favicon_png, favicon_svg]:
+            math_name = re.search(r"from './(math-titles\.[a-f0-9]+\.mjs)'", app).group(1)
+            for name in [app_name, css_name, module_name, math_name, theme_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
+            self.assertNotIn("'./math-titles.mjs'", app)
+            vendor = output / "vendor/katex-0.19.1"
+            self.assertTrue((vendor / "katex.mjs").is_file())
+            self.assertTrue((vendor / "LICENSE").is_file())
+            for font in re.findall(r'url\(([^)]+)\)', (vendor / "katex.min.css").read_text()):
+                self.assertTrue((vendor / font.strip('\"\'')).is_file(), f"Missing math font: {font}")
             self.assertLess(html.index(theme_name), html.index(css_name), "Theme must apply before CSS loads")
             source = json.loads((ROOT / "data/papers.json").read_text())
             deployed = json.loads((output / "data/papers.json").read_text())

@@ -135,12 +135,11 @@ abbr[title] { text-decoration: none; cursor: help; }
 .masthead__nav a { padding: 6px 0; text-decoration: none; }
 .masthead__nav a:hover { color: var(--accent); }
 .theme-toggle {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-width: 88px; min-height: 40px; padding: 8px 12px;
-  font-size: .8125rem; color: var(--ink-2); background: var(--surface);
-  border: 1px solid var(--control-rule); border-radius: var(--radius);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; padding: 8px; flex: none;
+  color: var(--muted); background: none; border: 0; border-radius: var(--radius);
 }
-.theme-toggle:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-tint); }
+.theme-toggle:hover { color: var(--accent); background: var(--rule-soft); }
 .theme-toggle__icon { display: none; flex: none; width: 16px; height: 16px; fill: currentColor; }
 .theme-toggle[data-mode="auto"] .theme-toggle__icon--auto,
 .theme-toggle[data-mode="light"] .theme-toggle__icon--light,
@@ -314,6 +313,7 @@ abbr[title] { text-decoration: none; cursor: help; }
 .paper__room.is-missing { font-size: .8125rem; font-weight: 500; color: var(--muted); }
 .paper__body { grid-area: body; min-width: 0; }
 .paper__title { font: 600 1.0625rem/1.4 var(--font-ui); color: var(--ink); text-wrap: pretty; overflow-wrap: anywhere; }
+.paper__title .katex { font-size: 1em; }
 .paper__title a { text-decoration: none; }
 .paper__title a:hover { text-decoration-color: currentColor; }
 .paper__people { margin-top: 5px; font-size: .9375rem; color: var(--ink-2); overflow-wrap: anywhere; }
@@ -421,7 +421,7 @@ mark {
   .brand__name { font-size: 1.0625rem; }
   .brand__name { padding-left: 12px; }
   .masthead__actions { display: contents; }
-  .theme-toggle { grid-column: 2; grid-row: 1; min-width: 76px; min-height: 44px; padding-inline: 8px; }
+  .theme-toggle { grid-column: 2; grid-row: 1; width: 40px; height: 40px; padding: 12px; }
   .brand__meta { font-size: .75rem; }
   .masthead__nav { grid-column: 1 / -1; grid-row: 2; gap: 0 18px; font-size: .8125rem; }
   .notice { font-size: .75rem; padding-bottom: 10px; }

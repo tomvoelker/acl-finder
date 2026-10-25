@@ -11,6 +11,7 @@ from import_underline import match_presentations
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
 FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
+         "math-titles.mjs", "vendor/katex-0.19.1/katex.mjs", "vendor/katex-0.19.1/katex.min.css", "vendor/katex-0.19.1/LICENSE",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "LICENSE"]
 
@@ -48,7 +49,9 @@ def build():
         return versioned
 
     module_name = asset("schedule-view.mjs", (ROOT / "schedule-view.mjs").read_bytes())
+    math_name = asset("math-titles.mjs", (ROOT / "math-titles.mjs").read_bytes())
     app = (ROOT / "app.js").read_text().replace("'./schedule-view.mjs'", f"'./{module_name}'")
+    app = app.replace("'./math-titles.mjs'", f"'./{math_name}'")
     app_name = asset("app.js", app.encode())
     theme_name = asset("theme.js", (ROOT / "theme.js").read_bytes())
     styles_name = asset("styles.css", (ROOT / "styles.css").read_bytes())
@@ -60,6 +63,7 @@ def build():
     html = html.replace('href="favicon.png"', f'href="{favicon_png}"')
     html = html.replace('href="favicon.svg"', f'href="{favicon_svg}"')
     (OUTPUT / "index.html").write_text(html)
+    shutil.copytree(ROOT / "vendor/katex-0.19.1", OUTPUT / "vendor/katex-0.19.1")
 
     (OUTPUT / "data").mkdir()
     (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")

@@ -24,6 +24,17 @@ export function expandSessions(state) {
   return !!(state.q.trim() || state.saved || state.paper || state.author || Object.values(state.filters).some((value) => value !== null));
 }
 
+export function searchState(state, query) {
+  return {
+    ...state,
+    ...(state.author ? {
+      day: 'all', saved: false,
+      filters: Object.fromEntries(Object.keys(state.filters).map((key) => [key, null])),
+    } : {}),
+    q: query, paper: null, author: null,
+  };
+}
+
 // Use publication names, preserving accents and case. These are name-based
 // pages, not inferred identities or matches against the presenter field.
 export function authorKey(name) {

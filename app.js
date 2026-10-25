@@ -1,11 +1,13 @@
 /*
  * EMNLP 2026 Paper Finder: an unofficial, static schedule search.
  * Every value from data/papers.json is untrusted text. It is rendered through
- * DOM APIs (textContent / text nodes) only, never as HTML.
+ * DOM APIs (textContent / text nodes), never as raw HTML. Delimited title
+ * formulas are parsed by KaTeX with untrusted input settings.
  */
 'use strict';
 
-import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices, authorKey, indexAuthors } from './schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorIndices, authorKey, indexAuthors, searchState } from './schedule-view.mjs';
+import { renderTitle, titleSearchText } from './math-titles.mjs';
 
 (() => {
   const DATA_URL = 'data/papers.json';
@@ -66,7 +68,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   const plural = (n, one, many) => `${fmtNum(n)} ${n === 1 ? one : many}`;
   const nat = (a, b) => (a == null) - (b == null) || (a == null ? 0 : collator.compare(a, b));
   const str = (a, b) => (a == null) - (b == null) || (a == null || a === b ? 0 : a < b ? -1 : 1);
-  const fold = (s) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  const fold = (s) => s.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase();
   const slugify = (s) => fold(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
 
   let conference = {};
@@ -86,6 +88,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   let typingTimer = null;
   let announceTimer = null;
   let loaded = false;
+  let searchBeforeLoad = false;
   let shortlist = loadShortlist();
   let storageWarned = false;
 
@@ -277,7 +280,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     p._timed = p.status === 'scheduled' && !p.scheduleNote && !!p.date && !!p.start;
     p._bucket = p.status === 'desk rejected' ? 4 : p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
     p._day = p._inactive ? null : p.date || 'undated';
-    p._hay = fold([p.id, p.title, ...p.authors, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
+    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);
     return p;
   }
@@ -436,7 +439,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       const opt = facetOptions[f.key].find((o) => o.slug === raw);
       if (opt) s.filters[f.key] = opt.value;
     }
-    return s;
+    return s.author && s.q.trim() ? searchState(s, s.q) : s;
   }
 
   function urlFromState() {
@@ -470,15 +473,12 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     update({ typing: kind === 'typing', ...opts });
   }
 
-  function resetFilters(author) {
+  function resetAll() {
     clearTimeout(typingTimer);
-    Object.assign(state, blankState(), { author });
+    Object.assign(state, blankState());
     syncControls();
     commit('filter');
   }
-
-  function resetAll() { resetFilters(null); }
-  function clearFilters() { resetFilters(state.author); }
 
   function authorHref(name) {
     return `${location.pathname}?${new URLSearchParams({ author: authorKey(name) })}`;
@@ -641,8 +641,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       }
     }
     els.savedCount.textContent = fmtNum(savedPapers().length);
-    els.clearAll.textContent = state.author ? 'Clear filters' : 'Clear all';
-    els.clearAll.hidden = !state.q.trim() && state.day === 'all' && !state.saved && !state.paper &&
+    els.clearAll.hidden = !state.q.trim() && state.day === 'all' && !state.saved && !state.paper && !state.author &&
       FACETS.every((f) => state.filters[f.key] === null);
   }
 
@@ -776,7 +775,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     const body = h('div', { class: 'paper__body' });
     const title = h('h4', { class: 'paper__title', tabindex: '-1' });
     const titleText = h('span');
-    highlightInto(titleText, p.title || 'Untitled entry', terms);
+    renderTitle(titleText, p.title || 'Untitled entry', (node, value) => highlightInto(node, value, terms));
     title.append(p.anthologyUrl ? newTab(p.anthologyUrl,
       [titleText, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
       ' on ACL Anthology (opens in a new tab)') : titleText);
@@ -872,7 +871,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     return box('No papers match',
       q ? `Nothing matches “${q}” with the current filters. Try fewer or different words, a paper ID such as 1234-MAIN, or remove a filter.`
         : 'No papers match this combination of filters. Remove one to see more.',
-      [h('button', { type: 'button', class: 'btn btn--ink', onclick: clearFilters }, 'Clear search and filters')]);
+      [h('button', { type: 'button', class: 'btn btn--ink', onclick: resetAll }, 'Clear search and filters')]);
   }
 
   function skeleton() {
@@ -912,6 +911,13 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
   }
 
   /* ---------- Interaction ---------- */
+
+  function applySearch(kind = 'typing') {
+    if (!loaded) searchBeforeLoad = true;
+    Object.assign(state, searchState(state, els.q.value));
+    syncControls();
+    commit(kind);
+  }
 
   function handleAction(e) {
     const btn = e.target.closest('[data-action]');
@@ -972,18 +978,15 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     els.form.addEventListener('submit', (e) => {
       e.preventDefault();
       clearTimeout(typingTimer);
-      state.q = els.q.value;
-      state.paper = null;
-      commit('typing');
+      applySearch();
       if (window.matchMedia('(max-width: 639px)').matches) els.q.blur();
     });
     els.q.addEventListener('input', () => {
+      if (!loaded) searchBeforeLoad = true;
       els.qClear.hidden = !els.q.value;
       clearTimeout(typingTimer);
       typingTimer = setTimeout(() => {
-        state.q = els.q.value;
-        state.paper = null;
-        commit('typing');
+        applySearch();
       }, 140);
     });
     els.q.addEventListener('keydown', (e) => {
@@ -996,10 +999,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
     els.qClear.addEventListener('click', () => {
       els.q.value = '';
       clearTimeout(typingTimer);
-      state.q = '';
-      state.paper = null;
-      syncControls();
-      commit('filter');
+      applySearch('filter');
       els.q.focus();
     });
 
@@ -1028,7 +1028,7 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
       syncControls();
       commit('filter');
     });
-    els.clearAll.addEventListener('click', () => { clearFilters(); els.q.focus({ preventScroll: true }); });
+    els.clearAll.addEventListener('click', () => { resetAll(); els.q.focus({ preventScroll: true }); });
     els.nowBtn.addEventListener('click', jumpToNow);
 
     els.list.addEventListener('click', handleAction);
@@ -1091,10 +1091,16 @@ import { conferenceNow, initialDay, sessionKey, expandSessions, presenterAuthorI
 
     const typedEarly = els.q.value;
     Object.assign(state, stateFromUrl());
-    if (!state.q && !state.paper && typedEarly.trim()) state.q = typedEarly;
+    const hasEarlySearch = searchBeforeLoad || (!state.q && !state.paper && typedEarly.trim());
+    if (hasEarlySearch) {
+      clearTimeout(typingTimer);
+      Object.assign(state, searchState(state, typedEarly));
+    }
+    searchBeforeLoad = false;
     syncControls();
     loaded = true;
-    update({ scroll: false });
+    if (hasEarlySearch) commit('typing', { scroll: false });
+    else update({ scroll: false });
   }
 
   function showError(err) {

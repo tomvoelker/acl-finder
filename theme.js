@@ -18,11 +18,9 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const control = document.querySelector('#theme');
-    const label = control.querySelector('[data-theme-label]');
     function updateControl() {
       const next = choices[(choices.indexOf(choice) + 1) % choices.length];
       control.dataset.mode = choice;
-      label.textContent = labels[choice];
       const description = `Theme: ${labels[choice]}${choice === 'auto' ? ' (system)' : ''}. Switch to ${labels[next]}.`;
       control.setAttribute('aria-label', description);
       control.title = description;
