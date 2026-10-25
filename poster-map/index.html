@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <title>Unofficial poster map · EMNLP 2026</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <script src="../theme.js"></script>
   <link rel="stylesheet" href="../vendor/katex-0.19.1/katex.min.css">
   <link rel="stylesheet" href="map.css">
   <script src="map.mjs" type="module"></script>
@@ -26,6 +27,11 @@
       <input id="board-number" type="number" min="1" max="424" step="1" placeholder="1–424" required inputmode="numeric">
       <button type="submit">Find</button>
     </form>
+    <button id="theme" class="theme-toggle" type="button" data-mode="auto" hidden aria-label="Theme: Auto">
+      <svg class="theme-toggle__icon theme-toggle__icon--auto" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/></svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--light" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>
+      <svg class="theme-toggle__icon theme-toggle__icon--dark" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/></svg>
+    </button>
     <button id="open-details" type="button" aria-haspopup="dialog" aria-controls="details-panel">Details</button>
   </header>
   <main aria-label="Interactive poster floor plan">
@@ -35,7 +41,8 @@
         <desc>Paired poster positions arranged as in the venue photograph. Select a board or use the board finder. Arrow keys move between positions.</desc>
       </svg>
     </div>
-    <button id="selection-chip" class="selection-chip" type="button" aria-haspopup="dialog" aria-controls="details-panel" hidden></button>
+    <p class="saved-map-key"><span aria-hidden="true">★</span> <span id="saved-map-count">0 saved papers in this session</span></p>
+    <aside id="selection-chip" class="selection-chip" aria-label="Selected poster" hidden></aside>
     <p id="map-help" class="map-help">Drag to move · Pinch or double-tap to zoom</p>
     <div class="zoom-controls" role="group" aria-label="Map zoom">
       <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
@@ -71,6 +78,7 @@
         <summary>Legend and source notes</summary>
         <p><a href="https://2026.emnlp.org/venue/" target="_blank" rel="noopener noreferrer">Official venue information</a> · <a href="../#privacy">Privacy</a></p>
         <div class="legend">
+          <span><i class="key saved" aria-hidden="true">★</i>Saved paper</span>
           <span><i class="key empty"></i>No listing</span>
           <span><i class="key assigned"></i>Handbook listing</span>
           <span><i class="key source"></i>Yellow in source</span>
@@ -81,6 +89,7 @@
         <p>The photograph’s “Poster Display TV’s” area is for demo sessions.</p>
         <p>Yellow highlights and markers B1–B10 are reproduced without assuming their meaning. No entrance or compass direction is identified.</p>
         <p>Paper assignments come from the conference handbook. Board numbers are reused between sessions. An unlisted board does not establish whether a paper is presenting.</p>
+        <p>Stars show papers saved in the finder on this browser, using verified board assignments for the selected session. Conflicting or unverified assignments do not receive stars.</p>
         <p><a id="handbook-source" hidden>Conference handbook (PDF)</a></p>
         <p>Drag or swipe to pan. Pinch to zoom, or double-tap to zoom in. Use Fit to see the whole map. On a trackpad, scroll to pan and pinch to zoom.</p>
       </details>

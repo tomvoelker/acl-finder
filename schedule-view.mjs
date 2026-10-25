@@ -21,13 +21,14 @@ export function sessionKey(paper) {
 }
 
 export function searchState(state, query) {
+  const leaveScope = state.author || (state.view === 'posters' && !state.q.trim());
   return {
     ...state,
-    ...(state.author || state.view === 'posters' ? {
+    ...(leaveScope ? {
       day: 'all', saved: false,
       filters: Object.fromEntries(Object.keys(state.filters).map((key) => [key, null])),
     } : {}),
-    q: query, paper: null, author: null, view: 'programme', posterSession: null,
+    q: query, paper: null, author: null, view: leaveScope ? 'programme' : state.view, posterSession: null,
   };
 }
 
@@ -41,7 +42,11 @@ export function resultPage(items, page = 0) {
 }
 
 export function posterBrowsing(state) {
-  return state.view === 'posters' && !state.q.trim() && !state.author && !state.paper && !state.saved;
+  return posterScope(state) && !state.q.trim() && !state.author && !state.saved;
+}
+
+export function posterScope(state) {
+  return state.view === 'posters' && !state.paper;
 }
 
 // Use publication names, preserving accents and case. These are name-based

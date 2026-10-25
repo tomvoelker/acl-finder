@@ -49,6 +49,17 @@ export function assignmentAt(entries, session, board) {
     conflicts:listed.length > 1 ? listed : []};
 }
 
+// Entries must use the canonical physical sessions returned by mapEntries.
+export function savedAssignments(entries, session, savedPapers) {
+  const saved = new Map();
+  for (const candidate of entries) {
+    if (candidate.session !== session || !savedPapers.has(candidate.paperId)) continue;
+    const {entry} = assignmentAt(entries, session, candidate.board);
+    if (entry) saved.set(entry.board, entry);
+  }
+  return saved;
+}
+
 export function defaultSession(sessions, now = new Date()) {
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Budapest', year: 'numeric', month: '2-digit', day: '2-digit',

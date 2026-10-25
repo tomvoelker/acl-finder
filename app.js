@@ -6,16 +6,16 @@
  */
 'use strict';
 
-import { conferenceNow, initialDay, sessionKey, presenterAuthorIndices, authorKey, indexAuthors, searchState, resultPage, RESULT_PAGE_SIZE, posterBrowsing } from './schedule-view.mjs';
+import { conferenceNow, initialDay, sessionKey, presenterAuthorIndices, authorKey, indexAuthors, searchState, resultPage, RESULT_PAGE_SIZE, posterBrowsing, posterScope } from './schedule-view.mjs';
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
 import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
+import { SAVED_PAPERS_KEY as STORAGE_KEY, readSavedPapers } from './saved-papers.mjs';
 
 (() => {
   const analytics = createAnalytics();
   const DATA_URL = 'data/papers.json';
   const NONE = '__none__';
-  const STORAGE_KEY = 'emnlp2026-finder.shortlist.v1';
   const DEFAULT_TZ = 'Europe/Budapest';
   const PROGRAM_URL = 'https://2026.emnlp.org/program/';
   const FALLBACK_SOURCE = 'https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490';
@@ -37,8 +37,9 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   const FACETS = [
     { key: 'track', param: 'track', label: 'Track', all: 'All tracks', get: (p) => p.track,
       order: ['Main conference', 'Findings', 'Industry', 'Systems demonstrations', 'TACL', 'Computational Linguistics'] },
-    { key: 'format', param: 'format', label: 'Format', all: 'All formats', get: (p) => p.presentation,
-      order: ['Oral', 'Poster', 'Demo', 'Virtual', 'Virtual demo'], hide: STATUS_LIKE },
+    { key: 'format', param: 'format', label: 'Presentations', all: 'All', get: (p) => p.presentation,
+      labels: { Poster: 'Posters', Oral: 'Orals', Demo: 'Demos', 'Virtual demo': 'Virtual demos' },
+      order: ['Poster', 'Oral', 'Demo', 'Virtual', 'Virtual demo'], hide: STATUS_LIKE },
     { key: 'mode', param: 'attendance', label: 'Attendance', all: 'Any', get: (p) => p.mode,
       order: ['In person', 'Virtual'], hide: STATUS_LIKE,
       hint: 'How the presenter attends. A virtual presenter can still be assigned a physical room.' },
@@ -95,7 +96,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   let announceTimer = null;
   let loaded = false;
   let searchBeforeLoad = false;
-  let shortlist = loadShortlist();
+  let shortlist = readSavedPapers();
   let storageWarned = false;
 
   const blankState = () => ({
@@ -330,15 +331,6 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
 
   /* ---------- Shortlist ---------- */
 
-  function loadShortlist() {
-    try {
-      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      return new Set(Array.isArray(raw) ? raw.filter((x) => typeof x === 'string' && x.length < 80) : []);
-    } catch {
-      return new Set();
-    }
-  }
-
   function persistShortlist() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify([...shortlist]));
@@ -462,8 +454,12 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       const opt = facetOptions[f.key].find((o) => o.slug === raw);
       if (opt) s.filters[f.key] = opt.value;
     }
-    s.view = params.get('view') === 'programme' || s.author || s.q.trim() || s.saved ||
-      (params.get('view') !== 'posters' && !s.posterSession && FACETS.some(f => params.has(f.param))) ? 'programme' : 'posters';
+    const format = params.get('format');
+    const requestedPosters = format === 'poster' || params.get('view') === 'posters' || s.posterSession;
+    const requestedProgramme = format === 'all' || (format && format !== 'poster') || (!format && params.get('view') === 'programme');
+    s.view = requestedProgramme ? 'programme' : requestedPosters ? 'posters' :
+      s.author || s.saved || s.q.trim() || FACETS.some(f => params.has(f.param)) ? 'programme' : 'posters';
+    if (s.view === 'posters') s.filters.format = null;
     s.day = initialDay(params.get('day'), dayOptions.map((d) => d.value),
       s.author || s.q.trim() || s.saved || s.posterSession ? null : zonedNow()?.date);
     if (s.view !== 'posters') s.posterSession = null;
@@ -475,7 +471,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     if (state.paper) {
       params.set('paper', state.paper);
     } else {
-      if (state.view === 'programme' || FACETS.some(f => state.filters[f.key] !== null)) params.set('view', state.view);
+      params.set('format', state.view === 'posters' ? 'poster' : 'all');
       if (state.posterSession) params.set('poster', state.posterSession);
       if (state.author) params.set('author', state.author);
       if (state.q.trim()) params.set('q', state.q.trim());
@@ -564,7 +560,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     for (const d of dayOptions) {
       d.buttonEl = h('button', { type: 'button', class: 'day-nav__button', 'data-day': d.value, 'aria-pressed': 'false' }, d.label);
       els.day.append(d.buttonEl);
-      els.daySelect.append(h('option', { value: d.value }, d.label));
+      els.daySelect.append(h('option', { value: d.value, title: d.label }, d.label.replace(' · Today', '')));
     }
     els.nowBtn.hidden = !dates.includes(today);
   }
@@ -579,7 +575,10 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
         select.append(o.optionEl);
       }
       facetSelects[f.key] = select;
-      els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__label', for: id }, f.label), select));
+      const field = h('div', { class: f.key === 'format' ? 'format-picker' : 'facet' },
+        h('label', { class: f.key === 'format' ? 'visually-hidden' : 'facet__label', for: id }, f.label), select);
+      if (f.key === 'format') $('#format-picker-slot').replaceWith(field);
+      else els.facets.append(field);
     });
   }
 
@@ -590,9 +589,9 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     els.daySelect.value = state.day;
     for (const f of FACETS) {
       const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
-      if (facetSelects[f.key]) facetSelects[f.key].value = opt ? opt.slug : '';
+      if (facetSelects[f.key]) facetSelects[f.key].value = f.key === 'format' && posterScope(state) ? 'poster' : opt ? opt.slug : '';
     }
-    const active = FACETS.filter((f) => state.filters[f.key] !== null).length;
+    const active = FACETS.filter((f) => f.key !== 'format' && state.filters[f.key] !== null).length;
     els.filtersCount.textContent = active;
     els.filtersCount.hidden = !active;
     els.filtersToggle.setAttribute('aria-label', active ? `Filters: ${active} active` : 'Filters');
@@ -613,6 +612,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   function update({ typing = false, scroll = true } = {}) {
     const ticket = ++renderTicket;
     const browsingPosters = posterBrowsing(state);
+    const withinPosters = posterScope(state);
     const posterQuery = parsePosterQuery(state.q);
     terms = fold(posterQuery.text).split(/\s+/).filter(Boolean);
     const n = FACETS.length;
@@ -622,9 +622,9 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     const authorPapers = state.author ? authors.get(state.author) || new Set() : null;
     for (const p of (state.q.trim() || state.author || state.saved || browsingPosters ? posterOrderedPapers : papers)) {
       if (authorPapers && !authorPapers.has(p)) continue;
-      const day = browsingPosters ? posterBrowseDay(p) : p._day;
-      if (browsingPosters && !day) continue;
-      if (browsingPosters && state.posterSession && (p.poster?.id || 'unconfirmed') !== state.posterSession) continue;
+      const day = withinPosters ? posterBrowseDay(p) : p._day;
+      if (withinPosters && !day) continue;
+      if (withinPosters && state.posterSession && (p.poster?.id || 'unconfirmed') !== state.posterSession) continue;
       let m = matchesPosterQuery(p, posterQuery.boards) ? 0 : 1;
       for (const t of terms) if (!p._hay.includes(t)) { m |= 1; break; }
       if (state.saved && !shortlist.has(p._key)) m |= 2;
@@ -677,6 +677,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
 
   function renderFacetCounts(counts) {
     FACETS.forEach((f, j) => {
+      if (f.key === 'format') return;
       for (const o of facetOptions[f.key]) {
         const c = counts[j].get(o.value) || 0;
         o.optionEl.textContent = `${o.label} (${fmtNum(c)})`;
@@ -703,8 +704,9 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       }
     }
     els.savedCount.textContent = fmtNum(savedPapers().length);
-    els.browseLink.textContent = browsingPosters ? (state.posterSession ? 'All sessions' : 'Full programme') : 'Posters';
-    els.browseLink.href = browsingPosters && !state.posterSession ? '?view=programme&day=all' : '?day=all';
+    els.browseLink.hidden = !browsingPosters || !state.posterSession;
+    els.browseLink.textContent = 'All sessions';
+    els.browseLink.href = '?format=poster&day=all';
     els.nowBtn.hidden = browsingPosters || !!state.q.trim() || !!state.author || !!state.saved || !!state.paper ||
       FACETS.some(f => state.filters[f.key] !== null) || !dayOptions.some(d => d.value === zonedNow()?.date);
     els.clearAll.hidden = !state.q.trim() && (browsingPosters || state.day === 'all') && !state.saved && !state.paper && !state.author &&
@@ -1161,6 +1163,19 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       commit('filter', { scroll: !els.facets.classList.contains('is-expanded') });
     });
 
+    $('.presentation-controls').addEventListener('change', e => {
+      if (e.target.dataset.facet !== 'format') return;
+      analytics.cancelSearch();
+      clearTimeout(typingTimer);
+      const opt = facetOptions.format.find(o => o.slug === facetSelects.format.value);
+      state.view = opt?.value === 'Poster' ? 'posters' : 'programme';
+      state.filters.format = opt?.value === 'Poster' ? null : opt?.value ?? null;
+      state.posterSession = null;
+      state.paper = null;
+      syncControls();
+      commit('filter', { scroll: false });
+    });
+
     els.savedBtn.addEventListener('click', () => {
       Object.assign(state, blankState(), { saved: !state.saved, view: state.saved ? 'posters' : 'programme' });
       if (state.saved) analytics.track('shortlist_view');
@@ -1224,8 +1239,8 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     });
 
     window.addEventListener('storage', (e) => {
-      if (e.key !== STORAGE_KEY) return;
-      shortlist = loadShortlist();
+      if (e.key !== STORAGE_KEY && e.key !== null) return;
+      shortlist = readSavedPapers();
       refreshStars();
       if (state.saved) update({ scroll: false });
     });

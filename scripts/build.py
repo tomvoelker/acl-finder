@@ -11,7 +11,7 @@ from import_handbook import load_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
-FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
+FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "saved-papers.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
          "analytics.mjs", "traffic.mjs", "poster-view.mjs", "math-titles.mjs", "vendor/katex-0.19.1/katex.mjs", "vendor/katex-0.19.1/katex.min.css", "vendor/katex-0.19.1/LICENSE",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "data/poster-boards.json",
@@ -82,6 +82,8 @@ def build():
     app = app.replace("'./analytics.mjs'", f"'./{analytics_name}'")
     poster_view_name = asset("poster-view.mjs", (ROOT / "poster-view.mjs").read_bytes())
     app = app.replace("'./poster-view.mjs'", f"'./{poster_view_name}'")
+    saved_name = asset("saved-papers.mjs", (ROOT / "saved-papers.mjs").read_bytes())
+    app = app.replace("'./saved-papers.mjs'", f"'./{saved_name}'")
     app_name = asset("app.js", app.encode())
     traffic_name = asset("traffic.mjs", (ROOT / "traffic.mjs").read_bytes())
     theme_name = asset("theme.js", (ROOT / "theme.js").read_bytes())
@@ -105,10 +107,12 @@ def build():
     for original, versioned in map_modules.items():
         map_app = map_app.replace(f"'./{original}'", f"'./{versioned}'")
     map_app = map_app.replace("'../math-titles.mjs'", f"'../{math_name}'")
+    map_app = map_app.replace("'../saved-papers.mjs'", f"'../{saved_name}'")
     map_app_name = asset("map.mjs", map_app.encode(), map_output)
     map_css_name = asset("map.css", (ROOT / "poster-map/map.css").read_bytes(), map_output)
     map_html = (ROOT / "poster-map/index.html").read_text().replace('src="map.mjs"', f'src="{map_app_name}"')
     map_html = map_html.replace('src="../traffic.mjs"', f'src="../{traffic_name}"')
+    map_html = map_html.replace('src="../theme.js"', f'src="../{theme_name}"')
     map_html = map_html.replace('href="map.css"', f'href="{map_css_name}"').replace('href="../favicon.svg"', f'href="../{favicon_svg}"')
     (map_output / "index.html").write_text(map_html)
 

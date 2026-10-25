@@ -87,15 +87,16 @@ THE SOFTWARE.
     <div class="wrap">
       <section class="author-profile" id="author-profile" aria-labelledby="author-name" hidden></section>
       <div class="day-nav" id="day" role="group" aria-label="Conference day"></div>
-      <div class="mobile-controls">
+      <div class="presentation-controls">
         <div class="day-picker">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h14v14H5zM5 10h14M9 3.5v4M15 3.5v4"/></svg>
           <label class="visually-hidden" for="day-select">Conference day</label>
           <select id="day-select" class="select"></select>
         </div>
+        <div id="format-picker-slot"></div>
         <button class="filters-toggle" id="filters-toggle" type="button" aria-controls="facets" aria-expanded="false">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h9m4 0h3M4 17h3m4 0h9M13 4v6M7 14v6"/></svg>
-          Filters <span class="filters-toggle__count" id="filters-count" hidden>0</span>
+          <span class="filters-toggle__label">Filters</span> <span class="filters-toggle__count" id="filters-count" hidden>0</span>
           <svg class="filters-toggle__chevron" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="m3 4.5 3 3 3-3"/></svg>
         </button>
       </div>
@@ -105,7 +106,7 @@ THE SOFTWARE.
         <div class="results__bar">
           <h2 class="results__count" id="results-count" tabindex="-1">Loading schedule…</h2>
           <div class="results__tools">
-            <a class="browse-link" id="browse-link" href="?view=programme&amp;day=all">Full programme</a>
+            <a class="browse-link" id="browse-link" href="?format=poster&amp;day=all" hidden>All sessions</a>
             <button class="pill" id="now-btn" type="button" aria-label="Jump to now" title="Jump to now" hidden>
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 7.5V12l3 2"/></svg>
               <span class="now-label">Jump to now</span>

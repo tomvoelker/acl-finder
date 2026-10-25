@@ -51,3 +51,12 @@ test('an author search clears constraints even when its incoming view is program
   assert.equal(next.saved, false);
   assert.deepEqual(next.filters, { track: null, format: null, room: null });
 });
+
+test('a poster filter deliberately selected during a search survives further typing', () => {
+  const current = { ...authorView, author: null, saved: false, q: 'diff', posterSession: null,
+    filters: { track: null, format: null, room: null } };
+  const next = searchState(current, 'diffusion');
+  assert.equal(next.view, 'posters');
+  assert.equal(next.day, current.day);
+  assert.equal(next.q, 'diffusion');
+});

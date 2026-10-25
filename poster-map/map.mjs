@@ -1,5 +1,6 @@
 import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS} from './layout.mjs';
-import {validateCatalog, sessionGroups, mapEntries, assignmentAt, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
+import {validateCatalog, sessionGroups, mapEntries, assignmentAt, savedAssignments, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
+import {SAVED_PAPERS_KEY, readSavedPapers} from '../saved-papers.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
 
@@ -10,6 +11,7 @@ let selected = null, sessions = [], assignments = [], activeSession = '', catalo
 let catalog = null;
 let finderUnavailable = false;
 const papers = new Map();
+let savedPapers = readSavedPapers(), savedBoards = new Map();
 let viewport = {width: stage.clientWidth, height: stage.clientHeight};
 let view = fitView(MAP, viewport);
 // Start with legible positions on a phone. Fit remains available for the overview.
@@ -95,7 +97,7 @@ function selectBoard(number, {reveal = false, focus = false, hash = true, keepZo
   $('#selection-note').hidden = !notes.length;
   $('#selection-chip').hidden = false;
   $('#selection-chip').textContent = `Board ${number}${board.needsReview ? ' · Check source' : ''}`;
-  $('#selection-chip').setAttribute('aria-label', `Board ${number}. Open board details`);
+  $('#selection-chip').setAttribute('aria-label', `Selected board ${number}`);
   $('#map-status').textContent = `Selected board ${number}${board.needsReview ? '. Source numbering needs confirmation.' : '.'}`;
   renderAssignment();
   renderPaperResults();
@@ -132,6 +134,10 @@ function renderAssignment() {
   if (entry && displayAuthors(entry)) {
     const authors = document.createElement('p'); authors.textContent = displayAuthors(entry); detail.append(authors);
   }
+  if (savedBoards.has(selected)) {
+    const saved = document.createElement('p');
+    saved.className = 'saved-paper-label'; saved.textContent = '★ Saved paper'; detail.append(saved);
+  }
   const note = document.createElement('p');
   note.textContent = conflicts.length ? 'The handbook lists both papers at this board. Confirm the location with conference staff.' : entry ? `${sessionLabel} · Handbook PDF page ${entry.page}` : 'Board numbers are reused between sessions. Check the selected session.';
   detail.append(note);
@@ -142,26 +148,43 @@ function renderAssignment() {
   }
   const chip = $('#selection-chip');
   chip.replaceChildren();
-  const label = document.createElement('span');
-  label.textContent = `${activeSession ? `${currentSession()?.shortLabel} · ` : ''}Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
+  const label = document.createElement('p');
+  label.className = 'selection-card-label';
+  label.textContent = `${savedBoards.has(selected) ? '★ Saved · ' : ''}${activeSession ? `${currentSession()?.shortLabel} · ` : ''}Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
   chip.append(label);
-  if (entry || conflicts.length) {
-    const paperTitle = document.createElement('span'); paperTitle.className = 'chip-title';
-    if (entry) renderTitle(paperTitle, displayTitle(entry));
-    else paperTitle.textContent = 'Conflicting handbook entries';
-    chip.append(paperTitle);
+  const paperTitle = document.createElement('h2'); paperTitle.className = 'chip-title';
+  if (entry) renderTitle(paperTitle, displayTitle(entry));
+  else paperTitle.textContent = conflicts.length ? 'Conflicting handbook entries' : catalogReady ? 'No verified paper assignment' : 'Floor plan position';
+  chip.append(paperTitle);
+  const session = currentSession();
+  if (session) {
+    const time = document.createElement('p'); time.className = 'selection-card-time';
+    time.textContent = `${session.date} · ${session.start}–${session.end} Budapest time`;
+    chip.append(time);
   }
-  chip.setAttribute('aria-label', `${sessionLabel}. Board ${selected}${entry ? `. ${displayTitle(entry)}` : ''}. Open board details`);
+  const actions = document.createElement('div'); actions.className = 'selection-card-actions';
+  const details = document.createElement('button'); details.type = 'button'; details.textContent = 'Details';
+  details.setAttribute('aria-haspopup','dialog'); details.setAttribute('aria-controls','details-panel');
+  details.addEventListener('click', openDetails); actions.append(details);
+  if (entry?.paperId && papers.has(entry.paperId)) {
+    const link = document.createElement('a'); link.href = `../?paper=${encodeURIComponent(entry.paperId)}`;
+    link.textContent = 'View paper'; actions.append(link);
+  }
+  chip.append(actions);
+  chip.setAttribute('aria-label', `${sessionLabel}. Selected board ${selected}${savedBoards.has(selected) ? '. Saved paper' : ''}`);
 }
 function refreshAssignments() {
+  savedBoards = savedAssignments(assignments, activeSession, savedPapers);
   for (const board of BOARDS) {
     const element = elements.get(board.number);
     const entry = currentAssignment(board.number);
     element.classList.toggle('has-paper', Boolean(entry));
+    element.classList.toggle('is-saved', savedBoards.has(board.number));
     element.classList.toggle('has-conflict', conflictingEntries(board.number).length > 0);
-    element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
-    element.querySelector('title').textContent = `Board ${board.number}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
+    element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
+    element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
   }
+  $('#saved-map-count').textContent = `${savedBoards.size} saved ${savedBoards.size === 1 ? 'paper' : 'papers'} in this session`;
   const session = currentSession();
   $('#assignment-count').textContent = session ? `${currentEntries().filter(entry => currentAssignment(entry.board)).length} verified handbook assignments · ${session.room || 'Room not listed'}` : 'Handbook assignments unavailable';
   $('#session-note').textContent = session ? `${session.label} · ${session.date} · ${session.start}–${session.end} Budapest time. Boards are reused each session.` : 'The complete floor plan remains available.';
@@ -184,7 +207,7 @@ function renderPaperResults() {
     button.type = 'button'; button.className = 'paper-result';
     const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); button.append(title);
     const meta = document.createElement('small');
-    meta.textContent = `Board ${entry.board}${conflictingEntries(entry.board).length ? ' · Conflicting entries' : ''}${displayAuthors(entry) ? ` · ${displayAuthors(entry)}` : ''}`;
+    meta.textContent = `Board ${entry.board}${savedBoards.has(entry.board) ? ' · ★ Saved' : ''}${conflictingEntries(entry.board).length ? ' · Conflicting entries' : ''}${displayAuthors(entry) ? ` · ${displayAuthors(entry)}` : ''}`;
     button.append(meta);
     button.addEventListener('click', () => {
       selectBoard(entry.board, {reveal:true});
@@ -222,6 +245,10 @@ function drawMap() {
     group.append(node('title', {}, `Board ${board.number}`));
     group.append(node('rect', {x:board.x,y:board.y,width:MAP.faceWidth,height:MAP.faceHeight,rx:2}));
     group.append(node('text', {x:board.x+MAP.faceWidth/2,y:board.y+MAP.faceHeight/2}, board.number));
+    const savedMarker = node('g', {class:'saved-marker', 'aria-hidden':'true'});
+    savedMarker.append(node('circle', {cx:board.x+MAP.faceWidth-1,cy:board.y+2,r:8}));
+    savedMarker.append(node('text', {x:board.x+MAP.faceWidth-1,y:board.y+2,class:'saved-star'}, '★'));
+    group.append(savedMarker);
     group.addEventListener('click', event => { if (event.detail === 0) selectBoard(board.number); });
     group.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {event.preventDefault(); selectBoard(board.number); return;}
@@ -372,11 +399,16 @@ new ResizeObserver(() => {
   viewport = next; pointers.clear(); drag = null; pinch = null;
   stage.classList.remove('dragging'); applyView();
 }).observe(stage);
+// Reserve room for the larger phone selection card so Fit and centered boards
+// remain above it. The existing stage observer keeps camera geometry in sync.
+new ResizeObserver(() => {
+  const card = $('#selection-chip');
+  stage.parentElement.style.setProperty('--selection-height', `${card.hidden ? 0 : card.offsetHeight}px`);
+}).observe($('#selection-chip'));
 $('#zoom-in').addEventListener('click', () => zoom(1/1.4, {x:0.5,y:0.5}, true));
 $('#zoom-out').addEventListener('click', () => zoom(1.4, {x:0.5,y:0.5}, true));
 $('#fit').addEventListener('click',fitMap);
 $('#open-details').addEventListener('click',openDetails);
-$('#selection-chip').addEventListener('click',openDetails);
 $('#close-details').addEventListener('click', () => $('#details-panel').close());
 $('#details-panel').addEventListener('click', event => {
   const panel = $('#details-panel'), rect = panel.getBoundingClientRect();
@@ -408,6 +440,15 @@ function readHash({reveal = true} = {}) {
   refreshAssignments(); renderPaperResults();
 }
 window.addEventListener('hashchange', () => readHash());
+function refreshSavedPapers() {
+  savedPapers = readSavedPapers();
+  refreshAssignments(); renderPaperResults();
+}
+window.addEventListener('storage', event => {
+  if (event.key === SAVED_PAPERS_KEY || event.key === null) refreshSavedPapers();
+});
+window.addEventListener('focus', refreshSavedPapers);
+window.addEventListener('pageshow', refreshSavedPapers);
 drawMap(); applyView(); refreshAssignments(); readHash();
 
 // A missing finder dataset must not hide official handbook assignments.

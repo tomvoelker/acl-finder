@@ -2,7 +2,7 @@
 
 The public map shows the conference handbook's verified paper assignments on a schematic of 424 numbered positions. Choose the poster session before looking up a board, since the venue reuses board numbers. The selector stays visible above the map. Session D and Industry Track Session 6 share a room and time, so they appear together as **D + Industry**. Links using either source session ID reach that shared map.
 
-Select a board, or search for a paper title or author in **Details**. The selected board chip shows the official title and opens its details. Details include authors when supplied, the physical handbook PDF page, and a paper finder link when the catalog has a matching paper ID. An unmatched handbook title still appears. Conflicting handbook entries appear together with a warning and are not shown as a verified assignment. An unlisted board says “No assignment listed in handbook for this session”. This does not establish whether a paper is presenting.
+Select a board, or search for a paper title or author in **Details**. The selected-paper card shows a larger title, board, session and time. It stays visible beside the desktop map or above the zoom controls on phones, with Details and View paper actions. Details include authors when supplied, the physical handbook PDF page, and a paper finder link when the catalog has a matching paper ID. An unmatched handbook title still appears. Conflicting handbook entries appear together with a warning and are not shown as a verified assignment. An unlisted board says “No assignment listed in handbook for this session”. This does not establish whether a paper is presenting.
 
 Serve the repository root to use the map locally:
 
@@ -11,6 +11,10 @@ python3 -m http.server 8017 --bind 127.0.0.1
 ```
 
 Open <http://localhost:8017/poster-map/>. The map reads `../data/poster-boards.json` and `../data/papers.json`. Handbook assignments remain available if the finder dataset cannot load. The complete floor plan remains available if the handbook catalog cannot load. The map does not read or write browser-local assignment drafts. Previous stored drafts are left untouched.
+
+Saved papers from the finder use purple board outlines and white-star badges, plus a count for the selected session. The selection card, board labels and Details also identify saved papers. Only verified assignments in the current physical session receive markers. Reused board numbers and conflicting entries do not inherit a star from another paper. The map reads the shared browser-local saved list and updates on storage changes, focus and page restoration. It never uploads or changes the list.
+
+The map uses the finder’s Auto/Light/Dark button and theme preference. Open tabs follow each other’s theme changes. Board colors, labels, saved markers and selection cards support both palettes.
 
 ## Navigation and data
 

@@ -6,7 +6,7 @@ import test from 'node:test';
 const source = readFileSync(new URL('../theme.js', import.meta.url), 'utf8');
 const key = 'emnlp2026-finder.theme';
 
-function page({ dark = false, saved = null, storageBlocked = false } = {}) {
+function page({ dark = false, saved = null, storageBlocked = false, writeBlocked = false } = {}) {
   const values = new Map(saved === null ? [] : [[key, saved]]);
   const events = {};
   const root = { dataset: {} };
@@ -18,12 +18,12 @@ function page({ dark = false, saved = null, storageBlocked = false } = {}) {
   const system = { matches: dark, addEventListener: (_, fn) => { events.system = fn; } };
   const localStorage = {
     getItem(k) { if (storageBlocked) throw new Error('Storage blocked'); return values.get(k) ?? null; },
-    setItem(k, v) { if (storageBlocked) throw new Error('Storage blocked'); values.set(k, v); },
-    removeItem(k) { if (storageBlocked) throw new Error('Storage blocked'); values.delete(k); },
+    setItem(k, v) { if (storageBlocked || writeBlocked) throw new Error('Storage blocked'); values.set(k, v); },
+    removeItem(k) { if (storageBlocked || writeBlocked) throw new Error('Storage blocked'); values.delete(k); },
   };
   runInNewContext(source, {
     localStorage,
-    window: { matchMedia: () => system },
+    window: { matchMedia: () => system, addEventListener: (type, fn) => { events[`window:${type}`] = fn; } },
     document: {
       documentElement: root,
       querySelector: () => control,
@@ -35,6 +35,11 @@ function page({ dark = false, saved = null, storageBlocked = false } = {}) {
     ready: () => events.ready(),
     systemChange(dark) { system.matches = dark; events.system(); },
     click: () => events.click(),
+    storageChange(value) {
+      if (value === null) values.delete(key); else values.set(key, value);
+      events['window:storage']({ key });
+    },
+    focus: () => events['window:focus'](),
   };
 }
 
@@ -94,4 +99,40 @@ test('theme control works without storage, and invalid saved choices use the sys
   p.click();
   assert.equal(p.root.dataset.theme, 'dark');
   assert.equal(page({ saved: 'unexpected', dark: true }).root.dataset.theme, 'dark');
+});
+
+test('finder and map tabs follow shared theme changes without reloading', () => {
+  const p = page({ dark: true });
+  p.ready();
+  p.storageChange('light');
+  assert.equal(p.root.dataset.theme, 'light');
+  assert.equal(p.control.dataset.mode, 'light');
+  p.storageChange('dark');
+  assert.equal(p.root.dataset.theme, 'dark');
+  p.storageChange(null);
+  assert.equal(p.control.dataset.mode, 'auto');
+  assert.equal(p.root.dataset.theme, 'dark');
+  p.values.set(key, 'light');
+  p.focus();
+  assert.equal(p.root.dataset.theme, 'light');
+});
+
+test('blocked storage does not undo a temporary manual theme on focus', () => {
+  const p = page({ storageBlocked: true });
+  p.ready();
+  p.click();
+  p.click();
+  p.focus();
+  assert.equal(p.root.dataset.theme, 'dark');
+});
+
+test('readable storage with failed writes does not overwrite a temporary choice', () => {
+  const p = page({ dark: true, writeBlocked: true });
+  p.ready();
+  p.click();
+  p.focus();
+  assert.equal(p.root.dataset.theme, 'light');
+  assert.equal(p.control.dataset.mode, 'light');
+  p.storageChange('dark');
+  assert.equal(p.root.dataset.theme, 'dark');
 });

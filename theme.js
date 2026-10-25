@@ -18,6 +18,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const control = document.querySelector('#theme');
+    let temporaryChoice = false;
     function updateControl() {
       const next = choices[(choices.indexOf(choice) + 1) % choices.length];
       control.dataset.mode = choice;
@@ -34,7 +35,22 @@
       try {
         if (choice === 'auto') localStorage.removeItem(key);
         else localStorage.setItem(key, choice);
-      } catch { /* Keep the chosen theme for this page even without storage. */ }
+        temporaryChoice = false;
+      } catch { temporaryChoice = true; }
     });
+    const refresh = () => {
+      if (temporaryChoice) return;
+      try {
+        const saved = localStorage.getItem(key);
+        choice = saved === 'light' || saved === 'dark' ? saved : 'auto';
+      } catch { return; }
+      apply();
+      updateControl();
+    };
+    window.addEventListener('storage', event => {
+      if (event.key === key || event.key === null) { temporaryChoice = false; refresh(); }
+    });
+    window.addEventListener('pageshow', refresh);
+    window.addEventListener('focus', refresh);
   });
 })();

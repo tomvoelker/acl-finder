@@ -2,3 +2,4 @@
 import '../poster-map/tests/layout.test.mjs';
 import '../poster-map/tests/camera.test.mjs';
 import '../poster-map/tests/catalog.test.mjs';
+import '../poster-map/tests/saved-papers.test.mjs';

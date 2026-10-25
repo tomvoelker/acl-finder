@@ -35,7 +35,8 @@ class BuildTests(unittest.TestCase):
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
             math_name = re.search(r"from './(math-titles\.[a-f0-9]+\.mjs)'", app).group(1)
             poster_view_name = re.search(r"from './(poster-view\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [poster_view_name, app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
+            saved_name = re.search(r"from './(saved-papers\.[a-f0-9]+\.mjs)'", app).group(1)
+            for name in [saved_name, poster_view_name, app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
@@ -86,6 +87,9 @@ class BuildTests(unittest.TestCase):
             map_css_name = re.search(r'href="(map\.[a-f0-9]+\.css)"', map_html).group(1)
             map_app = (map_output / map_app_name).read_text()
             self.assertIn(f"'../{math_name}'", map_app)
+            self.assertIn(f"'../{saved_name}'", map_app)
+            self.assertIn(f'src="../{theme_name}"', map_html)
+            self.assertLess(map_html.index(theme_name), map_html.index(map_css_name), "Map theme applies before CSS")
             for name in [map_app_name, map_css_name] + re.findall(r"from './([^']+)'", map_app):
                 content = (map_output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
