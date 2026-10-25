@@ -85,9 +85,11 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   let dayOptions = [];
   const facetOptions = Object.fromEntries(FACETS.map((f) => [f.key, []]));
   const facetSelects = {};
+  const facetCaptions = {};
   let results = [];
   let terms = [];
   const sessions = new Map();
+  const sessionOpen = new Map();
   let lastNav = null;
   let typingTimer = null;
   let announceTimer = null;
@@ -535,13 +537,16 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
   function buildDays() {
     const dates = [...new Set(papers.map((p) => p._day).filter((d) => d && d !== 'undated'))].sort();
     const today = (zonedNow() || {}).date;
-    dayOptions = [{ value: 'all', label: 'All days' }, ...dates.map((date) => ({
+    dayOptions = [{ value: 'all', label: 'All days', short: 'All' }, ...dates.map((date) => ({
       value: date, label: `${dateInfo(date).short}${date === today ? ' · Today' : ''}`,
+      short: dateInfo(date).short.split(' ').slice(0, 2).join(' '),
     }))];
     if (papers.some((p) => p._day === 'undated')) dayOptions.push({ value: 'undated', label: 'No date' });
     els.day.replaceChildren();
     for (const d of dayOptions) {
-      d.buttonEl = h('button', { type: 'button', class: 'day-nav__button', 'data-day': d.value, 'aria-pressed': 'false' }, d.label);
+      d.buttonEl = h('button', { type: 'button', class: 'day-nav__button', 'data-day': d.value, 'aria-pressed': 'false' },
+        h('span', { class: 'day-nav__full', 'aria-hidden': 'true' }, d.label),
+        h('span', { class: 'day-nav__short', 'aria-hidden': 'true' }, d.short || d.label));
       els.day.append(d.buttonEl);
     }
     els.nowBtn.hidden = !dates.includes(today);
@@ -557,7 +562,8 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
         select.append(o.optionEl);
       }
       facetSelects[f.key] = select;
-      els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__label', for: id }, f.label), select));
+      facetCaptions[f.key] = h('span', { class: 'facet__value', 'aria-hidden': 'true' });
+      els.facets.append(h('div', { class: 'facet' }, h('label', { class: 'facet__label', for: id }, f.label), select, facetCaptions[f.key]));
     });
   }
 
@@ -568,6 +574,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
     for (const f of FACETS) {
       const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
       if (facetSelects[f.key]) facetSelects[f.key].value = opt ? opt.slug : '';
+      if (facetCaptions[f.key]) facetCaptions[f.key].textContent = opt ? opt.label : ({ format: 'Type', mode: 'Mode' }[f.key] || f.label);
     }
     els.savedBtn.setAttribute('aria-pressed', String(state.saved));
   }
@@ -718,7 +725,10 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       sessions.get(key).papers.push(p);
     }
     const expand = expandSessions(state);
-    for (const group of sessions.values()) {
+    let first = true;
+    for (const [key, group] of sessions) {
+      const open = !!state.paper || (sessionOpen.get(key) ?? (expand || first));
+      first = false;
       const p = group.papers[0];
       const title = h('h3', { class: 'session__title' });
       if (p._inactive) {
@@ -743,11 +753,17 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
         announce(group.status.textContent, 50);
       } });
       group.more = h('div', { class: 'more' }, group.status, group.button);
-      group.details = h('details', { class: 'session', open: expand }, summary, group.list, group.more);
+      group.details = h('details', { class: 'session', open }, summary, group.list, group.more);
+      let observedOpen = open;
       group.details.addEventListener('toggle', () => {
+        if (!group.details.isConnected) return;
+        if (group.details.open !== observedOpen) {
+          sessionOpen.set(key, group.details.open);
+          observedOpen = group.details.open;
+        }
         if (group.details.open && !group.rendered) renderMore(group);
       });
-      if (expand) renderMore(group);
+      if (open) renderMore(group);
       els.list.append(group.details);
     }
   }
@@ -1050,6 +1066,7 @@ import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery,
       const opt = facetOptions[key].find((o) => o.slug === t.value);
       state.filters[key] = opt ? opt.value : null;
       state.paper = null;
+      syncControls();
       commit('filter');
     });
 
