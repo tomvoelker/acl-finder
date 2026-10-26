@@ -1,10 +1,10 @@
 import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS} from './layout.mjs';
-import {validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, boardSearchNumber, matchesPosterSearch} from './catalog.mjs';
+import {validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, indexAssignments, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, boardSearchNumber, matchesPosterSearch} from './catalog.mjs';
 import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.mjs';
 import {createAnalytics} from '../analytics.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
-import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from './topics.mjs';
+import {validateTopics, indexTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from './topics.mjs';
 import {AREA_COLORS} from '../atlas.mjs';
 
 const $ = selector => document.querySelector(selector);
@@ -18,7 +18,8 @@ const posterSearchCache = new Map();
 const analytics = createAnalytics();
 let selected = null, sessions = [], assignments = [], activeSession = '', catalogReady = false;
 let catalog = null;
-let finderUnavailable = false;
+let assignmentIndex = indexAssignments([]), topicIndex = null;
+let sessionEntries = new Map();
 let topics = null, topicsEnabled = true, selectedArea = null, selectedTopic = null, topicSession = '';
 const papers = new Map();
 let savedPapers = readSavedPapers(), savedBoards = new Map(), savedStops = [];
@@ -84,6 +85,7 @@ function zoom(factor, anchor = {x:0.5,y:0.5}, animate = false) {
 }
 function openDetails({topic = false, search = false} = {}) {
   stopMotion();
+  if (previewed !== null) { clearPreview(); renderAssignment(); }
   closeSearchSuggestions();
   $('#filters-panel').close();
   const panel = $('#details-panel');
@@ -91,18 +93,19 @@ function openDetails({topic = false, search = false} = {}) {
   panel.classList.toggle('search-list', search);
   if (!topic && !search) $('#paper-search').value = '';
   $('#details-title').textContent = search ? 'Search posters' : topic ? currentTopicHeading() : 'Map details';
-  renderPaperResults();
   if (!panel.open) panel.showModal();
+  renderAssignment(selected, {detailsOnly:true});
+  renderPaperResults();
   $('.panel-body').scrollTop = 0;
   if (topic) $('#details-title').focus({preventScroll:true});
   if (search) $('#paper-search').focus({preventScroll:true});
 }
 function displayTitle(entry) { return papers.get(entry.paperId)?.title || entry.title; }
 function displayAuthors(entry) { return papers.get(entry.paperId)?.authors?.join(', ') || authorsText(entry); }
-function currentAssignment(number) { return assignmentAt(assignments, activeSession, number).entry; }
-function conflictingEntries(number) { return assignmentAt(assignments, activeSession, number).conflicts; }
+function currentAssignment(number) { return assignmentAt(assignments, activeSession, number, assignmentIndex).entry; }
+function conflictingEntries(number) { return assignmentAt(assignments, activeSession, number, assignmentIndex).conflicts; }
 function currentSession() { return sessions.find(session => session.id === activeSession); }
-function currentEntries() { return assignments.filter(entry => entry.session === activeSession); }
+function currentEntries() { return sessionEntries.get(activeSession) || []; }
 function clearPreview() {
   elements.get(previewed)?.classList.remove('previewing');
   previewed = null;
@@ -114,17 +117,17 @@ function previewBoard(number) {
   elements.get(number)?.classList.add('previewing');
   renderAssignment();
 }
-function currentTopic(entry) { return topicForEntry(topics, activeSession, entry); }
+function currentTopic(entry) { return topicForEntry(topics, activeSession, entry, topicIndex); }
 function hasTopicFilter() { return topicsEnabled && (selectedArea !== null || selectedTopic !== null); }
 function currentTopicHeading() {
   if (selectedTopic !== null) return topics.topics.find(topic => topic.id === selectedTopic).label;
   if (selectedArea === 'unclassified') return 'Not classified in Atlas';
   return selectedArea === null ? 'All posters in this session' : topics.areas.find(area => area.id === selectedArea).label;
 }
-function topicMembers() { return topicEntries(topics, activeSession, currentEntries(), selectedArea, selectedTopic); }
+function topicMembers() { return topicEntries(topics, activeSession, currentEntries(), selectedArea, selectedTopic, topicIndex); }
 function renderTopicControls() {
   if (topicSession !== activeSession) { selectedArea = selectedTopic = null; topicSession = activeSession; }
-  const choices = topicChoices(topics, activeSession, currentEntries().filter(entry => currentAssignment(entry.board)));
+  const choices = topicChoices(topics, activeSession, currentEntries().filter(entry => currentAssignment(entry.board)), topicIndex);
   const available = choices.areas.length > 0;
   $('#topics-toggle').disabled = !available;
   $('#topics-toggle').setAttribute('aria-pressed', String(topicsEnabled && available));
@@ -180,9 +183,12 @@ function selectBoard(number, {reveal = false, focus = false, hash = true, keepZo
   closeSearchSuggestions();
   if (reveal) revealedBoard = number;
   else if (selected !== number) revealedBoard = null;
+  const previous = selected;
   selected = number;
   const board = BOARD_BY_NUMBER.get(number);
-  for (const [id,element] of elements) {
+  for (const id of new Set([previous ?? 1, selected])) {
+    if (id === null) continue;
+    const element = elements.get(id);
     element.classList.toggle('selected', id === selected);
     element.setAttribute('aria-pressed', String(id === selected));
     element.setAttribute('tabindex', id === selected ? '0' : '-1');
@@ -222,10 +228,11 @@ function scheduleRowLink(entry) {
   } catch { /* Keep the row label when source metadata is unusable. */ }
   return link;
 }
-function renderAssignment(number = previewed ?? selected) {
+function renderAssignment(number = previewed ?? selected, {detailsOnly = false} = {}) {
+  const detailsOpen = $('#details-panel').open;
   const entry = currentAssignment(number);
   const detail = $('#selection-assignment');
-  detail.replaceChildren();
+  if (detailsOpen) detail.replaceChildren();
   detail.hidden = number === null;
   $('#paper-search').disabled = !catalogReady;
   $('#map-search').disabled = !catalogReady;
@@ -233,35 +240,40 @@ function renderAssignment(number = previewed ?? selected) {
   if (number === null) { placeZoomControls(); return; }
   const sessionLabel = currentSession()?.shortLabel || 'Session unavailable';
   const conflicts = conflictingEntries(number);
-  const unconfirmed = !entry && !conflicts.length ? assignments.find(row => row.session === activeSession && row.board === number) : null;
+  const unconfirmed = !entry && !conflicts.length ? assignmentIndex.get(activeSession)?.get(number)?.[0] : null;
   $('#selection-title').textContent = `Board ${number} · ${activeSession ? currentSession()?.shortLabel : 'Floor plan'}`;
-  const title = document.createElement('strong');
-  if (conflicts.length) title.textContent = 'Conflicting schedule entries';
-  else if (entry) renderTitle(title, displayTitle(entry));
-  else if (unconfirmed) renderTitle(title, displayTitle(unconfirmed));
-  else title.textContent = catalogReady ? 'No assignment listed in schedule for this session' : 'Schedule assignments unavailable';
-  detail.append(title);
-  for (const conflict of conflicts) {
-    const conflictTitle = document.createElement('p'); renderTitle(conflictTitle, conflict.title); detail.append(conflictTitle);
-    const conflictSource = document.createElement('p');
-    conflictSource.append(`${authorsText(conflict) ? `${authorsText(conflict)} · ` : ''}`, scheduleRowLink(conflict)); detail.append(conflictSource);
+  if (detailsOpen) {
+    const title = document.createElement('strong');
+    if (conflicts.length) title.textContent = 'Conflicting schedule entries';
+    else if (entry) renderTitle(title, displayTitle(entry));
+    else if (unconfirmed) renderTitle(title, displayTitle(unconfirmed));
+    else title.textContent = catalogReady ? 'No assignment listed in schedule for this session' : 'Schedule assignments unavailable';
+    detail.append(title);
+    for (const conflict of conflicts) {
+      const conflictTitle = document.createElement('p'); renderTitle(conflictTitle, conflict.title); detail.append(conflictTitle);
+      const conflictSource = document.createElement('p');
+      conflictSource.append(`${authorsText(conflict) ? `${authorsText(conflict)} · ` : ''}`, scheduleRowLink(conflict)); detail.append(conflictSource);
+    }
+    if (entry && displayAuthors(entry)) {
+      const authors = document.createElement('p'); authors.textContent = displayAuthors(entry); detail.append(authors);
+    }
+    if (savedBoards.has(number)) {
+      const saved = document.createElement('p');
+      saved.className = 'saved-paper-label'; saved.textContent = '★ Saved paper'; detail.append(saved);
+    }
+    const note = document.createElement('p');
+    note.textContent = conflicts.length ? 'The schedule lists multiple papers at this board. Confirm the location with conference staff.' : unconfirmed ? unconfirmed.issue || 'Board assignment unconfirmed.' : entry ? `${sessionLabel} · ` : 'Board numbers are reused between sessions. Check the number session.';
+    if (entry || unconfirmed) note.append(' ', scheduleRowLink(entry || unconfirmed));
+    detail.append(note);
+    if (entry?.paperId && papers.has(entry.paperId)) {
+      const link = document.createElement('a');
+      link.href = `../?paper=${encodeURIComponent(entry.paperId)}`;
+      link.className = 'paper-link'; link.textContent = 'View paper in finder'; detail.append(link);
+    }
+    const topic = topicLabel(entry);
+    if (topic) detail.append(topic);
   }
-  if (entry && displayAuthors(entry)) {
-    const authors = document.createElement('p'); authors.textContent = displayAuthors(entry); detail.append(authors);
-  }
-  if (savedBoards.has(number)) {
-    const saved = document.createElement('p');
-    saved.className = 'saved-paper-label'; saved.textContent = '★ Saved paper'; detail.append(saved);
-  }
-  const note = document.createElement('p');
-  note.textContent = conflicts.length ? 'The schedule lists multiple papers at this board. Confirm the location with conference staff.' : unconfirmed ? unconfirmed.issue || 'Board assignment unconfirmed.' : entry ? `${sessionLabel} · ` : 'Board numbers are reused between sessions. Check the number session.';
-  if (entry || unconfirmed) note.append(' ', scheduleRowLink(entry || unconfirmed));
-  detail.append(note);
-  if (entry?.paperId && papers.has(entry.paperId)) {
-    const link = document.createElement('a');
-    link.href = `../?paper=${encodeURIComponent(entry.paperId)}`;
-    link.className = 'paper-link'; link.textContent = 'View paper in finder'; detail.append(link);
-  }
+  if (detailsOnly) return;
   const chip = $('#selection-chip');
   chip.replaceChildren();
   const label = document.createElement('p');
@@ -307,8 +319,6 @@ function renderAssignment(number = previewed ?? selected) {
     warning.textContent = 'Board assignment unconfirmed. Check Details before attending.';
     chip.append(warning);
   }
-  const topic = topicLabel(entry);
-  if (topic) detail.append(topic);
   if (hasTopicFilter()) {
     const members = topicMembers();
     const index = members.findIndex(row => row.board === number);
@@ -344,8 +354,8 @@ function renderAssignment(number = previewed ?? selected) {
 function refreshAssignments() {
   clearPreview();
   renderTopicControls();
-  savedBoards = savedAssignments(assignments, activeSession, savedPapers);
-  savedStops = savedPosterStops(assignments, sessions, savedPapers);
+  savedBoards = savedAssignments(assignments, activeSession, savedPapers, assignmentIndex);
+  savedStops = savedPosterStops(assignments, sessions, savedPapers, assignmentIndex);
   for (const board of BOARDS) {
     const element = elements.get(board.number);
     const entry = currentAssignment(board.number);
@@ -434,7 +444,7 @@ function renderSearchSuggestions() {
     const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); option.append(title);
     const meta = document.createElement('small');
     const slot = sessions.find(session => session.id === entry.session);
-    const conflict = assignmentAt(assignments, entry.session, entry.board).conflicts.length;
+    const conflict = assignmentAt(assignments, entry.session, entry.board, assignmentIndex).conflicts.length;
     meta.textContent = `${sessionOptionLabel(slot)} · Board ${entry.board}${conflict ? ' · Conflicting entries' : entry.verified !== true ? ' · Board unconfirmed' : ''}${savedPapers.has(entry.paperId) ? ' · ★ Saved' : ''}`;
     option.append(meta);
     if (displayAuthors(entry)) {
@@ -452,6 +462,7 @@ function renderSearchSuggestions() {
   $('#map-search').setAttribute('aria-expanded', 'true');
 }
 function renderPaperResults() {
+  if (!$('#details-panel').open) return;
   const results = $('#paper-results');
   results.replaceChildren();
   if (!catalogReady) return;
@@ -478,7 +489,7 @@ function renderPaperResults() {
     const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); button.append(title);
     const meta = document.createElement('small');
     const slot = sessions.find(session => session.id === entry.session);
-    const conflicts = assignmentAt(assignments, entry.session, entry.board).conflicts;
+    const conflicts = assignmentAt(assignments, entry.session, entry.board, assignmentIndex).conflicts;
     meta.textContent = `${allSessions ? `${sessionOptionLabel(slot)} · Budapest time · ` : ''}Board ${entry.board}${savedPapers.has(entry.paperId) ? ' · ★ Saved' : ''}${conflicts.length ? ' · Conflicting entries' : entry.verified !== true ? ' · Board unconfirmed' : ''}`;
     button.append(meta);
     if (displayAuthors(entry)) {
@@ -791,7 +802,7 @@ $('#topic-select').addEventListener('change', () => {
   changeTopicFilter();
 });
 $('#topic-browse').addEventListener('click', () => {
-  $('#paper-search').value = ''; renderPaperResults(); openDetails({topic:true});
+  $('#paper-search').value = ''; openDetails({topic:true});
 });
 
 function readHash({reveal = true} = {}) {
@@ -822,24 +833,17 @@ window.addEventListener('focus', refreshSavedPapers);
 window.addEventListener('pageshow', refreshSavedPapers);
 drawMap(); applyView(); refreshAssignments(); readHash();
 
-// A missing finder dataset must not hide official schedule assignments.
-const paperRequest = fetch('../data/papers.json', {cache:'no-cache'}).then(async response => {
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  const schedule = await response.json();
-  if (!Array.isArray(schedule.papers)) throw new Error('Missing paper list');
-  for (const paper of schedule.papers) papers.set(paper.id, paper);
-  posterSearchCache.clear();
-  refreshAssignments(); renderPaperResults();
-}).catch(() => {
-  finderUnavailable = true;
-  if (catalogReady) feedback('Paper finder links are unavailable. Schedule assignments still appear on the map.');
-});
 try {
-  const response = await fetch('../data/poster-boards.json', {cache:'no-cache'});
+  const response = await fetch('../data/poster-boards.json');
   if (!response.ok) throw new Error(`Schedule catalog returned HTTP ${response.status}.`);
   catalog = validateCatalog(await response.json());
   sessions = sessionGroups(catalog.sessions);
   assignments = mapEntries(catalog.entries, sessions);
+  assignmentIndex = indexAssignments(assignments);
+  sessionEntries = new Map(sessions.map(session => [session.id, assignments.filter(entry => entry.session === session.id)]));
+  // The build validates IDs and enriches this standalone catalog with finder authors.
+  for (const entry of catalog.entries) papers.set(entry.paperId, {id:entry.paperId, title:entry.title, authors:entry.authors});
+  posterSearchCache.clear();
   $('#session').replaceChildren();
   for (const session of sessions) {
     const option = document.createElement('option'); option.value = session.id;
@@ -856,16 +860,15 @@ try {
     if (url.protocol === 'https:' || url.protocol === 'http:') { source.href = url.href; source.hidden = false; }
   } catch { /* Assignments remain readable if source metadata has no usable URL. */ }
   readHash({reveal:false});
-  if (finderUnavailable) feedback('Paper finder links are unavailable. Schedule assignments still appear on the map.');
 } catch (error) {
   $('#session-note').textContent = 'Schedule assignments unavailable. The complete floor plan still works.';
   feedback(error.message);
 }
-await paperRequest;
 try {
-  const response = await fetch('../data/poster-topics.json', {cache:'no-cache'});
+  const response = await fetch('../data/map-topics.json');
   if (!response.ok) throw new Error('Topics unavailable');
   topics = validateTopics(await response.json());
+  topicIndex = indexTopics(topics);
   refreshAssignments();
 } catch {
   $('#topics-note').textContent = 'Atlas topics unavailable. The floor plan still works.';

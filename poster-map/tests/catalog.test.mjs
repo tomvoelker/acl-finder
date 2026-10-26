@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {searchText, validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, assignmentAt, defaultSession, boardHash, authorsText, boardSearchNumber, matchesPosterSearch} from '../catalog.mjs';
+import {searchText, validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, indexAssignments, assignmentAt, savedAssignments, savedPosterStops, defaultSession, boardHash, authorsText, boardSearchNumber, matchesPosterSearch} from '../catalog.mjs';
 
 test('poster search matches author and title words, accents, IDs and exact board numbers', () => {
   const poster = {title:'Graph Reasoning with LLMs', authors:['José García'], paperId:'1234-MAIN', board:329};
@@ -101,4 +101,24 @@ test('the published schedule catalog uses valid board and session identities', (
 test('paper lookup accepts unaccented author names and PDF ligatures', () => {
   assert.equal(searchText('Tom Völker'), 'tom volker');
   assert.equal(searchText('Jan Pﬁster'), 'jan pfister');
+});
+
+
+test('assignment index preserves every verified, missing, unconfirmed and conflicting board result', () => {
+  const document = validateCatalog(JSON.parse(readFileSync(published,'utf8')));
+  const groups = sessionGroups(document.sessions);
+  const entries = mapEntries(document.entries,groups);
+  const index = indexAssignments(entries);
+  for (const session of [...groups.map(row => row.id), 'missing']) {
+    for (let board = 1; board <= 424; board++) {
+      assert.deepEqual(assignmentAt(entries,session,board,index), assignmentAt(entries,session,board));
+    }
+  }
+  const saved = new Set(entries.map(row => row.paperId));
+  for (const session of groups) {
+    assert.deepEqual(savedAssignments(entries,session.id,saved,index), savedAssignments(entries,session.id,saved));
+  }
+  assert.deepEqual(savedPosterStops(entries,groups,saved,index), savedPosterStops(entries,groups,saved));
+  assert.equal(assignmentAt(entries,'D',311,index).entry,null);
+  assert.ok(assignmentAt(entries,'D',311,index).conflicts.length > 1);
 });

@@ -60,29 +60,41 @@ export function mapEntries(entries, sessions) {
     session:sessions.find(session => session.aliases.includes(entry.session)).id}));
 }
 
-export function assignmentAt(entries, session, board) {
-  const listed = entries.filter(entry => entry.session === session && entry.board === board);
+// Build once for the immutable schedule loaded by the map. Keep every source row.
+export function indexAssignments(entries) {
+  const index = new Map();
+  for (const entry of entries) {
+    if (!index.has(entry.session)) index.set(entry.session, new Map());
+    const boards = index.get(entry.session);
+    if (!boards.has(entry.board)) boards.set(entry.board, []);
+    boards.get(entry.board).push(entry);
+  }
+  return index;
+}
+
+export function assignmentAt(entries, session, board, index = null) {
+  const listed = index ? index.get(session)?.get(board) || [] : entries.filter(entry => entry.session === session && entry.board === board);
   return {entry:listed.length === 1 && listed[0].verified === true ? listed[0] : null,
     conflicts:listed.length > 1 ? listed : []};
 }
 
 // Entries must use the canonical physical sessions returned by mapEntries.
-export function savedAssignments(entries, session, savedPapers) {
+export function savedAssignments(entries, session, savedPapers, index = null) {
   const saved = new Map();
   for (const candidate of entries) {
     if (candidate.session !== session || !savedPapers.has(candidate.paperId)) continue;
-    const {entry} = assignmentAt(entries, session, candidate.board);
+    const {entry} = assignmentAt(entries, session, candidate.board, index);
     if (entry) saved.set(entry.board, entry);
   }
   return saved;
 }
 
-export function savedPosterStops(entries, sessions, savedIds) {
+export function savedPosterStops(entries, sessions, savedIds, index = null) {
   const saved = new Set(savedIds);
   const physicalSessions = new Map(sessions.map(session => [session.id, session]));
   const stops = [];
   for (const session of sessions) {
-    for (const [board, entry] of savedAssignments(entries, session.id, saved)) {
+    for (const [board, entry] of savedAssignments(entries, session.id, saved, index)) {
       stops.push({session:session.id, board, entry});
     }
   }

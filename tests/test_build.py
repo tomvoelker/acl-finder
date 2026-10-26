@@ -18,6 +18,36 @@ spec.loader.exec_module(site_build)
 
 
 class BuildTests(unittest.TestCase):
+    def test_preloads_and_runtime_share_versioned_data_snapshots(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "site"
+            with patch.object(site_build, "OUTPUT", output):
+                site_build.build()
+            html = (output / "index.html").read_text()
+            app_name = re.search(r'src="(app\.[a-f0-9]+\.js)"', html).group(1)
+            app = (output / app_name).read_text()
+            data_url = re.search(r"const DATA_URL = '(data/papers\.[a-f0-9]+\.json)'", app)
+            self.assertIsNotNone(data_url, "The programme snapshot must be versioned with the app")
+            data_url = data_url.group(1)
+            self.assertIn(f'href="{data_url}" as="fetch" crossorigin', html)
+            self.assertEqual((output / data_url).read_bytes(), (output / 'data/papers.json').read_bytes())
+            self.assertIn(hashlib.sha256((output / data_url).read_bytes()).hexdigest()[:12], data_url)
+            theme = (ROOT / 'theme.js').read_text()
+            self.assertIn(f'<script>{theme}</script>', html)
+            self.assertLess(html.index(theme), html.index('rel="stylesheet"'))
+            map_html = (output / 'poster-map/index.html').read_text()
+            map_app_name = re.search(r'src="(map\.[a-f0-9]+\.mjs)"', map_html).group(1)
+            map_app = (output / 'poster-map' / map_app_name).read_text()
+            self.assertNotIn("../data/papers", map_app)
+            for stem in ['poster-boards', 'map-topics']:
+                url = re.search(rf"\.\./(data/{stem}\.[a-f0-9]+\.json)", map_app).group(1)
+                self.assertIn(f'href="../{url}" as="fetch" crossorigin', map_html)
+                self.assertEqual((output / url).read_bytes(), (output / 'data' / f'{stem}.json').read_bytes())
+                self.assertIn(hashlib.sha256((output / url).read_bytes()).hexdigest()[:12], url)
+            full_topics = json.loads((ROOT / 'data/poster-topics.json').read_text())
+            map_topics = json.loads((output / 'data/map-topics.json').read_text())
+            self.assertEqual(map_topics, {key: full_topics[key] for key in ['version', 'source', 'localSource', 'areas', 'topics', 'sessions']})
+
     def test_stale_board_catalog_does_not_replace_previous_site(self):
         catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
         catalog["entries"][0]["board"] += 1
@@ -38,7 +68,6 @@ class BuildTests(unittest.TestCase):
             html = (output / "index.html").read_text()
             app_name = re.search(r'src="(app\.[a-f0-9]+\.js)"', html).group(1)
             css_name = re.search(r'href="(styles\.[a-f0-9]+\.css)"', html).group(1)
-            theme_name = re.search(r'src="(theme\.[a-f0-9]+\.js)"', html).group(1)
             favicon_png = re.search(r'href="(favicon\.[a-f0-9]+\.png)"', html).group(1)
             favicon_svg = re.search(r'href="(favicon\.[a-f0-9]+\.svg)"', html).group(1)
             traffic_name = re.search(r'src="(traffic\.[a-f0-9]+\.mjs)"', html).group(1)
@@ -50,7 +79,7 @@ class BuildTests(unittest.TestCase):
             poster_view_name = re.search(r"from './(poster-view\.[a-f0-9]+\.mjs)'", app).group(1)
             saved_name = re.search(r"from './(saved-papers\.[a-f0-9]+\.mjs)'", app).group(1)
             sharing_name = re.search(r"from './(saved-sharing\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [atlas_name, sharing_name, saved_name, poster_view_name, app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
+            for name in [atlas_name, sharing_name, saved_name, poster_view_name, app_name, css_name, module_name, math_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
@@ -60,7 +89,9 @@ class BuildTests(unittest.TestCase):
             self.assertTrue((vendor / "LICENSE").is_file())
             for font in re.findall(r'url\(([^)]+)\)', (vendor / "katex.min.css").read_text()):
                 self.assertTrue((vendor / font.strip('\"\'')).is_file(), f"Missing math font: {font}")
-            self.assertLess(html.index(theme_name), html.index(css_name), "Theme must apply before CSS loads")
+            theme_source = (ROOT / 'theme.js').read_text()
+            self.assertIn(f'<script>{theme_source}</script>', html)
+            self.assertLess(html.index(theme_source), html.index(css_name), "Theme must apply before CSS loads")
             source = json.loads((ROOT / "data/papers.json").read_text())
             deployed = json.loads((output / "data/papers.json").read_text())
             by_id = {paper["id"]: paper for paper in deployed["papers"]}
@@ -110,7 +141,10 @@ class BuildTests(unittest.TestCase):
                 paper.pop("oralSlotNote", None)
             self.assertEqual(deployed.pop("posterSessions"), catalog["sessions"])
             self.assertEqual(deployed, source, "Adding paper links must not change the schedule")
-            self.assertEqual(sorted(p.name for p in (output / "data").iterdir()), ["papers.json", "poster-boards.json", "poster-topics.json"])
+            canonical = {"papers.json", "poster-boards.json", "poster-topics.json", "map-topics.json"}
+            versioned = {f"{stem}.{hashlib.sha256((output / 'data' / f'{stem}.json').read_bytes()).hexdigest()[:12]}.json"
+                         for stem in ['papers', 'poster-boards', 'map-topics']}
+            self.assertEqual({p.name for p in (output / "data").iterdir()}, canonical | versioned)
             self.assertEqual(json.loads((output / 'data/poster-topics.json').read_text()), json.loads((ROOT / 'data/poster-topics.json').read_text()))
             map_output = output / "poster-map"
             map_html = (map_output / "index.html").read_text()
@@ -121,8 +155,8 @@ class BuildTests(unittest.TestCase):
             self.assertIn(f"'../{saved_name}'", map_app)
             self.assertIn(f"'../{analytics_name}'", map_app)
             self.assertIn(f"'../{atlas_name}'", map_app)
-            self.assertIn(f'src="../{theme_name}"', map_html)
-            self.assertLess(map_html.index(theme_name), map_html.index(map_css_name), "Map theme applies before CSS")
+            self.assertIn(f'<script>{theme_source}</script>', map_html)
+            self.assertLess(map_html.index(theme_source), map_html.index(map_css_name), "Map theme applies before CSS")
             for name in [map_app_name, map_css_name] + re.findall(r"from './([^']+)'", map_app):
                 content = (map_output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)

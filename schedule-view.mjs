@@ -69,8 +69,7 @@ export function authorKey(name) {
   return name.normalize('NFC').trim().replace(/\s+/gu, ' ');
 }
 
-export function indexAuthors(papers) {
-  const index = new Map();
+export function indexAuthors(papers, index = new Map()) {
   for (const paper of papers) {
     const seen = new Set();
     for (const name of paper.authors) {

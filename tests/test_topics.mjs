@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from '../poster-map/topics.mjs';
+import {validateTopics, indexTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from '../poster-map/topics.mjs';
 import {AREA_COLORS, readAtlasLabel} from '../atlas.mjs';
 import {sessionGroups, mapEntries, assignmentAt} from '../poster-map/catalog.mjs';
 
@@ -117,4 +117,19 @@ test('local areas have the same colours but never acquire an invented fine topic
   assert.equal(choices.areas.find(a=>a.id===0).count,2); assert.equal(choices.local,1); assert.equal(choices.unclassified,0);
   assert.deepEqual(topicEntries(topics,'A',entries(),0).map(e=>e.board),[1,2]);
   assert.deepEqual(topicEntries(topics,'A',entries(),0,0).map(e=>e.board),[1]);
+});
+
+
+test('indexed topic lookups retain identity checks and all browsing results', () => {
+  const topics = validateTopics(data());
+  const index = indexTopics(topics);
+  for (const changed of [{}, {board:2}, {paperId:'other'}, {title:'Changed'}, {verified:false}]) {
+    const candidate = {...entry,...changed};
+    assert.deepEqual(topicForEntry(topics,'A',candidate,index),topicForEntry(topics,'A',candidate));
+  }
+  assert.equal(topicForEntry(topics,'missing',entry,index),null);
+  assert.deepEqual(topicChoices(topics,'A',entries(),index),topicChoices(topics,'A',entries()));
+  for (const [area,topic] of [[null,null],[0,null],[null,1],['unclassified',null]]) {
+    assert.deepEqual(topicEntries(topics,'A',entries(),area,topic,index),topicEntries(topics,'A',entries(),area,topic));
+  }
 });

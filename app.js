@@ -1419,7 +1419,11 @@ import { readAtlasLabel } from './atlas.mjs';
 
   /* ---------- Boot ---------- */
 
-  function init(json) {
+  const yieldToBrowser = () => globalThis.scheduler?.yield
+    ? globalThis.scheduler.yield()
+    : new Promise(resolve => setTimeout(resolve, 0));
+
+  async function init(json) {
     conference = json.conference && typeof json.conference === 'object' ? json.conference : {};
     atlas = json.atlas;
     const zone = text(conference.timezone);
@@ -1429,10 +1433,31 @@ import { readAtlasLabel } from './atlas.mjs';
     sourceUrl = safeSourceUrl(conference.sourceUrl) || safeSourceUrl(FALLBACK_SOURCE);
 
     posterSessions = new Map((json.posterSessions || []).map(slot => [slot.id, slot]));
-    papers = json.papers.map(normalize).filter(Boolean).sort(compare);
+    const normalized = [];
+    let sliceStarted = performance.now();
+    for (let offset = 0; offset < json.papers.length; offset += 100) {
+      normalized.push(...json.papers.slice(offset, offset + 100)
+        .map((raw, index) => normalize(raw, offset + index)).filter(Boolean));
+      // Leave part of each frame available for paint and input during startup.
+      if (performance.now() - sliceStarted >= 8) {
+        await yieldToBrowser();
+        sliceStarted = performance.now();
+      }
+    }
+    papers = normalized.sort(compare);
     posterOrderedPapers = [...papers].sort(comparePosterFirst);
     byKey = new Map(papers.map((p) => [p._key, p]));
-    authors = indexAuthors(papers);
+    await yieldToBrowser();
+    authors = new Map();
+    sliceStarted = performance.now();
+    for (let offset = 0; offset < papers.length; offset += 100) {
+      indexAuthors(papers.slice(offset, offset + 100), authors);
+      if (performance.now() - sliceStarted >= 8) {
+        await yieldToBrowser();
+        sliceStarted = performance.now();
+      }
+    }
+    await yieldToBrowser();
 
     applyMeta();
     buildOptions();
@@ -1474,11 +1499,11 @@ import { readAtlasLabel } from './atlas.mjs';
     els.list.replaceChildren(skeleton());
     els.count.textContent = 'Loading schedule…';
     try {
-      const res = await fetch(DATA_URL, { cache: 'no-cache' });
+      const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status} while loading ${DATA_URL}`);
       const json = await res.json();
       if (!json || !Array.isArray(json.papers)) throw new Error('The data file has an unexpected format.');
-      init(json);
+      await init(json);
     } catch (err) {
       showError(err);
     }

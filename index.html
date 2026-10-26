@@ -10,6 +10,8 @@
   <link rel="icon" href="favicon.png" type="image/png" sizes="128x128">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <script src="theme.js"></script>
+  <link rel="modulepreload" href="vendor/katex-0.19.1/katex.mjs">
+  <link rel="preload" href="data/papers.json" as="fetch" crossorigin>
   <link rel="stylesheet" href="vendor/katex-0.19.1/katex.min.css">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" type="module"></script>
@@ -23,7 +25,7 @@
     <div class="wrap masthead__inner">
       <a class="brand" href="./" aria-label="Unofficial EMNLP 2026 Paper Finder">
         <span class="brand__identity">
-          <img class="brand__logo" src="conference-logo.png" width="190" height="33" alt="EMNLP 2026 Budapest">
+          <img class="brand__logo" src="conference-logo.png" width="190" height="33" alt="EMNLP 2026 Budapest" fetchpriority="high">
           <span class="brand__ribbon">Unofficial</span>
         </span>
         <span class="brand__name">Paper Finder</span>

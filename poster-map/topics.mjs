@@ -24,10 +24,16 @@ export function validateTopics(data) {
   return data;
 }
 
-export function topicForEntry(data, session, entry) {
+// Topic data is immutable after validation. Identity checks still gate each lookup.
+export function indexTopics(data) {
+  return new Map(Object.entries(data?.sessions || {}).map(([session, value]) =>
+    [session, new Map(value.assignments.map(row => [row.board, row]))]));
+}
+
+export function topicForEntry(data, session, entry, index = null) {
   if (!entry?.verified) return null;
-  const assignment = data?.sessions[session]?.assignments.find(row => row.board === entry.board && row.paperId === entry.paperId && row.title === entry.title);
-  if (!assignment) return null;
+  const assignment = index ? index.get(session)?.get(entry.board) : data?.sessions[session]?.assignments.find(row => row.board === entry.board && row.paperId === entry.paperId && row.title === entry.title);
+  if (!assignment || assignment.paperId !== entry.paperId || assignment.title !== entry.title) return null;
   return readAtlasLabel(data, assignment.topic, assignment.area);
 }
 
@@ -36,11 +42,11 @@ export function matchesTopic(topic, areaId = null, topicId = null) {
   return (areaId === null || topic?.area === areaId) && (topicId === null || topic?.id === topicId);
 }
 
-export function topicChoices(data, session, entries) {
+export function topicChoices(data, session, entries, index = null) {
   const areaCounts = new Map(), topicCounts = new Map();
   let unclassified = 0, local = 0;
   for (const entry of entries.filter(entry => entry.verified)) {
-    const topic = topicForEntry(data, session, entry);
+    const topic = topicForEntry(data, session, entry, index);
     if (!topic) { unclassified++; continue; }
     areaCounts.set(topic.area, (areaCounts.get(topic.area) || 0) + 1);
     if (topic.id !== null) topicCounts.set(topic.id, (topicCounts.get(topic.id) || 0) + 1);
@@ -51,7 +57,7 @@ export function topicChoices(data, session, entries) {
   return {areas:count(data?.areas, areaCounts), topics:count(data?.topics, topicCounts), unclassified, local};
 }
 
-export function topicEntries(data, session, entries, areaId = null, topicId = null) {
-  return entries.filter(entry => entry.verified && matchesTopic(topicForEntry(data, session, entry), areaId, topicId))
+export function topicEntries(data, session, entries, areaId = null, topicId = null, index = null) {
+  return entries.filter(entry => entry.verified && matchesTopic(topicForEntry(data, session, entry, index), areaId, topicId))
     .sort((a,b) => a.board - b.board);
 }

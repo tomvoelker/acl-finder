@@ -35,6 +35,19 @@ test('duplicate author credits count each paper once; absent authors are not inf
   assert.equal(index.has('Another Person'), false);
 });
 
+test('incremental author indexing preserves complete membership and insertion order', () => {
+  const papers = [
+    { authors: ['José Li', 'A. Author', 'A. Author'] },
+    { authors: ['B. Author', 'Jose\u0301 Li'] },
+    { authors: ['A. Author'] },
+  ];
+  const index = new Map();
+  for (const paper of papers) assert.equal(indexAuthors([paper], index), index);
+  assert.deepEqual(index, indexAuthors(papers));
+  indexAuthors(papers, index);
+  assert.deepEqual(index, indexAuthors(papers));
+});
+
 test('author pages bypass poster browsing regardless of their incoming view', () => {
   for (const view of ['posters', 'programme']) {
     assert.equal(posterBrowsing({ view, q: '', saved: false, paper: null, author: 'Tom Völker', filters: {} }), false);

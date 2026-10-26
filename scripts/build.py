@@ -99,10 +99,25 @@ def build():
         (directory / versioned).write_bytes(content)
         return versioned
 
+    data_output = OUTPUT / "data"
+    data_output.mkdir()
+    paper_bytes = (json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
+    board_bytes = (json.dumps(poster_catalog, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
+    map_topics = {key: topics[key] for key in ["version", "source", "localSource", "areas", "topics", "sessions"]}
+    topic_bytes = (json.dumps(map_topics, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
+    paper_name = asset("papers.json", paper_bytes, data_output)
+    board_name = asset("poster-boards.json", board_bytes, data_output)
+    topic_name = asset("map-topics.json", topic_bytes, data_output)
+    # Keep canonical snapshots for source checks and external inspection.
+    (data_output / "papers.json").write_bytes(paper_bytes)
+    (data_output / "poster-boards.json").write_bytes(board_bytes)
+    (data_output / "map-topics.json").write_bytes(topic_bytes)
+
     module_name = asset("schedule-view.mjs", (ROOT / "schedule-view.mjs").read_bytes())
     atlas_name = asset("atlas.mjs", (ROOT / "atlas.mjs").read_bytes())
     math_name = asset("math-titles.mjs", (ROOT / "math-titles.mjs").read_bytes())
     app = (ROOT / "app.js").read_text().replace("'./schedule-view.mjs'", f"'./{module_name}'")
+    app = app.replace("'data/papers.json'", f"'data/{paper_name}'")
     app = app.replace("'./atlas.mjs'", f"'./{atlas_name}'")
     app = app.replace("'./math-titles.mjs'", f"'./{math_name}'")
     analytics_name = asset("analytics.mjs", (ROOT / "analytics.mjs").read_bytes())
@@ -115,14 +130,17 @@ def build():
     app = app.replace("'./saved-sharing.mjs'", f"'./{sharing_name}'")
     app_name = asset("app.js", app.encode())
     traffic_name = asset("traffic.mjs", (ROOT / "traffic.mjs").read_bytes())
-    theme_name = asset("theme.js", (ROOT / "theme.js").read_bytes())
+    theme_source = (ROOT / "theme.js").read_text()
+    if "</script" in theme_source.lower():
+        raise ValueError("Theme bootstrap cannot contain a closing script tag")
     styles_name = asset("styles.css", (ROOT / "styles.css").read_bytes())
     favicon_png = asset("favicon.png", (ROOT / "favicon.png").read_bytes())
     favicon_svg = asset("favicon.svg", (ROOT / "favicon.svg").read_bytes())
     html = (ROOT / "index.html").read_text().replace('src="app.js"', f'src="{app_name}"')
     html = html.replace('src="traffic.mjs"', f'src="{traffic_name}"')
     html = html.replace('href="styles.css"', f'href="{styles_name}"')
-    html = html.replace('src="theme.js"', f'src="{theme_name}"')
+    html = html.replace('<script src="theme.js"></script>', f'<script>{theme_source}</script>')
+    html = html.replace('href="data/papers.json"', f'href="data/{paper_name}"')
     html = html.replace('href="favicon.png"', f'href="{favicon_png}"')
     html = html.replace('href="favicon.svg"', f'href="{favicon_svg}"')
     (OUTPUT / "index.html").write_text(html)
@@ -133,6 +151,8 @@ def build():
     map_modules = {name: asset(name, (ROOT / "poster-map" / name).read_text().replace("'../atlas.mjs'", f"'../{atlas_name}'").encode(), map_output)
                    for name in ["layout.mjs", "camera.mjs", "catalog.mjs", "topics.mjs"]}
     map_app = (ROOT / "poster-map/map.mjs").read_text()
+    map_app = map_app.replace("'../data/poster-boards.json'", f"'../data/{board_name}'")
+    map_app = map_app.replace("'../data/map-topics.json'", f"'../data/{topic_name}'")
     for original, versioned in map_modules.items():
         map_app = map_app.replace(f"'./{original}'", f"'./{versioned}'")
     map_app = map_app.replace("'../math-titles.mjs'", f"'../{math_name}'")
@@ -143,14 +163,13 @@ def build():
     map_css_name = asset("map.css", (ROOT / "poster-map/map.css").read_bytes(), map_output)
     map_html = (ROOT / "poster-map/index.html").read_text().replace('src="map.mjs"', f'src="{map_app_name}"')
     map_html = map_html.replace('src="../traffic.mjs"', f'src="../{traffic_name}"')
-    map_html = map_html.replace('src="../theme.js"', f'src="../{theme_name}"')
+    map_html = map_html.replace('<script src="../theme.js"></script>', f'<script>{theme_source}</script>')
+    map_html = map_html.replace('href="../data/poster-boards.json"', f'href="../data/{board_name}"')
+    map_html = map_html.replace('href="../data/map-topics.json"', f'href="../data/{topic_name}"')
     map_html = map_html.replace('href="map.css"', f'href="{map_css_name}"').replace('href="../favicon.svg"', f'href="../{favicon_svg}"')
     (map_output / "index.html").write_text(map_html)
 
-    (OUTPUT / "data").mkdir()
-    (OUTPUT / "data/poster-boards.json").write_text(json.dumps(poster_catalog, ensure_ascii=False, separators=(",", ":")) + "\n")
     shutil.copy2(ROOT / "data/poster-topics.json", OUTPUT / "data/poster-topics.json")
-    (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
     for name in ["conference-logo.png", "LICENSE"]:
         destination = OUTPUT / name
         destination.parent.mkdir(parents=True, exist_ok=True)
