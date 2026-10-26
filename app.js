@@ -1200,7 +1200,7 @@ import { readAtlasLabel } from './atlas.mjs';
   }
 
   function scrollToResults(force) {
-    const offset = els.toolbar.offsetHeight + 4;
+    const offset = els.toolbar.offsetHeight + ($('.feedback-bar')?.offsetHeight || 0) + 4;
     const top = els.results.getBoundingClientRect().top;
     if (top < offset || (force && top > offset)) window.scrollTo(0, window.scrollY + top - offset);
   }
@@ -1403,8 +1403,17 @@ import { readAtlasLabel } from './atlas.mjs';
       if (state.saved) update({ scroll: false });
     });
 
-    const setToolbarHeight = () => document.documentElement.style.setProperty('--toolbar-h', `${els.toolbar.offsetHeight}px`);
-    if ('ResizeObserver' in window) new ResizeObserver(setToolbarHeight).observe(els.toolbar);
+    const feedbackBar = $('.feedback-bar');
+    const setToolbarHeight = () => {
+      const feedbackHeight = feedbackBar?.offsetHeight || 0;
+      document.documentElement.style.setProperty('--feedback-h', `${feedbackHeight}px`);
+      document.documentElement.style.setProperty('--toolbar-h', `${els.toolbar.offsetHeight + feedbackHeight}px`);
+    };
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(setToolbarHeight);
+      observer.observe(els.toolbar);
+      if (feedbackBar) observer.observe(feedbackBar);
+    }
     setToolbarHeight();
   }
 
