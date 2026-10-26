@@ -379,7 +379,6 @@ abbr[title] { text-decoration: none; cursor: help; }
 .atlas-area { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-height: 32px; padding: 0; border: 0; background: none; color: var(--ink-2); font: inherit; text-align: left; }
 .atlas-area:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: .2em; }
 .atlas-swatch { width: 11px; height: 11px; flex: none; border: 1px solid var(--muted); border-radius: 3px; }
-.atlas-local { color: var(--muted); font-size: .6875rem; }
 .paper__default-save { margin-top: 6px; font-size: .75rem; color: var(--muted); }
 .paper.is-inactive .paper__title { color: var(--ink-2); }
 

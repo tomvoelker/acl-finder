@@ -1020,12 +1020,11 @@ import { readAtlasLabel } from './atlas.mjs';
 
     const meta = h('div', { class: 'paper__meta' });
     const area = h('button', { type: 'button', class: 'atlas-area',
-      title: p.atlas?.source === 'local' ? 'Area assigned locally by Codex; click to filter' : p.atlas ? 'Filter by this inferred Atlas area' : 'Show papers without an Atlas classification',
+      title: p.atlas ? 'Filter by this inferred area' : 'Show papers without an area classification',
       'aria-label': p.atlas ? `Filter by Atlas area: ${p.atlas.areaLabel}` : 'Show papers not classified in Atlas',
       onclick: () => selectArea(p.atlas?.areaLabel || NONE) });
     if (p.atlas) area.append(h('span', { class: 'atlas-swatch', 'aria-hidden': 'true', style: `background-color:${p.atlas.color}` }));
     area.append(p.atlas?.areaLabel || 'Not classified in Atlas');
-    if (p.atlas?.source === 'local') area.append(h('small', { class: 'atlas-local' }, 'local'));
     meta.append(area);
     if (p.underlineUrl) meta.append(newTab(p.underlineUrl, 'Underline ↗', ' for this paper (opens in a new tab)'));
     if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Share presentation details for ${p.title}` }, 'Share'));
@@ -1042,11 +1041,7 @@ import { readAtlasLabel } from './atlas.mjs';
       const label = h('span'); highlightInto(label, p.atlas.label, terms); fine.append(label);
       detailsBody.append(fine, h('p', null, p.atlas.description));
     }
-    if (p.atlas?.source === 'local') detailsBody.append(h('p', null,
-      `Broad area assigned locally by Codex from ${p.atlasAreaBasis === 'title' ? 'the title only' : 'the title and abstract'}. No fine topic assigned. This paper has no classification in the imported Atlas snapshot.`));
-    else detailsBody.append(h('p', null, 'Areas and topics are inferred by ',
-        newTab('https://mohammadi.cv/emnlp/2026/atlas.html', 'Hadi Mohammadi’s EMNLP Atlas ↗', ' (opens in a new tab)'),
-        '; they are not official acceptance tracks.'));
+    if (p.atlasAreaBasis === 'title') detailsBody.append(h('p', null, 'Area based on the title only.'));
     if (p.oralSlot) detailsBody.append(h('p', null, `Individual oral time from Underline. Full session: ${timeRange(p)} CET.`));
     if (p.oralSlotNote) detailsBody.append(h('p', { class: 'note' }, p.oralSlotNote));
     if (poster && posterSlotDiffers(p, poster)) {

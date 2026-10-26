@@ -101,7 +101,7 @@ function renderTopicControls() {
   $('#topics-toggle').disabled = !available;
   $('#topics-toggle').setAttribute('aria-pressed', String(topicsEnabled && available));
   $('#topic-filters').hidden = $('#topic-browse').hidden = !topicsEnabled || !available;
-  if (topics) $('#topics-note').textContent = available ? `Inferred · ${choices.local} locally assigned${choices.unclassified ? ` · ${choices.unclassified} unclassified` : ''}` : 'Topics unavailable for this session.';
+  if (topics) $('#topics-note').textContent = available ? 'Inferred · not official tracks' : 'Topics unavailable for this session.';
   if (!topicsEnabled || !available) return;
   const option = (parent, value, label) => {
     const item = document.createElement('option'); item.value = value; item.textContent = label; parent.append(item);
@@ -134,9 +134,11 @@ function topicLabel(entry) {
   const swatch = document.createElement('span'); swatch.className = 'topic-swatch';
   swatch.style.backgroundColor = topic.color; swatch.setAttribute('aria-hidden','true');
   const text = document.createElement('span');
-  const fine = document.createElement('small'); fine.textContent = topic.source === 'local' ? 'Area assigned locally by Codex' : topic.label;
-  text.append(document.createTextNode(topic.areaLabel), fine);
-  label.append(swatch, text); label.title = topic.source === 'local' ? 'Broad area assigned locally; no fine topic assigned.' : `Inferred topic from Hadi Mohammadi’s EMNLP Atlas: ${topic.description}`;
+  text.append(document.createTextNode(topic.areaLabel));
+  if (topic.label) {
+    const fine = document.createElement('small'); fine.textContent = topic.label; text.append(fine);
+  }
+  label.append(swatch, text); label.title = topic.description || `Inferred area: ${topic.areaLabel}`;
   return label;
 }
 function updateHash() {
@@ -305,7 +307,7 @@ function refreshAssignments() {
     element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
     element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
     if (topic) {
-      const label = topic.source === 'local' ? `Locally assigned area: ${topic.areaLabel}` : `Atlas area: ${topic.areaLabel}, topic: ${topic.label}`;
+      const label = `Inferred area: ${topic.areaLabel}${topic.label ? `, topic: ${topic.label}` : ''}`;
       element.setAttribute('aria-label', `${element.getAttribute('aria-label')}, ${label}`);
       element.querySelector('title').textContent += ` · ${label}`;
     }
