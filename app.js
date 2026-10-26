@@ -1013,9 +1013,13 @@ import { readAtlasLabel } from './atlas.mjs';
     const title = h('h4', { class: 'paper__title', tabindex: '-1' });
     const titleText = h('span');
     renderTitle(titleText, p.title || 'Untitled entry', (node, value) => highlightInto(node, value, terms));
-    title.append(p.anthologyUrl ? newTab(p.anthologyUrl,
-      [titleText, h('span', { class: 'ext', 'aria-hidden': 'true' }, '\u00a0↗')],
-      ' on ACL Anthology (opens in a new tab)') : titleText);
+    title.append(poster ? h('a', {
+      href: posterMapHref(poster),
+      'aria-label': `${p.title}. Open board ${poster.board}, ${poster.label}, on the poster map`,
+    }, titleText) : p.id ? h('a', {
+      href: permalinkHref(p.id), 'data-permalink': p.id,
+      'aria-label': `Presentation details for ${p.title}`,
+    }, titleText) : titleText);
     body.append(title, ...peopleLines(p, 'paper__people', terms));
 
     const meta = h('div', { class: 'paper__meta' });
@@ -1026,6 +1030,7 @@ import { readAtlasLabel } from './atlas.mjs';
     if (p.atlas) area.append(h('span', { class: 'atlas-swatch', 'aria-hidden': 'true', style: `background-color:${p.atlas.color}` }));
     area.append(p.atlas?.areaLabel || 'Not classified in Atlas');
     meta.append(area);
+    if (p.anthologyUrl) meta.append(newTab(p.anthologyUrl, 'ACL Anthology ↗', ' for this paper (opens in a new tab)'));
     if (p.underlineUrl) meta.append(newTab(p.underlineUrl, 'Underline ↗', ' for this paper (opens in a new tab)'));
     if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Share presentation details for ${p.title}` }, 'Share'));
     if (calendarEligible(p) && !(poster && posterSlotDiffers(p, poster))) meta.append(h('button', {

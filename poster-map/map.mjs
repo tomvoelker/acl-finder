@@ -14,7 +14,7 @@ const analytics = createAnalytics();
 let selected = null, sessions = [], assignments = [], activeSession = '', catalogReady = false;
 let catalog = null;
 let finderUnavailable = false;
-let topics = null, topicsEnabled = false, selectedArea = null, selectedTopic = null, topicSession = '';
+let topics = null, topicsEnabled = true, selectedArea = null, selectedTopic = null, topicSession = '';
 const papers = new Map();
 let savedPapers = readSavedPapers(), savedBoards = new Map(), savedStops = [];
 let viewport = {width: stage.clientWidth, height: stage.clientHeight};
