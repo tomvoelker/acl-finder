@@ -14,9 +14,10 @@
 </head>
 <body>
   <a class="skip" href="#map-search">Skip to poster search</a>
+  <aside class="feedback-bar" aria-label="Feedback">Ideas or bugs? <a href="mailto:emnlp-finder@tomvoelker.de?subject=EMNLP%202026%20Paper%20Finder%20feedback">Email Tom</a><span aria-hidden="true">·</span><a href="https://www.linkedin.com/in/tom-v%C3%B6lker-0485332b9/" target="_blank" rel="noopener noreferrer">LinkedIn ↗<span class="visually-hidden"> (opens in a new tab)</span></a></aside>
   <header class="header">
     <div class="identity">
-      <span class="map-brand"><img src="../conference-logo.png" width="136" height="24" alt="EMNLP 2026 Budapest"><span class="map-brand__ribbon">Unofficial</span></span>
+      <a class="map-brand" href="../" aria-label="EMNLP 2026 Paper Finder home"><img src="../conference-logo.png" width="136" height="24" alt="EMNLP 2026 Budapest"><span class="map-brand__ribbon">Unofficial</span></a>
       <h1>Poster map</h1>
       <a class="finder-link" href="../">Papers</a>
     </div>
@@ -24,8 +25,13 @@
     <select id="session" class="session-select" aria-describedby="session-note" disabled><option value="">Sessions…</option></select>
     <form id="find-form" class="finder">
       <label class="visually-hidden" for="map-search">Search all posters by title, author, paper ID or board number</label>
-      <input id="map-search" type="search" placeholder="Search posters…" required autocomplete="off" enterkeyhint="search" disabled>
+      <input id="map-search" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="map-search-results" placeholder="Search posters…" required autocomplete="off" enterkeyhint="search" disabled>
       <button type="submit" aria-label="Search posters"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+      <div id="map-search-popup" class="search-suggestions" hidden>
+        <p id="map-search-status" class="search-suggestions-status" role="status"></p>
+        <div id="map-search-results" role="listbox" aria-label="Poster search results"></div>
+        <button id="map-search-more" class="search-suggestions-more" type="button" hidden>More results</button>
+      </div>
     </form>
     <button id="open-filters" type="button" aria-haspopup="dialog" aria-controls="filters-panel"><span class="filter-label">Filters</span></button>
   </header>
@@ -33,7 +39,7 @@
     <div id="map-stage" class="map-stage">
       <svg id="floor-map" viewBox="0 0 1320 1280" aria-label="424 numbered poster positions" aria-describedby="map-help">
         <title>EMNLP poster floor plan</title>
-        <desc>Paired poster positions arranged as in the venue photograph. Select a board or use the board finder. Arrow keys move between positions.</desc>
+        <desc>Paired poster positions arranged as in the venue photograph. Hover to preview a poster. Click for details, or tap to select on a phone. Arrow keys move between positions.</desc>
       </svg>
     </div>
     <button id="next-saved" type="button" class="saved-map-key" disabled><span aria-hidden="true">★</span> <span id="saved-map-count">0 saved posters</span><span class="saved-map-next" aria-hidden="true">→</span></button>

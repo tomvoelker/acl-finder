@@ -12,6 +12,9 @@ const svg = $('#floor-map');
 const stage = $('#map-stage');
 const zoomControls = $('.zoom-controls');
 const inlineZoom = matchMedia('(max-width: 640px) and (min-height: 501px)');
+const desktopHover = matchMedia('(hover: hover) and (pointer: fine)');
+let previewed = null, suggestionMatches = [], activeSuggestion = -1;
+const posterSearchCache = new Map();
 const analytics = createAnalytics();
 let selected = null, sessions = [], assignments = [], activeSession = '', catalogReady = false;
 let catalog = null;
@@ -81,10 +84,12 @@ function zoom(factor, anchor = {x:0.5,y:0.5}, animate = false) {
 }
 function openDetails({topic = false, search = false} = {}) {
   stopMotion();
+  closeSearchSuggestions();
   $('#filters-panel').close();
   const panel = $('#details-panel');
   panel.classList.toggle('topic-list', topic);
   panel.classList.toggle('search-list', search);
+  if (!topic && !search) $('#paper-search').value = '';
   $('#details-title').textContent = search ? 'Search posters' : topic ? currentTopicHeading() : 'Map details';
   renderPaperResults();
   if (!panel.open) panel.showModal();
@@ -98,6 +103,17 @@ function currentAssignment(number) { return assignmentAt(assignments, activeSess
 function conflictingEntries(number) { return assignmentAt(assignments, activeSession, number).conflicts; }
 function currentSession() { return sessions.find(session => session.id === activeSession); }
 function currentEntries() { return assignments.filter(entry => entry.session === activeSession); }
+function clearPreview() {
+  elements.get(previewed)?.classList.remove('previewing');
+  previewed = null;
+}
+function previewBoard(number) {
+  if (previewed === number) return;
+  clearPreview();
+  previewed = number;
+  elements.get(number)?.classList.add('previewing');
+  renderAssignment();
+}
 function currentTopic(entry) { return topicForEntry(topics, activeSession, entry); }
 function hasTopicFilter() { return topicsEnabled && (selectedArea !== null || selectedTopic !== null); }
 function currentTopicHeading() {
@@ -160,6 +176,8 @@ function updateHash() {
 }
 function selectBoard(number, {reveal = false, focus = false, hash = true, keepZoom = false} = {}) {
   if (!BOARD_BY_NUMBER.has(number)) return;
+  clearPreview();
+  closeSearchSuggestions();
   if (reveal) revealedBoard = number;
   else if (selected !== number) revealedBoard = null;
   selected = number;
@@ -204,18 +222,19 @@ function scheduleRowLink(entry) {
   } catch { /* Keep the row label when source metadata is unusable. */ }
   return link;
 }
-function renderAssignment() {
-  const entry = currentAssignment(selected);
+function renderAssignment(number = previewed ?? selected) {
+  const entry = currentAssignment(number);
   const detail = $('#selection-assignment');
   detail.replaceChildren();
-  detail.hidden = selected === null;
+  detail.hidden = number === null;
   $('#paper-search').disabled = !catalogReady;
   $('#map-search').disabled = !catalogReady;
-  if (selected === null) return;
+  $('#selection-chip').hidden = number === null;
+  if (number === null) { placeZoomControls(); return; }
   const sessionLabel = currentSession()?.shortLabel || 'Session unavailable';
-  const conflicts = conflictingEntries(selected);
-  const unconfirmed = !entry && !conflicts.length ? assignments.find(row => row.session === activeSession && row.board === selected) : null;
-  $('#selection-title').textContent = `Board ${selected} · ${activeSession ? currentSession()?.shortLabel : 'Floor plan'}`;
+  const conflicts = conflictingEntries(number);
+  const unconfirmed = !entry && !conflicts.length ? assignments.find(row => row.session === activeSession && row.board === number) : null;
+  $('#selection-title').textContent = `Board ${number} · ${activeSession ? currentSession()?.shortLabel : 'Floor plan'}`;
   const title = document.createElement('strong');
   if (conflicts.length) title.textContent = 'Conflicting schedule entries';
   else if (entry) renderTitle(title, displayTitle(entry));
@@ -230,12 +249,12 @@ function renderAssignment() {
   if (entry && displayAuthors(entry)) {
     const authors = document.createElement('p'); authors.textContent = displayAuthors(entry); detail.append(authors);
   }
-  if (savedBoards.has(selected)) {
+  if (savedBoards.has(number)) {
     const saved = document.createElement('p');
     saved.className = 'saved-paper-label'; saved.textContent = '★ Saved paper'; detail.append(saved);
   }
   const note = document.createElement('p');
-  note.textContent = conflicts.length ? 'The schedule lists multiple papers at this board. Confirm the location with conference staff.' : unconfirmed ? unconfirmed.issue || 'Board assignment unconfirmed.' : entry ? `${sessionLabel} · ` : 'Board numbers are reused between sessions. Check the selected session.';
+  note.textContent = conflicts.length ? 'The schedule lists multiple papers at this board. Confirm the location with conference staff.' : unconfirmed ? unconfirmed.issue || 'Board assignment unconfirmed.' : entry ? `${sessionLabel} · ` : 'Board numbers are reused between sessions. Check the number session.';
   if (entry || unconfirmed) note.append(' ', scheduleRowLink(entry || unconfirmed));
   detail.append(note);
   if (entry?.paperId && papers.has(entry.paperId)) {
@@ -247,7 +266,7 @@ function renderAssignment() {
   chip.replaceChildren();
   const label = document.createElement('p');
   label.className = 'selection-card-label';
-  label.textContent = `Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
+  label.textContent = `Board ${number}${BOARD_BY_NUMBER.get(number).needsReview ? ' · Check source' : ''}`;
   const heading = document.createElement('div'); heading.className = 'selection-card-heading';
   heading.append(label);
   if (entry?.paperId) {
@@ -261,6 +280,7 @@ function renderAssignment() {
     star.append(node('path', {d:'M12 3.6l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.62 6.9 19.3l.98-5.68L3.75 9.6l5.7-.83z'}));
     save.append(star);
     save.addEventListener('click', () => {
+      if (previewed !== null) selectBoard(number);
       const updated = setSavedPaper(entry.paperId, !isSaved);
       if (updated === null) {
         const error = document.createElement('p'); error.className = 'selection-save-error';
@@ -291,7 +311,7 @@ function renderAssignment() {
   if (topic) detail.append(topic);
   if (hasTopicFilter()) {
     const members = topicMembers();
-    const index = members.findIndex(row => row.board === selected);
+    const index = members.findIndex(row => row.board === number);
     const navigation = document.createElement('div'); navigation.className = 'topic-navigation';
     const position = document.createElement('span');
     position.textContent = index < 0 ? 'Outside highlighted group' : `${index + 1} of ${members.length} posters`;
@@ -312,16 +332,17 @@ function renderAssignment() {
   const actions = document.createElement('div'); actions.className = 'selection-card-actions';
   const details = document.createElement('button'); details.type = 'button'; details.textContent = 'Details';
   details.setAttribute('aria-haspopup','dialog'); details.setAttribute('aria-controls','details-panel');
-  details.addEventListener('click', openDetails); actions.append(details);
+  details.addEventListener('click', () => { selectBoard(number); openDetails(); }); actions.append(details);
   if (entry?.paperId && papers.has(entry.paperId)) {
     const link = document.createElement('a'); link.href = `../?paper=${encodeURIComponent(entry.paperId)}`;
     link.textContent = 'View paper'; actions.append(link);
   }
   chip.append(actions);
   placeZoomControls();
-  chip.setAttribute('aria-label', `${sessionLabel}. Selected board ${selected}${savedBoards.has(selected) ? '. Saved paper' : ''}`);
+  chip.setAttribute('aria-label', `${sessionLabel}. ${previewed === null ? 'Selected' : 'Previewing'} board ${number}${savedBoards.has(number) ? '. Saved paper' : ''}`);
 }
 function refreshAssignments() {
+  clearPreview();
   renderTopicControls();
   savedBoards = savedAssignments(assignments, activeSession, savedPapers);
   savedStops = savedPosterStops(assignments, sessions, savedPapers);
@@ -353,6 +374,83 @@ function refreshAssignments() {
   $('#session-note').textContent = session ? `${session.label} · ${session.date} · ${session.start}–${session.end} Budapest time. Boards are reused each session.` : 'The complete floor plan remains available.';
   renderAssignment();
 }
+function matchingPosters(query, entries = assignments) {
+  query = titleSearchText(query);
+  return entries.filter(entry => {
+    if (!posterSearchCache.has(entry.paperId)) {
+      posterSearchCache.set(entry.paperId, {...entry, title:titleSearchText(displayTitle(entry)), authors:displayAuthors(entry)});
+    }
+    return matchesPosterSearch(posterSearchCache.get(entry.paperId), query);
+  });
+}
+function choosePoster(entry) {
+  activeSession = entry.session;
+  $('#session').value = activeSession;
+  $('#session').title = sessionOptionLabel(currentSession()) + ' · Budapest time';
+  $('#map-search').blur();
+  refreshAssignments();
+  selectBoard(entry.board, {reveal:true});
+}
+function closeSearchSuggestions() {
+  $('#map-search-popup').hidden = true;
+  $('#map-search').setAttribute('aria-expanded', 'false');
+  $('#map-search').removeAttribute('aria-activedescendant');
+  activeSuggestion = -1;
+}
+function setActiveSuggestion(index) {
+  activeSuggestion = index;
+  for (const [i, option] of [...$('#map-search-results').children].entries()) {
+    option.setAttribute('aria-selected', String(i === index));
+  }
+  const option = $('#map-search-results').children[index];
+  if (option) {
+    $('#map-search').setAttribute('aria-activedescendant', option.id);
+    option.scrollIntoView({block:'nearest'});
+  }
+}
+function updateSearchPlacement() {
+  const bottom = $('.header').getBoundingClientRect().bottom;
+  const visibleBottom = window.visualViewport ? window.visualViewport.height + window.visualViewport.offsetTop : innerHeight;
+  document.documentElement.style.setProperty('--map-header-bottom', `${bottom}px`);
+  document.documentElement.style.setProperty('--map-search-height', `${Math.max(80, visibleBottom - bottom - 16)}px`);
+}
+function renderSearchSuggestions() {
+  const query = $('#map-search').value.trim();
+  const results = $('#map-search-results');
+  results.replaceChildren();
+  suggestionMatches = [];
+  activeSuggestion = -1;
+  $('#map-search').removeAttribute('aria-activedescendant');
+  if (!query || !catalogReady) { closeSearchSuggestions(); return; }
+  const matches = matchingPosters(query).sort((a, b) => Number(b.session === activeSession) - Number(a.session === activeSession));
+  suggestionMatches = matches.slice(0, 6);
+  $('#map-search-status').textContent = matches.length ? `${matches.length} poster${matches.length === 1 ? '' : 's'} · all sessions · Budapest time` : 'No matching poster. Try another title, author or paper ID.';
+  for (const [index, entry] of suggestionMatches.entries()) {
+    const option = document.createElement('div');
+    option.id = `poster-suggestion-${index}`;
+    option.className = 'search-suggestion';
+    option.setAttribute('role', 'option');
+    option.setAttribute('aria-selected', 'false');
+    const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); option.append(title);
+    const meta = document.createElement('small');
+    const slot = sessions.find(session => session.id === entry.session);
+    const conflict = assignmentAt(assignments, entry.session, entry.board).conflicts.length;
+    meta.textContent = `${sessionOptionLabel(slot)} · Board ${entry.board}${conflict ? ' · Conflicting entries' : entry.verified !== true ? ' · Board unconfirmed' : ''}${savedPapers.has(entry.paperId) ? ' · ★ Saved' : ''}`;
+    option.append(meta);
+    if (displayAuthors(entry)) {
+      const authors = document.createElement('small'); authors.className = 'suggestion-authors'; authors.textContent = displayAuthors(entry); option.append(authors);
+    }
+    option.addEventListener('pointerdown', event => event.preventDefault());
+    option.addEventListener('pointerenter', () => setActiveSuggestion(index));
+    option.addEventListener('click', () => choosePoster(entry));
+    results.append(option);
+  }
+  $('#map-search-more').hidden = matches.length <= suggestionMatches.length;
+  $('#map-search-more').textContent = 'See more results →';
+  updateSearchPlacement();
+  $('#map-search-popup').hidden = false;
+  $('#map-search').setAttribute('aria-expanded', 'true');
+}
 function renderPaperResults() {
   const results = $('#paper-results');
   results.replaceChildren();
@@ -363,7 +461,7 @@ function renderPaperResults() {
   $('.paper-search-panel label').textContent = allSessions ? 'Title, author, paper ID or board · all sessions' : topicFilter ? 'Search this poster list' : 'Find a paper in this session';
   if (!query && !topicFilter) return;
   const entries = allSessions ? assignments : topicFilter ? topicMembers() : currentEntries();
-  const matches = entries.filter(entry => matchesPosterSearch({...entry, title:titleSearchText(displayTitle(entry)), authors:displayAuthors(entry)}, query));
+  const matches = matchingPosters(query, entries);
   if (topicFilter) {
     const note = document.createElement('p');
     note.textContent = `${matches.length} posters · board order · Atlas topics are inferred`;
@@ -387,13 +485,8 @@ function renderPaperResults() {
       const authors = document.createElement('small'); authors.textContent = displayAuthors(entry); button.append(authors);
     }
     button.addEventListener('click', () => {
-      if (allSessions) {
-        activeSession = entry.session;
-        $('#session').value = activeSession;
-        $('#session').title = sessionOptionLabel(slot) + ' · Budapest time';
-        refreshAssignments();
-      }
-      selectBoard(entry.board, {reveal:true});
+      if (allSessions) choosePoster(entry);
+      else selectBoard(entry.board, {reveal:true});
       if (allSessions || $('#details-panel').classList.contains('topic-list')) $('#details-panel').close();
       else $('.panel-body').scrollTop = 0;
     });
@@ -433,9 +526,14 @@ function drawMap() {
     savedMarker.append(node('circle', {cx:board.x+MAP.faceWidth-1,cy:board.y+2,r:8}));
     savedMarker.append(node('text', {x:board.x+MAP.faceWidth-1,y:board.y+2,class:'saved-star'}, '★'));
     group.append(savedMarker);
-    group.addEventListener('click', event => { if (event.detail === 0) selectBoard(board.number); });
+    group.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'mouse' && desktopHover.matches && !pointers.size && !$('#details-panel').open && !$('#filters-panel').open && $('#map-search-popup').hidden) previewBoard(board.number);
+    });
+    group.addEventListener('click', event => {
+      if (event.detail === 0) { selectBoard(board.number); openDetails(); }
+    });
     group.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {event.preventDefault(); selectBoard(board.number); return;}
+      if (event.key === 'Enter' || event.key === ' ') {event.preventDefault(); selectBoard(board.number); openDetails(); return;}
       const directions = {ArrowRight:[1,0], ArrowLeft:[-1,0], ArrowDown:[0,1], ArrowUp:[0,-1]};
       const direction = directions[event.key];
       if (!direction) return;
@@ -550,12 +648,16 @@ function endPointer(event) {
   if (!gestureMoved && event.type === 'pointerup') {
     const point = {x:event.clientX,y:event.clientY};
     const now = performance.now();
-    if (lastTap && now-lastTap.time < 320 && Math.hypot(point.x-lastTap.x,point.y-lastTap.y) < 28) {
+    const desktopClick = event.pointerType === 'mouse' && desktopHover.matches;
+    if (!desktopClick && lastTap && now-lastTap.time < 320 && Math.hypot(point.x-lastTap.x,point.y-lastTap.y) < 28) {
       zoom(0.5,anchorAt(point)); lastTap = null;
     } else {
       lastTap = {...point,time:now};
       const hit = document.elementFromPoint(point.x,point.y)?.closest('[data-board]');
-      if (hit) selectBoard(Number(hit.dataset.board));
+      if (hit) {
+        selectBoard(Number(hit.dataset.board));
+        if (desktopClick) openDetails();
+      }
     }
   } else if (!wasPinching && drag && event.type === 'pointerup' && performance.now()-drag.time < 70) {
     coast(drag.vx,drag.vy);
@@ -599,21 +701,53 @@ new ResizeObserver(() => {
 $('#zoom-in').addEventListener('click', () => zoom(1/1.4, {x:0.5,y:0.5}, true));
 $('#zoom-out').addEventListener('click', () => zoom(1.4, {x:0.5,y:0.5}, true));
 $('#fit').addEventListener('click',fitMap);
-$('#open-filters').addEventListener('click', () => $('#filters-panel').showModal());
+$('#open-filters').addEventListener('click', () => { closeSearchSuggestions(); $('#filters-panel').showModal(); });
 $('#close-filters').addEventListener('click', () => $('#filters-panel').close());
 $('#close-details').addEventListener('click', () => $('#details-panel').close());
 $('#details-panel').addEventListener('click', event => {
   const panel = $('#details-panel'), rect = panel.getBoundingClientRect();
   if (event.target === panel && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) panel.close();
 });
-$('#find-form').addEventListener('submit', event => {
-  event.preventDefault();
+function openSearchResults() {
   const query = $('#map-search').value.trim();
   if (!query) return;
-  const board = boardSearchNumber(query);
-  if (board !== null) { selectBoard(board, {reveal:true,focus:true}); return; }
   $('#paper-search').value = query;
   openDetails({search:true});
+}
+$('#map-search').addEventListener('input', renderSearchSuggestions);
+$('#map-search').addEventListener('focus', renderSearchSuggestions);
+$('#map-search').addEventListener('keydown', event => {
+  if (event.isComposing) return;
+  if (event.key === 'Escape' && !$('#map-search-popup').hidden) {
+    event.preventDefault(); closeSearchSuggestions();
+  } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    event.preventDefault();
+    if ($('#map-search-popup').hidden) renderSearchSuggestions();
+    if (!suggestionMatches.length) return;
+    const step = event.key === 'ArrowDown' ? 1 : -1;
+    const index = activeSuggestion < 0 ? (step > 0 ? 0 : suggestionMatches.length - 1) : (activeSuggestion + step + suggestionMatches.length) % suggestionMatches.length;
+    setActiveSuggestion(index);
+  } else if (event.key === 'Enter' && !$('#map-search-popup').hidden && activeSuggestion >= 0) {
+    event.preventDefault(); choosePoster(suggestionMatches[activeSuggestion]);
+  }
+});
+$('#map-search-more').addEventListener('click', openSearchResults);
+$('#find-form').addEventListener('focusout', event => {
+  if (!$('#find-form').contains(event.relatedTarget)) closeSearchSuggestions();
+});
+document.addEventListener('pointerdown', event => {
+  if (!$('#find-form').contains(event.target)) closeSearchSuggestions();
+});
+const headerObserver = new ResizeObserver(updateSearchPlacement);
+headerObserver.observe($('.header'));
+headerObserver.observe($('.feedback-bar'));
+window.visualViewport?.addEventListener('resize', updateSearchPlacement);
+window.visualViewport?.addEventListener('scroll', updateSearchPlacement);
+$('#find-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const board = boardSearchNumber($('#map-search').value);
+  if (board !== null) { selectBoard(board, {reveal:true,focus:true}); return; }
+  openSearchResults();
 });
 $('#session').addEventListener('change', () => {
   activeSession = $('#session').value; $('#paper-search').value = '';
@@ -694,6 +828,7 @@ const paperRequest = fetch('../data/papers.json', {cache:'no-cache'}).then(async
   const schedule = await response.json();
   if (!Array.isArray(schedule.papers)) throw new Error('Missing paper list');
   for (const paper of schedule.papers) papers.set(paper.id, paper);
+  posterSearchCache.clear();
   refreshAssignments(); renderPaperResults();
 }).catch(() => {
   finderUnavailable = true;

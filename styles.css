@@ -107,6 +107,9 @@ abbr[title] { text-decoration: none; cursor: help; }
 }
 
 /* ---------- Masthead ---------- */
+.feedback-bar { display: flex; align-items: center; justify-content: center; gap: 6px; padding: calc(2px + env(safe-area-inset-top)) 10px 2px; background: var(--surface); border-bottom: 1px solid var(--rule); color: var(--muted); font-size: 11px; line-height: 20px; }
+.feedback-bar a { display: inline-flex; align-items: center; min-height: 24px; color: inherit; text-underline-offset: 2px; }
+.feedback-bar a:hover { color: var(--accent); }
 .masthead { background: var(--surface); border-bottom: 1px solid var(--rule); }
 .masthead__inner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
@@ -133,9 +136,6 @@ abbr[title] { text-decoration: none; cursor: help; }
 .masthead__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 20px; font-size: .8125rem; font-weight: 500; }
 .masthead__nav a { padding: 6px 0; text-decoration: none; }
 .masthead__nav a:hover { color: var(--accent); }
-.masthead__nav .masthead__social { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 32px; height: 32px; padding: 8px; border-radius: var(--radius); }
-.masthead__social:hover { background: var(--rule-soft); }
-.masthead__social-icon { width: 16px; height: 16px; fill: currentColor; }
 .theme-toggle {
   display: inline-flex; align-items: center; justify-content: center;
   width: 32px; height: 32px; padding: 8px; flex: none;
@@ -504,7 +504,7 @@ mark {
 }
 
 @media print {
-  .toolbar, .day-nav, .presentation-controls, .filter-bar, .star, .pagination, .results__tools, .skip-link, .theme-toggle, .masthead__nav { display: none !important; }
+  .toolbar, .day-nav, .presentation-controls, .filter-bar, .star, .pagination, .results__tools, .skip-link, .theme-toggle, .masthead__nav, .feedback-bar { display: none !important; }
   .session[open] > .session__header { position: static; }
   :root, :root[data-theme="dark"] {
     color-scheme: light; --paper: #fff; --surface: #fff; --ink: #141c2e; --ink-2: #3a4357; --muted: #5a6172;
