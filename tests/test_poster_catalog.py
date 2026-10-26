@@ -32,14 +32,19 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog["source"]["updatedAt"], "2026-10-26")
         self.assertEqual(self.catalog["source"]["sha256"], hashlib.sha256(self.source.encode()).hexdigest())
         self.assertEqual(self.catalog["source"]["timelineSHA256"], hashlib.sha256(self.timeline.encode()).hexdigest())
-        self.assertEqual(len(self.catalog["entries"]), 2807)
-        self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2796)
+        self.assertEqual(len(self.catalog["entries"]), 2806)
+        self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2795)
         papers = {p["id"]: p for p in self.data["papers"]}
         virtual = papers["3310-FIND"]
         self.assertEqual((virtual["presentation"], virtual["mode"], virtual["room"], virtual["session"], virtual["board"]),
                          ("Virtual", "Virtual", "Zoom", "Virtual 5", None))
         self.assertEqual((virtual["date"], virtual["start"], virtual["end"]), ("2026-10-27", "12:30", "14:00"))
         self.assertNotIn(virtual["id"], {entry["paperId"] for entry in self.catalog["entries"]})
+        temps = papers["9349-MAIN"]
+        self.assertEqual((temps["presentation"], temps["mode"], temps["room"], temps["session"], temps["board"]),
+                         ("Virtual", "Virtual", "Zoom", "Virtual 4", None))
+        self.assertEqual((temps["date"], temps["start"], temps["end"]), ("2026-10-26", "12:30", "14:00"))
+        self.assertNotIn(temps["id"], {entry["paperId"] for entry in self.catalog["entries"]})
         for entry in self.catalog["entries"]:
             paper = papers[entry["paperId"]]
             self.assertEqual(entry["board"], int(paper["board"]))
