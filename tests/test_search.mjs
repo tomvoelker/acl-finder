@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { searchState } from '../schedule-view.mjs';
+import { searchState, posterBrowsing } from '../schedule-view.mjs';
 
 const authorView = {
   view: 'posters', posterSession: 'A', author: 'Yulan He', q: '', day: '2026-10-26', saved: true, paper: null, shared: null,
@@ -59,6 +59,16 @@ test('a poster filter deliberately selected during a search survives further typ
   assert.equal(next.view, 'posters');
   assert.equal(next.day, current.day);
   assert.equal(next.q, 'diffusion');
+});
+
+test('choosing an Atlas area shows papers and a subsequent search narrows that scope', () => {
+  const current = { ...authorView, author:null, saved:false, filters:{area:'Efficient LLMs & Decoding',track:null,format:null,room:null} };
+  assert.equal(posterBrowsing(current),false);
+  const next=searchState(current,'KV cache');
+  assert.equal(next.filters.area,current.filters.area);
+  assert.equal(next.day,current.day);
+  assert.equal(next.view,'posters');
+  assert.equal(posterBrowsing({...current,filters:{...current.filters,area:null}}),true);
 });
 
 test('searching a shared list retains its snapshot and deliberately selected poster filter', () => {

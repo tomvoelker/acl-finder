@@ -32,12 +32,13 @@ class BuildTests(unittest.TestCase):
             traffic_name = re.search(r'src="(traffic\.[a-f0-9]+\.mjs)"', html).group(1)
             app = (output / app_name).read_text()
             analytics_name = re.search(r"from './(analytics\.[a-f0-9]+\.mjs)'", app).group(1)
+            atlas_name = re.search(r"from './(atlas\.[a-f0-9]+\.mjs)'", app).group(1)
             module_name = re.search(r"from './(schedule-view\.[a-f0-9]+\.mjs)'", app).group(1)
             math_name = re.search(r"from './(math-titles\.[a-f0-9]+\.mjs)'", app).group(1)
             poster_view_name = re.search(r"from './(poster-view\.[a-f0-9]+\.mjs)'", app).group(1)
             saved_name = re.search(r"from './(saved-papers\.[a-f0-9]+\.mjs)'", app).group(1)
             sharing_name = re.search(r"from './(saved-sharing\.[a-f0-9]+\.mjs)'", app).group(1)
-            for name in [sharing_name, saved_name, poster_view_name, app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
+            for name in [atlas_name, sharing_name, saved_name, poster_view_name, app_name, css_name, module_name, math_name, theme_name, traffic_name, analytics_name, favicon_png, favicon_svg]:
                 content = (output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
             self.assertNotIn("'./schedule-view.mjs'", app)
@@ -51,6 +52,16 @@ class BuildTests(unittest.TestCase):
             source = json.loads((ROOT / "data/papers.json").read_text())
             deployed = json.loads((output / "data/papers.json").read_text())
             by_id = {paper["id"]: paper for paper in deployed["papers"]}
+            topics = json.loads((ROOT / 'data/poster-topics.json').read_text())
+            self.assertEqual(deployed.pop("atlas"), {key: topics[key] for key in ["source", "localSource", "areas", "topics"]})
+            self.assertEqual(sum("atlasTopic" in paper for paper in deployed["papers"]), 5532)
+            self.assertTrue(any("atlasTopic" in paper and not paper.get("posterBoard") for paper in deployed["papers"]), "Topics cover the whole programme")
+            self.assertEqual(sum("atlasArea" in paper for paper in deployed["papers"]), 71)
+            for paper in deployed["papers"]:
+                self.assertEqual(paper.pop("atlasTopic", None), topics["papers"].get(paper.get("anthologyId")))
+                local=topics["localAreas"].get(paper["id"])
+                self.assertEqual(paper.pop("atlasArea", None), local["area"] if local else None)
+                self.assertEqual(paper.pop("atlasAreaBasis", None), local["basis"] if local else None)
             self.assertEqual(by_id["9736-FIND"]["anthologyId"], "2026.findings-emnlp.2464")
             self.assertEqual(by_id["9736-FIND"]["authors"], ["Jan Pfister", "Tom Völker", "Andreas Hotho"])
             self.assertNotIn("anthologyId", by_id["6620-MAIN"])
@@ -97,11 +108,14 @@ class BuildTests(unittest.TestCase):
             self.assertIn(f"'../{math_name}'", map_app)
             self.assertIn(f"'../{saved_name}'", map_app)
             self.assertIn(f"'../{analytics_name}'", map_app)
+            self.assertIn(f"'../{atlas_name}'", map_app)
             self.assertIn(f'src="../{theme_name}"', map_html)
             self.assertLess(map_html.index(theme_name), map_html.index(map_css_name), "Map theme applies before CSS")
             for name in [map_app_name, map_css_name] + re.findall(r"from './([^']+)'", map_app):
                 content = (map_output / name).read_bytes()
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
+                if name.startswith("topics."):
+                    self.assertIn(f"'../{atlas_name}'", content.decode())
             self.assertFalse((map_output / "qa.md").exists())
             self.assertFalse((map_output / "tests").exists())
 

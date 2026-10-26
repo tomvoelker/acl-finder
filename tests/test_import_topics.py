@@ -23,7 +23,19 @@ class AtlasImportTests(unittest.TestCase):
         self.assertEqual(data, json.loads((ROOT / "data/poster-topics.json").read_text()))
         self.assertEqual(audit, json.loads((ROOT / "data/atlas/audit.json").read_text()))
         self.assertEqual((audit["atlasPapers"], audit["posters"], audit["matched"]), (5534, 2831, 2803))
-        self.assertEqual(len(audit["unclassified"]), 28)
+        self.assertEqual(len(audit["unclassified"]), 0)
+        self.assertEqual(audit["programme"]["matched"], 5532)
+        self.assertEqual(len(audit["programme"]["unclassified"]), 0)
+        self.assertEqual(len(data["papers"]), 5534)
+        self.assertEqual(audit["programme"]["localAssigned"],71)
+        self.assertEqual(audit["programme"]["titleOnly"],7)
+        self.assertEqual(audit["localAssigned"],28)
+        local=json.loads((ROOT / "data/atlas/local-areas.json").read_text())
+        self.assertEqual(sum(bool(row.get("abstract")) for row in local["assignments"]),64)
+        alias=next(row for row in data["sessions"]["E"]["assignments"] if row["board"]==371)
+        self.assertIsNone(alias["paperId"])
+        self.assertIsNone(alias["topic"])
+        self.assertEqual(alias["area"],1)
         self.assertEqual(data["source"]["author"], "Hadi Mohammadi")
 
     def test_topic_labels_are_joined_by_anthology_identity_only(self):
@@ -74,6 +86,19 @@ class AtlasImportTests(unittest.TestCase):
                 import_topics.import_topics(root)
             self.assertEqual((root / "data/poster-topics.json").read_bytes(), before)
             self.assertNotEqual(import_topics.input_hash(root), import_topics.input_hash())
+
+    def test_local_area_review_cannot_silently_follow_a_changed_paper(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            for name in import_topics.INPUTS:
+                target=root/name; target.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(ROOT/name,target)
+            path=root/"data/atlas/local-areas.json"
+            review=json.loads(path.read_text())
+            review["assignments"][0]["title"]="Different paper"
+            path.write_text(json.dumps(review))
+            with self.assertRaisesRegex(ValueError,"Local area identity changed"):
+                import_topics.create_dataset(root)
 
     def test_build_rejects_stale_topic_inputs_before_replacing_the_site(self):
         with tempfile.TemporaryDirectory() as directory:

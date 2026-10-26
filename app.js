@@ -12,6 +12,7 @@ import { createAnalytics } from './analytics.mjs';
 import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
 import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList, addSavedPapers } from './saved-papers.mjs';
 import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
+import { readAtlasLabel } from './atlas.mjs';
 
 (() => {
   const analytics = createAnalytics();
@@ -36,6 +37,8 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
   const FORMAT_RANK = { Oral: 0, Demo: 1, Poster: 2, 'Virtual demo': 3, Virtual: 4 };
 
   const FACETS = [
+    { key: 'area', param: 'area', label: 'Area', all: 'All areas', get: (p) => p.atlas?.areaLabel,
+      noneLabel: 'Not classified in Atlas', hint: 'Broad inferred areas from Hadi Mohammadi’s EMNLP Atlas, not official acceptance tracks.' },
     { key: 'track', param: 'track', label: 'Track', all: 'All tracks', get: (p) => p.track,
       order: ['Main conference', 'Findings', 'Industry', 'Systems demonstrations', 'TACL', 'Computational Linguistics'] },
     { key: 'format', param: 'format', label: 'Presentations', all: 'All', get: (p) => p.presentation,
@@ -76,6 +79,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
   const slugify = (s) => fold(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
 
   let conference = {};
+  let atlas = null;
   let posterSessions = new Map();
   let tz = DEFAULT_TZ;
   let sourceUrl = null;
@@ -281,6 +285,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
       authors: Array.isArray(raw.authors) ? raw.authors.map(text).filter(Boolean) : [],
       presenterNote: text(raw.presenterNote), room: text(raw.room), session: text(raw.session),
       topic: text(raw.topic), date: validDate(raw.date), start: validTime(raw.start), end: validTime(raw.end),
+      atlas: readAtlasLabel(atlas, raw.atlasTopic, raw.atlasArea), atlasAreaBasis: text(raw.atlasAreaBasis),
       timeZone: text(raw.timeZone), status: text(raw.status), scheduleNote: text(raw.scheduleNote),
       oralSlotNote: text(raw.oralSlotNote),
       poster: readPosterLocation(raw, posterSessions), posterIssue: text(raw.posterLocationIssue),
@@ -298,7 +303,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     p._timed = p.status === 'scheduled' && !p.scheduleNote && !!p.date && !!p.start;
     p._bucket = p.status === 'desk rejected' ? 4 : p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
     p._day = p._inactive ? null : p.date || 'undated';
-    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic, p.poster ? `board ${p.poster.board} board${p.poster.board} ${p.poster.label}` : null, p.posterIssue].filter(Boolean).join(' \u2002 '));
+    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic, p.atlas?.areaLabel, p.atlas?.label, p.poster ? `board ${p.poster.board} board${p.poster.board} ${p.poster.label}` : null, p.posterIssue].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);
     return p;
   }
@@ -525,6 +530,13 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     return `${location.pathname}?${new URLSearchParams({ author: authorKey(name) })}`;
   }
 
+  function selectArea(value) {
+    state.filters.area = value;
+    state.paper = null;
+    syncControls();
+    commit('filter', { scroll: false });
+  }
+
   function openAuthor(name) {
     analytics.cancelSearch();
     clearTimeout(typingTimer);
@@ -556,7 +568,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
         .map((v) => ({
           value: v,
           slug: v === NONE ? 'not-listed' : slugify(v),
-          label: v === NONE ? 'Not listed' : (f.labels && f.labels[v]) || v,
+          label: v === NONE ? f.noneLabel || 'Not listed' : (f.labels && f.labels[v]) || v,
         }));
     });
   }
@@ -588,6 +600,12 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
         select.append(o.optionEl);
       }
       facetSelects[f.key] = select;
+      if (f.key === 'area') {
+        select.setAttribute('aria-describedby', 'atlas-credit');
+        $('#area-picker-slot').replaceWith(h('div', { class: 'area-picker' },
+          h('label', { for: id }, f.label), select));
+        return;
+      }
       const field = h('div', { class: f.key === 'format' ? 'format-picker' : 'facet' },
         h('label', { class: f.key === 'format' ? 'visually-hidden' : 'facet__label', for: id }, f.label), select);
       if (f.key === 'format') $('#format-picker-slot').replaceWith(field);
@@ -604,7 +622,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
       const opt = facetOptions[f.key].find((o) => o.value === state.filters[f.key]);
       if (facetSelects[f.key]) facetSelects[f.key].value = f.key === 'format' && posterScope(state) ? 'poster' : opt ? opt.slug : '';
     }
-    const active = FACETS.filter((f) => f.key !== 'format' && state.filters[f.key] !== null).length;
+    const active = FACETS.filter((f) => !['format', 'area'].includes(f.key) && state.filters[f.key] !== null).length;
     els.filtersCount.textContent = active;
     els.filtersCount.hidden = !active;
     els.filtersToggle.setAttribute('aria-label', active ? `Filters: ${active} active` : 'Filters');
@@ -1001,6 +1019,14 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     body.append(title, ...peopleLines(p, 'paper__people', terms));
 
     const meta = h('div', { class: 'paper__meta' });
+    const area = h('button', { type: 'button', class: 'atlas-area',
+      title: p.atlas?.source === 'local' ? 'Area assigned locally by Codex; click to filter' : p.atlas ? 'Filter by this inferred Atlas area' : 'Show papers without an Atlas classification',
+      'aria-label': p.atlas ? `Filter by Atlas area: ${p.atlas.areaLabel}` : 'Show papers not classified in Atlas',
+      onclick: () => selectArea(p.atlas?.areaLabel || NONE) });
+    if (p.atlas) area.append(h('span', { class: 'atlas-swatch', 'aria-hidden': 'true', style: `background-color:${p.atlas.color}` }));
+    area.append(p.atlas?.areaLabel || 'Not classified in Atlas');
+    if (p.atlas?.source === 'local') area.append(h('small', { class: 'atlas-local' }, 'local'));
+    meta.append(area);
     if (p.underlineUrl) meta.append(newTab(p.underlineUrl, 'Underline ↗', ' for this paper (opens in a new tab)'));
     if (p.id) meta.append(h('a', { href: permalinkHref(p.id), 'data-permalink': p.id, 'aria-label': `Share presentation details for ${p.title}` }, 'Share'));
     if (calendarEligible(p) && !(poster && posterSlotDiffers(p, poster))) meta.append(h('button', {
@@ -1010,6 +1036,17 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
 
     const detailsBody = h('div', { class: 'paper__details-body' });
     if (p.track || p.topic) detailsBody.append(h('p', null, [p.track, p.topic].filter(Boolean).join(' · ')));
+    if (p.atlas?.source === 'atlas') {
+      const fine = h('p');
+      fine.append(h('strong', null, 'Atlas topic: '));
+      const label = h('span'); highlightInto(label, p.atlas.label, terms); fine.append(label);
+      detailsBody.append(fine, h('p', null, p.atlas.description));
+    }
+    if (p.atlas?.source === 'local') detailsBody.append(h('p', null,
+      `Broad area assigned locally by Codex from ${p.atlasAreaBasis === 'title' ? 'the title only' : 'the title and abstract'}. No fine topic assigned. This paper has no classification in the imported Atlas snapshot.`));
+    else detailsBody.append(h('p', null, 'Areas and topics are inferred by ',
+        newTab('https://mohammadi.cv/emnlp/2026/atlas.html', 'Hadi Mohammadi’s EMNLP Atlas ↗', ' (opens in a new tab)'),
+        '; they are not official acceptance tracks.'));
     if (p.oralSlot) detailsBody.append(h('p', null, `Individual oral time from Underline. Full session: ${timeRange(p)} CET.`));
     if (p.oralSlotNote) detailsBody.append(h('p', { class: 'note' }, p.oralSlotNote));
     if (poster && posterSlotDiffers(p, poster)) {
@@ -1261,6 +1298,11 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
     });
 
     $('.presentation-controls').addEventListener('change', e => {
+      if (e.target.dataset.facet === 'area') {
+        const opt = facetOptions.area.find(o => o.slug === e.target.value);
+        selectArea(opt ? opt.value : null);
+        return;
+      }
       if (e.target.dataset.facet !== 'format') return;
       analytics.cancelSearch();
       clearTimeout(typingTimer);
@@ -1367,6 +1409,7 @@ import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
 
   function init(json) {
     conference = json.conference && typeof json.conference === 'object' ? json.conference : {};
+    atlas = json.atlas;
     const zone = text(conference.timezone);
     if (zone) {
       try { new Intl.DateTimeFormat('en', { timeZone: zone }); tz = zone; } catch { tz = DEFAULT_TZ; }

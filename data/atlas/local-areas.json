@@ -1,0 +1,649 @@
+{
+  "version": 1,
+  "assignedBy": "Codex",
+  "reviewedAt": "2026-10-26",
+  "method": "Manual broad-area assignment from paper titles and available public Underline abstracts. Fine topics are not inferred. These assignments are not part of Hadi Mohammadi’s Atlas.",
+  "assignments": [
+    {
+      "paperId": "3146-CL",
+      "title": "What if Deception cannot be Detected? A Cross-linguistic Study on the Limits of Deception Detection from Text",
+      "abstract": "Can deception be detected solely from written text? Cues of deceptive communication are inherently subtle, and even more so in text-only communication. Yet, prior studies have reported considerable success in automatic deception detection. In this study, we hypothesize that such findings are largely driven by artifacts introduced during data collection and do not generalize beyond specific datasets. We revisit this foundational assumption by introducing a belief-based deception framework, which defines deception as a misalignment between an authorâs claims and their true beliefs, irrespective of factual accuracy, allowing deception cues to be studied in isolation. Based on this framework, we construct three corpora â collectively referred to as DEFABEL â including a German-language corpus of deceptive and non-deceptive arguments and a multilingual version in German and English, each collected under different conditions to account for potential belief change and enable cross-linguistic analysis. Using these corpora, we evaluate commonly reported linguistic cues of deception. Across all three DEFABEL variants, we find that these cues exhibit negligible and statistically insignificant correlations with deception labels, contrary to prior work that treats such cues as reliable indicators. We further benchmark against other English deception datasets, that follow similar data collection protocols. While some of these show statistically significant correlations, the effect sizes remain low and, critically, the set of predictive cues is inconsistent across datasets. We also evaluate deception detection using feature-based models, pre-trained language models, and instruction-tuned large language models. While some of these models perform well on established deception datasets, they consistently perform near chance on DEFABEL. Our findings challenge the core assumption that deception can be reliably inferred from linguistic cues and call for a rethinking how deception is studied and modeled in Natural Language Processing.",
+      "source": "https://underline.io/events/535/schedule/sessions/23679/lecture/167199-what-if-deception-cannot-be-detectedquestion-a-cross-linguistic-study-on-the-limits-of-deception-detection-from-text",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Human deception and its linguistic cues, rather than factual verification."
+    },
+    {
+      "paperId": "3181-CL",
+      "title": "Sequence Labeling for Constituent Parsing: A Comparative Study and Encoding Innovations",
+      "abstract": "Various encodings have been proposed to cast constituent parsing in terms of a sequencelabeling task. However, unlike in the case of dependency parsing, existing comparisons have notbeen entirely homogeneous and, to the best of our knowledge, there is no systematic evaluationof these encodings under uniform configurations. A homogeneous evaluation needs to accountfor various aspects that could influence results, either by controlling for these aspects to ensureuniformity (e.g., network architecture, parameter settings, postprocessing of ill-formed output), orby systematically analyzing their impact (e.g., the impact of binary versus arbitrary structures). Inthis paper, we: (1) compare different encodings comprehensively both theoretically and empirically,on a modern neural architecture and across nine languages, and (2) also introduce new encodingsand variants, including an encoding that our analysis finds particularly accurate and compact.",
+      "source": "https://underline.io/events/535/schedule/sessions/23683/lecture/167200-sequence-labeling-for-constituent-parsing-a-comparative-study-and-encoding-innovations",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Constituent parsing encodings and cross-linguistic syntactic evaluation."
+    },
+    {
+      "paperId": "3212-CL",
+      "title": "Instructional Text Across Disciplines: A Survey of Representations, Downstream Tasks, and Open Challenges Toward Capable AI Agents",
+      "abstract": "Recent advances in large language models have demonstrated promising capabilities in following simple instructions through instruction tuning. However, real-world tasks often involve complex, multi-step instructions that remain challenging for current NLP systems. Robust understanding of such instructions is essential for deploying LLMs as general-purpose agents that can be programmed in natural language to perform complex, real-world tasks across domains like robotics, business automation, and interactive systems. Despite growing interest in this area, there is a lack of a comprehensive survey that systematically analyzes the landscape of complex instruction understanding and processing. Through a systematic review of the literature, we analyze available resources, representation schemes, and downstream tasks related to instructional text. Our study examines 181 papers, identifying trends, challenges, and opportunities in this emerging field. We provide AI/NLP researchers with essential background knowledge and a unified view of various approaches to complex instruction understanding, bridging gaps between different research directions and highlighting future research opportunities.",
+      "source": "https://underline.io/events/535/schedule/sessions/23645/lecture/167201-instructional-text-across-disciplines-a-survey-of-representations-downstream-tasks-and-open-challenges-toward-capable-ai-agents",
+      "basis": "title-and-abstract",
+      "area": 5,
+      "reason": "Understanding complex instructions for agent tasks and workflows."
+    },
+    {
+      "paperId": "3276-CL",
+      "title": "Strategic Deflection: Defending LLMs from Logit Manipulation",
+      "abstract": "With the growing adoption of Large Language Models (LLMs) in critical areas, ensuring their security against jailbreaking attacks is paramount. While traditional defenses primarily rely on refusing malicious prompts, recent logit-level attacks have demonstrated the ability to bypass these safeguards by directly manipulating the token-selection process during generation. We introduce Strategic Deflection (SDeflection), a defense that redefines the LLM's response to such advanced attacks. Instead of outright refusal, the model produces an answer that is semantically adjacent to the user's request, yet strips away the harmful intent, thereby neutralizing the attack. Our experiments demonstrate that SDeflection significantly lowers Attack Success Rate (ASR) while maintaining model performance on benign queries. This work presents a critical shift in defensive strategies, moving from simple refusal to strategic content redirection to neutralize advanced threats.",
+      "source": "https://underline.io/events/535/schedule/sessions/23311/lecture/167202-strategic-deflection-defending-llms-from-logit-manipulation",
+      "basis": "title-and-abstract",
+      "area": 8,
+      "reason": "Defending language models against logit-level jailbreak attacks."
+    },
+    {
+      "paperId": "3350-CL",
+      "title": "Rethinking Evaluation in Simultaneous Speech Translation: A Case for Monotonic Test Sets",
+      "abstract": "Overcoming the trade-off between quality and latency is a challenge in simultaneous speech translation.; Common approaches in previous works have been to segment the source sentence or align target sentences with the source's syntax as closely as possible, enabling faster translations while maintaining quality.; However, a major limitation in these studies is the reliance on existing translation test data, which often include reordering and are unsuitable for simultaneous settings with low latency. Alternatively, some use interpretation data transcribed from interpreters, which is also problematic due to translation errors and omissions, making both inadequate for fully evaluating simultaneous models. In this work, we introduce a construction, verification, and analysis of a new test set specifically designed for simultaneous settings, with a focus on maintaining word and phrase order consistency with the source. The test set comprises three language pairs representing different levels of word order similarity to the source by leveraging large language models, with quality verified by professional interpreters. This provides an interpreter-grounded perspective, and empirically shows the ideal level of monotonicity and the other sentence style characteristics including syntax simplicity and sentence length. It also reveals the capabilities and limitations of LLMs on monotonic translation. Experiments revealed that existing test data tends to underestimate a model's performance, while the proposed test set, simul-tst-COMMON, offers a more appropriate evaluation of simultaneous models. Moreover, the quality gap between wait-k and Local Agreement suggests that the adaptive policy more closely resembles the monotonic translation behavior of human interpreters. Finally, the analysis highlights the limitations of current metrics, which may not be fully suitable for evaluating simultaneous tasks.",
+      "source": "https://underline.io/events/535/schedule/sessions/23757/lecture/167203-rethinking-evaluation-in-simultaneous-speech-translation-a-case-for-monotonic-test-sets",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Evaluation methodology for simultaneous machine translation."
+    },
+    {
+      "paperId": "3371-CL",
+      "title": "Quantified Reproducibility Assessment for Four Common Types of Evaluation Results in NLP/ML",
+      "abstract": "Reproductions in NLP/ML indicate worryingly low levels of reproducibility, but their results are hard to interpret, compare, and learn from, because reported in qualitative terms with varying, often unstated, criteria. We propose QRA, a quantitative approach to reproducibility assessment that (i) produces continuous-valued degree of reproducibility assessments at three levels of granularity; (ii) utilises reproducibility measures that are comparable across different studies; and (iii) grounds expectations about degree of reproducibility in similarity between experiments. QRA facilitates more informative reproducibility assessments and conclusions about the causesof better/poorer reproducibility. We demonstrate its benefits by applying QRA to three sets of comparable experiments, obtaining clear evidence that degree of reproducibility depends on similarity of experiment properties, system type and evaluation method.",
+      "source": "https://underline.io/events/535/schedule/sessions/23680/lecture/167204-quantified-reproducibility-assessment-for-four-common-types-of-evaluation-results-in-nlpdashml",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Reproducibility and reliability of NLP evaluation results."
+    },
+    {
+      "paperId": "3398-CL",
+      "title": "Explanation Variability in Text Classification: Humans vs. LLMs",
+      "abstract": "This paper examines the variability of human and large language model (LLM) token-level explanations applied to the use case of French journalistic text classification between newsÂ and opinionÂ articles. To do so, we compare human annotations (in the form of highlighted tokens indicating perceived decision-relevant words) with Layer-wise Relevance Propagation (LRP) explanations from fine-tuned transformer models. Using ten texts annotated by multiple readers and classified by equivalent instantiations of a LLM, we analyze qualitative patterns and quantitative trends with a similarity score. Results show that humans highlight fewer, longer spans focused on linguistically salient cues while LRP produces more diffuse, token-level attributions. Humans also tend to agree more on the most important tokens, whereas models align better when considering all tokens, reflecting divergent sensitivities to granularity. Prediction class matters as well: humans are more consistent on opinion texts, while models show greater stability on news. To refine our variability analysis, we apply discretization schemes aligning LRP values with categorical human judgments. Both linear and human-aligned discretization increase similarity with human explanations and thus improve visual plausibility in aggregated attention maps without altering model predictions. These findings suggest that model explanations are not systematically more variable than human ones but follow different dynamics depending on representation and scope. They also highlight the Rashomon effect in LLM explainability, showing that agreement on outputs does not imply convergence in reasoning. Our work demonstrates how methodological choices shape explanation variability and offers practical insights for bridging faithfulness and plausibility in explainable NLP.",
+      "source": "https://underline.io/events/535/schedule/sessions/23638/lecture/167205-explanation-variability-in-text-classification-humans-vs-llms",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Evaluating explanation consistency and agreement with human annotations."
+    },
+    {
+      "paperId": "3407-CL",
+      "title": "Causal Adversarial Training for Improving Language Understanding and Robustness",
+      "abstract": "Language models suffer from adversarial vulnerability, where imperceptible perturbations in inputs can mislead model predictions. Existing adversarial training methods enhance model robustness by augmenting training data with worst-case adversarial perturbations for each input. However, these approaches overlook the intrinsic causal relationships within data. We construct causal graphs to model the behavior of encoder-based language models under adversarial inputs, suggesting that adversarial vulnerability is often associated with the model's overfitting to spurious correlations. Within the adversarial training framework, we formulate expressions for Total Effect (TE) and Natural Direct Effect (NDE), and propose a causal regularization objective based on TE-NDE alignment. Experiments on five benchmark datasets show that this causal adversarial training framework improves adversarial robustness across different settings. We further evaluate the model behavior in a controlled sentiment analysis setting, where the quantitative results provide additional evidence for the effectiveness of our method.",
+      "source": "https://underline.io/events/535/schedule/sessions/23315/lecture/167206-causal-adversarial-training-for-improving-language-understanding-and-robustness",
+      "basis": "title-and-abstract",
+      "area": 8,
+      "reason": "Adversarial robustness and defenses against input perturbations."
+    },
+    {
+      "paperId": "3417-CL",
+      "title": "How to Evaluate Speech Translation with Source-Aware Neural MT Metrics",
+      "abstract": "Automatic evaluation of speech-to-text translation (ST) systems is typically performed by comparing translation hypotheses with one or more reference translations. While effective to some extent, this approach inherits the limitation of reference-based evaluation that ignores valuable information from the source input. In machine translation (MT), recent progress has shown that neural metrics incorporating the source text achieve stronger correlation with human judgments. Extending this idea to ST, however, is not trivial because the source is audio rather than text, and reliable transcripts or alignments between source and references are often unavailable. In this work, we conduct the first systematic study of source-aware metrics for ST, with a particular focus on real-world operating conditions where source transcripts are not available. We explore two complementary strategies for generating textual proxies of the input audio, automatic speech recognition (ASR) transcripts, and back-translations of the reference translation, and introduce a novel two-step cross-lingual re-segmentation algorithm to address the alignment mismatch between synthetic sources and reference translations. Our experiments, carried out on two ST benchmarks covering 79 language pairs and six ST systems with diverse architectures and performance levels, show that ASR transcripts constitute a more reliable synthetic source than back-translations when word error rate is below 20%, while back-translations always represent a computationally cheaper but still effective alternative. The robustness of these findings is further confirmed by experiments on a low-resource language pair (Bemba-English) and by a direct validation against human quality judgments. Furthermore, our cross-lingual re-segmentation algorithm enables robust use of source-aware MT metrics in ST evaluation, paving the way towards more accurate and principled evaluation methodologies for speech translation.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/167207-how-to-evaluate-speech-translation-with-source-aware-neural-mt-metrics",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Source-aware metrics for evaluating machine translation quality."
+    },
+    {
+      "paperId": "3424-CL",
+      "title": "Representational Equality in Cross-country Value Simulation: A Systematic Analysis of Large Language Models",
+      "abstract": "Traditional methods for studying human opinions often struggle to support representative and scalable research across countries. Large language models (LLMs) can serve as scalable proxies for simulating human opinions, enabling more efficient opinion analysis. However, this use of LLMs requires not only high average accuracy but also representational equality, that is, comparable simulation accuracy across populations. Uneven simulation accuracy may reproduce or amplify societal biases in downstream applications. This study systematically investigates country-level representational equality across 59 countries and finds substantial, systematic inequality. Populations from wealthier and more technologically advanced countries are simulated more accurately. We further compare two foundational intervention pathways, contextual adaptation and parametric modification, and show that improvements in average or target-group accuracy do not necessarily translate into greater representational equality. For contextual adaptation, native-language prompting generally improves accuracy but remains model-dependent, whereas additional information more often improves both accuracy and equality. For parametric modification, language-specific continued post-training improves accuracy for targeted language groups but unevenly, while preference alignment yields no systematic gains in accuracy or equality. Human-annotated preference data generally preserve accuracy better than AI-annotated data. These findings highlight the need for representational equality alongside accuracy and offer guidance for more inclusive, socially responsible LLM-based simulations.",
+      "source": "https://underline.io/events/535/schedule/sessions/23610/lecture/167208-representational-equality-in-cross-country-value-simulation-a-systematic-analysis-of-large-language-models",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Representational inequality and bias in cross-country value simulation."
+    },
+    {
+      "paperId": "3501-CL",
+      "title": "MultiLoKo: a multilingual local knowledgebenchmark for LLMs spanning 31 languages",
+      "abstract": "We present MultiLoKo, a new benchmark for evaluating multilinguality in LLMs covering 31 languages. MultiLoKo consists of three partitions: a main partition with 500 questions per language, separately sourced to be locally relevant to the specific language, and two translated partitions, containing human-authored translations from 30 non-English languages to Englishand vice versa. For comparison, we also release corresponding machine-authored translations. The data is equally distributed over two splits: a dev split and a blind, out-of-distribution test split. MultiLoKo can be used to study a variety of questions regarding the multilinguality of LLMs as well as meta-questions about multilingual benchmark creation. We compute MultiLoKo scores for 11 base and chat models marketed to be multilingual and study their average performance, their performance parity across languages, how much their ability to answer questions depends on the question language, and which languages are most difficult. We find that none of the models we evaluated performs well on MultiLoKo, as indicated by low average scores as well as large differences between the best and worst scoring languages. Furthermore, we find a substantial effect of the question language, indicating suboptimal knowledge transfer between languages. Lastly, we find that using local vs English-translated data can result in differences more than 20 points for the best performing models, drastically change the estimated difficulty of some languages. For using machines instead of human translations, we find a weaker effect on ordering of language difficulty, a larger difference in model rankings,and a substantial drop in estimated performance for all models.",
+      "source": "https://underline.io/events/535/schedule/sessions/23663/lecture/167209-multiloko-a-multilingual-local-knowledgebenchmark-for-llms-spanning-31-languages",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Multilingual knowledge evaluation and performance parity across languages."
+    },
+    {
+      "paperId": "3530-CL",
+      "title": "Eye Tracking Based Cognitive Evaluation of Automatic Readability Assessment Methods",
+      "abstract": "Automatic methods for scoring text readability have been studied for over a century, and are widely used in research and in user-facing applications in many domains. Thus far, the development and evaluation of such methods have primarily relied on two types of offline human behavioral data, performance on reading comprehension tests and ratings of text readability levels. In this work, we instead focus on a fundamental and understudied aspect of readability, real-time reading ease, captured with online reading measures using eye tracking. We introduce a new cognitive evaluation framework for readability scoring methods that quantifies their ability to account for reading ease, while controlling for content variation across texts. Applying this evaluation to prominent traditional readability formulas, NLP-based methods, commercial systems used in education, and frontier LLMs suggests that they are all poor predictors of English reading ease in adults as compared to word properties commonly used in psycholinguistics for the prediction of reading times. This outcome holds across L1 and L2 speakers, different reading regimes, and textual units of different lengths. Our results reveal an important limitation of a wide range of methods for readability scoring, highlight the utility of real-time behavioral benchmarks for readability research, and call for new, cognitively driven readability scoring approaches that can better account for how humans experience texts in real time.",
+      "source": "https://underline.io/events/535/schedule/sessions/23650/lecture/167210-eye-tracking-based-cognitive-evaluation-of-automatic-readability-assessment-methods",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Psycholinguistic reading measures and readability assessment."
+    },
+    {
+      "paperId": "3579-CL",
+      "title": "Justify Your Prompts!",
+      "abstract": "When you use a large language model (LLM) in your research, you often need to formulate a prompt to elicit some relevant output from the LLM. This step is challenging since (1) LLMs are known to be brittle and their results may vary drastically between different prompts; and (2) for any given task, there are infinitely many possible prompts. Thus we end up with the following problem: if you cannot try out infinitely many prompts, how do you justify your selected prompt? This paper discusses different ways in which authors may motivate their choices, and urges authors to consider how their prompting strategy might be justified.",
+      "source": "https://underline.io/events/535/schedule/sessions/23694/lecture/167211-justify-your-prompts",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Justification and reproducibility of prompt choices in research."
+    },
+    {
+      "paperId": "7575-TACL",
+      "title": "REAL Sampling: Boosting Factuality and Diversity of Open-Ended Generation by Extrapolating the Entropy of an Infinitely Large LM",
+      "abstract": "Decoding methods for large language models (LLMs) usually struggle with the tradeoff between ensuring factuality and maintaining diversity. In this paper, we propose REAL (Residual Entropy from Asymptotic Line) sampling, which predicts the step-wise hallucination likelihood of an LLM. When an LLM is likely to hallucinate, REAL lowers the p threshold in nucleus sampling. Otherwise, REAL sampling increases the p threshold to boost the diversity. To predict the step-wise hallucination likelihood without supervision, we construct a THF (Token-level Hallucination Forecasting) model, which predicts the asymptotic entropy (i.e., inherent uncertainty) of the next token by extrapolating the next-token entropies of an infinitely large language model from a series of LLMs with different sizes. If an LLM's entropy is higher than the asymptotic entropy (i.e., the LLM is more uncertain than it should be), the THF model predicts a high hallucination hazard, which leads to a lower p threshold in REAL sampling. In the FactualityPrompts benchmark, we demonstrate that REAL sampling based on a 70M THF model can substantially improve the factuality and diversity of 7B LLMs simultaneously. After combined with contrastive decoding, REAL sampling outperforms 13 sampling methods, and generates texts that are more factual than the greedy sampling and more diverse than the nucleus sampling with p=0.5.",
+      "source": "https://underline.io/events/535/schedule/sessions/23624/lecture/167212-real-sampling-boosting-factuality-and-diversity-of-open-ended-generation-by-extrapolating-the-entropy-of-an-infinitely-large-lm",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Reducing hallucination and improving factuality through calibrated sampling."
+    },
+    {
+      "paperId": "8379-TACL",
+      "title": "Fine-tuning Large Language Models with Limited Data: A Survey and Practical Guide",
+      "abstract": "Fine-tuning large language models (LLMs) with limited data can pose a practical challenge in low-resource languages, specialized domains, and constrained deployment settings. While pre-trained LLMs provide strong foundations, effective adaptation under data scarcity requires focused and efficient fine-tuning techniques. This paper presents a structured and practical survey of recent methods for fine-tuning LLMs in data-scarce scenarios. We systematically review parameter-efficient fine-tuning techniques that reduce training and deployment costs, strategies for enhancing generalization in encoder and decoder models, and specialization methods, including model and data scaling and catastrophic forgetting mitigation. We further examine preference alignment approaches that steer model behavior using limited human or synthetic feedback, with an emphasis on sample and compute efficiency. Throughout, we highlight empirical trade-offs, selection criteria, and best practices for choosing the right techniques based on task constraints. The aim is to equip researchers and practitioners with actionable insights to effectively fine-tune LLMs when data and resources are limited.",
+      "source": "https://underline.io/events/535/schedule/sessions/23621/lecture/167213-fine-tuning-large-language-models-with-limited-data-a-survey-and-practical-guide",
+      "basis": "title-and-abstract",
+      "area": 2,
+      "reason": "Fine-tuning and preference alignment when adaptation data is limited."
+    },
+    {
+      "paperId": "8523-TACL",
+      "title": "SPES: Spectrogram Perturbation for Explainable Speech-to-text Generation",
+      "abstract": "Spurred by the demand for interpretable models, research on eXplainable AI for language technologies has experienced significant growth, with feature attribution methods emerging as a cornerstone of this progress. While prior work in NLP explored such methods for classification tasks and textual applications, explainability intersecting generation and speech is lagging, with existing techniques failing to account for the autoregressive nature of state-of-the-art models and to provide finegrained, phonetically meaningful explanations. We address this gap by introducing Spectrogram Perturbation for Explainable Speech-to-text Generation (SPES), a feature attribution technique applicable to sequence generation tasks with autoregressive models. SPES provides explanations for each predicted token based on both the input spectrogram and the previously generated tokens. Extensive evaluation on speech recognition and translation demonstrates that SPES generates explanations that are faithful and plausible to humans.",
+      "source": "https://underline.io/events/535/schedule/sessions/23670/lecture/167214-spes-spectrogram-perturbation-for-explainable-speech-to-text-generation",
+      "basis": "title-and-abstract",
+      "area": 4,
+      "reason": "Feature attribution for speech recognition and speech-to-text generation."
+    },
+    {
+      "paperId": "8593-TACL",
+      "title": "DeepTrans: Deep Reasoning Translation via Reinforcement Learning",
+      "abstract": "Recently, deep reasoning LLMs (e.g., OpenAI o1 and DeepSeek-R1) have shown promising performance in various downstream tasks. Free translation is an important and interesting task in the multilingual world, which requires going beyond word-for-word translation. However, the task is still under-explored in deep reasoning LLMs. In this paper, we introduce DeepTrans, a deep reasoning translation model that learns free translation via reinforcement learning (RL). Specifically, we carefully build a reward model with pre-defined scoring criteria on both the translation results and the thought processes. The reward model teaches DeepTrans how to think and free-translate the given sentences during RL. Besides, our RL training does not need any labeled translations, avoiding the human-intensive annotation or resource-intensive data synthesis. Experimental results show the effectiveness of DeepTrans. Using Qwen2.5-7B as the backbone, DeepTrans improves performance by 16.3% in literature translation, and outperforms strong deep reasoning LLMs. Moreover, we summarize the failures and interesting findings during our RL exploration. We hope this work could inspire other researchers in free translation.",
+      "source": "https://underline.io/events/535/schedule/sessions/23652/lecture/167215-deeptrans-deep-reasoning-translation-via-reinforcement-learning",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Improving translation through reasoning and reinforcement learning."
+    },
+    {
+      "paperId": "8687-TACL",
+      "title": "Towards More Realistic Extraction Attacks: An Adversarial Perspective",
+      "abstract": "Language models are prone to memorizing their training data, making them vulnerable to extraction attacks. While existing research often examines isolated setups, such as a single model or a fixed prompt, real-world adversaries have a considerably larger attack surface due to access to models across various sizes and checkpoints, and repeated prompting. In this paper, we revisit extraction attacks from an adversarial perspective—with multi-faceted access to the underlying data. We find significant churn in extraction trends, i.e., even unintuitive changes to the prompt, or targeting smaller models and earlier checkpoints, can extract distinct information. By combining multiple attacks, our adversary doubles (2 ×) the extraction risks, persisting even under mitigation strategies like data deduplication. We conclude with four case studies, including detecting pre-training data, copyright violations, extracting personally identifiable information, and attacking closed-source models, showing how our more realistic adversary can outperform existing adversaries in the literature.",
+      "source": "https://underline.io/events/535/schedule/sessions/23672/lecture/167216-towards-more-realistic-extraction-attacks-an-adversarial-perspective",
+      "basis": "title-and-abstract",
+      "area": 8,
+      "reason": "Training-data extraction attacks and privacy leakage."
+    },
+    {
+      "paperId": "8971-TACL",
+      "title": "Preferences for Idiomatic Language are Acquired Slowly -- and Forgotten Quickly",
+      "abstract": "We investigate how language models develop preferences for idiomatic versus correct Swedish, both during pretraining and when adapting a model from English to Swedish. To do so, we train models on Swedish from scratch and by fine-tuning English-pretrained models, probing their preferences at various checkpoints using minimal pairs that differ in linguistic acceptability or idiomaticity. For linguistic acceptability, we adapt existing benchmarks into a minimal-pair format. To assess idiomaticity, we introduce two novel datasets: one contrasting conventionalized idioms with plausible variants, and another contrasting idiomatic Swedish with Translationese. Our findings show that idiomatic competence emerges more slowly than other linguistic abilities, including grammatical and lexical correctness. While longer training yields diminishing returns for most tasks, idiom-related performance continues to improve, particularly in the largest model tested (8B). However, instruction tuning on data translated from English – a common approach for languages with little native instruction data – causes models to rapidly lose their preference for idiomatic language.",
+      "source": "https://underline.io/events/535/schedule/sessions/23654/lecture/167217-preferences-for-idiomatic-language-are-acquired-slowly-and-forgotten-quickly",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Acquisition and loss of idiomatic competence in Swedish."
+    },
+    {
+      "paperId": "9093-TACL",
+      "title": "CAuSE: Decoding Multimodal Classifiers using Faithful Natural Language Explanation",
+      "abstract": "Multimodal classifiers function as opaque black box models. While several techniques exist to interpret their predictions, few are as intuitive and accessible as natural language explanations (NLEs). To build trust, such explanations must faithfully capture the classifier’s internal decision making behavior, a property known as faithfulness. In this paper, we propose CAuSE (Causal Abstraction under Simulated Explanations), a novel framework to generate faithful NLEs for any pretrained multimodal classifier. We demonstrate that CAuSE generalizes across datasets and models through extensive empirical evaluation. Theoretically, we show that CAuSE, trained via interchange intervention, forms a causal abstraction of the underlying classifier. We further validate this through a redesigned metric for measuring causal faithfulness in multimodal settings. CAuSE surpasses other methods on this metric, with qualitative analysis reinforcing its advantages. We perform detailed error analysis to pinpoint the failure cases of CAuSE. For replicability, we make the codes available at https://anonymous.4open. science/r/CAuSE-5BD0.",
+      "source": "https://underline.io/events/535/schedule/sessions/23667/lecture/167218-cause-decoding-multimodal-classifiers-using-faithful-natural-language-explanation",
+      "basis": "title-and-abstract",
+      "area": 1,
+      "reason": "Faithful explanations of multimodal classifier predictions."
+    },
+    {
+      "paperId": "9181-TACL",
+      "title": "KisMATH: Do LLMs Have Knowledge of Implicit Structures in Mathematical Reasoning?",
+      "abstract": "Chain-of-thought traces have been shown to improve performance of large language models on a plethora of reasoning tasks, yet there is no consensus on the mechanism through which this boost is achieved. To shed more light on this, we introduce Causal CoT Graphs (CCGs), which are directed acyclic graphs automatically extracted from reasoning traces that model fine-grained causal dependencies in language-model outputs. A collection of 1671 mathematical reasoning problems from MATH500, GSM8K and AIME, together with their associated CCGs, has been compiled into our dataset—KisMATH. Our detailed empirical analysis with 15 open-weight LLMs shows that (i) reasoning nodes in the CCG are causal contributors to the final answer, which we argue is constitutive of reasoning; and (ii) LLMs emphasize the reasoning paths captured by the CCG, indicating that the models internally realize structures akin to our graphs. KisMATH enables controlled, graph-aligned interventions and opens avenues for further investigation into the role of chain-of-thought in LLM reasoning.",
+      "source": "https://underline.io/events/535/schedule/sessions/23686/lecture/167219-kismath-do-llms-have-knowledge-of-implicit-structures-in-mathematical-reasoningquestion",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Causal structure and faithfulness of mathematical reasoning traces."
+    },
+    {
+      "paperId": "9239-TACL",
+      "title": "Human-like fleeting memory improves language learning but impairs reading time prediction in transformer language models",
+      "abstract": "Human memory is fleeting. As words are processed, the exact wordforms that make up incoming sentences are rapidly lost. Cognitive scientists have long believed that this limitation of memory may, paradoxically, help in learning language – an idea supported by classic connectionist modelling work. The rise of Transformers appears to challenge this idea, as these models can learn language effectively, despite lacking memory limitations or other architectural recency biases. Here, we investigate the hypothesized benefit of fleeting memory for language learning in tightly controlled experiments on transformer language models. Training transformers with and without fleeting memory on a developmentally realistic training set, we find that fleeting memory consistently improves language learning (as quantified by both overall language modelling performance and targeted syntactic evaluation) but, unexpectedly, impairs surprisal-based prediction of human reading times. Interestingly, follow up analyses revealed that this discrepancy – better language modeling, yet worse reading time prediction – could not be accounted for by prior explanations of why better language models sometimes fit human reading time worse. Together, these results support a benefit of memory limitations on neural network language learning – but not on predicting behavior.",
+      "source": "https://underline.io/events/535/schedule/sessions/23643/lecture/167220-human-like-fleeting-memory-improves-language-learning-but-impairs-reading-time-prediction-in-transformer-language-models",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Human memory constraints, language acquisition and reading-time prediction."
+    },
+    {
+      "paperId": "9259-TACL",
+      "title": "Anthropomimetic Uncertainty: What Verbalized Uncertainty in Language Models is Missing",
+      "abstract": "Human users increasingly communicate on large language models (LLMs), however their trustworthiness and perceived legitimacy of LLMs is undermined by the frequent overconfidence in their output, even when its accuracy is questionable. Therefore, there is a need to signal the confidence of the language model in order to reap the benefits of human-machine collaboration and mitigate potential harms. Verbalized uncertainty is the expression of confidence with linguistic means, an approach that integrates perfectly into language-based interfaces. Nevertheless, most recent research in natural language processing (NLP) overlooks the nuances surrounding human uncertainty communication and the biases that influence machine equivalent. We argue for anthropomimetic uncertainty, namely that intuitive and trustworthy uncertainty communication requires a degree of linguistic authenticity and personalization to the user. We present a thorough overview over the research in human uncertainty communication, survey ongoing research in NLP, and perform additional analyses to demonstrate so-far underexplored biases in verbalized uncertainty. We conclude by pointing out unique factors in human-machine uncertainty and deconstruct anthropomimetic uncertainty into future research directions.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/167221-anthropomimetic-uncertainty-what-verbalized-uncertainty-in-language-models-is-missing",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Calibration and communication of model uncertainty."
+    },
+    {
+      "paperId": "9295-TACL",
+      "title": "Scale Can’t Overcome Pragmatics: The Impact of Reporting Bias on Vision-Language Reasoning",
+      "abstract": "The lack of reasoning capabilities in Vision-Language Models (VLMs) has remained at the forefront of research discourse. We posit that this behavior stems from a reporting bias in their training data. That is, how people communicate about visual content by default omits tacit information needed to supervise some types of reasoning; e.g., “at the game today!” is a more likely caption than “a photo of 37 people standing behind the field”. We investigate the data underlying the popular VLMs OpenCLIP, LLaVA-1.5 and Molmo through the lens of theories from pragmatics, and find that reporting bias results in insufficient representation of four reasoning skills (spatial, temporal, negation, and counting), despite the corpora being of web-scale, and/or synthetically generated. With a set of curated benchmarks, we demonstrate that: (i) VLMs perform poorly on the aforementioned types of reasoning suppressed in the training data by reporting bias; (ii) contrary to popular belief, scaling data size, model size, and to multiple languages does not result in emergence of these skills by default; but, promisingly, (iii) incorporating annotations specifically collected to obtain tacit information is effective. Our findings highlight the need for more intentional training data curation methods, rather than counting on scale for emergence of reasoning capabilities.",
+      "source": "https://underline.io/events/535/schedule/sessions/23670/lecture/167222-scale-doesn-t-compensate-for-the-gricean-maxims-the-impact-of-reporting-bias-on-vision-language-reasoning",
+      "basis": "title-and-abstract",
+      "area": 1,
+      "reason": "Reporting bias and missing visual reasoning abilities in VLMs."
+    },
+    {
+      "paperId": "9411-TACL",
+      "title": "As Easy as Rocket Science: Assessing the Ability of Large Language Models to Interpret Negation in Figurative Language",
+      "abstract": "Figurative language and negation are two areas that challenge current language models, however, both are widely used throughout written and spoken language. Large language models (LLMs) are also widely used in everyday contexts where they cannot necessarily be tuned for a specific dataset. It is therefore essential to understand the ability of LLMs to correctly interpret text that includes both negation and figurative language. To investigate this, we develop a set of new annotations to the Fig-QA dataset (Liu et al., 2022), and test a range of language models on the dataset. We find that the combination of negation and figurativeness can present a particular challenge, and that performance overall and across different negation types is particularly dependent on the prompt style used.",
+      "source": "https://underline.io/events/535/schedule/sessions/23662/lecture/167223-as-easy-as-rocket-science-assessing-the-ability-of-large-language-models-to-interpret-negation-in-figurative-language",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Understanding negation and figurative language."
+    },
+    {
+      "paperId": "9557-TACL",
+      "title": "Sharing Beyond Decision: Deep Collaboration between Large Language Models via Representation Ensemble",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 5,
+      "reason": "Collaboration between language models through shared representations; title-only decision."
+    },
+    {
+      "paperId": "9565-TACL",
+      "title": "Learning to Optimize Multi-Objective Alignment Through Dynamic Reward Weighting",
+      "abstract": "Prior works in multi-objective reinforcement learning typically use linear reward scalarization with fixed weights, which provably fail to capture non‑convex Pareto fronts and thus yield suboptimal results. This limitation becomes especially critical in online preference alignment for large language models. Here, stochastic trajectories generated by parameterized policies create highly non-linear and non-convex mappings from parameters to objectives that no single static weighting scheme can find optimal trade-offs. We address this limitation by introducing dynamic reward weighting, which adaptively adjusts reward weights during the online reinforcement learning process. Unlike existing approaches that rely on fixed-weight interpolation, our dynamic weighting continuously balances and prioritizes objectives in training, facilitating effective exploration of Pareto fronts in objective space. We introduce two approaches of increasing sophistication and generalizability: (1) hypervolume-guided weight adaptation and (2) gradient-based weight optimization, offering a versatile toolkit for online multi-objective alignment. Our extensive experiments demonstrate their compatibility with commonly used online reinforcement learning algorithms (including GRPO, REINFORCE, and RLOO), effectiveness across multiple mathematical reasoning datasets, and applicability to different model families, consistently achieving Pareto dominant solutions with fewer training steps than fixed-weight linear scalarization baselines.",
+      "source": "https://underline.io/events/535/schedule/sessions/23651/lecture/167225-learning-to-optimize-multi-objective-alignment-through-dynamic-reward-weighting",
+      "basis": "title-and-abstract",
+      "area": 2,
+      "reason": "Multi-objective preference alignment with adaptive reward weighting."
+    },
+    {
+      "paperId": "9787-TACL",
+      "title": "CROC: Evaluating and Training T2I Metrics Pseudo- and Human-Labeled Contrastive Robustness Checks",
+      "abstract": "The assessment of evaluation metrics (meta-evaluation) is crucial for determining the suitability of existing metrics in text-to-image (T2I) generation tasks. Human-based meta-evaluation is costly and time-intensive, and automated alternatives are scarce. We address this gap and propose CROC: a scalable framework for automated Contrastive Robustness Checks that systematically probes and quantifies metric robustness by synthesizing contrastive test cases across a comprehensive taxonomy of image properties. With CROC, we generate a pseudo-labeled dataset (CROCsyn) of over 1 million contrastive prompt–image pairs to enable a fine-grained comparison of evaluation metrics. We also use the dataset to train CROCScore, a new metric that achieves state-of-the-art performance among open-source methods, demonstrating an additional key application of our framework. To complement this dataset, we introduce a human-supervised benchmark (CROChum) targeting especially challenging categories. Our results highlight robustness issues in existing metrics: for example, many fail on prompts involving negation, and all tested open-source metrics fail on at least 24% of cases involving correct identification of body parts.",
+      "source": "https://underline.io/events/535/schedule/sessions/23673/lecture/167226-croc-evaluating-and-training-t2i-metrics-pseudo-and-human-labeled-contrastive-robustness-checks",
+      "basis": "title-and-abstract",
+      "area": 1,
+      "reason": "Robustness of text-to-image evaluation metrics."
+    },
+    {
+      "paperId": "9837-TACL",
+      "title": "CG-TTRL: Context-guided Test-time Reinforcement Learning for On-device Large Language Models",
+      "abstract": "Test-time Reinforcement Learning (TTRL) has shown promise in adapting foundation models for complex tasks at test-time, resulting in large performance improvements. TTRL leverages an elegant two-phase sampling strategy: first, multi-sampling derives a pseudo-label via majority voting, while subsequent downsampling and reward-based fine-tuning encourages the model to explore and learn diverse valid solutions, with the pseudo-label modulating the reward signal. Meanwhile, in-context learning has been widely explored at inference time and demonstrated the ability to enhance model performance without weight updates. However, TTRL's two-phase sampling strategy under-utilizes contextual guidance, which can potentially improve pseudo-label accuracy in the initial exploitation phase while regulating exploration in the second. To address this, we propose context-guided TTRL (CG-TTRL), integrating context dynamically into both sampling phases and propose a method for efficient context selection for on-device applications. Our evaluations on mathematical and scientific QA benchmarks show CG-TTRL outperforms TTRL (e.g. additional 7% relative accuracy improvement over zero-shot), while boosting efficiency by obtaining strong performance after only a few steps of test-time training (e.g. 8% relative improvement rather than 1% over zero-shot after 3 steps).",
+      "source": "https://underline.io/events/535/schedule/sessions/23668/lecture/167227-cg-ttrl-context-guided-test-time-reinforcement-learning-for-on-device-large-language-models",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Context-guided test-time reinforcement learning for reasoning."
+    },
+    {
+      "paperId": "9857-TACL",
+      "title": "FeedTrans: Enhance Machine Translation via Feedback",
+      "abstract": "Large reasoning models (LRMs) have shown exceptional performance in complex tasks such as mathematics and coding. In the field of machine translation (MT), reinforcement learning (RL) has been utilized to enhance the quality of translations. However, traditional RL approaches rely heavily on the base model's inherent translation capabilities, which may falter when dealing with terminology translations and domain-specific expressions without sufficient guidance. In this paper, we introduce FeedTrans (Feedback-driven Translation), which employs a FeedRollout mechanism to incorporate feedback as guidance, enabling the production of high-quality translations and expanding the search space for improved translation outcomes. Extensive experiments across six translation tasks validate the effectiveness of our approach. To the best of our knowledge, this is the first attempt at utilizing feedback in MT-oriented RL.",
+      "source": "https://underline.io/events/535/schedule/sessions/23652/lecture/167228-feedtrans-enhance-machine-translation-via-feedback",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Feedback-guided reinforcement learning for machine translation."
+    },
+    {
+      "paperId": "9881-TACL",
+      "title": "Rethinking the Relationship between the Power Law and Hierarchical Structures",
+      "abstract": "Statistical analysis of corpora provides an approach to quantitatively investigate natural languages. This approach has revealed that several power laws consistently emerge across different corpora and languages, suggesting universal mechanisms underlying languages. Particularly, the power-law decay of correlation has been interpreted as evidence for underlying hierarchical structures in syntax, semantics, and discourse. This perspective has also been extended to child speeches and animal signals. However, the argument supporting this interpretation has not been empirically tested in natural languages. To address this problem, the present study examines the validity of the argument for syntactic structures. Specifically, we test whether the statistical properties of parse trees align with the assumptions in the argument. Using English and Japanese corpora, we analyze the mutual information, deviations from probabilistic context-free grammars (PCFGs), and other properties in natural language parse trees, as well as in the PCFG that approximates these parse trees. Our results indicate that the assumptions do not hold for syntactic structures and that it is difficult to apply the proposed argument to child speeches and animal signals, highlighting the need to reconsider the relationship between the power law and hierarchical structures.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/167229-rethinking-the-relationship-between-the-power-law-and-hierarchical-structures",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Statistical laws and hierarchical syntactic structures in natural language."
+    },
+    {
+      "paperId": "9915-TACL",
+      "title": "No Shortcuts to Culture:IndonesianMulti-hop Question Answering for Complex Cultural Understanding",
+      "abstract": "Understanding culture requires reasoning across context, tradition, and implicit social knowledge, far beyond recalling isolated facts. Yet most culturally focused question answering (QA) benchmarks rely on single-hop questions, which may allow models to exploit shallow cues rather than demonstrate genuine cultural reasoning. In this work, we introduce ID-MoCQA, the first large-scale multi-hop QA dataset for assessing the cultural understanding of large language models (LLMs), grounded in Indonesian traditions and available in both English and Indonesian. We present a new framework that systematically transforms single-hop cultural questions into multi-hop reasoning chains spanning six clue types (e.g., commonsense, temporal, geographical). Our multi-stage validation pipeline, combining expert review and LLM-as-a-judge filtering, ensures high-quality question-answer pairs. Our evaluation across state-of-the-art models reveals substantial gaps in cultural reasoning, particularly in tasks requiring nuanced inference. ID-MoCQA provides a challenging and essential benchmark for advancing the cultural competency of LLMs.",
+      "source": "https://underline.io/events/535/schedule/sessions/23671/lecture/167230-no-shortcuts-to-cultureindonesianmulti-hop-question-answering-for-complex-cultural-understanding",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Cultural knowledge and reasoning about Indonesian traditions."
+    },
+    {
+      "paperId": "9923-TACL",
+      "title": "LlaMADRS: Evaluating Open-Source LLMs on Real Clinical Interviews—To Reason or Not to Reason?",
+      "abstract": "Large language models (LLMs) excel on many NLP benchmarks, but their behavior on real-world, semi-structured prediction remains underexplored. We present LlaMADRS, a benchmark for structured clinical assessment from dialogue built on the CAMI corpus of psychiatric interviews, comprising 5,804 expert annotations across 541 sessions. We evaluate 25 open-source models (standard and reasoning-augmented; 0.6B–400B parameters) and generate over 400,000 predictions. Strong open-source LLMs achieve item-level accuracy whose residual error is below clinically substantial thresholds. A predict-then-aggregate strategy—scoring symptoms individually and then summing—reduces error relative to direct end-to-end prediction across most architectures and scales, even when reasoning models attempt similar decomposition in their traces. We further find that performance gains attributed to “reasoning” depend on prompt design: standard models equipped with structured task definitions and examples match reasoning-augmented counterparts. Among reasoning models, longer reasoning traces correlate with reduced error; across both families, larger model scale improves accuracy. These results clarify when and why reasoning helps and offer actionable guidance for deploying LLMs in semi-structured clinical assessment.",
+      "source": "https://underline.io/events/535/schedule/sessions/23315/lecture/167231-llamadrs-evaluating-open-source-llms-on-real-clinical-interviews-to-reason-or-not-to-reasonquestion",
+      "basis": "title-and-abstract",
+      "area": 14,
+      "reason": "Structured clinical assessment from psychiatric interviews."
+    },
+    {
+      "paperId": "9955-TACL",
+      "title": "OrthoEdit: Principled and Stable Knowledge Editing via Orthogonal Subspace Projection",
+      "abstract": "Large language models (LLMs) encode extensive factual knowledge through pretraining, yet often require targeted updates to correct errors, incorporate new information, or revise outdated facts. Recent approaches to knowledge editing, such as projection-based constraints, parameter pruning, and regularization, have proven effective in improving editing accuracy and stability. However, these methods often fail to maintain a clear separation between new edits and existing knowledge, leading to interference and degradation over time. We propose OrthoEdit, a principled framework for stable and scalable knowledge editing that ensures each parameter update is orthogonal to both pre-existing and previously edited knowledge, remains strictly non-interfering and preserving the integrity of prior edits. OrthoEdit enables exact subspace control through three coordinated steps: progressive null space refinement, principal subspace extraction, and orthogonal projection. This yields compact and well-aligned updates that systematically satisfy all accumulated constraints. Comprehensive experiments across diverse models and benchmarks demonstrate that OrthoEdit consistently enhances editing accuracy and robustness while preserving general capabilities—even through extended sequences of batched edits. Our code will be available.",
+      "source": "https://underline.io/events/535/schedule/sessions/23667/lecture/167232-orthoedit-principled-and-stable-knowledge-editing-via-orthogonal-subspace-projection",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Stable updates to factual knowledge through model editing."
+    },
+    {
+      "paperId": "9963-TACL",
+      "title": "Do Large Language Models Exhibit Spontaneous Rational Deception?",
+      "abstract": "Large Language Models (LLMs) are effective at deceiving when prompted to do so. Models that demonstrate better performance on reasoning tasks are also better at prompted deception. But under what conditions do they deceive spontaneously? This study evaluates spontaneous deception produced by LLMs in a preregistered experimental protocol using tools from signaling theory. We evaluated a range of 18 proprietary closed-source and open-source LLMs using modified 2x2 games (in the style of the Prisoner’s Dilemma) augmented with a phase in which they can freely communicate to the other agent using unconstrained language. This setup creates an opportunity to deceive, in conditions that vary in how useful deception might be to an agent’s rational self-interest. The results indicate that 1) all tested LLMs spontaneously misrepresent their actions in at least some conditions, 2) they are generally more likely to do so in situations in which deception would benefit them, and 3) models exhibiting better reasoning capacity overall tend to deceive at higher rates. Taken together, these results suggest a tradeoff between LLM reasoning capability and honesty. They also provide evidence of reasoning-like behavior in LLMs from a novel experimental configuration. Finally, they reveal certain contextual factors that affect whether LLMs will deceive or not.",
+      "source": "https://underline.io/events/535/schedule/sessions/23668/lecture/167233-do-large-language-models-exhibit-spontaneous-rational-deceptionquestion",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Spontaneous deception and strategic social behavior in language models."
+    },
+    {
+      "paperId": "10051-TACL",
+      "title": "Bridging Auxiliary Constraints to Resolve Instruction Following in Large Reasoning Models",
+      "abstract": "Large Reasoning Models (LRMs) have demonstrated impressive capabilities in many tasks, yet they struggle with reliably following multiple instructions, either by failing to satisfy individual constraints or by struggling to balance competing constraints simultaneously. We formalize this challenge as the Constraint Adherence Problem (CAP). This paper introduces a novel framework that addresses CAP by representing instructions as a structured knowledge graph of constraints. Our approach, Constraint Relationship Graph Completion (CRGC), explicitly models relationships between constraints, identifies adherence challenges, and discovers “bridge constraints” that help the model better focus on and reconcile requirements. Bridge constraints act as auxiliary instructions that make primary constraints more salient and compatible. Unlike existing approaches that enhance instruction following through general training methods, CRGC specifically improves constraint satisfaction by leveraging the model's own knowledge to create better pathways for generation. Experiments across three popular instruction following datasets demonstrate that our approach reduces constraint violations by 39% compared to standard prompting while maintaining reasoning abilities of large reasoning models.",
+      "source": "https://underline.io/events/535/schedule/sessions/23624/lecture/167234-bridging-auxiliary-constraints-to-resolve-instruction-following-in-large-reasoning-models",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Constraint satisfaction and instruction adherence in reasoning models."
+    },
+    {
+      "paperId": "10139-TACL",
+      "title": "Beyond Majority Voting: Agreement-Based Clustering to Model Annotator Perspectives in Subjective NLP Tasks",
+      "abstract": "Disagreement in annotation is a common phenomenon in the development of NLP datasets and serves as a valuable source of insight. While majority voting remains the dominant strategy for aggregating labels, recent work has explored modeling individual annotators to preserve their perspectives. However, modeling each annotator is resource-intensive and remains underexplored across various NLP tasks. We propose an agreement-based clustering technique to model the disagreement between the annotators. We conduct comprehensive experiments in 39 datasets in 18 typologically diverse languages, covering three subjective NLP tasks: sentiment analysis, emotion classification, and hate speech detection. We evaluate four aggregation approaches: majority vote, ensemble, multi-label, and multitask. The results demonstrate that agreement-based clustering can leverage the full spectrum of annotator perspectives and significantly enhance classification performance in subjective NLP tasks compared to majority voting and individual annotator modeling. Regarding the aggregation approach, the multi-label and multitask approaches are better for modeling clustered annotators than an ensemble and model majority vote.",
+      "source": "https://underline.io/events/535/schedule/sessions/23685/lecture/167235-beyond-majority-voting-agreement-based-clustering-to-model-annotator-perspectives-in-subjective-nlp-tasks",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Annotation disagreement, label aggregation and evaluation methodology."
+    },
+    {
+      "paperId": "10171-TACL",
+      "title": "Fodor and Pylyshyn's systematicity challenge still stands",
+      "abstract": "The recent successes of neural networks producing human-like language have caused significant stir in cognitive science, with many researchers arguing that classical puzzles about human cognition and challenges to artificial intelligence are being solved by neural networks. A notable case is the argument from systematicity due to Jerry Fodor and Zenon Pylyshyn, argues that humans displays systematic biconditional dependencies. For example, someone can understand the sentence \"John saw Mary” just in case that they understand the sentence \"Mary saw John.\" Symbolic systems account for this systematicity of language and thought immediately, while neural networks can't be guaranteed to be systematic. Several recent articles argue that this challenge has now been met by neural networks. In particular, Brenden Lake and Marco Baroni argue that their meta-learning for compositionality protocol matches and perhaps explains human systematicity. We demonstrate that these conclusions are premature. Among other results, we found that their model is entirely unable to learn rules that are even slightly out of distribution compared to their training data. Furthermore, their model behaves unsystematically even on many within-distribution problems. We conclude that Fodor and Pylyshyn's challenge to neural networks remains unmet.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/167236-fodor-and-pylyshyn-s-systematicity-challenge-still-stands",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Compositionality and systematicity of language and cognition."
+    },
+    {
+      "paperId": "10177-TACL",
+      "title": "SupraTok: Cross-Boundary Tokenization for Enhanced Language Model Performance",
+      "abstract": "Tokenization remains a fundamental yet underexplored bottleneck in natural language processing. We present SupraTok, a data-efficient approach to cross-boundary tokenization that achieves state-of-the-art compression with an order of magnitude less training data than prior methods. While recent work (SuperBPE) demonstrates that cross-boundary tokenization is viable with massive corpora (10GB+), SupraTok achieves equivalent or superior results using just 1GB through three synergistic innovations: curriculum-based pattern learning that prevents vocabulary collapse, entropy-driven data curation, and PMI-guided phrase discovery. In controlled experiments with identical training data, SupraTok outperforms standard BPE by 17.5% and SuperBPE by 1.8% in compression efficiency—while training 2.5× faster. At smaller vocabulary sizes where efficiency matters most for resource-constrained deployments, this advantage grows to 10.6%. Our full pipeline with entropy-driven curation achieves 22% improvement over BPE. Ablation analysis confirms that curriculum learning (+5.8%) and cross-boundary processing (+6.1%) provide the primary benefits, together yielding 16.8% total improvement over minimal BPE. Multilingual evaluation across 14 languages shows consistent gains averaging 33%. At GPT-2 scale (124M parameters), SupraTok yields 10.3% improvement on HellaSwag and 9.4% on MMLU; validation at 350M parameters confirms benefits persist with scale. By enabling cross-boundary tokenization for researchers without access to massive infrastructure, SupraTok provides a practical path to improved language model efficiency.",
+      "source": "https://underline.io/events/535/schedule/sessions/23672/lecture/167237-supratok-cross-boundary-tokenization-for-enhanced-language-model-performance",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Tokenization and vocabulary learning across word boundaries."
+    },
+    {
+      "paperId": "10201-TACL",
+      "title": "Common Objects Out-of-Context (COOCO): Investigating Multimodal Con- text and Semantic Scene Violations in Referential Communication",
+      "abstract": "Do Vision–Language Models (VLMs) learn to rely on scene context when generating references to objects? To address this question, we introduce the Common Objects Out-of-Context (COOCO) dataset and conduct experiments on several VLMs under different degrees of scene–object congruency and noise. We find that models leverage scene context adaptively, depending on scene-object semantic relatedness and noise level. After identifying consistent trends across models, we perform an in-depth behavioural and model attention analysis on a single representative model. This analysis shows that successful object categorisation is associated with increased mid-layer attention to the target and reveals a non-monotonic dependency on semantic fit, with attention dropping at moderate fit and increasing for both low and high fit. These results suggest that VLMs dynamically balance local and contextual information for reference generation. We will make our dataset, code and models available.",
+      "source": "https://underline.io/events/535/schedule/sessions/23670/lecture/167238-common-objects-out-of-context-cooco-investigating-multimodal-con-text-and-semantic-scene-violations-in-referential-communication",
+      "basis": "title-and-abstract",
+      "area": 1,
+      "reason": "Visual scene context and object reference generation in VLMs."
+    },
+    {
+      "paperId": "10215-TACL",
+      "title": "Hearing to Translate: The Effectiveness of Speech Modality Integration into LLMs",
+      "abstract": "As Large Language Models (LLMs) expand beyond text, integrating speech as a native modality has given rise to SpeechLLMs, which aim to translate spoken language directly, thereby bypassing traditional transcription-based pipelines. Whether this integration improves speech-to-text translation quality over established cascaded architectures, however, remains an open question. We present Hearing to Translate, the first comprehensive test suite rigorously benchmarking 5 state-of-the-art SpeechLLMs against 16 strong direct and cascade systems that couple leading speech foundation models (SFM), with multilingual LLMs. Our analysis spans 16 benchmarks, 13 language pairs, and 9 challenging conditions, including disfluent, noisy, and long-form speech. Across this extensive evaluation, we find that cascaded systems remain the most reliable overall, while current SpeechLLMs only match cascades in selected settings and SFMs lag behind both, highlighting that integrating an LLM, either within the model or in a pipeline, is essential for high-quality speech translation.",
+      "source": "https://underline.io/events/535/schedule/sessions/23672/lecture/167239-hearing-to-translate-the-effectiveness-of-speech-modality-integration-into-llms",
+      "basis": "title-and-abstract",
+      "area": 4,
+      "reason": "Speech modality integration and evaluation of speech-language models."
+    },
+    {
+      "paperId": "10243-TACL",
+      "title": "Generalizing Numerical Reasoning in Table Data through Operation Sketches and Self-Supervised Learning",
+      "abstract": "Numerical reasoning over expert-domain tables often exhibits high in-domain accuracy but limited robustness to domain shift. Models trained with supervised fine-tuning (SFT) on specific datasets tend to rely on header–operation shortcuts rather than structural reasoning. We introduce TaNOS, a continual pre-training framework comprising three components: (i) header anonymization to reduce lexical memorization, (ii) operation sketches that provide minimal structural cues, and (iii) self-supervised pretraining that constructs correctness-guaranteed program–question pairs from given tables in a program-first manner. By decoupling domain semantics and numerical operation structure, TaNOS improves the transferability of numerical reasoning. Applied to an 8B instruction-tuned model, TaNOS achieves 80.13% execution accuracy on FinQA with only 10% train data, outperforming SFT baseline (73.97%) with full train data and proprietary models such as GPT-5, Gemini-2.5-Pro. Furthermore, in the domain-shift experiments, TaNOS displays nearly-negligible cross-domain gap (<2pp) when standard SFT shows over 10pp gap. These results suggest that structural guidance with operation sketches, header-agnostic representations, and correctness-guaranteed self-supervision can improve the robustness of numerical reasoning across diverse expert-domain tables.",
+      "source": "https://underline.io/events/535/schedule/sessions/23665/lecture/167240-generalizing-numerical-reasoning-in-table-data-through-operation-sketches-and-self-supervised-learning",
+      "basis": "title-and-abstract",
+      "area": 9,
+      "reason": "Numerical question answering and structural reasoning over tables."
+    },
+    {
+      "paperId": "10281-TACL",
+      "title": "StructTune: Structured Sparse Fine-Tuning for Efficient Adaptation of Large Language Models",
+      "abstract": "Parameter-efficient fine-tuning (PEFT) methods like LoRA have become crucial for adapting large language models under computational constraints. While LoRA focuses on dense weight updates, recent sparse methods propose updating only selected portions of pretrained weights. However, these sparse approaches predominantly use element-wise parameter selection, overlooking inherent structured patterns in LLM weight distributions. We introduce StructTune, a PEFT method that uses entire rows or columns as basic units for identifying task-relevant sparse components. Our analysis reveals LLaMA models exhibit distinct structured patterns in pretrained weights, with fine-tuning updates showing structured amplification rather than uniform changes. We develop a sensitivity-based framework to efficiently identify task-relevant weight structures without full fine-tuning. Experiments on mathematical reasoning and code generation demonstrate StructTune's structured sparse updates outperform both dense LoRA and element-wise sparse methods while maintaining computational efficiency. Ablation studies validate our sensitivity-based selection strategy, confirming the efficacy of exploiting structured weight patterns in PEFT.",
+      "source": "https://underline.io/events/535/schedule/sessions/23694/lecture/167241-structtune-structured-sparse-fine-tuning-for-efficient-adaptation-of-large-language-models",
+      "basis": "title-and-abstract",
+      "area": 2,
+      "reason": "Parameter-efficient adaptation through structured sparse updates."
+    },
+    {
+      "paperId": "10349-TACL",
+      "title": "From Benchmarks to Skills: Low-Rank Factors for LLM Evaluation",
+      "abstract": "Current evaluations of large language models (LLMs) rely heavily on a growing collection of benchmarks and on aggregate benchmark scores, yet it remains unclear what this comparison actually captures, and what these scores reveal about models' underlying capabilities. Here, we propose a new paradigm for LLM evaluation, by asking whether benchmark performance reflects many independent abilities, or rather relies on a small number of shared dimensions. To answer this, we propose to we apply Factor Analysis (FA) to a massive performance matrix of LLMs versus benchmarks (60×44) revealing an intrinsically low-rank structure of that matrix. That is, a small number of latent factors captures most of the structure in the full task space. This low-rank geometry reveals substantial redundancy across existing tasks and explains why many benchmarks appear to be measuring overlapping abilities. We further show that these latent factors correspond to coherent, skill-like, dimensions of LLM behavior. Leveraging this latent skill-space, we deliver three practical tools for LLM evaluation and downstream users: (i) identifying redundant tasks, (ii) profiling new models using a small subset of tasks, and (iii) selecting models aligned with desired skill profiles. Our method provides a solid alternative to the de-facto standard of a single aggregate score, and establishes an interpretable and practical framework for understanding and benchmarking LLM core capabilities.",
+      "source": "https://underline.io/events/535/schedule/sessions/23675/lecture/167242-from-benchmarks-to-skills-low-rank-factors-for-llm-evaluation",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Benchmark validity and latent factors underlying model evaluation."
+    },
+    {
+      "paperId": "10361-TACL",
+      "title": "CUS-QA: Local-Knowledge-Oriented Open-Ended Question Answering Dataset",
+      "abstract": "We introduce CUS-QA, a benchmark for evaluation of open-ended regional question answering that encompasses both textual and visual modalities. We also provide strong baselines using state-of-the-art large language models (LLMs). Our dataset consists of manually curated questions and answers grounded in Wikipedia, created by native speakers from Czechia, Slovakia, and Ukraine, with accompanying English translations. It includes both purely textual questions and those requiring visual understanding. We evaluate state-of-the-art LLMs through prompting and add human judgments of answer correctness. Using these human evaluations, we analyze the reliability of existing automatic evaluation metrics. Our baseline results show that even the best open-weight LLMs achieve only over 40% accuracy on textual questions and below 30% on visual questions. LLM-based evaluation metrics show strong correlation with human judgment, while traditional string-overlap metrics perform surprisingly well due to the prevalence of named entities in answers.",
+      "source": "https://underline.io/events/535/schedule/sessions/23676/lecture/167243-cus-qa-local-knowledge-oriented-open-ended-question-answering-dataset",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Region-specific knowledge in Czech, Slovak and Ukrainian contexts."
+    },
+    {
+      "paperId": "10393-TACL",
+      "title": "Understanding Benchmark Language Under Weakened Formal Semantics",
+      "abstract": "State-of-the-art NLP benchmarks require interpretation of natural-language that specify conditions, procedures, and exceptions, often relying on implicit assumptions and external knowledge. Constructing complete semantic representations with proof-theoretic guarantees is frequently impractical at scale, and purely text-based reasoning offers limited means of inspection. This paper asks how much understanding of benchmark language can be achieved when formal semantic guarantees are weakened. We investigate this question by extracting computables: executable representations whose runtime behavior provides operational evidence of semantic adequacy, including executability, execution traces, and runtime failures. We induce and iteratively refine computables for benchmark instances using retrieval from external knowledge. Across mathematical reasoning, multi-step reasoning, causal inference, and rule- and exception-heavy legal and biomedical benchmarks, we find that the proposed approach consistently exceeds text-only reasoning and one-shot code execution. Beyond accuracy, our analyses show that these computables provide scalable, inspectable semantic evidence: they expose which conditions and exceptions benchmark language forces into executable form, offering a practical bridge between proof-oriented semantics and purely textual reasoning.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/167244-understanding-benchmark-language-under-weakened-formal-semantics",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Executable representations for complex benchmark reasoning."
+    },
+    {
+      "paperId": "10467-TACL",
+      "title": "Value Drifts: Tracing Value Alignment During LLM Post-Training",
+      "abstract": "As LLMs occupy an increasingly important role in society, they are more and more confronted with questions that require them not only to draw on their general knowledge but also to align with certain human value systems. Therefore, studying the alignment of LLMs with human values has become a crucial field of inquiry. Prior work, however, mostly focuses on evaluating the alignment of fully trained models, overlooking the training dynamics by which models learn to express human values. In this work, we investigate how and at which stage value alignment arises during the course of a model's post-training. Our analysis disentangles the effects of post-training algorithms and datasets, measuring both the magnitude and time of value drifts during training. Experimenting with Llama-3 and Qwen-3 models of different sizes and popular supervised fine-tuning (SFT) and preference optimization datasets and algorithms, we find that the SFT phase generally establishes a model's values, and subsequent preference optimization rarely re-aligns these values. Furthermore, using a synthetic preference dataset that enables controlled manipulation of values, we find that different preference optimization algorithms lead to different value alignment outcomes, even when preference data is held constant. Our findings provide actionable insights into how values are learned during post-training and help to inform data curation, as well as the selection of models and algorithms for preference optimization to improve model alignment to human values.",
+      "source": "https://underline.io/events/535/schedule/sessions/23636/lecture/167245-value-drifts-tracing-value-alignment-during-llm-post-training",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "How human values expressed by models change during post-training."
+    },
+    {
+      "paperId": "10481-TACL",
+      "title": "Probabilistic Inferences in Humans and LLMs",
+      "abstract": "Human reasoning often involves working over limited information to arrive at probabilistic conclusions. In its simplest form, this involves making an inference that is not strictly entailed by a premise, but rather only likely given the premise. While reasoning LLMs have demonstrated strong performance on logical and mathematical tasks, their behavior on such open-ended, non-deterministic inferences remains largely unexplored. We introduce PROBCOPA, a dataset of 210 handcrafted probabilistic inferences in English, each annotated for inference likelihood by 25–30 human participants. We find that human responses are graded and varied, revealing probabilistic judgments of the inferences in our dataset. Comparing these judgments with responses from eight state-of-the-art reasoning LLMs, we show that models consistently fail to produce human-like distributions. Finally, analyzing LLM reasoning chains, we find evidence of a common reasoning pattern used to evaluate such inferences. Our findings reveal persistent differences between humans and LLMs, and underscore the need to evaluate reasoning beyond deterministic settings.",
+      "source": "https://underline.io/events/535/schedule/sessions/23643/lecture/167246-probabilistic-inferences-in-humans-and-llms",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Comparing probabilistic inferences and reasoning chains with human judgments."
+    },
+    {
+      "paperId": "10497-TACL",
+      "title": "Breaking the Code: Security Assessment of AI Code Agents Through Systematic Jailbreaking Attacks",
+      "abstract": "Code-capable large language model (LLM) agents are embedded in software engineering workflows where they can read, write, and execute code, raising \"jailbreak\" stakes beyond text-only settings. Prior evaluations emphasize refusal or harmful-text detection, leaving open whether agents compile and run malicious programs. We present JAWS-Bench (Jailbreaks Across WorkSpaces), a benchmark spanning three escalating workspace regimes mirroring attacker capability: empty (JAWS-0), single-file (JAWS-1), and multi-file (JAWS-M). We pair it with a hierarchical, executable-aware Judge Framework that tests (i) compliance, (ii) attack success, (iii) syntactic correctness, and (iv) runtime executability to measure deployable harm. Across seven LLM backends from five families, prompt-only attacks in JAWS-0 achieve 61% compliance; 58% are harmful, 52% parse, and 27% run end-to-end. In JAWS-1, compliance reaches ~100% for stronger models with a mean ASR (Attack Success Rate) ≈71%; JAWS-M raises mean ASR to ≈75%, with 32% runnable attack code. Wrapping an LLM in an agent increases ASR by 1.6×, by overturning initial refusals during planning and tool use. Similar trends hold for OpenHands, SWE-Agent, and OpenAI Codex, suggesting our JAWS-Bench is agent-agnostic. Category analyses identify which attack classes are most vulnerable and deployable, motivating execution-aware defenses and refusal-preserving agent designs.",
+      "source": "https://underline.io/events/535/schedule/sessions/23315/lecture/167247-breaking-the-code-security-assessment-of-ai-code-agents-through-systematic-jailbreaking-attacks",
+      "basis": "title-and-abstract",
+      "area": 8,
+      "reason": "Jailbreak attacks and security evaluation of code-capable agents."
+    },
+    {
+      "paperId": "10565-TACL",
+      "title": "Vertical Routing: A Cost-Efficient Collaboration Routing Framework",
+      "abstract": "Routing Large and Small Language Models (LLMs & SLMs) is commonly framed as query-level difficulty prediction, yet lightweight routers are often unreliable and stronger evaluators introduce non-trivial overhead. We propose Vertical Routing, a stage-level collaboration framework that avoids monolithic difficulty prediction by allocating the large model to critical sub-tasks and delegating the remaining generation to a small model. Vertical Routing instantiates two templates: (i) domain-specific templates that decompose a task into ordered stages with criticality scores , and (ii) a robust default template that follows a prefix-first prior for general queries. Under a token budget, we allocate large-model capacity to the most critical stages, or to a budgeted prefix under the default template. Experiments show that Vertical Routing outperforms the strongest baseline (RouterDC) by 2.0 points in the averaged metric, while significantly reducing token usage by 48.9% and large-model output share by 41.7%. Additionally, it enhances stability by lowering the standard deviation by 87.5%. These results highlight its advantages in accuracy, efficiency, and robustness.",
+      "source": "https://underline.io/events/535/schedule/sessions/23668/lecture/167248-vertical-routing-a-cost-efficient-collaboration-routing-framework",
+      "basis": "title-and-abstract",
+      "area": 15,
+      "reason": "Reducing inference cost by routing generation between large and small models."
+    },
+    {
+      "paperId": "10587-TACL",
+      "title": "Early Risk Prediction with Temporally and Contextually Grounded Clinical Language Processing",
+      "abstract": "Clinical notes in Electronic Health Records (EHRs) capture rich temporal information on events, clinician reasoning, and lifestyle factors often missing from structured data. Leveraging them for predictive modeling can be impactful for timely identification of chronic diseases. However, they present core natural language processing (NLP) challenges: long text, irregular event distribution, complex temporal dependencies, privacy constraints, and resource limitations. We present two complementary methods for temporally and contextually grounded risk prediction from longitudinal notes. First, we introduce HITGNN, a hierarchical temporal graph neural network that integrates intranote temporal event structures, inter-visit dynamics, and medical knowledge to model patient trajectories with fine-grained temporal granularity. Second, we propose REVEAL, a lightweight, test-time framework that distills the reasoning of LLMs into smaller verifier models. Applied to opportunistic screening for Type 2 Diabetes (T2D) using temporally realistic cohorts curated from private and public hospital corpora, HITGNN achievesthe highest predictive accuracy—especially for near-term risk—while preserving privacyand limiting reliance on large proprietary models. REVEAL enhances sensitivity totrue T2D cases and retains explanatory reasoning. Our ablations confirm the value of temporal structure and knowledge augmentation, and fairness analysis shows HITGNN performs more equitably across subgroups.",
+      "source": "https://underline.io/events/535/schedule/sessions/23608/lecture/167249-early-risk-prediction-with-temporally-and-contextually-grounded-clinical-language-processing",
+      "basis": "title-and-abstract",
+      "area": 14,
+      "reason": "Risk prediction from longitudinal clinical notes and health records."
+    },
+    {
+      "paperId": "10613-TACL",
+      "title": "LMEnt: A Suite for Analyzing Knowledge in Language Models from Pretraining Data to Representations",
+      "abstract": "Language models (LMs) increasingly drive real-world applications that require world knowledge. However, the internal processes through which models turn data into representations of knowledge and beliefs about the world are poorly understood. To facilitate such studies, we present LMEnt, a suite including (1) a knowledge-rich pretraining corpus, fully annotated with entity mentions based on Wikipedia, (2) an entity-based retrieval method over pretraining data that outperforms existing tools by as much as 80.4%, and (3) 12 pretrained LMs with up to 1B parameters and 4K intermediate checkpoints, with comparable performance to popular open-source models on knowledge tasks. Together, these resources provide a controlled environment for analyzing connections between entity mentions in pretraining data and downstream performance. We show the utility of LMEnt by studying knowledge acquisition over training, finding that entity co-occurrence and mention forms—which are difficult to study with existing tools—affect learning trends. Moreover, as LMs form stronger associations between entities, their facts are harder to edit in-context, whereas inconsistencies in model predictions over training are indicative of editing success. We release LMEnt to support studies of knowledge in LMs, including knowledge representations, plasticity, editing, attribution, hallucinations, and learning dynamics.",
+      "source": "https://underline.io/events/535/schedule/sessions/23635/lecture/167250-lment-a-suite-for-analyzing-knowledge-in-language-models-from-pretraining-data-to-representations",
+      "basis": "title-and-abstract",
+      "area": 9,
+      "reason": "Entity-grounded knowledge acquisition and retrieval from pretraining data."
+    },
+    {
+      "paperId": "10641-TACL",
+      "title": "RELIC: Evaluating Complex Reasoning via the Recognition of Languages In-Context",
+      "abstract": "Large language models (LLMs) are increasingly used to solve complex tasks where they must retrieve and compose many pieces of in-context information in long reasoning chains. For many real-world tasks it is hard to accurately gauge how model performance and strategy change as task complexity grows. To evaluate models' complex reasoning capability in a scalable and verifiable way, we introduce RELIC (Recognition of Languages In-Context), a framework that evaluates an LLM's ability to decide whether a given string belongs to the context-free language (CFL) generated by a grammar presented in-context. CFL recognition allows us to modulate the intrinsic complexity of the problem by varying grammar size and string length and translate this asymptotic complexity into predictions for ideal LLM performance. We find that even the most advanced reasoning models fail on RELIC, failing to appropriately scale their inference compute to keep pace with task difficulty and even reducing the number of reasoning tokens used. We find that these decreases in compute accompany changes in reasoning strategy, as models move from identifying and implementing algorithmic solutions to guessing. For reasoning models which don't return full traces, this manifests in models \"quiet quitting\" on hard tasks.",
+      "source": "https://underline.io/events/535/schedule/sessions/23636/lecture/167251-relic-evaluating-complex-reasoning-via-the-recognition-of-languages-in-context",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Evaluating complex reasoning through formal-language recognition."
+    },
+    {
+      "paperId": "10697-TACL",
+      "title": "In Generative AI We (Dis)Trust? Computational Analysis of Trust and Distrust in Reddit Discussions",
+      "abstract": "The rise of generative AI (GenAI) has impacted many aspects of human life. As these systems become embedded in everyday practices, understanding public trust in them also becomes essential for responsible adoption and governance. Prior work on trust in AI has largely drawn from psychology and human–computer interaction, but there is a lack of computational, large-scale, and longitudinal approaches to measuring trust and distrust in GenAI and large language models (LLMs). This paper presents the first computational study of Trust and Distrust in GenAI, using a multi-year Reddit dataset (2022–2025) spanning 39 subreddits and 230,576 posts. Crowd-sourced annotations of a representative sample were combined with classification models to scale analysis. We find that Trust and Distrust are nearly balanced over time, although Trust modestly outweighs Distrust with shifts around major model releases. Technical performance and usability dominate as dimensions, while personal experience is the most frequent reason shaping attitudes. Distinct patterns also emerge across trustors (e.g., experts, ethicists, general users). Our results provide a methodological framework for large-scale Trust analysis and insights into evolving public perceptions of GenAI.",
+      "source": "https://underline.io/events/535/schedule/sessions/23610/lecture/167252-in-generative-ai-we-dis-trustquestion-computational-analysis-of-trust-and-distrust-in-reddit-discussions",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Public trust and distrust in generative AI as social phenomena."
+    },
+    {
+      "paperId": "10717-TACL",
+      "title": "R1-T1: Fully Incentivizing Translation Capability in LLMs via Reasoning Learning",
+      "abstract": "Despite recent breakthroughs in reasoning-enhanced large language models (LLMs), incorporating inference-time reasoning into application tasks such as machine translation (MT), where human translators naturally employ structured, multi-layered reasoning chain-of-thoughts (CoTs), is yet underexplored. Existing methods either design a fixed CoT tailored for a specific MT sub-task (e.g., literature translation), or rely on synthesizing CoTs unaligned with humans and supervised fine-tuning (SFT) prone to overfitting, limiting their adaptability to diverse translation scenarios. This paper introduces R1-Translator (R1-T1), a novel framework to achieve inference-time reasoning for general MT via reinforcement learning (RL) with human-aligned CoTs comprising six common patterns. Our approach pioneers three innovations: (1) verifying reasoning-based translation in various MT scenarios (e.g., multilingual MT, domain MT) unseen from the training phase; (2) formalizing six expert-curated CoT templates that mirror hybrid human strategies like context-aware paraphrasing and round-trip translation; and (3) enabling more flexible CoTs through an RL stage after cold-start. Both human and automatic evaluation results indicate a steady translation quality improvement in a total of 10+ languages and 40+ translation directions on Flores-101 test set and four domain-specific MT tasks, especially on the languages unseen from training.",
+      "source": "https://underline.io/events/535/schedule/sessions/23311/lecture/167253-r1-t1-fully-incentivizing-translation-capability-in-llms-via-reasoning-learning",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Machine translation improved through human-aligned reasoning."
+    },
+    {
+      "paperId": "10789-TACL",
+      "title": "ConspirED: A Dataset for Cognitive Traits of Conspiracy Theories and Large Language Model Safety",
+      "abstract": "Conspiracy theories erode public trust in science and institutions while resisting debunking by evolving and absorbing counter-evidence. As AI-generated misinformation becomes increasingly sophisticated, understanding the rhetorical patterns in conspiratorial content is important for developing interventions such as targeted prebunking and assessing AI vulnerabilities. We introduce ConspirED (CONSPIR Evaluation Dataset), which captures the cognitive traits of conspiratorial ideation in multi-sentence excerpts (80–120 words) from online conspiracy articles, annotated using the CONSPIR cognitive framework. ConspirED is the first dataset of conspiratorial content annotated for general cognitive traits. Using ConspirED, we (i) develop computational models that identify conspiratorial traits and determine the dominant traits in text excerpts, and (ii) evaluate large language model (LLM) robustness to conspiratorial inputs. We find that both are misaligned by conspiratorial content, producing output that mirrors input reasoning patterns, even when successfully deflecting comparable fact-checked misinformation.",
+      "source": "https://underline.io/events/535/schedule/sessions/23670/lecture/167254-conspired-a-dataset-for-cognitive-traits-of-conspiracy-theories-and-large-language-model-safety",
+      "basis": "title-and-abstract",
+      "area": 3,
+      "reason": "Conspiratorial misinformation, its detection and effects on model factual reliability."
+    },
+    {
+      "paperId": "10793-TACL",
+      "title": "CURE: Cultural Value-based Reasoning for Enhancing the Cultural Adaptability of Large Language Models",
+      "abstract": "While large language models (LLMs) are widely used across cultures, they often generate culturally inappropriate responses in unfamiliar cultural contexts due to biases embedded in their training data. Existing approaches primarily rely on expanding static cultural knowledge, which fails to capture the inherently relative and context-dependent nature of culture. In this paper, we propose a Cultural value-based Reasoning (CURE) framework that interprets behaviors through underlying cultural value systems. In addition, we integrate CURE into LLMs via Chain-of-Thought (CoT) distillation, referred to as CURE-distillation, to internalize culturally grounded reasoning. Experimental results show that models trained with CURE-distillation improve cultural adaptability, enabling them to produce culturally aligned ethical judgments across diverse cultural scenarios. These results suggest that strengthening sociocultural reasoning capabilities can substantially improve the cultural adaptability of LLMs.",
+      "source": "https://underline.io/events/535/schedule/sessions/23670/lecture/167255-cure-cultural-value-based-reasoning-for-enhancing-the-cultural-adaptability-of-large-language-models",
+      "basis": "title-and-abstract",
+      "area": 7,
+      "reason": "Cultural values and culturally appropriate reasoning."
+    },
+    {
+      "paperId": "10907-TACL",
+      "title": "Lightweight Latent Reasoning for Narrative Tasks",
+      "abstract": "Large language models (LLMs) tackle complex tasks by generating long chains of thought or 'reasoning traces' that act as latent variables in the generation of an output given a query. A model's ability to generate such traces can be optimized with reinforcement learning (RL) to improve their utility in predicting an answer. This optimization comes at a high computational cost, especially for narrative-related tasks that involve retrieving and processing many tokens. To this end, we propose LiteReason, a latent reasoning method that can be interleaved with standard token sampling and easily combined with RL techniques. LiteReason employs a lightweight Reasoning Projector module, trained to produce continuous latent tokens that help the model 'skip' reasoning steps. During RL, the policy model decides when to activate the projector, switching between latent and discrete reasoning as needed. Experimental results on plot hole detection and book chapter generation show that our method outperforms latent reasoning baselines and comes close to matching non-latent RL training, while reducing final reasoning length by 77–92%. Overall, LiteReason guides RL training to a more efficient part of the performance-computation tradeoff curve.",
+      "source": "https://underline.io/events/535/schedule/sessions/23668/lecture/167256-lightweight-latent-reasoning-for-narrative-tasks",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Efficient latent chain-of-thought reasoning for narrative tasks."
+    },
+    {
+      "paperId": "10951-TACL",
+      "title": "Model Directions, Not Words: Mechanistic Topic Models Using Sparse Autoencoders",
+      "abstract": "Traditional topic models are effective at uncovering latent themes in large text collections. However, due to their reliance on bag-of-words representations, they struggle to capture semantically abstract features. While some neural variants use richer representations, they are similarly constrained by expressing topics as word lists, which limits their ability to articulate complex topics. We introduce Mechanistic Topic Models (MTMs), a class of topic models that operate on interpretable features learned by sparse autoencoders (SAEs). By defining topics over this semantically rich space, MTMs can reveal deeper conceptual themes with expressive feature descriptions. Moreover, uniquely among topic models, MTMs enable controllable text generation using topic steering vectors. To properly evaluate MTM topics against word list approaches, we propose topic judge, an LLM-based pairwise comparison evaluation framework. Across eight datasets, MTMs match or exceed traditional and neural baselines on coherence metrics, are consistently preferred by topic judge, and enable effective LLM steering.",
+      "source": "https://underline.io/events/535/schedule/sessions/23694/lecture/167257-model-directions-not-words-mechanistic-topic-models-using-sparse-autoencoders",
+      "basis": "title-and-abstract",
+      "area": 9,
+      "reason": "Organizing document collections into conceptual topics using interpretable representations."
+    },
+    {
+      "paperId": "10995-TACL",
+      "title": "ORCA: Open-ended Response Correctness Assessment for Audio Question Answering",
+      "abstract": "Evaluating open-ended responses from large audio language models (LALMs) is challenging, as human annotators frequently disagree due to ambiguity, partial correctness, and subjective judgment. We present ORCA (Open-ended Response Correctness Assessment), a lightweight framework that fine-tunes small open-weight LLMs (1–3B parameters) to predict both expected correctness and annotation uncertainty—overlooked by existing methods. We employ a three-stage annotation pipeline combining human judgment, structured feedback, and iterative human-AI correction, yielding 9,663 annotations across 3,699 question-answer pairs from 15 LALMs on three audio QA benchmarks (Krippendorff's alpha of 0.82). ORCA achieves 0.91 Spearman correlation with mean human judgments on seen benchmarks and 0.85 on unseen MMAU-Pro, outperforming LLM-judge baselines including Gemini-2.5-Flash at a fraction of the cost. Its predicted variance reliably tracks human disagreement, and our curriculum training scheme combining synthetic and human-annotated data proves highly effective for training and generalization.",
+      "source": "https://underline.io/events/535/schedule/sessions/23670/lecture/167258-orca-open-ended-response-correctness-assessment-for-audio-question-answering",
+      "basis": "title-and-abstract",
+      "area": 4,
+      "reason": "Assessing correctness and uncertainty in audio question answering."
+    },
+    {
+      "paperId": "11114-TACL",
+      "title": "Emergent Communication in Continuous Worlds: Self-Organisation of Conceptually Grounded Vocabularies at Scale",
+      "abstract": "This paper introduces a general methodology through which a population of autonomous agents can converge on a linguistic convention that enables them to refer to arbitrary entities in their environment. The linguistic convention emerges in a decentralised manner through local communicative interactions between pairs of agents drawn from the population. The emergent convention consists of associations between symbolic labels (word forms) and subsymbolic concept representations (word meanings) that are grounded in a continuous feature space. We confirm the generality and scalability of the method through its evaluation on a wide and diverse selection of 37 publicly available datasets. Through a range of experiments, we demonstrate the robustness of the method against perceptual variation, including in heteromorphic populations, as well as the ability of the emergent conventions to self-adapt to changes in the environment.",
+      "source": "https://underline.io/events/535/schedule/sessions/23687/lecture/167259-emergent-communication-in-continuous-worlds-self-organisation-of-conceptually-grounded-vocabularies-at-scale",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Emergence of linguistic conventions and grounded vocabularies."
+    },
+    {
+      "paperId": "11221-TACL",
+      "title": "GTPO: Stabilizing Group Relative Policy Optimization via Gradient and Entropy Control",
+      "abstract": "Group Relative Policy Optimization (GRPO) is a promising policy-based approach for Large Language Model alignment, yet its performance is often limited by training instability and suboptimal convergence. In this paper, we identify and analyze two main GRPO issues: (i) the token-level penalization, where valuable tokens shared across different responses receive contradictory feedback signals, leading to conflicting gradient updates that can reduce their likelihood; and (ii) the policy collapse, where negatively rewarded completions may penalize confident responses and shift model decisions toward unlikely tokens, destabilizing training process. To address these issues we introduce GTPO (Group-relative Trajectory-based Policy Optimization), which prevents conflicting gradients on valuable tokens by skipping negative updates while amplifying positive ones and filters out completions whose entropy exceeds a provable threshold, to prevent policy collapse. By omitting KL-divergence regularization, GTPO eliminates the reference model while achieving superior stability and performance over GRPO and DAPO. Extensive evaluations across GSM8K, MATH, R1, AIME 2024–2025, AMC 2023, and MMLU validate these gains.",
+      "source": "https://underline.io/events/535/schedule/sessions/23672/lecture/167260-gtpo-stabilizing-group-relative-policy-optimization-via-gradient-and-entropy-control",
+      "basis": "title-and-abstract",
+      "area": 11,
+      "reason": "Stabilizing group-relative reinforcement learning for language models."
+    },
+    {
+      "paperId": "11242-TACL",
+      "title": "STEMTOX: From Social Tags to Fine-Grained Toxic Meme Detection\\\\ via Entropy-Guided Multi-Task Learning",
+      "abstract": "Memes, as a widely used mode of online communication, often serve as vehicles for spreading harmful content. However, limitations in data accessibility and the high costs of dataset curation hinder the development of robust meme moderation systems. To address this challenge, in this work, we introduce a first-of-its-kind dataset – TOXICTAGS – consisting of 6,300 real-world meme-based posts annotated in two stages: (i) binary classification into toxic and normal, and (ii) fine-grained labelling of toxic memes as hateful, dangerous, or offensive. A key feature of this dataset is that it includes socially relevant tags associated with the original posts, enhancing the context of each meme. In addition, we propose a novel entropy-guided multi-tasking framework – STEMTOX – that leverages these socially grounded tags alongside visual and textual inputs within a robust classification framework. Experimental results show that incorporating these tags substantially enhances the performance of state-of-the-art VLMs in toxicity detection tasks. Our contributions offer a novel and scalable foundation for improved content moderation in multimodal online environments. Warning: Contains potentially toxic contents.",
+      "source": "https://underline.io/events/535/schedule/sessions/23672/lecture/167261-stemtox-from-social-tags-to-fine-grained-toxic-meme-detection-via-entropy-guided-multi-task-learning",
+      "basis": "title-and-abstract",
+      "area": 1,
+      "reason": "Multimodal meme understanding and harmful meme detection, matching the Atlas placement of this topic."
+    },
+    {
+      "paperId": "5210-MAIN",
+      "title": "Q-Bimodal Attention: Prefix and Tail Dispatch for Efficient Tree-Structured LLM Decoding",
+      "abstract": "Tree-structured decoding workloads generate many continuations from a shared context, causing redundant KV-prefix reads and inefficient attention execution. We observe that tree attention is query-bimodal: shared prefixes favor wide prefill-style kernels, while branch-specific tails favor decode-native execution. We propose a fixed-cardinality dispatcher that selects between two execution strategies: a fused prefill-style tail strategy and a decode-native tail strategy, using a calibrated cost model. This keeps the dispatch space small while adapting to prefix length, batch size, and tail shape. On H100 GPUs with Llama-3.2-1B, Llama-3.1-8B and Llama-3-70B, our method consistently outperforms paged decoding, fixed shared-prefix execution, and existing dynamic tree-attention planning, achieving up to 6.74× over PagedAttention and up to 2.73× over the strongest competing baseline.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/166660-q-bimodal-attention-prefix-and-tail-dispatch-for-efficient-tree-structured-llm-decoding",
+      "basis": "title-and-abstract",
+      "area": 15,
+      "reason": "Efficient attention execution and inference for tree-structured decoding."
+    },
+    {
+      "paperId": "6620-MAIN",
+      "title": "The Necessity of Rational Grounding in Surprisal Theory",
+      "abstract": "Surprisal theory holds that the human processing difficulty of a linguistic unit is an affine function of its surprisal in context under some language model. I argue this claim is tautological, i.e., for any non-negative difficulty measure over units in context, there exists a language model whose surprisal is an affine function of it under mild technical conditions. Therefore, because any pattern of difficulty is consistent with some language model, without an additional constraint on the language model itself, surprisal theory makes no falsifiable predictions. I further claim that the tautology was obscured by an assumption implicit in two decades of psycholinguistic work – that the language model relevant for studying human sentence processing is the distribution that generated the training corpus. Recent empirical work, however, has undermined this assumption, demonstrating that better corpus models can be worse predictors of processing difficulty. I conclude that breaking the tautology requires a rationalist intervention, i.e., the language models used for the study of human sentence processing must be derived from an independently motivated model of the comprehender, which could be based on, for instance, memory constraints or processing goals, and that, crucially, does not depend on the behavioral data surprisal theory is meant to explain.",
+      "source": "https://underline.io/events/535/schedule/sessions/23669/lecture/166224-the-necessity-of-rational-grounding-in-surprisal-theory",
+      "basis": "title-and-abstract",
+      "area": 6,
+      "reason": "Psycholinguistic theory of surprisal and human processing difficulty."
+    },
+    {
+      "paperId": "1725-FIND",
+      "title": "CLBench-V: Evaluating Multimodal Context Learning from Grounding to Knowledge Acquisition",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 1,
+      "reason": "Multimodal context learning and visual grounding; title-only decision."
+    },
+    {
+      "paperId": "1727-FIND",
+      "title": "Multilingual Coreference Resolution via Cycle-Consistent Machine Translation",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 6,
+      "reason": "Multilingual coreference resolution using machine translation; title-only decision."
+    },
+    {
+      "paperId": "2677-FIND",
+      "title": "From Fact Overwriting to Knowledge Evolution: Causal Editing via On-Policy Self-Distillation",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 3,
+      "reason": "Causal knowledge editing and factual updates; title-only decision."
+    },
+    {
+      "paperId": "7609-FIND",
+      "title": "Neuron Level Analysis of Large Language Model in Legal Domain Reasoning",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 3,
+      "reason": "Analysis of model reasoning in the legal domain; title-only decision."
+    },
+    {
+      "paperId": "8977-FIND",
+      "title": "Beyond Chunk-Local Extraction: Cross-Chunk Graph Augmentation for GraphRAG",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 9,
+      "reason": "Graph augmentation for retrieval-augmented generation; title-only decision."
+    },
+    {
+      "paperId": "9475-FIND",
+      "title": "EQL-Act: Evidence Query Language Guided Scientific Operation Acting for Scientific VQA",
+      "source": "data/papers.json",
+      "basis": "title",
+      "area": 1,
+      "reason": "Scientific visual question answering and evidence-guided actions; title-only decision."
+    }
+  ],
+  "posterAliases": [
+    {
+      "session": "E",
+      "board": 371,
+      "title": "Scale Doesn’t Compensate for the Gricean Maxims: The Impact of Reporting Bias on Vision-Language Reasoning",
+      "paperId": "9295-TACL",
+      "reason": "The handbook uses the earlier title about scale, Gricean maxims and reporting bias; the programme title and abstract describe the same VLM reporting-bias study. This alias supplies only a local area, not a verified board identity."
+    }
+  ]
+}

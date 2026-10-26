@@ -4,7 +4,8 @@ import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.
 import {createAnalytics} from '../analytics.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from './camera.mjs';
-import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic, AREA_COLORS} from './topics.mjs';
+import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from './topics.mjs';
+import {AREA_COLORS} from '../atlas.mjs';
 
 const $ = selector => document.querySelector(selector);
 const svg = $('#floor-map');
@@ -100,7 +101,7 @@ function renderTopicControls() {
   $('#topics-toggle').disabled = !available;
   $('#topics-toggle').setAttribute('aria-pressed', String(topicsEnabled && available));
   $('#topic-filters').hidden = $('#topic-browse').hidden = !topicsEnabled || !available;
-  if (topics) $('#topics-note').textContent = available ? `Inferred · ${choices.unclassified} unclassified` : 'Topics unavailable for this session.';
+  if (topics) $('#topics-note').textContent = available ? `Inferred · ${choices.local} locally assigned${choices.unclassified ? ` · ${choices.unclassified} unclassified` : ''}` : 'Topics unavailable for this session.';
   if (!topicsEnabled || !available) return;
   const option = (parent, value, label) => {
     const item = document.createElement('option'); item.value = value; item.textContent = label; parent.append(item);
@@ -133,9 +134,9 @@ function topicLabel(entry) {
   const swatch = document.createElement('span'); swatch.className = 'topic-swatch';
   swatch.style.backgroundColor = topic.color; swatch.setAttribute('aria-hidden','true');
   const text = document.createElement('span');
-  const area = document.createElement('small'); area.textContent = topic.areaLabel;
-  text.append(document.createTextNode(topic.label), area);
-  label.append(swatch, text); label.title = `Inferred topic from Hadi Mohammadi’s EMNLP Atlas: ${topic.description}`;
+  const fine = document.createElement('small'); fine.textContent = topic.source === 'local' ? 'Area assigned locally by Codex' : topic.label;
+  text.append(document.createTextNode(topic.areaLabel), fine);
+  label.append(swatch, text); label.title = topic.source === 'local' ? 'Broad area assigned locally; no fine topic assigned.' : `Inferred topic from Hadi Mohammadi’s EMNLP Atlas: ${topic.description}`;
   return label;
 }
 function updateHash() {
@@ -304,8 +305,9 @@ function refreshAssignments() {
     element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
     element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
     if (topic) {
-      element.setAttribute('aria-label', `${element.getAttribute('aria-label')}, Atlas topic: ${topic.label}, area: ${topic.areaLabel}`);
-      element.querySelector('title').textContent += ` · Atlas topic: ${topic.label} · ${topic.areaLabel}`;
+      const label = topic.source === 'local' ? `Locally assigned area: ${topic.areaLabel}` : `Atlas area: ${topic.areaLabel}, topic: ${topic.label}`;
+      element.setAttribute('aria-label', `${element.getAttribute('aria-label')}, ${label}`);
+      element.querySelector('title').textContent += ` · ${label}`;
     }
   }
   $('#saved-map-count').textContent = `${savedStops.length} saved ${savedStops.length === 1 ? 'poster' : 'posters'}`;

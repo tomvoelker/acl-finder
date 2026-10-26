@@ -236,6 +236,10 @@ abbr[title] { text-decoration: none; cursor: help; }
 .presentation-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 8px; padding-block: 4px; border-bottom: 1px solid var(--rule); }
 .day-picker { display: none; }
 .format-picker { width: 180px; }
+.area-picker { display: flex; flex: 1; align-items: center; gap: 10px; min-width: 0; max-width: 460px; margin-right: auto; }
+.area-picker label { color: var(--muted); font-size: .8125rem; }
+.area-picker .select { min-width: 0; height: 44px; }
+.area-picker .select:has(option:checked:not([value=""])) { border-color: var(--accent); color: var(--selected-ink); background-color: var(--accent-tint); }
 .format-picker .select { height: 44px; padding-left: 0; border: 0; font-size: 1rem; font-weight: 500; background-color: transparent; background-position: right 4px center; }
 .filters-toggle { display: inline-flex; align-items: center; justify-content: center; flex: none; gap: 7px; min-height: 44px; padding: 0 2px 0 8px; border: 0; border-radius: var(--radius); color: var(--ink-2); background: none; font-size: .875rem; font-weight: 500; }
 .filters-toggle:hover, .filters-toggle[aria-expanded="true"] { color: var(--accent); }
@@ -372,6 +376,10 @@ abbr[title] { text-decoration: none; cursor: help; }
 .paper__meta > a, .paper__meta > .linkish { display: inline-flex; align-items: center; min-height: 32px; }
 .paper__meta .paper__details > summary { padding-block: 6px; }
 .paper__meta a:hover, .linkish:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
+.atlas-area { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-height: 32px; padding: 0; border: 0; background: none; color: var(--ink-2); font: inherit; text-align: left; }
+.atlas-area:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: .2em; }
+.atlas-swatch { width: 11px; height: 11px; flex: none; border: 1px solid var(--muted); border-radius: 3px; }
+.atlas-local { color: var(--muted); font-size: .6875rem; }
 .paper__default-save { margin-top: 6px; font-size: .75rem; color: var(--muted); }
 .paper.is-inactive .paper__title { color: var(--ink-2); }
 
@@ -459,7 +467,8 @@ mark {
   .search__input { font-size: 1rem; }
   .search__kbd { display: none; }
   .day-nav, .now-label { display: none; }
-  .presentation-controls { gap: 8px; }
+  .presentation-controls { flex-wrap: wrap; gap: 6px 8px; }
+  .area-picker { order: 1; flex-basis: 100%; max-width: none; padding-bottom: 4px; }
   .day-picker { display: flex; align-items: center; flex: 1; min-width: 0; gap: 8px; color: var(--muted); }
   .day-picker .select { width: 100%; height: 44px; padding-left: 0; border: 0; font-size: 1rem; font-weight: 500; background-color: transparent; background-position: right 4px center; }
   .format-picker { flex: none; width: 104px; }

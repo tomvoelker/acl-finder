@@ -27,7 +27,7 @@ SOURCE = {
 }
 INPUTS = ["data/poster-boards.json", "data/papers.json", "data/anthology-catalog.json",
           "data/anthology-overrides.json", "data/atlas/source.json",
-          "data/atlas/papers_index.csv.gz", "data/atlas/labels_2026.json"]
+          "data/atlas/papers_index.csv.gz", "data/atlas/labels_2026.json", "data/atlas/local-areas.json"]
 
 
 def input_hash(root=ROOT):
@@ -99,8 +99,30 @@ def create_dataset(root=ROOT):
         if hashlib.sha256(content).hexdigest() != source["sha256"][name]:
             raise ValueError(f"Atlas snapshot checksum mismatch: {name}")
     areas, topics, atlas = read_atlas(index, json.loads(labels))
-    links, _ = match_papers(read("data/papers.json")["papers"], read("data/anthology-catalog.json"), read("data/anthology-overrides.json"))
+    programme = read("data/papers.json")["papers"]
+    links, _ = match_papers(programme, read("data/anthology-catalog.json"), read("data/anthology-overrides.json"))
+    local_review = read("data/atlas/local-areas.json")
+    by_id = {paper["id"]: paper for paper in programme}
+    local = {}
+    for row in local_review["assignments"]:
+        pid = row["paperId"]
+        if pid in local or pid not in by_id or row["title"] != by_id[pid]["title"]:
+            raise ValueError(f"Local area identity changed or duplicated: {pid}")
+        if links.get(pid) in atlas:
+            raise ValueError(f"Atlas now classifies {pid}: remove its local assignment after review")
+        if type(row["area"]) is not int or row["area"] not in {area["id"] for area in areas}:
+            raise ValueError(f"Invalid local area: {pid}")
+        if row["basis"] not in {"title", "title-and-abstract"} or not row["reason"]:
+            raise ValueError(f"Local area needs review evidence: {pid}")
+        local[pid] = {"area": row["area"], "basis": row["basis"]}
     catalog = load_catalog(root / "data/poster-boards.json")
+    poster_aliases = {}
+    for alias in local_review["posterAliases"]:
+        key = (alias["session"], alias["board"], alias["title"])
+        if key in poster_aliases or alias["paperId"] not in local or not any(
+                (e["session"], e["board"], e["title"]) == key and e["paperId"] is None and e["verified"] for e in catalog["entries"]):
+            raise ValueError("Local poster-area alias changed: review the handbook identity")
+        poster_aliases[key] = alias["paperId"]
     # Same physical-session rule as poster-map/catalog.mjs: D includes Industry.
     groups = {}
     for session in catalog["sessions"]:
@@ -120,16 +142,24 @@ def create_dataset(root=ROOT):
         anthology_id = links.get(entry["paperId"])
         assignment = {k: entry[k] for k in ["board", "paperId", "title"]}
         assignment.update(anthologyId=anthology_id, topic=atlas.get(anthology_id))
+        local_id = entry["paperId"] or poster_aliases.get((entry["session"], entry["board"], entry["title"]))
+        if assignment["topic"] is None and local_id in local:
+            assignment["area"] = local[local_id]["area"]
         sessions[sid]["assignments"].append(assignment)
-        if assignment["topic"] is None:
+        if assignment["topic"] is None and "area" not in assignment:
             missing.append({"session": sid, **assignment, "reason": "No verified Anthology match" if not anthology_id else "Not in Atlas snapshot"})
     for session in sessions.values():
         session["assignments"].sort(key=lambda row: row["board"])
     data = {"version": 2, "source": source, "inputsSHA256": input_hash(root),
-            "areas": areas, "topics": topics, "sessions": sessions}
+            "areas": areas, "topics": topics, "papers": atlas, "localAreas": local,
+            "localSource": {k: local_review[k] for k in ["assignedBy", "reviewedAt", "method"]}, "sessions": sessions}
     total = sum(len(s["assignments"]) for s in sessions.values())
+    local_posters = sum("area" in entry for s in sessions.values() for entry in s["assignments"])
     audit = {"sourceRevision": source["revision"], "atlasPapers": len(atlas), "posters": total,
-             "matched": total-len(missing), "unclassified": missing}
+             "matched": total-len(missing)-local_posters, "localAssigned": local_posters, "unclassified": missing,
+             "programme": {"total": len(programme), "matched": sum(links.get(p["id"]) in atlas for p in programme),
+                           "localAssigned": len(local), "titleOnly": sum(row["basis"] == "title" for row in local.values()),
+                           "unclassified": [p["id"] for p in programme if links.get(p["id"]) not in atlas and p["id"] not in local]}}
     return data, audit
 
 
@@ -137,7 +167,7 @@ def import_topics(root=ROOT):
     data, audit = create_dataset(root)
     (root / "data/poster-topics.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     (root / "data/atlas/audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Imported {audit['matched']:,} Atlas labels onto {audit['posters']:,} posters; {len(audit['unclassified'])} unclassified")
+    print(f"Imported {audit['matched']:,} Atlas labels and {audit['localAssigned']} local areas onto {audit['posters']:,} posters; {len(audit['unclassified'])} unclassified")
 
 
 if __name__ == "__main__":

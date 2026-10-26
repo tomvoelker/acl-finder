@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic, AREA_COLORS} from '../poster-map/topics.mjs';
+import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from '../poster-map/topics.mjs';
+import {AREA_COLORS, readAtlasLabel} from '../atlas.mjs';
 import {sessionGroups, mapEntries, assignmentAt} from '../poster-map/catalog.mjs';
 
 const data = () => ({version:2, areas:[{id:0,label:'Language'},{id:1,label:'Reasoning'}], topics:[{id:0,area:0,label:'Translation'},{id:1,area:1,label:'Maths'}], sessions:{A:{assignments:[{board:1,paperId:'x',title:'Example',topic:0},{board:2,paperId:'y',title:'Unknown',topic:null},{board:3,paperId:'z',title:'Proofs',topic:1}]}}});
@@ -48,6 +49,15 @@ test('area colours and labels stay identical between sessions', () => {
   const topics=data(); topics.sessions.B=structuredClone(topics.sessions.A);
   assert.deepEqual(topicForEntry(topics,'A',entry),topicForEntry(topics,'B',entry));
   assert.equal(topicForEntry(topics,'A',entry).color, AREA_COLORS[0]);
+  assert.deepEqual(topicForEntry(topics,'A',entry), readAtlasLabel(topics,0), 'List and map resolve the same hierarchy');
+});
+
+test('Atlas lookup keeps topic zero and rejects absent or unknown classifications', () => {
+  assert.equal(readAtlasLabel(data(),0).areaLabel,'Language');
+  for (const id of [null,undefined,'0',-1,100]) assert.equal(readAtlasLabel(data(),id),null);
+  assert.equal(readAtlasLabel(null,0),null);
+  const invalid=data(); invalid.topics[0].area=16;
+  assert.equal(readAtlasLabel(invalid,0),null);
 });
 
 test('topic swatches retain text contrast and basic colour separation', () => {
@@ -71,12 +81,12 @@ test('topic swatches retain text contrast and basic colour separation', () => {
 });
 
 
-test('published Atlas assignments cover all unambiguous boards without classifying missing papers', () => {
+test('published areas cover every unambiguous board and distinguish local assignments', () => {
   const catalog=JSON.parse(readFileSync(new URL('../data/poster-boards.json',import.meta.url)));
   const topics=validateTopics(JSON.parse(readFileSync(new URL('../data/poster-topics.json',import.meta.url))));
   const audit=JSON.parse(readFileSync(new URL('../data/atlas/audit.json',import.meta.url)));
   const sessions=sessionGroups(catalog.sessions), entries=mapEntries(catalog.entries,sessions);
-  let classified=0, unclassified=0;
+  let classified=0, local=0, unclassified=0;
   for (const session of sessions) {
     const current=entries.filter(e=>e.session===session.id);
     const valid=current.filter(e=>assignmentAt(entries,session.id,e.board).entry);
@@ -84,12 +94,27 @@ test('published Atlas assignments cover all unambiguous boards without classifyi
     for (const entry of current) {
       const assignment=assignmentAt(entries,session.id,entry.board).entry;
       if (!assignment) assert.equal(topics.sessions[session.id].assignments.some(a=>a.board===entry.board),false);
-      else if(topicForEntry(topics,session.id,assignment)) classified++;
+      else if(topicForEntry(topics,session.id,assignment)) {
+        const label=topicForEntry(topics,session.id,assignment);
+        if(label.source==='local') { local++; assert.equal(label.id,null); } else classified++;
+      }
       else { unclassified++; assert.ok(audit.unclassified.some(e=>e.session===session.id&&e.board===entry.board)); }
     }
     const choices=topicChoices(topics,session.id,valid);
     assert.equal(choices.areas.length,16);
-    assert.equal(choices.topics.reduce((n,t)=>n+t.count,0)+choices.unclassified,valid.length);
+    assert.equal(choices.topics.reduce((n,t)=>n+t.count,0)+choices.local+choices.unclassified,valid.length);
   }
-  assert.equal(classified,2803); assert.equal(unclassified,28);
+  assert.equal(classified,2803); assert.equal(local,28); assert.equal(unclassified,0);
+});
+
+test('local areas have the same colours but never acquire an invented fine topic', () => {
+  const label=readAtlasLabel(data(),null,0);
+  assert.equal(label.source,'local'); assert.equal(label.id,null); assert.equal(label.label,null);
+  assert.equal(label.areaLabel,'Language'); assert.equal(label.color,AREA_COLORS[0]);
+  const topics=data(); topics.sessions.A.assignments[1].area=0;
+  assert.equal(topicForEntry(validateTopics(topics),'A',entries()[1]).source,'local');
+  const choices=topicChoices(topics,'A',entries());
+  assert.equal(choices.areas.find(a=>a.id===0).count,2); assert.equal(choices.local,1); assert.equal(choices.unclassified,0);
+  assert.deepEqual(topicEntries(topics,'A',entries(),0).map(e=>e.board),[1,2]);
+  assert.deepEqual(topicEntries(topics,'A',entries(),0,0).map(e=>e.board),[1]);
 });

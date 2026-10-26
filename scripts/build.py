@@ -12,7 +12,7 @@ from import_topics import input_hash
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
-FILES = ["index.html", "styles.css", "app.js", "theme.js", "schedule-view.mjs", "saved-papers.mjs", "saved-sharing.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
+FILES = ["index.html", "styles.css", "app.js", "theme.js", "atlas.mjs", "schedule-view.mjs", "saved-papers.mjs", "saved-sharing.mjs", "favicon.png", "favicon.svg", "conference-logo.png", "data/papers.json",
          "analytics.mjs", "traffic.mjs", "poster-view.mjs", "math-titles.mjs", "vendor/katex-0.19.1/katex.mjs", "vendor/katex-0.19.1/katex.min.css", "vendor/katex-0.19.1/LICENSE",
          "data/anthology-catalog.json", "data/anthology-overrides.json",
          "data/underline-catalog.json", "data/underline-overrides.json", "data/poster-boards.json",
@@ -66,6 +66,14 @@ def build():
     topics = json.loads((ROOT / "data/poster-topics.json").read_text())
     if topics.get("version") != 2 or topics.get("inputsSHA256") != input_hash(ROOT):
         raise ValueError("Poster topics are stale. Run python3 scripts/import_topics.py before building.")
+    data["atlas"] = {key: topics[key] for key in ["source", "localSource", "areas", "topics"]}
+    for paper in data["papers"]:
+        topic = topics["papers"].get(paper.get("anthologyId"))
+        if topic is not None:
+            paper["atlasTopic"] = topic
+        elif paper["id"] in topics["localAreas"]:
+            local = topics["localAreas"][paper["id"]]
+            paper.update(atlasArea=local["area"], atlasAreaBasis=local["basis"])
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)
@@ -78,8 +86,10 @@ def build():
         return versioned
 
     module_name = asset("schedule-view.mjs", (ROOT / "schedule-view.mjs").read_bytes())
+    atlas_name = asset("atlas.mjs", (ROOT / "atlas.mjs").read_bytes())
     math_name = asset("math-titles.mjs", (ROOT / "math-titles.mjs").read_bytes())
     app = (ROOT / "app.js").read_text().replace("'./schedule-view.mjs'", f"'./{module_name}'")
+    app = app.replace("'./atlas.mjs'", f"'./{atlas_name}'")
     app = app.replace("'./math-titles.mjs'", f"'./{math_name}'")
     analytics_name = asset("analytics.mjs", (ROOT / "analytics.mjs").read_bytes())
     app = app.replace("'./analytics.mjs'", f"'./{analytics_name}'")
@@ -106,7 +116,7 @@ def build():
 
     map_output = OUTPUT / "poster-map"
     map_output.mkdir()
-    map_modules = {name: asset(name, (ROOT / "poster-map" / name).read_bytes(), map_output)
+    map_modules = {name: asset(name, (ROOT / "poster-map" / name).read_text().replace("'../atlas.mjs'", f"'../{atlas_name}'").encode(), map_output)
                    for name in ["layout.mjs", "camera.mjs", "catalog.mjs", "topics.mjs"]}
     map_app = (ROOT / "poster-map/map.mjs").read_text()
     for original, versioned in map_modules.items():
@@ -114,6 +124,7 @@ def build():
     map_app = map_app.replace("'../math-titles.mjs'", f"'../{math_name}'")
     map_app = map_app.replace("'../saved-papers.mjs'", f"'../{saved_name}'")
     map_app = map_app.replace("'../analytics.mjs'", f"'../{analytics_name}'")
+    map_app = map_app.replace("'../atlas.mjs'", f"'../{atlas_name}'")
     map_app_name = asset("map.mjs", map_app.encode(), map_output)
     map_css_name = asset("map.css", (ROOT / "poster-map/map.css").read_bytes(), map_output)
     map_html = (ROOT / "poster-map/index.html").read_text().replace('src="map.mjs"', f'src="{map_app_name}"')

@@ -34,7 +34,7 @@ export function presentationSlot(paper) {
 }
 
 export function searchState(state, query) {
-  const leaveScope = state.author || (!state.shared && state.view === 'posters' && !state.q.trim());
+  const leaveScope = state.author || (!state.shared && state.view === 'posters' && !state.q.trim() && !state.filters?.area);
   return {
     ...state,
     ...(leaveScope ? {
@@ -56,7 +56,7 @@ export function resultPage(items, page = 0) {
 }
 
 export function posterBrowsing(state) {
-  return posterScope(state) && !state.q.trim() && !state.author && !state.saved;
+  return posterScope(state) && !state.q.trim() && !state.author && !state.saved && !state.filters?.area;
 }
 
 export function posterScope(state) {
