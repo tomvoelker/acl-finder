@@ -1,7 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {searchText, validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, assignmentAt, defaultSession, boardHash, authorsText} from '../catalog.mjs';
+import {searchText, validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, assignmentAt, defaultSession, boardHash, authorsText, boardSearchNumber, matchesPosterSearch} from '../catalog.mjs';
+
+test('poster search matches author and title words, accents, IDs and exact board numbers', () => {
+  const poster = {title:'Graph Reasoning with LLMs', authors:['José García'], paperId:'1234-MAIN', board:329};
+  for (const query of ['reasoning garcia', 'JOSE graph', '1234-main', '329', 'Board 329']) {
+    assert.equal(matchesPosterSearch(poster, query), true, query);
+  }
+  for (const query of ['32', 'graph missing', 'other author']) assert.equal(matchesPosterSearch(poster, query), false, query);
+  assert.equal(matchesPosterSearch({...poster, authors:'José García'}, 'garcia'), true);
+});
+
+test('board shortcuts accept only a complete, physical board number', () => {
+  for (const [query, expected] of [['1',1],[' 424 ',424],['board 329',329],['0',null],['425',null],['32.9',null],['329 paper',null],['D1',null]]) {
+    assert.equal(boardSearchNumber(query), expected, query);
+  }
+});
 
 const sessions = [
   {id:'A',label:'Poster Session A',date:'2026-10-25',start:'11:00',end:'12:30',room:'Hall H'},

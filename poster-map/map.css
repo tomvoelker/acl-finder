@@ -105,9 +105,9 @@ a { color: var(--accent); }
 .chip-title .katex { font-size: 1em; }
 .paper-link { display: inline-block; margin-top: 10px; padding-block: 8px; font-size: 12px; }
 .paper-search-panel { padding-top: 18px; }
-.finder { display: flex; gap: 5px; }
-.finder input { width: 86px; padding-inline: 8px; }
-.finder button { border-color: transparent; }
+.finder { display: flex; position: relative; min-width: 0; width: 240px; flex: 0 1 240px; }
+.finder input { width: 100%; min-width: 0; padding: 10px 42px 10px 10px; }
+.finder button { position: absolute; right: 0; top: 0; bottom: 0; display: grid; place-items: center; width: 40px; padding: 0; border: 0; background: transparent; }
 main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .map-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 .map-stage.dragging { cursor: grabbing; }
@@ -213,11 +213,11 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
 .paper-result { font-size: 12px; line-height: 1.5; text-align: left; font-weight: 500; white-space: normal; }
 .paper-result small { display: block; color: var(--muted); font-size: 11px; }
 .paper-results p { font-size: 11px; color: var(--muted); margin: 5px 0; }
-.topic-list .selection, .topic-list .session-panel, .topic-list .source-details, .topic-list .feedback { display: none; }
-.topic-list .paper-results { max-height: none; overflow: visible; }
-.topic-list .paper-result { font-size: 14px; padding: 12px; }
-.topic-list .paper-result small { margin-top: 5px; }
-@media (min-width: 641px) { #details-panel.topic-list { inset: 6dvh 0 auto; margin-inline: auto; width: 680px; height: 88dvh; } }
+:is(.topic-list, .search-list) .selection, :is(.topic-list, .search-list) .session-panel, :is(.topic-list, .search-list) .source-details, :is(.topic-list, .search-list) .feedback { display: none; }
+:is(.topic-list, .search-list) .paper-results { max-height: none; overflow: visible; }
+:is(.topic-list, .search-list) .paper-result { font-size: 14px; padding: 12px; }
+:is(.topic-list, .search-list) .paper-result small { margin-top: 5px; }
+@media (min-width: 641px) { #details-panel:is(.topic-list, .search-list) { inset: 6dvh 0 auto; margin-inline: auto; width: 680px; height: 88dvh; } }
 .assignment-detail { border-left: 3px solid var(--assigned-rule); padding-left: 11px; margin-top: 16px; }
 .assignment-detail strong { font-size: 12px; line-height: 1.55; display: block; }
 .assignment-detail p { font-size: 11px; color: var(--muted); margin-top: 5px; }
@@ -233,14 +233,13 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
 .key.review { border: 1px dashed var(--review); }
 .key.saved { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-color: var(--saved-rule); background: var(--saved-badge); color: white; font-style: normal; font-size: 12px; }
 @media (max-width: 640px) {
-  .header { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 12px; padding: calc(8px + env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) 8px max(10px, env(safe-area-inset-left)); }
+  .header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px 12px; padding: calc(8px + env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) 8px max(10px, env(safe-area-inset-left)); }
   .identity { grid-column: 1; grid-row: 2; margin: 0; }
   .identity .map-brand, .identity h1 { display: none; }
   .finder-link { font-size: 13px; }
   .session-select { grid-column: 1 / -1; grid-row: 1; width: 100%; font-size: 14px; padding-inline: 10px; }
-  .finder { grid-column: 2; grid-row: 2; }
-  .finder input { width: 64px; font-size: 16px; }
-  .finder button { padding-inline: 9px; }
+  .finder { grid-column: 2; grid-row: 2; width: 100%; }
+  .finder input { font-size: 16px; }
   #open-filters { grid-column: 3; grid-row: 2; padding-inline: 12px; font-size: 13px; }
   :is(#details-panel, #filters-panel) { inset: auto 0 0; width: 100%; max-width: none; max-height: 78vh; max-height: 78dvh; border-radius: 14px 14px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom); }
   .zoom-controls { right: max(10px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); flex-direction: row; align-items: center; }
@@ -257,7 +256,7 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
 @media (min-width: 641px) and (max-width: 860px) {
   .identity .map-brand, .identity h1 { display: none; }
   .session-select { width: 250px; }
-  .finder input { width: 64px; }
+  .finder { width: auto; flex: 1; }
 }
 @media (max-width: 640px) and (min-height: 501px) {
   .selection-chip { bottom: max(12px, env(safe-area-inset-bottom)); }
@@ -277,7 +276,6 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
 :root[data-theme="dark"] .map-brand > img { filter: brightness(0) invert(1); }
 @media (max-width: 380px) {
   .header { column-gap: 6px; }
-  .finder input { width: 56px; }
   #open-filters { padding-inline: 9px; }
   .selection-card-actions > button, .selection-card-actions > a { font-size: 12px; }
 }

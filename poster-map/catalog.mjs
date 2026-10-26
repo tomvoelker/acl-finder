@@ -127,3 +127,16 @@ export function boardHash(session, board) {
 export function searchText(value) {
   return String(value || '').normalize('NFKD').replace(/\p{Mark}/gu, '').toLocaleLowerCase();
 }
+
+export function boardSearchNumber(query) {
+  const match = String(query).trim().match(/^(?:board\s+)?(\d+)$/i);
+  const number = match ? Number(match[1]) : null;
+  return Number.isInteger(number) && number >= 1 && number <= 424 ? number : null;
+}
+
+export function matchesPosterSearch(entry, query) {
+  const board = boardSearchNumber(query);
+  if (board !== null) return entry.board === board;
+  const text = searchText(`${entry.title} ${authorsText(entry)} ${entry.paperId || ''}`);
+  return searchText(query).trim().split(/\s+/).every(word => text.includes(word));
+}
