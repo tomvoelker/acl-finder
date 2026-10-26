@@ -46,6 +46,15 @@ export function sessionGroups(sessions) {
   });
 }
 
+// Dates and clock times already describe the conference's Europe/Budapest schedule.
+export function sessionOptionLabel(session) {
+  const [year, month, day] = session.date.split('-').map(Number);
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const weekday = weekdays[new Date(Date.UTC(year, month - 1, day)).getUTCDay()];
+  return `${session.id} · ${weekday} ${day} ${months[month - 1]} · ${session.start}–${session.end}`;
+}
+
 export function mapEntries(entries, sessions) {
   return entries.map(entry => ({...entry, sourceSession:entry.session,
     session:sessions.find(session => session.aliases.includes(entry.session)).id}));

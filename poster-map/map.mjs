@@ -1,5 +1,5 @@
 import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS} from './layout.mjs';
-import {validateCatalog, sessionGroups, mapEntries, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
+import {validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, searchText} from './catalog.mjs';
 import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.mjs';
 import {createAnalytics} from '../analytics.mjs';
 import {renderTitle, titleSearchText} from '../math-titles.mjs';
@@ -74,6 +74,7 @@ function zoom(factor, anchor = {x:0.5,y:0.5}, animate = false) {
 }
 function openDetails({topic = false} = {}) {
   stopMotion();
+  $('#filters-panel').close();
   const panel = $('#details-panel');
   panel.classList.toggle('topic-list', topic);
   $('#details-title').textContent = topic ? currentTopicHeading() : 'Map details';
@@ -104,6 +105,7 @@ function renderTopicControls() {
   $('#topics-toggle').setAttribute('aria-pressed', String(topicsEnabled && available));
   $('#topic-filters').hidden = $('#topic-browse').hidden = !topicsEnabled || !available;
   if (topics) $('#topics-note').textContent = available ? 'Inferred · not official tracks' : 'Topics unavailable for this session.';
+  $('#open-filters .filter-label').textContent = hasTopicFilter() ? 'Filters · 1' : 'Filters';
   if (!topicsEnabled || !available) return;
   const option = (parent, value, label) => {
     const item = document.createElement('option'); item.value = value; item.textContent = label; parent.append(item);
@@ -128,6 +130,7 @@ function renderTopicControls() {
   if (!swatch.hidden) swatch.style.backgroundColor = AREA_COLORS[selectedArea];
   $('#topic-browse').textContent = `Browse ${topicMembers().length} posters`;
 }
+
 function topicLabel(entry) {
   if (!topicsEnabled || !entry?.verified) return null;
   const topic = currentTopic(entry);
@@ -235,7 +238,7 @@ function renderAssignment() {
   chip.replaceChildren();
   const label = document.createElement('p');
   label.className = 'selection-card-label';
-  label.textContent = `${savedBoards.has(selected) ? 'Saved · ' : ''}${activeSession ? `${currentSession()?.shortLabel} · ` : ''}Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
+  label.textContent = `Board ${selected}${BOARD_BY_NUMBER.get(selected).needsReview ? ' · Check source' : ''}`;
   const heading = document.createElement('div'); heading.className = 'selection-card-heading';
   heading.append(label);
   if (entry?.paperId) {
@@ -276,7 +279,7 @@ function renderAssignment() {
     chip.append(warning);
   }
   const topic = topicLabel(entry);
-  if (topic) { chip.append(topic); detail.append(topic.cloneNode(true)); }
+  if (topic) detail.append(topic);
   if (hasTopicFilter()) {
     const members = topicMembers();
     const index = members.findIndex(row => row.board === selected);
@@ -296,12 +299,6 @@ function renderAssignment() {
       navigation.append(button);
     }
     chip.append(navigation);
-  }
-  const session = currentSession();
-  if (session) {
-    const time = document.createElement('p'); time.className = 'selection-card-time';
-    time.textContent = `${session.date} · ${session.start}–${session.end} Budapest time`;
-    chip.append(time);
   }
   const actions = document.createElement('div'); actions.className = 'selection-card-actions';
   const details = document.createElement('button'); details.type = 'button'; details.textContent = 'Details';
@@ -337,7 +334,7 @@ function refreshAssignments() {
       element.querySelector('title').textContent += ` · ${label}`;
     }
   }
-  $('#saved-map-count').textContent = `${savedStops.length} saved ${savedStops.length === 1 ? 'poster' : 'posters'}`;
+  $('#saved-map-count').textContent = `${savedStops.length} saved`;
   $('#next-saved').disabled = savedStops.length === 0;
   $('#next-saved').title = savedStops.length ? 'Jump through saved posters across all sessions' : 'No saved papers have a confirmed poster board';
   $('#next-saved').setAttribute('aria-label', savedStops.length ? `Next saved poster. ${savedStops.length} across all poster sessions.` : 'No saved posters with confirmed boards');
@@ -581,7 +578,8 @@ new ResizeObserver(() => {
 $('#zoom-in').addEventListener('click', () => zoom(1/1.4, {x:0.5,y:0.5}, true));
 $('#zoom-out').addEventListener('click', () => zoom(1.4, {x:0.5,y:0.5}, true));
 $('#fit').addEventListener('click',fitMap);
-$('#open-details').addEventListener('click',openDetails);
+$('#open-filters').addEventListener('click', () => $('#filters-panel').showModal());
+$('#close-filters').addEventListener('click', () => $('#filters-panel').close());
 $('#close-details').addEventListener('click', () => $('#details-panel').close());
 $('#details-panel').addEventListener('click', event => {
   const panel = $('#details-panel'), rect = panel.getBoundingClientRect();
@@ -592,6 +590,7 @@ $('#find-form').addEventListener('submit', event => {
 });
 $('#session').addEventListener('change', () => {
   activeSession = $('#session').value; $('#paper-search').value = '';
+  $('#session').title = sessionOptionLabel(currentSession()) + ' · Budapest time';
   refreshAssignments(); renderPaperResults(); updateHash(); feedback('');
 });
 $('#next-saved').addEventListener('click', () => {
@@ -599,7 +598,7 @@ $('#next-saved').addEventListener('click', () => {
   if (!target) return;
   activeSession = target.session;
   $('#session').value = activeSession;
-  $('#session').title = currentSession()?.label || 'Poster session';
+  $('#session').title = currentSession() ? sessionOptionLabel(currentSession()) + ' · Budapest time' : 'Poster session';
   $('#paper-search').value = '';
   refreshAssignments();
   selectBoard(target.board, {reveal:true});
@@ -638,7 +637,7 @@ function readHash({reveal = true} = {}) {
     const requested = sessions.find(session => session.aliases.includes(requestedSession));
     activeSession = requested?.id || activeSession || defaultSession(sessions);
     $('#session').value = activeSession;
-    $('#session').title = currentSession()?.label || 'Poster session';
+    $('#session').title = currentSession() ? sessionOptionLabel(currentSession()) + ' · Budapest time' : 'Poster session';
     if (hash.has('board') && !requested) {
       feedback(`This board link has no valid session. Showing Session ${activeSession}. Check the session before using this assignment.`);
     }
@@ -679,7 +678,7 @@ try {
   $('#session').replaceChildren();
   for (const session of sessions) {
     const option = document.createElement('option'); option.value = session.id;
-    option.textContent = session.shortLabel;
+    option.textContent = sessionOptionLabel(session);
     option.title = session.label;
     $('#session').append(option);
   }

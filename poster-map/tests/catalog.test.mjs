@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {searchText, validateCatalog, sessionGroups, mapEntries, assignmentAt, defaultSession, boardHash, authorsText} from '../catalog.mjs';
+import {searchText, validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, assignmentAt, defaultSession, boardHash, authorsText} from '../catalog.mjs';
 
 const sessions = [
   {id:'A',label:'Poster Session A',date:'2026-10-25',start:'11:00',end:'12:30',room:'Hall H'},
@@ -53,6 +53,25 @@ test('session defaults use Budapest local time and canonical hashes always ident
 });
 
 const published = new URL('../../data/poster-boards.json',import.meta.url);
+test('native session options show the conference day and local time for all seven published slots', () => {
+  const document = validateCatalog(JSON.parse(readFileSync(published,'utf8')));
+  assert.deepEqual(sessionGroups(document.sessions).map(sessionOptionLabel), [
+    'A · Sun 25 Oct · 11:00–12:30',
+    'B · Sun 25 Oct · 16:00–17:30',
+    'C · Mon 26 Oct · 09:00–10:30',
+    'D · Mon 26 Oct · 11:00–12:30',
+    'E · Mon 26 Oct · 16:45–18:15',
+    'F · Tue 27 Oct · 09:00–10:30',
+    'G · Tue 27 Oct · 11:00–12:30',
+  ]);
+});
+
+test('session option labels use date-only weekdays and preserve Budapest clock times', () => {
+  assert.equal(sessionOptionLabel(sessions[1]), 'D · Mon 26 Oct · 11:00–12:30');
+  assert.equal(sessionOptionLabel({...sessions[0], date:'2026-01-01', start:'00:00', end:'01:30'}),
+    'A · Thu 1 Jan · 00:00–01:30');
+});
+
 test('the published schedule catalog uses valid board and session identities', () => {
   const document = validateCatalog(JSON.parse(readFileSync(published,'utf8')));
   const groups = sessionGroups(document.sessions);

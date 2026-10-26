@@ -27,22 +27,8 @@
       <input id="board-number" type="number" min="1" max="424" step="1" placeholder="1–424" required inputmode="numeric">
       <button type="submit">Find</button>
     </form>
-    <button id="theme" class="theme-toggle" type="button" data-mode="auto" hidden aria-label="Theme: Auto">
-      <svg class="theme-toggle__icon theme-toggle__icon--auto" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/></svg>
-      <svg class="theme-toggle__icon theme-toggle__icon--light" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>
-      <svg class="theme-toggle__icon theme-toggle__icon--dark" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/></svg>
-    </button>
-    <button id="open-details" type="button" aria-haspopup="dialog" aria-controls="details-panel">Details</button>
+    <button id="open-filters" type="button" aria-haspopup="dialog" aria-controls="filters-panel"><span class="filter-label">Filters</span></button>
   </header>
-  <section class="topic-toolbar" aria-label="Atlas topics">
-    <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-filters" disabled>Colour by area</button>
-    <div id="topic-filters" class="topic-filters" hidden>
-      <label class="area-filter"><span class="visually-hidden">Atlas area</span><span id="area-swatch" class="topic-swatch" aria-hidden="true" hidden></span><select id="topic-area"><option value="">All areas</option></select></label>
-      <label class="fine-filter"><span class="visually-hidden">Atlas topic</span><select id="topic-select"><option value="">All topics</option></select></label>
-    </div>
-    <button id="topic-browse" type="button" hidden aria-haspopup="dialog" aria-controls="details-panel">Browse posters</button>
-    <span class="topics-credit">Topics by <a href="https://mohammadi.cv/emnlp/2026/atlas.html" target="_blank" rel="noopener noreferrer">Hadi Mohammadi · EMNLP Atlas ↗</a><span id="topics-note" class="topics-note">Loading topics…</span></span>
-  </section>
   <main aria-label="Interactive poster floor plan">
     <div id="map-stage" class="map-stage">
       <svg id="floor-map" viewBox="0 0 1320 1280" aria-label="424 numbered poster positions" aria-describedby="map-help">
@@ -50,17 +36,41 @@
         <desc>Paired poster positions arranged as in the venue photograph. Select a board or use the board finder. Arrow keys move between positions.</desc>
       </svg>
     </div>
-    <button id="next-saved" type="button" class="saved-map-key" disabled><span aria-hidden="true">★</span> <span id="saved-map-count">0 saved posters</span><span class="saved-map-next" aria-hidden="true">Next →</span></button>
+    <button id="next-saved" type="button" class="saved-map-key" disabled><span aria-hidden="true">★</span> <span id="saved-map-count">0 saved posters</span><span class="saved-map-next" aria-hidden="true">→</span></button>
     <aside id="selection-chip" class="selection-chip" aria-label="Selected poster" hidden></aside>
     <p id="map-help" class="map-help">Drag to move · Pinch or double-tap to zoom</p>
     <div class="zoom-controls" role="group" aria-label="Map zoom">
       <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
-      <output id="zoom-level" aria-label="Zoom level">100%</output>
+      <output id="zoom-level" class="visually-hidden" aria-label="Zoom level">100%</output>
       <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
       <button id="fit" type="button" aria-label="Fit whole map">Fit</button>
     </div>
     <p id="map-status" class="visually-hidden" role="status" aria-live="polite"></p>
   </main>
+  <dialog id="filters-panel" aria-labelledby="filters-title">
+    <div class="panel-header">
+      <h2 id="filters-title">Map filters</h2>
+      <button id="close-filters" type="button" aria-label="Close filters">Done</button>
+    </div>
+    <div class="panel-body">
+        <section class="topic-toolbar" aria-label="Atlas topics">
+          <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-filters" disabled>Colour by area</button>
+          <div id="topic-filters" class="topic-filters" hidden>
+            <label class="area-filter"><span>Area</span><span id="area-swatch" class="topic-swatch" aria-hidden="true" hidden></span><select id="topic-area"><option value="">All areas</option></select></label>
+            <label class="fine-filter"><span>Topic</span><select id="topic-select"><option value="">All topics</option></select></label>
+          </div>
+          <button id="topic-browse" type="button" hidden aria-haspopup="dialog" aria-controls="details-panel">Browse posters</button>
+          <span class="topics-credit">Topics by <a href="https://mohammadi.cv/emnlp/2026/atlas.html" target="_blank" rel="noopener noreferrer">Hadi Mohammadi · EMNLP Atlas ↗</a><span id="topics-note" class="topics-note">Loading topics…</span></span>
+        </section>
+      <div class="map-appearance"><span>Appearance</span>
+        <button id="theme" class="theme-toggle" type="button" data-mode="auto" hidden aria-label="Theme: Auto">
+          <svg class="theme-toggle__icon theme-toggle__icon--auto" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/></svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--light" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--dark" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/></svg>
+        </button>
+      </div>
+    </div>
+  </dialog>
   <dialog id="details-panel" aria-labelledby="details-title">
     <div class="panel-header">
       <h2 id="details-title" tabindex="-1">Map details</h2>
