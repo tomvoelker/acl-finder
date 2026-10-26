@@ -1,8 +1,8 @@
 # EMNLP 2026 poster map
 
-The public map shows the conference handbook's verified paper assignments on a schematic of 424 numbered positions. Choose the poster session before looking up a board, since the venue reuses board numbers. The selector stays visible above the map. Session D and Industry Track Session 6 share a room and time, so they appear together as **D + Industry**. Links using either source session ID reach that shared map.
+The public map shows the official schedule sheet’s verified paper assignments on a schematic of 424 numbered positions. Choose the poster session before looking up a board, since the venue reuses board numbers. The selector stays visible above the map. Session D includes Industry posters. Old links using Industry6 reach Session D.
 
-Select a board, or search for a paper title or author in **Details**. The selected-paper card shows a larger title, board, session and time. It stays visible beside the desktop map or above the zoom controls on phones, with Details and View paper actions. Details include authors when supplied, the physical handbook PDF page, and a paper finder link when the catalog has a matching paper ID. An unmatched handbook title still appears. Conflicting handbook entries appear together with a warning and are not shown as a verified assignment. An unlisted board says “No assignment listed in handbook for this session”. This does not establish whether a paper is presenting.
+Select a board, or search for a paper title or author in **Details**. The selected-paper card shows a larger title, board, session and time. It stays visible beside the desktop map or above the zoom controls on phones, with Details and View paper actions. Details include authors when supplied, the source sheet row, and a paper finder link when the catalog has a matching paper ID. Conflicting schedule entries appear together with a warning and are not shown as a verified assignment. An unlisted board says “No assignment listed in schedule for this session”. This does not establish whether a paper is presenting.
 
 Serve the repository root to use the map locally:
 
@@ -10,7 +10,7 @@ Serve the repository root to use the map locally:
 python3 -m http.server 8017 --bind 127.0.0.1
 ```
 
-Open <http://localhost:8017/poster-map/>. The map reads `../data/poster-boards.json` and `../data/papers.json`. Handbook assignments remain available if the finder dataset cannot load. The complete floor plan remains available if the handbook catalog cannot load. The map does not read or write browser-local assignment drafts. Previous stored drafts are left untouched.
+Open <http://localhost:8017/poster-map/>. The map reads `../data/poster-boards.json` and `../data/papers.json`. Schedule assignments remain available if the finder dataset cannot load. The complete floor plan remains available if the schedule catalog cannot load. Demo labels D1–D10 appear in the finder. They have no numbered positions on this map.
 
 Saved papers from the finder use purple board outlines and white-star badges, plus a clickable badge counting saved posters across all sessions. Click it, or press Enter/Space while it is focused, to jump to the next saved poster. Navigation changes the session when needed and wraps after the last poster. The selection card, board labels and Details also identify saved papers. Only verified assignments in the current physical session receive markers. Reused board numbers and conflicting entries do not inherit a star from another paper. The map reads the shared browser-local saved list and updates on storage changes, focus and page restoration. Use the star in the selected-paper card to save or unstar that paper directly. The finder, map markers and saved-posters shortcut share the same list. Changes stay in browser storage and are not uploaded. Unmatched or conflicting board assignments do not offer an ambiguous save action. A missing list includes the finder authors’ poster at F200 by default. Existing or explicitly emptied lists are respected.
 
@@ -26,7 +26,7 @@ On phones, the map starts at a readable zoom. Drag or swipe to pan, pinch around
 
 ## Source limits
 
-The venue photograph supplies the geometry and numbering. Paper assignments come from the linked conference handbook. The photograph's external labels are often displaced from the drawn boxes. The reconstruction aligns those labels with their numbered rows, regularizes spacing and moves section headings into the gaps. The exact face orientation and spacing need venue confirmation.
+The venue photograph supplies the geometry and numbering. Paper assignments come from the linked official schedule sheet, column L (Board #). The photograph's external labels are often displaced from the drawn boxes. The reconstruction aligns those labels with their numbered rows, regularizes spacing and moves section headings into the gaps. The exact face orientation and spacing need venue confirmation.
 
 Positions 41–56 are especially crowded in the source and have dashed outlines and a warning. Both printed “Section 5” labels are preserved. The photograph's “Poster Display TV's” area is labelled **Demo sessions**, following the user's clarification. Yellow highlights and B1–B10 markers are reproduced without assigning a meaning. No entrance or compass direction is inferred.
 

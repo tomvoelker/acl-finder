@@ -34,11 +34,15 @@ class TopicExportTests(unittest.TestCase):
             root = Path(tmp)
             (root / 'data').mkdir()
             (root / 'experiments/poster-topics').mkdir(parents=True)
-            (root / 'data/poster-boards.json').write_bytes((ROOT / 'data/poster-boards.json').read_bytes())
+            board_fixture = b'reviewed experiment board catalog'
+            (root / 'data/poster-boards.json').write_bytes(board_fixture)
             output = root / 'experiments/poster-topics/assignments.json'
             output.write_text('previous deployment')
             (root / 'experiments/poster-topics/labels.json').write_bytes((EXPERIMENT / 'labels.json').read_bytes())
-            (root / 'metrics.json').write_bytes((EXPERIMENT / 'metrics.json').read_bytes())
+            metrics = json.loads((EXPERIMENT / 'metrics.json').read_text())
+            # Isolate the membership guard from later changes to the live board source.
+            metrics['handbookSHA256'] = hashlib.sha256(board_fixture).hexdigest()
+            (root / 'metrics.json').write_text(json.dumps(metrics))
             (root / 'candidates.json').write_text(json.dumps(candidates))
             with self.assertRaisesRegex(ValueError, 'Cluster memberships changed'):
                 exporter.export(root, root=root)

@@ -10,11 +10,11 @@ The Atlas embeds titles and abstracts with Qwen3-Embedding-0.6B and clusters pap
 - `labels_2026.json`: exact upstream `data/labels/labels_2026.json`, with area/topic IDs, names and descriptions.
 - `source.json`: author, URLs, Git revision, and SHA-256 hashes of the uncompressed source files.
 - `audit.json`: Atlas coverage, local assignment counts and any remaining gaps, for both posters and the whole programme.
-- `local-areas.json`: the 71 local broad-area decisions, titles, public evidence, rationale, reviewer and date. Of these, 64 use available Underline abstracts and seven use titles only. One explicit handbook-title alias supplies a local area without changing its unverified finder identity.
+- `local-areas.json`: the 71 local broad-area decisions, titles, public evidence, rationale, reviewer and date. Of these, 64 use available Underline abstracts and seven use titles only. The former handbook-only Gricean title is now linked directly by the schedule to `9295-TACL`.
 - `../poster-topics.json`: the generated browser dataset, including global Anthology assignments, local areas, poster assignments and its input hash.
 - `../../scripts/import_topics.py`: standard-library Python importer; no third-party dependencies.
 
-The Atlas join uses the finder's verified ACL Anthology IDs. It supplies fine topics and broad areas for **2,803 of 2,831** unambiguous poster assignments, and **5,532 of 5,603** programme entries. The local review supplies broad areas for the remaining **28 posters / 71 programme entries**. Every current paper therefore has an area, but local additions have no fine topic and are recorded separately from Hadi’s assignments. The UI uses the same area styling and explains the additional review once in its source notes. The two conflicting handbook entries receive no verified map assignment. Industry posters belong to physical session D.
+The Atlas join uses the finder's verified ACL Anthology IDs. It supplies fine topics and broad areas for **2,769 of 2,797** unambiguous poster assignments, and **5,532 of 5,603** programme entries. The local review supplies broad areas for the remaining **28 posters / 71 programme entries**. Every current paper therefore has an area, but local additions have no fine topic and are recorded separately from Hadi’s assignments. The UI uses the same area styling and explains the additional review once in its source notes. The duplicate D board 311 pair and nine rows with timeline or room discrepancies receive no verified map assignment. Industry posters belong to physical session D.
 
 The importer checks local reviews against exact programme IDs and titles, validates the area IDs, and rejects attempts to override a paper that now has an upstream Atlas assignment. Local review changes are included in the build's stale-input guard. A future paper without either source remains explicitly unclassified until reviewed.
 
@@ -22,7 +22,7 @@ Only topic assignments and descriptions are imported from the Atlas. The normal 
 
 ## Reproduce or refresh
 
-Run this after changes to the schedule, Anthology matches or handbook:
+Run this after changes to the schedule, timeline or Anthology matches:
 
 ```sh
 python3 scripts/import_topics.py

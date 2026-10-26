@@ -78,7 +78,7 @@
     {
       "id": "501-MAIN",
       "underlineId": "163956",
-      "status": "scheduled",
+      "status": "unscheduled",
       "reason": "No session assigned"
     },
     {
@@ -102,7 +102,7 @@
     {
       "id": "4587-MAIN",
       "underlineId": "162498",
-      "status": "unscheduled",
+      "status": "scheduled",
       "reason": "No session assigned"
     },
     {
@@ -150,7 +150,7 @@
     {
       "id": "8915-MAIN",
       "underlineId": "165565",
-      "status": "unscheduled",
+      "status": "scheduled",
       "reason": "Not published"
     },
     {
@@ -168,7 +168,7 @@
     {
       "id": "894-IND",
       "underlineId": "167517",
-      "status": "unscheduled",
+      "status": "scheduled",
       "reason": "Not published"
     },
     {
@@ -6774,7 +6774,7 @@
     {
       "id": "8105-FIND",
       "underlineId": "165143",
-      "status": "scheduled",
+      "status": "not presenting",
       "reason": "Not published"
     },
     {

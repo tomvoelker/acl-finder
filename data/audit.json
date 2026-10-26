@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-26",
   "sourceUrl": "https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490#gid=943432490",
   "sourceRows": 5603,
   "uniqueIds": 5603,
   "countsByStatus": {
     "desk rejected": 1,
-    "not presenting": 1222,
-    "scheduled": 4321,
-    "unscheduled": 59
+    "not presenting": 1223,
+    "scheduled": 4338,
+    "unscheduled": 41
   },
   "countsByTrack": {
     "Computational Linguistics": 13,
@@ -18,10 +18,14 @@
     "TACL": 50
   },
   "missingPresenters": 372,
+  "boardAssignments": {
+    "posters": 2808,
+    "demos": 70
+  },
   "issueCounts": {
     "inactive paper retains assignment": 2,
     "incomplete room name": 1,
-    "missing assignment": 60,
+    "missing assignment": 42,
     "presentation unconfirmed": 1,
     "presenter repeats title": 10,
     "unusual session assignment": 19
@@ -31,28 +35,6 @@
     {
       "id": "9557-TACL",
       "sourceRow": 27,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "116-MAIN",
-      "sourceRow": 106,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "312-MAIN",
-      "sourceRow": 183,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -73,8 +55,8 @@
       ]
     },
     {
-      "id": "448-MAIN",
-      "sourceRow": 231,
+      "id": "501-MAIN",
+      "sourceRow": 246,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -205,17 +187,6 @@
       ]
     },
     {
-      "id": "1953-MAIN",
-      "sourceRow": 789,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "2062-MAIN",
       "sourceRow": 823,
       "type": "missing assignment",
@@ -254,28 +225,6 @@
       ]
     },
     {
-      "id": "2201-MAIN",
-      "sourceRow": 873,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "2239-MAIN",
-      "sourceRow": 884,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "2407-MAIN",
       "sourceRow": 947,
       "type": "missing assignment",
@@ -283,17 +232,6 @@
         "date",
         "start",
         "end"
-      ]
-    },
-    {
-      "id": "3137-MAIN",
-      "sourceRow": 1167,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
       ]
     },
     {
@@ -387,39 +325,6 @@
       ]
     },
     {
-      "id": "4587-MAIN",
-      "sourceRow": 1607,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "4671-MAIN",
-      "sourceRow": 1634,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "4768-MAIN",
-      "sourceRow": 1666,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "4800-MAIN",
       "sourceRow": 1677,
       "type": "missing assignment",
@@ -494,17 +399,6 @@
       ]
     },
     {
-      "id": "7350-MAIN",
-      "sourceRow": 2355,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "7351-MAIN",
       "sourceRow": 2356,
       "type": "missing assignment",
@@ -512,17 +406,6 @@
         "date",
         "start",
         "end"
-      ]
-    },
-    {
-      "id": "7875-MAIN",
-      "sourceRow": 2469,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
       ]
     },
     {
@@ -573,17 +456,6 @@
       "sourceRow": 2643,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
-    },
-    {
-      "id": "8915-MAIN",
-      "sourceRow": 2669,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
     },
     {
       "id": "9090-MAIN",
@@ -670,17 +542,6 @@
       ]
     },
     {
-      "id": "894-IND",
-      "sourceRow": 3019,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "13-DEMO",
       "sourceRow": 3037,
       "type": "missing assignment",
@@ -710,18 +571,6 @@
         "start",
         "end",
         "session"
-      ]
-    },
-    {
-      "id": "167-DEMO",
-      "sourceRow": 3089,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session",
-        "room"
       ]
     },
     {
@@ -883,17 +732,6 @@
       ]
     },
     {
-      "id": "3314-FIND",
-      "sourceRow": 4006,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "3811-FIND",
       "sourceRow": 4129,
       "type": "unusual session assignment",
@@ -923,28 +761,6 @@
     {
       "id": "5353-FIND",
       "sourceRow": 4519,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "5458-FIND",
-      "sourceRow": 4543,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
-      "id": "5743-FIND",
-      "sourceRow": 4615,
       "type": "missing assignment",
       "fields": [
         "date",
@@ -1037,21 +853,75 @@
       ]
     },
     {
-      "id": "8722-FIND",
-      "sourceRow": 5374,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
-    },
-    {
       "id": "9316-FIND",
       "sourceRow": 5509,
       "type": "presenter repeats title",
       "note": "The source repeats the paper title in its presenter field."
+    }
+  ],
+  "boardIssues": [
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "307-IND",
+      "sourceRow": 2838,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "425-FIND",
+      "sourceRow": 3229,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "798-FIND",
+      "sourceRow": 3327,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "2167-FIND",
+      "sourceRow": 3684,
+      "note": "The schedule row does not confirm Hall H for this board."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "2352-FIND",
+      "sourceRow": 3735,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "2609-FIND",
+      "sourceRow": 3807,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "3234-FIND",
+      "sourceRow": 3978,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "3811-FIND",
+      "sourceRow": 4129,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "unconfirmed-assignment",
+      "paperId": "7688-FIND",
+      "sourceRow": 5112,
+      "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
+    },
+    {
+      "kind": "duplicate-board",
+      "session": "D",
+      "board": 311,
+      "paperIds": [
+        "2638-MAIN",
+        "6137-MAIN"
+      ]
     }
   ]
 }

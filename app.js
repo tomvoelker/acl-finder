@@ -273,7 +273,7 @@ import { readAtlasLabel } from './atlas.mjs';
     if (!sourceUrl || !row) return null;
     const u = new URL(sourceUrl.href);
     const gid = u.searchParams.get('gid') || (/gid=(\d+)/.exec(u.hash) || [])[1];
-    u.hash = `${gid ? `gid=${gid}&` : ''}range=A${row}:K${row}`;
+    u.hash = `${gid ? `gid=${gid}&` : ''}range=A${row}:L${row}`;
     return u.href;
   }
 
@@ -288,6 +288,7 @@ import { readAtlasLabel } from './atlas.mjs';
       atlas: readAtlasLabel(atlas, raw.atlasTopic, raw.atlasArea), atlasAreaBasis: text(raw.atlasAreaBasis),
       timeZone: text(raw.timeZone), status: text(raw.status), scheduleNote: text(raw.scheduleNote),
       oralSlotNote: text(raw.oralSlotNote),
+      board: /^D(?:10|[1-9])$/i.test(text(raw.board) || '') ? text(raw.board).toUpperCase() : null,
       poster: readPosterLocation(raw, posterSessions), posterIssue: text(raw.posterLocationIssue),
       posterClaimedBoard: Number.isInteger(raw.posterClaimedBoard) && raw.posterClaimedBoard >= 1 && raw.posterClaimedBoard <= 424 ? raw.posterClaimedBoard : null,
       sourceRow: Number.isInteger(raw.sourceRow) && raw.sourceRow > 0 ? raw.sourceRow : null,
@@ -303,7 +304,7 @@ import { readAtlasLabel } from './atlas.mjs';
     p._timed = p.status === 'scheduled' && !p.scheduleNote && !!p.date && !!p.start;
     p._bucket = p.status === 'desk rejected' ? 4 : p.status === 'withdrawn' ? 3 : p.status === 'not presenting' ? 2 : p.date ? 0 : 1;
     p._day = p._inactive ? null : p.date || 'undated';
-    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic, p.atlas?.areaLabel, p.atlas?.label, p.poster ? `board ${p.poster.board} board${p.poster.board} ${p.poster.label}` : null, p.posterIssue].filter(Boolean).join(' \u2002 '));
+    p._hay = fold([p.id, p.title, titleSearchText(p.title || ''), ...p.authors, p.presenter, p.topic, p.atlas?.areaLabel, p.atlas?.label, p.poster ? `board ${p.poster.board} board${p.poster.board} ${p.poster.label}` : null, p.board ? `board ${p.board} board${p.board}` : null, p.posterIssue].filter(Boolean).join(' \u2002 '));
     p._f = FACETS.map((f) => f.get(p) ?? NONE);
     return p;
   }
@@ -335,7 +336,7 @@ import { readAtlasLabel } from './atlas.mjs';
   function calendarEligible(p) {
     if (calCache.has(p._key)) return calCache.get(p._key);
     const slot = presentationSlot(p);
-    const ok = p.status === 'scheduled' && !p.scheduleNote && !p.oralSlotNote && !!p.id && !!slot.date && !!slot.start && !!slot.end &&
+    const ok = p.status === 'scheduled' && !p.scheduleNote && !p.oralSlotNote && !p.posterIssue && !!p.id && !!slot.date && !!slot.start && !!slot.end &&
       slot.end > slot.start && (p.timeZone || tz) === tz && !!localToUtc(slot.date, slot.start) && !!localToUtc(slot.date, slot.end);
     calCache.set(p._key, ok);
     return ok;
@@ -422,7 +423,8 @@ import { readAtlasLabel } from './atlas.mjs';
         p.presenter ? `Presenter: ${p.presenter}` : null,
         `Paper ID: ${p.id}`,
         p.oralSlot ? `Individual oral time from Underline: ${p.underlineUrl}. Programme session: ${p.start}–${p.end} CET.` : null,
-        p.poster ? `Handbook poster: ${p.poster.label}, board ${p.poster.board}, ${p.poster.date} ${p.poster.start}–${p.poster.end}, ${p.poster.room}.` : p.posterIssue,
+        p.poster ? `Schedule poster: ${p.poster.label}, board ${p.poster.board}, ${p.poster.date} ${p.poster.start}–${p.poster.end}, ${p.poster.room}.` : p.posterIssue,
+        p.board ? `Demo board: ${p.board}.` : null,
         p.poster ? `Poster map: ${new URL(posterMapHref(p.poster), location.href).href}` : null,
         `Budapest local time. Unofficial schedule snapshot (updated ${updatedLabel}). Check ${PROGRAM_URL} for changes.`,
       ].filter(Boolean).join('\n');
@@ -995,7 +997,8 @@ import { readAtlasLabel } from './atlas.mjs';
     else {
       if (poster) where.append(newTab(posterMapHref(poster), `Board ${poster.board} ↗`,
         ` for ${poster.label}. Locate this poster on the map (opens in a new tab)`, 'paper__board'));
-      else if (p.presentation === 'Poster' || p.posterIssue) where.append(h('span', { class: 'paper__board-warning' }, 'Board unconfirmed'));
+      else if (p.board) where.append(h('span', { class: 'paper__board' }, `Board ${p.board}`));
+      else if (p.presentation === 'Poster' || p.posterIssue) where.append(h('span', { class: 'paper__board-warning' }, p.posterClaimedBoard ? `Board ${p.posterClaimedBoard} · location unconfirmed` : 'Board unconfirmed'));
       const label = poster ? poster.label.replace(/session\s+/i, '') : p.presentation && !STATUS_LIKE.has(p.presentation) ? p.presentation : null;
       if (label) where.append(h('span', { class: 'paper__slot-type' }, label));
       if (slot.date) where.append(h('span', { class: 'paper__date' }, dateInfo(slot.date).short));
@@ -1050,7 +1053,7 @@ import { readAtlasLabel } from './atlas.mjs';
     if (p.oralSlot) detailsBody.append(h('p', null, `Individual oral time from Underline. Full session: ${timeRange(p)} CET.`));
     if (p.oralSlotNote) detailsBody.append(h('p', { class: 'note' }, p.oralSlotNote));
     if (poster && posterSlotDiffers(p, poster)) {
-      detailsBody.append(h('p', null, 'The handbook poster slot is shown above. ',
+      detailsBody.append(h('p', null, 'The schedule poster slot is shown above. ',
         p._inactive ? '' : `Programme entry: ${[p.presentation, p.date ? dateInfo(p.date).short : null, p._timed ? timeRange(presentationSlot(p)) : 'Time unconfirmed', p.room, p.mode].filter(Boolean).join(' · ')}.`));
       if (calendarEligible(p)) detailsBody.append(h('button', { type: 'button', class: 'linkish', 'data-action': 'ics', 'data-key': p._key }, 'Calendar for programme entry'));
     }

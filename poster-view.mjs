@@ -1,8 +1,8 @@
-// Physical locations come from the handbook, independently of the source sheet.
+// Numbered poster locations come from the official schedule sheet.
 export function readPosterLocation(raw, sessions) {
   const slot = sessions.get(raw.posterSession);
   if (!slot || !Number.isInteger(raw.posterBoard) || raw.posterBoard < 1 || raw.posterBoard > 424) return null;
-  return { ...slot, board: raw.posterBoard, page: raw.posterSourcePage };
+  return { ...slot, board: raw.posterBoard, sourceRow: raw.posterSourceRow };
 }
 
 export function posterMapHref(poster) {
@@ -20,18 +20,18 @@ export function posterSlotDiffers(paper, poster) {
 // Keep explicit board lookups separate from ordinary substring title/ID search.
 export function parsePosterQuery(query) {
   const boards = [];
-  const text = query.replace(/(^|\s)board\s*#?\s*(\d+)(?=\s|$)/gi, (_match, space, number) => {
-    boards.push(Number(number));
+  const text = query.replace(/(^|\s)board\s*#?\s*(D(?:10|[1-9])|\d+)(?=\s|$)/gi, (_match, space, number) => {
+    boards.push(/^d/i.test(number) ? number.toUpperCase() : Number(number));
     return space;
   }).trim();
   return { boards, text };
 }
 
 export function matchesPosterQuery(paper, boards) {
-  return boards.every(board => board === (paper.poster?.board ?? paper.posterClaimedBoard));
+  return boards.every(board => board === (paper.poster?.board ?? paper.posterClaimedBoard ?? (/^D(?:10|[1-9])$/i.test(paper.board || '') ? paper.board.toUpperCase() : null)));
 }
 
-// A handbook slot is independent of the presentation format in the source sheet.
+// A poster slot is independent of the presentation format in the source sheet.
 // Inactive entries remain searchable, but are not advertised as posters to attend.
 export function posterBrowseDay(paper) {
   if (paper._inactive) return null;

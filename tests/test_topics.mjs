@@ -104,7 +104,7 @@ test('published areas cover every unambiguous board and distinguish local assign
     assert.equal(choices.areas.length,16);
     assert.equal(choices.topics.reduce((n,t)=>n+t.count,0)+choices.local+choices.unclassified,valid.length);
   }
-  assert.equal(classified,2803); assert.equal(local,28); assert.equal(unclassified,0);
+  assert.equal(classified,2769); assert.equal(local,28); assert.equal(unclassified,0);
 });
 
 test('local areas have the same colours but never acquire an invented fine topic', () => {

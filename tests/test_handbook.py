@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from import_anthology import normalize_title
 from import_handbook import (extract_boards, import_catalog, load_catalog,
-                             match_entries, SOURCE_SHA256, validate_catalog)
+                             match_entries, validate_catalog)
 
 
 HEADER = "Main Conference, Day 1, Sunday, October 25, 2026\n"
@@ -186,21 +186,6 @@ class HandbookTests(unittest.TestCase):
             target.write_text(json.dumps(data))
             self.assertEqual(load_catalog(target), data)
 
-    def test_committed_catalog_source_counts_and_collision_receipts(self):
-        data = load_catalog()
-        self.assertEqual(data["source"]["sha256"], SOURCE_SHA256)
-        self.assertEqual(data["source"]["pageCount"], 607)
-        self.assertEqual(len(data["entries"]), 2833)
-        self.assertEqual(sum(e["paperId"] is not None for e in data["entries"]), 2832)
-        self.assertEqual(sum(e["verified"] for e in data["entries"]), 2831)
-        conflicts = [e for e in data["entries"] if not e["verified"]]
-        self.assertEqual({(e["session"], e["board"], e["boardPage"], e["paperId"]) for e in conflicts},
-                         {("D", 311, 225, "2638-MAIN"), ("D", 311, 225, "6137-MAIN")})
-        cross_page = next(e for e in data["entries"] if e["session"] == "A" and e["board"] == 4)
-        self.assertEqual((cross_page["title"], cross_page["page"], cross_page["boardPage"]),
-                         ("MiST: Mid-Training LLMs for Cybersecurity", 39, 40))
-        unmatched = [e for e in data["entries"] if e["paperId"] is None]
-        self.assertEqual([(e["session"], e["board"], e["authors"]) for e in unmatched], [("E", 371, "Amita Kamath")])
 
 
 if __name__ == "__main__":

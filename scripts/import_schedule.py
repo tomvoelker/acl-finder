@@ -3,7 +3,7 @@
 
 Refresh: python3 scripts/import_schedule.py --fetch
 Reproduce the committed snapshot:
-  python3 scripts/import_schedule.py --source data/source.csv --updated-at 2026-10-24
+  python3 scripts/import_schedule.py --source data/source.csv --timeline data/timeline.csv --updated-at 2026-10-26
 
 The source lists presenters, not complete author lists, and contains no abstracts.
 Only the Python standard library is required.
@@ -20,16 +20,19 @@ import re
 from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
+from poster_catalog import create_catalog, TIMELINE_TAB_ID
+
 ROOT = Path(__file__).resolve().parents[1]
 SHEET_ID = "1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk"
 TAB_ID = "943432490"
 SOURCE_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?gid={TAB_ID}#gid={TAB_ID}"
 CSV_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={TAB_ID}"
+TIMELINE_CSV_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={TIMELINE_TAB_ID}"
 TIME_ZONE = "Europe/Budapest"
 HEADER = [
     "Paper ID #-track)", "Title", "Assigned Pres Type", "Presentation Mode",
     "Presenters Name", "Room Location", "Session", "Sub-session", "Session Date",
-    "Session Start Time", "Session End Time",
+    "Session Start Time", "Session End Time", "Board #",
 ]
 TRACKS = {
     "MAIN": "Main conference", "FIND": "Findings", "IND": "Industry",
@@ -99,6 +102,17 @@ def parse_schedule(date_value, start_value, end_value):
     return day, start, end
 
 
+def parse_board(value, row):
+    value = clean(value)
+    if value is None:
+        return None
+    if re.fullmatch(r"[1-9]\d*", value) and 1 <= int(value) <= 424:
+        return value
+    if re.fullmatch(r"D(?:[1-9]|10)", value):
+        return value
+    raise ValueError(f"Row {row}: invalid Board # {value!r}; expected 1–424 or demo position D1–D10")
+
+
 def normalize_row(row, source_row):
     if len(row) > len(HEADER):
         raise ValueError(f"Row {source_row}: expected at most {len(HEADER)} cells, got {len(row)}")
@@ -141,6 +155,7 @@ def normalize_row(row, source_row):
         "date": day, "start": start, "end": end, "timeZone": TIME_ZONE,
         "status": status, "sourceRow": source_row,
         "scheduleNote": f"The source lists {clean(cells[9])} and a conflicting end time of {clean(cells[10])}. Check the source sheet." if conflict else None,
+        "board": parse_board(cells[11], source_row),
     }
 
 
@@ -205,6 +220,8 @@ def audit_papers(papers, updated_at):
         "countsByStatus": dict(sorted(Counter(paper["status"] for paper in papers).items())),
         "countsByTrack": dict(sorted(Counter(paper["track"] for paper in papers).items())),
         "missingPresenters": sum(paper["presenter"] is None for paper in papers),
+        "boardAssignments": {"posters": sum(bool(paper["board"] and paper["board"].isdigit()) for paper in papers),
+                             "demos": sum(bool(paper["board"] and paper["board"].startswith("D")) for paper in papers)},
         "issueCounts": dict(sorted(Counter(issue["type"] for issue in issues).items())),
         "note": "Source values are retained. An unusual assignment may be intentional; no times or rooms are inferred from neighboring rows.",
         "issues": sorted(issues, key=lambda issue: (issue["sourceRow"], issue["type"])),
@@ -216,6 +233,7 @@ def main():
     inputs = parser.add_mutually_exclusive_group(required=True)
     inputs.add_argument("--fetch", action="store_true", help="Download the current public author-presentation CSV")
     inputs.add_argument("--source", type=Path, help="Read a local source CSV")
+    parser.add_argument("--timeline", type=Path, help="Local Conference Timeline CSV (required with --source)")
     parser.add_argument("--updated-at", help="Source retrieval date, YYYY-MM-DD (required for local CSV)")
     args = parser.parse_args()
     if args.fetch:
@@ -223,21 +241,31 @@ def main():
             parser.error("--fetch records today's retrieval date; omit --updated-at")
         with urlopen(CSV_URL, timeout=60) as response:
             source_text = response.read().decode("utf-8-sig")
+        with urlopen(TIMELINE_CSV_URL, timeout=60) as response:
+            timeline_text = response.read().decode("utf-8-sig")
         updated_at = datetime.now(timezone.utc).date().isoformat()
     else:
         if not args.updated_at:
             parser.error("--source requires --updated-at with the date that source was retrieved")
+        if not args.timeline:
+            parser.error("--source requires --timeline with the Conference Timeline snapshot")
         with args.source.open(encoding="utf-8-sig", newline="") as source:
             source_text = source.read()
+        with args.timeline.open(encoding="utf-8-sig", newline="") as source:
+            timeline_text = source.read()
         updated_at = args.updated_at
     rows = list(csv.reader(io.StringIO(source_text)))
     dataset, audit = build_dataset(rows, updated_at)
+    catalog = create_catalog(dataset, csv.reader(io.StringIO(timeline_text)), source_text, timeline_text)
+    audit["boardIssues"] = catalog["sourceIssues"]
     data_dir = ROOT / "data"
     data_dir.mkdir(exist_ok=True)
     # Validate everything before replacing any committed data.
     (data_dir / "source.csv").write_text(source_text, encoding="utf-8")
+    (data_dir / "timeline.csv").write_text(timeline_text, encoding="utf-8")
     (data_dir / "papers.json").write_text(json.dumps(dataset, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     (data_dir / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (data_dir / "poster-boards.json").write_text(json.dumps(catalog, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"Imported {len(dataset['papers']):,} papers from source retrieved {updated_at}.")
     print(json.dumps({"statuses": audit["countsByStatus"], "sourceIssues": audit["issueCounts"]}, indent=2))
 

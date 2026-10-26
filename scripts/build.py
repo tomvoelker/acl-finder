@@ -1,5 +1,7 @@
 """Package the static site for GitHub Pages. No dependencies required."""
 
+import csv
+import io
 import json
 import hashlib
 import shutil
@@ -7,7 +9,7 @@ from pathlib import Path
 
 from import_anthology import match_papers
 from import_underline import match_presentations
-from import_handbook import load_catalog
+from poster_catalog import load_catalog, create_catalog
 from import_topics import input_hash
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,24 +22,26 @@ FILES = ["index.html", "styles.css", "app.js", "theme.js", "atlas.mjs", "schedul
 
 
 def enrich_poster_boards(data, catalog):
-    """Keep the sheet's schedule and attach only unambiguous handbook locations."""
+    """Attach only locations confirmed by the current schedule and timeline."""
     by_id = {paper["id"]: paper for paper in data["papers"]}
     seen = set()
     for entry in catalog["entries"]:
         paper_id = entry["paperId"]
-        if not paper_id:
-            continue  # Source-only titles still appear on the map.
         if paper_id not in by_id:
-            raise ValueError(f"Unknown handbook paper ID: {paper_id}")
+            raise ValueError(f"Unknown schedule board paper ID: {paper_id}")
         if paper_id in seen:
-            raise ValueError(f"Multiple handbook poster entries for paper: {paper_id}")
+            raise ValueError(f"Multiple schedule poster entries for paper: {paper_id}")
         seen.add(paper_id)
         paper = by_id[paper_id]
         if entry["verified"]:
-            paper.update(posterBoard=entry["board"], posterSession=entry["session"], posterSourcePage=entry["boardPage"])
+            paper.update(posterBoard=entry["board"], posterSession=entry["session"], posterSourceRow=entry["sourceRow"])
         else:
             paper["posterClaimedBoard"] = entry["board"]
-            paper["posterLocationIssue"] = f"The handbook assigns board {entry['board']} to more than one paper in the same poster session. Its location is unconfirmed."
+            paper["posterLocationIssue"] = entry["issue"]
+    for paper in data["papers"]:
+        if paper["id"] not in seen and paper.get("board") and paper["board"].isdigit():
+            paper["posterClaimedBoard"] = int(paper["board"])
+            paper["posterLocationIssue"] = "The schedule lists a board but does not confirm its poster session. Check the source sheet."
     data["posterSessions"] = catalog["sessions"]
 
 
@@ -62,6 +66,16 @@ def build():
             paper["authors"] = publications[paper["anthologyId"]]["authors"]
         paper.update(underline_presentations.get(paper["id"], {}))
     poster_catalog = load_catalog(ROOT / "data/poster-boards.json")
+    source_text = (ROOT / "data/source.csv").read_bytes().decode("utf-8-sig")
+    timeline_text = (ROOT / "data/timeline.csv").read_bytes().decode("utf-8-sig")
+    expected_catalog = create_catalog(data, csv.reader(io.StringIO(timeline_text)), source_text, timeline_text)
+    if poster_catalog != expected_catalog:
+        raise ValueError("Schedule board catalog is stale. Run scripts/import_schedule.py before building.")
+    # Keep the independent map catalog useful when the finder dataset cannot load.
+    by_id = {paper["id"]: paper for paper in data["papers"]}
+    for entry in poster_catalog["entries"]:
+        paper = by_id[entry["paperId"]]
+        entry["authors"] = paper.get("authors", [])
     enrich_poster_boards(data, poster_catalog)
     topics = json.loads((ROOT / "data/poster-topics.json").read_text())
     if topics.get("version") != 2 or topics.get("inputsSHA256") != input_hash(ROOT):
@@ -134,7 +148,7 @@ def build():
     (map_output / "index.html").write_text(map_html)
 
     (OUTPUT / "data").mkdir()
-    shutil.copy2(ROOT / "data/poster-boards.json", OUTPUT / "data/poster-boards.json")
+    (OUTPUT / "data/poster-boards.json").write_text(json.dumps(poster_catalog, ensure_ascii=False, separators=(",", ":")) + "\n")
     shutil.copy2(ROOT / "data/poster-topics.json", OUTPUT / "data/poster-topics.json")
     (OUTPUT / "data/papers.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n")
     for name in ["conference-logo.png", "LICENSE"]:

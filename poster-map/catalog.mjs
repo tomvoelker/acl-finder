@@ -1,24 +1,33 @@
-// The handbook is the assignment source. Board numbers are reused each session.
+// The schedule sheet supplies assignments. Board numbers are reused each session.
 export function validateCatalog(document) {
-  if (document?.version !== 1 || !Array.isArray(document.sessions) || !Array.isArray(document.entries)) {
-    throw new Error('Expected a version 1 handbook catalog with sessions and entries.');
+  if (document?.version !== 2 || !Array.isArray(document.sessions) || !Array.isArray(document.entries)) {
+    throw new Error('Expected a version 2 schedule catalog with sessions and entries.');
   }
-  const ids = new Set();
+  if (!document.source?.url || !document.source.sheet || document.source.column !== 'L' || !document.source.updatedAt) {
+    throw new Error('The schedule catalog needs source sheet, column L and update metadata.');
+  }
+  const ids = new Set(), aliases = new Set();
   for (const session of document.sessions) {
-    if (typeof session.id !== 'string' || !/^[A-Za-z0-9-]+$/.test(session.id) || ids.has(session.id)) throw new Error('Handbook session IDs must be unique.');
+    if (typeof session.id !== 'string' || !/^[A-Za-z0-9-]+$/.test(session.id) || ids.has(session.id)) throw new Error('Schedule session IDs must be unique.');
     if (!session.label || !/^\d{4}-\d{2}-\d{2}$/.test(session.date) || !/^\d{2}:\d{2}$/.test(session.start) || !/^\d{2}:\d{2}$/.test(session.end)) {
       throw new Error(`Session ${session.id}: missing label, date or time.`);
     }
     ids.add(session.id);
-  }
-  if (!ids.size) throw new Error('The handbook catalog has no poster sessions.');
-  for (const entry of document.entries) {
-    if (!ids.has(entry.session)) throw new Error('An assignment has an unknown handbook session.');
-    if (!Number.isInteger(entry.board) || entry.board < 1 || entry.board > 424) throw new Error('Handbook board must be an integer from 1 to 424.');
-    if (typeof entry.title !== 'string' || !entry.title.trim() || !Number.isInteger(entry.page) || entry.page < 1) {
-      throw new Error('A handbook assignment needs a title and physical PDF page.');
+    for (const alias of [session.id, ...(session.aliases || []).filter(alias => alias !== session.id)]) {
+      if (typeof alias !== 'string' || !/^[A-Za-z0-9-]+$/.test(alias) || aliases.has(alias)) throw new Error('Schedule session aliases must be unique.');
+      aliases.add(alias);
     }
-    if (entry.paperId !== null && typeof entry.paperId !== 'string') throw new Error('A handbook paper ID must be a string or null.');
+  }
+  if (!ids.size) throw new Error('The schedule catalog has no poster sessions.');
+  for (const entry of document.entries) {
+    if (!ids.has(entry.session)) throw new Error('An assignment has an unknown schedule session.');
+    if (!Number.isInteger(entry.board) || entry.board < 1 || entry.board > 424) throw new Error('Schedule board must be an integer from 1 to 424.');
+    if (typeof entry.title !== 'string' || !entry.title.trim() || !Number.isInteger(entry.sourceRow) || entry.sourceRow < 1) {
+      throw new Error('A schedule assignment needs a title and positive source row.');
+    }
+    if (typeof entry.paperId !== 'string' || !entry.paperId || typeof entry.verified !== 'boolean' || !Array.isArray(entry.authors)) {
+      throw new Error('A schedule assignment needs a paper ID, authors and verified flag.');
+    }
   }
   return document;
 }
@@ -32,9 +41,8 @@ export function sessionGroups(sessions) {
   }
   return [...groups.values()].map(members => {
     const main = members.find(session => /^[A-G]$/.test(session.id)) || members[0];
-    const industry = members.some(session => /industry/i.test(session.id + session.label));
-    return {...main, aliases: members.map(session => session.id), label: members.map(session => session.label).join(' + '),
-      shortLabel: `Session ${main.id}${members.length > 1 && industry ? ' + Industry' : ''}`};
+    return {...main, aliases: [...new Set(members.flatMap(session => [session.id, ...(session.aliases || [])]))], label: members.map(session => session.label).join(' + '),
+      shortLabel: `Session ${main.id}`};
   });
 }
 

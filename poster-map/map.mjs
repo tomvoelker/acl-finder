@@ -181,6 +181,18 @@ function selectBoard(number, {reveal = false, focus = false, hash = true, keepZo
   if (focus) elements.get(number).focus({preventScroll:true});
   if (hash) updateHash();
 }
+function scheduleRowLink(entry) {
+  const link = document.createElement('a');
+  link.textContent = `Schedule row ${entry.sourceRow}`;
+  try {
+    const url = new URL(catalog.source.url);
+    if (!['https:', 'http:'].includes(url.protocol)) return link;
+    const gid = url.searchParams.get('gid') || (/gid=(\d+)/.exec(url.hash) || [])[1];
+    url.hash = `${gid ? `gid=${gid}&` : ''}range=A${entry.sourceRow}:L${entry.sourceRow}`;
+    link.href = url.href; link.target = '_blank'; link.rel = 'noopener';
+  } catch { /* Keep the row label when source metadata is unusable. */ }
+  return link;
+}
 function renderAssignment() {
   const entry = currentAssignment(selected);
   const detail = $('#selection-assignment');
@@ -190,16 +202,18 @@ function renderAssignment() {
   if (selected === null) return;
   const sessionLabel = currentSession()?.shortLabel || 'Session unavailable';
   const conflicts = conflictingEntries(selected);
+  const unconfirmed = !entry && !conflicts.length ? assignments.find(row => row.session === activeSession && row.board === selected) : null;
   $('#selection-title').textContent = `Board ${selected} · ${activeSession ? currentSession()?.shortLabel : 'Floor plan'}`;
   const title = document.createElement('strong');
-  if (conflicts.length) title.textContent = 'Conflicting handbook entries';
+  if (conflicts.length) title.textContent = 'Conflicting schedule entries';
   else if (entry) renderTitle(title, displayTitle(entry));
-  else title.textContent = catalogReady ? 'No assignment listed in handbook for this session' : 'Handbook assignments unavailable';
+  else if (unconfirmed) renderTitle(title, displayTitle(unconfirmed));
+  else title.textContent = catalogReady ? 'No assignment listed in schedule for this session' : 'Schedule assignments unavailable';
   detail.append(title);
   for (const conflict of conflicts) {
     const conflictTitle = document.createElement('p'); renderTitle(conflictTitle, conflict.title); detail.append(conflictTitle);
     const conflictSource = document.createElement('p');
-    conflictSource.textContent = `${authorsText(conflict) ? `${authorsText(conflict)} · ` : ''}Handbook PDF page ${conflict.page}`; detail.append(conflictSource);
+    conflictSource.append(`${authorsText(conflict) ? `${authorsText(conflict)} · ` : ''}`, scheduleRowLink(conflict)); detail.append(conflictSource);
   }
   if (entry && displayAuthors(entry)) {
     const authors = document.createElement('p'); authors.textContent = displayAuthors(entry); detail.append(authors);
@@ -209,7 +223,8 @@ function renderAssignment() {
     saved.className = 'saved-paper-label'; saved.textContent = '★ Saved paper'; detail.append(saved);
   }
   const note = document.createElement('p');
-  note.textContent = conflicts.length ? 'The handbook lists both papers at this board. Confirm the location with conference staff.' : entry ? `${sessionLabel} · Handbook PDF page ${entry.page}` : 'Board numbers are reused between sessions. Check the selected session.';
+  note.textContent = conflicts.length ? 'The schedule lists multiple papers at this board. Confirm the location with conference staff.' : unconfirmed ? unconfirmed.issue || 'Board assignment unconfirmed.' : entry ? `${sessionLabel} · ` : 'Board numbers are reused between sessions. Check the selected session.';
+  if (entry || unconfirmed) note.append(' ', scheduleRowLink(entry || unconfirmed));
   detail.append(note);
   if (entry?.paperId && papers.has(entry.paperId)) {
     const link = document.createElement('a');
@@ -252,8 +267,14 @@ function renderAssignment() {
   chip.append(heading);
   const paperTitle = document.createElement('h2'); paperTitle.className = 'chip-title';
   if (entry) renderTitle(paperTitle, displayTitle(entry));
-  else paperTitle.textContent = conflicts.length ? 'Conflicting handbook entries' : catalogReady ? 'No verified paper assignment' : 'Floor plan position';
+  else if (unconfirmed) renderTitle(paperTitle, displayTitle(unconfirmed));
+  else paperTitle.textContent = conflicts.length ? 'Conflicting schedule entries' : catalogReady ? 'No verified paper assignment' : 'Floor plan position';
   chip.append(paperTitle);
+  if (unconfirmed) {
+    const warning = document.createElement('p'); warning.className = 'selection-card-time';
+    warning.textContent = 'Board assignment unconfirmed. Check Details before attending.';
+    chip.append(warning);
+  }
   const topic = topicLabel(entry);
   if (topic) { chip.append(topic); detail.append(topic.cloneNode(true)); }
   if (hasTopicFilter()) {
@@ -308,8 +329,8 @@ function refreshAssignments() {
     element.classList.toggle('topic-dimmed', hasTopicFilter() && (!entry || !matchesTopic(topic, selectedArea, selectedTopic)));
     if (topic) element.style.setProperty('--topic-color', topic.color);
     else element.style.removeProperty('--topic-color');
-    element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting handbook entries' : ', no verified assignment listed'}`);
-    element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting handbook entries' : ''}`;
+    element.setAttribute('aria-label', `Board ${board.number}${activeSession ? `, Session ${activeSession}` : ''}${savedBoards.has(board.number) ? ', saved paper' : ''}${board.needsReview ? ', numbering needs confirmation' : ''}${entry ? `, ${displayTitle(entry)}` : conflictingEntries(board.number).length ? ', conflicting schedule entries' : ', no verified assignment listed'}`);
+    element.querySelector('title').textContent = `Board ${board.number}${savedBoards.has(board.number) ? ' · Saved paper' : ''}${entry ? ': ' + displayTitle(entry) : conflictingEntries(board.number).length ? ': Conflicting schedule entries' : ''}`;
     if (topic) {
       const label = `Inferred area: ${topic.areaLabel}${topic.label ? `, topic: ${topic.label}` : ''}`;
       element.setAttribute('aria-label', `${element.getAttribute('aria-label')}, ${label}`);
@@ -321,7 +342,7 @@ function refreshAssignments() {
   $('#next-saved').title = savedStops.length ? 'Jump through saved posters across all sessions' : 'No saved papers have a confirmed poster board';
   $('#next-saved').setAttribute('aria-label', savedStops.length ? `Next saved poster. ${savedStops.length} across all poster sessions.` : 'No saved posters with confirmed boards');
   const session = currentSession();
-  $('#assignment-count').textContent = session ? `${currentEntries().filter(entry => currentAssignment(entry.board)).length} verified handbook assignments · ${session.room || 'Room not listed'}` : 'Handbook assignments unavailable';
+  $('#assignment-count').textContent = session ? `${currentEntries().filter(entry => currentAssignment(entry.board)).length} verified schedule assignments · ${session.room || 'Room not listed'}` : 'Schedule assignments unavailable';
   $('#session-note').textContent = session ? `${session.label} · ${session.date} · ${session.start}–${session.end} Budapest time. Boards are reused each session.` : 'The complete floor plan remains available.';
   renderAssignment();
 }
@@ -335,7 +356,7 @@ function renderPaperResults() {
   if (!query && !topicFilter) return;
   const words = query.split(/\s+/);
   const entries = topicFilter ? topicMembers() : currentEntries();
-  const matches = entries.filter(entry => (entry.verified === true || conflictingEntries(entry.board).length) && words.every(word => searchText(`${titleSearchText(displayTitle(entry))} ${displayAuthors(entry)} ${entry.paperId || ''}`).includes(word)));
+  const matches = entries.filter(entry => words.every(word => searchText(`${titleSearchText(displayTitle(entry))} ${displayAuthors(entry)} ${entry.paperId || ''}`).includes(word)));
   if (topicFilter) {
     const note = document.createElement('p');
     note.textContent = `${matches.length} posters · board order · Atlas topics are inferred`;
@@ -343,7 +364,7 @@ function renderPaperResults() {
   }
   if (!matches.length) {
     const note = document.createElement('p');
-    note.textContent = topicFilter ? 'No matching paper in this list. Clear the search or close the list and choose All areas.' : 'No matching handbook assignment in this session.'; results.append(note); return;
+    note.textContent = topicFilter ? 'No matching paper in this list. Clear the search or close the list and choose All areas.' : 'No matching schedule assignment in this session.'; results.append(note); return;
   }
   const limit = topicFilter ? matches.length : 20;
   for (const entry of matches.slice(0,limit)) {
@@ -351,7 +372,7 @@ function renderPaperResults() {
     button.type = 'button'; button.className = 'paper-result';
     const title = document.createElement('span'); renderTitle(title, displayTitle(entry)); button.append(title);
     const meta = document.createElement('small');
-    meta.textContent = `Board ${entry.board}${savedBoards.has(entry.board) ? ' · ★ Saved' : ''}${conflictingEntries(entry.board).length ? ' · Conflicting entries' : ''}${displayAuthors(entry) ? ` · ${displayAuthors(entry)}` : ''}`;
+    meta.textContent = `Board ${entry.board}${savedBoards.has(entry.board) ? ' · ★ Saved' : ''}${conflictingEntries(entry.board).length ? ' · Conflicting entries' : entry.verified !== true ? ' · Board unconfirmed' : ''}${displayAuthors(entry) ? ` · ${displayAuthors(entry)}` : ''}`;
     button.append(meta);
     button.addEventListener('click', () => {
       selectBoard(entry.board, {reveal:true});
@@ -638,7 +659,7 @@ window.addEventListener('focus', refreshSavedPapers);
 window.addEventListener('pageshow', refreshSavedPapers);
 drawMap(); applyView(); refreshAssignments(); readHash();
 
-// A missing finder dataset must not hide official handbook assignments.
+// A missing finder dataset must not hide official schedule assignments.
 const paperRequest = fetch('../data/papers.json', {cache:'no-cache'}).then(async response => {
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const schedule = await response.json();
@@ -647,33 +668,33 @@ const paperRequest = fetch('../data/papers.json', {cache:'no-cache'}).then(async
   refreshAssignments(); renderPaperResults();
 }).catch(() => {
   finderUnavailable = true;
-  if (catalogReady) feedback('Paper finder links are unavailable. Handbook assignments still appear on the map.');
+  if (catalogReady) feedback('Paper finder links are unavailable. Schedule assignments still appear on the map.');
 });
 try {
   const response = await fetch('../data/poster-boards.json', {cache:'no-cache'});
-  if (!response.ok) throw new Error(`Handbook catalog returned HTTP ${response.status}.`);
+  if (!response.ok) throw new Error(`Schedule catalog returned HTTP ${response.status}.`);
   catalog = validateCatalog(await response.json());
   sessions = sessionGroups(catalog.sessions);
   assignments = mapEntries(catalog.entries, sessions);
   $('#session').replaceChildren();
   for (const session of sessions) {
     const option = document.createElement('option'); option.value = session.id;
-    option.textContent = session.aliases.length > 1 ? `${session.id} + Industry` : session.shortLabel;
+    option.textContent = session.shortLabel;
     option.title = session.label;
     $('#session').append(option);
   }
   $('#session').disabled = false;
   activeSession = defaultSession(sessions);
   catalogReady = true;
-  const source = $('#handbook-source');
+  const source = $('#schedule-source');
   try {
     const url = new URL(catalog.source?.url);
     if (url.protocol === 'https:' || url.protocol === 'http:') { source.href = url.href; source.hidden = false; }
   } catch { /* Assignments remain readable if source metadata has no usable URL. */ }
   readHash({reveal:false});
-  if (finderUnavailable) feedback('Paper finder links are unavailable. Handbook assignments still appear on the map.');
+  if (finderUnavailable) feedback('Paper finder links are unavailable. Schedule assignments still appear on the map.');
 } catch (error) {
-  $('#session-note').textContent = 'Handbook assignments unavailable. The complete floor plan still works.';
+  $('#session-note').textContent = 'Schedule assignments unavailable. The complete floor plan still works.';
   feedback(error.message);
 }
 await paperRequest;

@@ -18,6 +18,18 @@ spec.loader.exec_module(site_build)
 
 
 class BuildTests(unittest.TestCase):
+    def test_stale_board_catalog_does_not_replace_previous_site(self):
+        catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
+        catalog["entries"][0]["board"] += 1
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "site"
+            output.mkdir()
+            (output / "sentinel").write_text("previous deployment")
+            with patch.object(site_build, "OUTPUT", output), patch.object(site_build, "load_catalog", return_value=catalog):
+                with self.assertRaisesRegex(ValueError, "Schedule board catalog is stale"):
+                    site_build.build()
+            self.assertEqual((output / "sentinel").read_text(), "previous deployment")
+
     def test_versioned_assets_exist_and_match_their_hashes(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "site"
@@ -75,7 +87,7 @@ class BuildTests(unittest.TestCase):
             self.assertIn("outside the programme session", by_id["809-MAIN"]["oralSlotNote"])
             catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
             verified = {entry["paperId"]: entry for entry in catalog["entries"] if entry["paperId"] and entry["verified"]}
-            self.assertEqual(len(verified), 2830)
+            self.assertEqual(len(verified), 2797)
             self.assertEqual(by_id["9736-FIND"]["posterBoard"], 200)
             self.assertEqual(by_id["9736-FIND"]["posterSession"], "F")
             self.assertEqual(by_id["4212-FIND"]["posterBoard"], 166)
@@ -85,9 +97,9 @@ class BuildTests(unittest.TestCase):
             for paper in deployed["papers"]:
                 if paper["id"] in verified:
                     entry = verified[paper["id"]]
-                    self.assertEqual((paper["posterBoard"], paper["posterSession"], paper["posterSourcePage"]),
-                                     (entry["board"], entry["session"], entry["boardPage"]))
-                for key in ["posterBoard", "posterSession", "posterSourcePage", "posterLocationIssue", "posterClaimedBoard"]:
+                    self.assertEqual((paper["posterBoard"], paper["posterSession"], paper["posterSourceRow"]),
+                                     (entry["board"], entry["session"], entry["sourceRow"]))
+                for key in ["posterBoard", "posterSession", "posterSourceRow", "posterLocationIssue", "posterClaimedBoard"]:
                     paper.pop(key, None)
                 if "anthologyId" in paper:
                     self.assertEqual(paper["authors"], publications[paper["anthologyId"]]["authors"])

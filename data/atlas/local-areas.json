@@ -636,14 +636,5 @@
       "area": 1,
       "reason": "Scientific visual question answering and evidence-guided actions; title-only decision."
     }
-  ],
-  "posterAliases": [
-    {
-      "session": "E",
-      "board": 371,
-      "title": "Scale Doesn’t Compensate for the Gricean Maxims: The Impact of Reporting Bias on Vision-Language Reasoning",
-      "paperId": "9295-TACL",
-      "reason": "The handbook uses the earlier title about scale, Gricean maxims and reporting bias; the programme title and abstract describe the same VLM reporting-bias study. This alias supplies only a local area, not a verified board identity."
-    }
   ]
 }

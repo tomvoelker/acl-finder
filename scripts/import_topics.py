@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 from urllib.request import urlopen
 
 from import_anthology import match_papers
-from import_handbook import load_catalog
+from poster_catalog import load_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = {
@@ -116,13 +116,6 @@ def create_dataset(root=ROOT):
             raise ValueError(f"Local area needs review evidence: {pid}")
         local[pid] = {"area": row["area"], "basis": row["basis"]}
     catalog = load_catalog(root / "data/poster-boards.json")
-    poster_aliases = {}
-    for alias in local_review["posterAliases"]:
-        key = (alias["session"], alias["board"], alias["title"])
-        if key in poster_aliases or alias["paperId"] not in local or not any(
-                (e["session"], e["board"], e["title"]) == key and e["paperId"] is None and e["verified"] for e in catalog["entries"]):
-            raise ValueError("Local poster-area alias changed: review the handbook identity")
-        poster_aliases[key] = alias["paperId"]
     # Same physical-session rule as poster-map/catalog.mjs: D includes Industry.
     groups = {}
     for session in catalog["sessions"]:
@@ -142,7 +135,7 @@ def create_dataset(root=ROOT):
         anthology_id = links.get(entry["paperId"])
         assignment = {k: entry[k] for k in ["board", "paperId", "title"]}
         assignment.update(anthologyId=anthology_id, topic=atlas.get(anthology_id))
-        local_id = entry["paperId"] or poster_aliases.get((entry["session"], entry["board"], entry["title"]))
+        local_id = entry["paperId"]
         if assignment["topic"] is None and local_id in local:
             assignment["area"] = local[local_id]["area"]
         sessions[sid]["assignments"].append(assignment)

@@ -3,13 +3,15 @@
 from collections import Counter
 import csv
 import json
+import io
 from pathlib import Path
 import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from import_schedule import HEADER, build_dataset, clean, normalize_row, parse_schedule
+from poster_catalog import create_catalog
+from import_schedule import HEADER, build_dataset, clean, normalize_row, parse_schedule, parse_board
 
 
 class ParsingTests(unittest.TestCase):
@@ -95,6 +97,15 @@ class ParsingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Duplicate ID 1-MAIN at rows 2 and 3"):
             build_dataset([HEADER, row, row], "2026-10-23")
 
+    def test_board_numbers_and_demo_positions_are_distinct(self):
+        for value in ("1", "424", "D1", "D10"):
+            self.assertEqual(parse_board(value, 12), value)
+        for value in (None, "", "TBC"):
+            self.assertIsNone(parse_board(value, 12))
+        for value in ("0", "425", "01", "1.0", "D0", "D11", "d1", "Board 4", "1-2"):
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, "Row 12: invalid Board #"):
+                parse_board(value, 12)
+
     def test_wrong_sheet_fails_before_output(self):
         with self.assertRaisesRegex(ValueError, "Unexpected CSV header"):
             build_dataset([["ID", "Title"]], "2026-10-23")
@@ -108,6 +119,10 @@ class SourceSnapshotTests(unittest.TestCase):
         cls.committed = json.loads((ROOT / "data/papers.json").read_text(encoding="utf-8"))
         cls.dataset, cls.audit = build_dataset(cls.rows, cls.committed["conference"]["updatedAt"])
         cls.papers = {paper["id"]: paper for paper in cls.dataset["papers"]}
+        timeline = (ROOT / "data/timeline.csv").read_bytes().decode("utf-8-sig")
+        source = (ROOT / "data/source.csv").read_bytes().decode("utf-8-sig")
+        catalog = create_catalog(cls.dataset, csv.reader(io.StringIO(timeline)), source, timeline)
+        cls.audit["boardIssues"] = catalog["sourceIssues"]
 
     def test_every_source_id_and_row_is_preserved_once(self):
         source_count = len(self.rows) - 1
@@ -138,7 +153,7 @@ class SourceSnapshotTests(unittest.TestCase):
     def test_schema_keeps_presenters_distinct_from_authors(self):
         required_fields = {
             "id", "title", "track", "trackCode", "presentation", "mode", "presenter", "presenterNote",
-            "room", "session", "topic", "date", "start", "end", "timeZone", "status", "sourceRow", "scheduleNote",
+            "room", "session", "topic", "date", "start", "end", "timeZone", "status", "sourceRow", "scheduleNote", "board",
         }
         for paper in self.papers.values():
             self.assertEqual(set(paper), required_fields)
