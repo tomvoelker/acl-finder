@@ -2283,7 +2283,7 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 7055-MAIN,Why Users Go There: World Knowledge-Augmented Generative Next POI Recommendation,Virtual Pres,Virtual ,Hengda Xux,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,,
 7062-MAIN,GraphRAG-Router: Learning Cost-Efficient Routing over GraphRAGs and LLMs with Reinforcement Learning,Poster,In-Person,Dongzhe Fan,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15,313
 7064-MAIN,Negation Without Confusion: Decomposing Bias and Recomposing Style in Text Embeddings for Negation-Aware Image Generation,Oral,In-Person,Sooyeon Park,F6,Session 6,"Multimodality and Language Grounding to Vision, Robotics and Beyond 3",2026-10-26,11:00,12:30,
-7073-MAIN,CMIE: Cross-Modal Interaction Erasure for MLLM Safety Unlearning via Counterfactual Localization and Subspace Nullification,Virtual Pres,Virtual ,Jiatian Cao,Zoom,Virtual 1,VIrtual Presentations 1,2026-10-25,12:30-14:00 CET,,
+7073-MAIN,CMIE: Cross-Modal Interaction Erasure for MLLM Safety Unlearning via Counterfactual Localization and Subspace Nullification,Virtual Pres,Virtual,Jiatian Cao,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,,
 7074-MAIN,MemWM: Memory-Augmented Text-Based World Model,Poster,In-Person,Yujun Wang,Hall H,Session 5,Poster Session C,2026-10-26,09:00,10:30,65
 7076-MAIN,Tracing Multilingual Representations in LLMs with Cross-Layer Transcoders,Oral,In-Person,Abir Harrasse,P1,Session 9,Interpretability and Analysis of Models for NLP 4,2026-10-26,16:45,18:15,
 7078-MAIN,MobQA: A Benchmark Dataset for Semantic Understanding of Human Mobility Data through Question Answering,Poster,In-Person,Hikaru Asano,Hall H,Session 9,Poster Session E,2026-10-26,16:45,18:15,223
