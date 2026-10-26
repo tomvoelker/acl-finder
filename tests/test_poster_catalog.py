@@ -32,9 +32,14 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog["source"]["updatedAt"], "2026-10-26")
         self.assertEqual(self.catalog["source"]["sha256"], hashlib.sha256(self.source.encode()).hexdigest())
         self.assertEqual(self.catalog["source"]["timelineSHA256"], hashlib.sha256(self.timeline.encode()).hexdigest())
-        self.assertEqual(len(self.catalog["entries"]), 2808)
+        self.assertEqual(len(self.catalog["entries"]), 2807)
         self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2796)
         papers = {p["id"]: p for p in self.data["papers"]}
+        virtual = papers["3310-FIND"]
+        self.assertEqual((virtual["presentation"], virtual["mode"], virtual["room"], virtual["session"], virtual["board"]),
+                         ("Virtual", "Virtual", "Zoom", "Virtual 5", None))
+        self.assertEqual((virtual["date"], virtual["start"], virtual["end"]), ("2026-10-27", "12:30", "14:00"))
+        self.assertNotIn(virtual["id"], {entry["paperId"] for entry in self.catalog["entries"]})
         for entry in self.catalog["entries"]:
             paper = papers[entry["paperId"]]
             self.assertEqual(entry["board"], int(paper["board"]))
@@ -70,9 +75,7 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual({(e["session"], e["board"], e["paperId"]) for e in duplicate},
                          {("D", 311, "2638-MAIN"), ("D", 311, "6137-MAIN")})
         singletons = [e for e in unverified if not e.get("conflict")]
-        self.assertEqual(len(singletons), 10)
-        virtual = next(e for e in singletons if e["paperId"] == "3310-FIND")
-        self.assertIn("does not mark this entry as a poster", virtual["issue"])
+        self.assertEqual(len(singletons), 9)
         minute = next(e for e in singletons if e["paperId"] == "425-FIND")
         self.assertEqual(minute["scheduleDifferences"], {"start": {"schedule": "16:46", "timeline": "16:45"}})
         room = next(e for e in singletons if e["paperId"] == "2167-FIND")

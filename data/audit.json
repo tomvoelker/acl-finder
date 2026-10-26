@@ -19,7 +19,7 @@
   },
   "missingPresenters": 372,
   "boardAssignments": {
-    "posters": 2808,
+    "posters": 2807,
     "demos": 70
   },
   "issueCounts": {
@@ -901,12 +901,6 @@
       "paperId": "3234-FIND",
       "sourceRow": 3978,
       "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."
-    },
-    {
-      "kind": "unconfirmed-assignment",
-      "paperId": "3310-FIND",
-      "sourceRow": 4004,
-      "note": "The schedule does not mark this entry as a poster."
     },
     {
       "kind": "unconfirmed-assignment",
