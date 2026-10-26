@@ -49,7 +49,8 @@ test('poster browsing uses schedule dates independently of sheet presentation de
   }
   assert.equal(posterBrowseDay({ presentation: 'Poster', _day: 'undated' }), 'undated');
   assert.equal(posterBrowseDay({ presentation: 'Poster', _day: '2026-10-26' }), '2026-10-26');
-  assert.equal(posterBrowseDay({ presentation: 'Virtual', posterIssue: 'Board unconfirmed', _day: '2026-10-26' }), '2026-10-26');
+  assert.equal(posterBrowseDay({ presentation: 'Virtual', posterIssue: 'Board unconfirmed', _day: '2026-10-26' }), null);
+  assert.equal(posterBrowseDay({ presentation: null, posterIssue: 'Board unconfirmed', _day: '2026-10-26' }), '2026-10-26');
   for (const presentation of ['Oral', 'Virtual', null]) {
     assert.equal(posterBrowseDay({ presentation, _day: '2026-10-25' }), null);
   }

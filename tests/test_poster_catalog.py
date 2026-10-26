@@ -33,7 +33,7 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog["source"]["sha256"], hashlib.sha256(self.source.encode()).hexdigest())
         self.assertEqual(self.catalog["source"]["timelineSHA256"], hashlib.sha256(self.timeline.encode()).hexdigest())
         self.assertEqual(len(self.catalog["entries"]), 2808)
-        self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2797)
+        self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2796)
         papers = {p["id"]: p for p in self.data["papers"]}
         for entry in self.catalog["entries"]:
             paper = papers[entry["paperId"]]
@@ -70,7 +70,9 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual({(e["session"], e["board"], e["paperId"]) for e in duplicate},
                          {("D", 311, "2638-MAIN"), ("D", 311, "6137-MAIN")})
         singletons = [e for e in unverified if not e.get("conflict")]
-        self.assertEqual(len(singletons), 9)
+        self.assertEqual(len(singletons), 10)
+        virtual = next(e for e in singletons if e["paperId"] == "3310-FIND")
+        self.assertIn("does not mark this entry as a poster", virtual["issue"])
         minute = next(e for e in singletons if e["paperId"] == "425-FIND")
         self.assertEqual(minute["scheduleDifferences"], {"start": {"schedule": "16:46", "timeline": "16:45"}})
         room = next(e for e in singletons if e["paperId"] == "2167-FIND")

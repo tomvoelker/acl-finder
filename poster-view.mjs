@@ -36,7 +36,7 @@ export function matchesPosterQuery(paper, boards) {
 export function posterBrowseDay(paper) {
   if (paper._inactive) return null;
   if (paper.poster) return paper.poster.date;
-  return paper.presentation === 'Poster' || paper.posterIssue ? paper._day : null;
+  return paper.presentation === 'Poster' || (paper.posterIssue && !paper.presentation) ? paper._day : null;
 }
 
 export function posterGroups(papers) {

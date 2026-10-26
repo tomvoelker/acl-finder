@@ -904,6 +904,12 @@
     },
     {
       "kind": "unconfirmed-assignment",
+      "paperId": "3310-FIND",
+      "sourceRow": 4004,
+      "note": "The schedule does not mark this entry as a poster."
+    },
+    {
+      "kind": "unconfirmed-assignment",
       "paperId": "3811-FIND",
       "sourceRow": 4129,
       "note": "The schedule row's date or time differs from the Conference Timeline. Check the source before attending."

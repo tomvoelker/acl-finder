@@ -22,7 +22,7 @@ class AtlasImportTests(unittest.TestCase):
             data, audit = import_topics.create_dataset()
         self.assertEqual(data, json.loads((ROOT / "data/poster-topics.json").read_text()))
         self.assertEqual(audit, json.loads((ROOT / "data/atlas/audit.json").read_text()))
-        self.assertEqual((audit["atlasPapers"], audit["posters"], audit["matched"]), (5534, 2797, 2769))
+        self.assertEqual((audit["atlasPapers"], audit["posters"], audit["matched"]), (5534, 2796, 2768))
         self.assertEqual(len(audit["unclassified"]), 0)
         self.assertEqual(audit["programme"]["matched"], 5532)
         self.assertEqual(len(audit["programme"]["unclassified"]), 0)

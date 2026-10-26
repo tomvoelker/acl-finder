@@ -87,7 +87,7 @@ class BuildTests(unittest.TestCase):
             self.assertIn("outside the programme session", by_id["809-MAIN"]["oralSlotNote"])
             catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
             verified = {entry["paperId"]: entry for entry in catalog["entries"] if entry["paperId"] and entry["verified"]}
-            self.assertEqual(len(verified), 2797)
+            self.assertEqual(len(verified), 2796)
             self.assertEqual(by_id["9736-FIND"]["posterBoard"], 200)
             self.assertEqual(by_id["9736-FIND"]["posterSession"], "F")
             self.assertEqual(by_id["4212-FIND"]["posterBoard"], 166)
