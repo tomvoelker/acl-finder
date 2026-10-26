@@ -1,0 +1,11 @@
+{
+  "author": "Hadi Mohammadi",
+  "name": "EMNLP 2026 Atlas",
+  "url": "https://mohammadi.cv/emnlp/2026/atlas.html",
+  "repository": "https://github.com/mohammadi-hadi/emnlp",
+  "revision": "58dd3536c32a4a101cc1e064e44ab25702829559",
+  "sha256": {
+    "papers_index.csv": "f36a1f99a8b433283a6d11ac4df2ea6d4c44e72592b5d0f3c9d295f71f5cf0fe",
+    "labels_2026.json": "8f0c3879b65dbdcf40f6c3eef40c28a24e2b26af3b0658fcd1f6500574eecc8e"
+  }
+}

@@ -27,7 +27,7 @@ class TopicExportTests(unittest.TestCase):
         self.assertEqual({row['session'] for row in rows}, set(labels['sessions']))
 
     def test_changed_memberships_cannot_overwrite_the_published_dataset(self):
-        public = json.loads((ROOT / 'data/poster-topics.json').read_text())
+        public = json.loads((EXPERIMENT / 'assignments.json').read_text())
         candidates = {f'embeddings-{s}-12': {'assignments': data['assignments']} for s, data in public['sessions'].items()}
         candidates['embeddings-A-12']['assignments'][0]['group'] = (candidates['embeddings-A-12']['assignments'][0]['group'] + 1) % 12
         with tempfile.TemporaryDirectory() as tmp:
@@ -35,7 +35,7 @@ class TopicExportTests(unittest.TestCase):
             (root / 'data').mkdir()
             (root / 'experiments/poster-topics').mkdir(parents=True)
             (root / 'data/poster-boards.json').write_bytes((ROOT / 'data/poster-boards.json').read_bytes())
-            output = root / 'data/poster-topics.json'
+            output = root / 'experiments/poster-topics/assignments.json'
             output.write_text('previous deployment')
             (root / 'experiments/poster-topics/labels.json').write_bytes((EXPERIMENT / 'labels.json').read_bytes())
             (root / 'metrics.json').write_bytes((EXPERIMENT / 'metrics.json').read_bytes())

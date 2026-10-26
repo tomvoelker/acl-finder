@@ -1,0 +1,1291 @@
+{
+ "fine": {
+  "0": {
+   "name": "Generative and Sequential Recommendation",
+   "one_line": "These papers build LLM-based recommender systems that generate semantic item IDs, model user histories and preferences, and suggest queries in e-commerce search.",
+   "keywords": [
+    "recommendation",
+    "semantic ids",
+    "sequential recommendation",
+    "user preferences",
+    "e-commerce",
+    "query suggestion"
+   ],
+   "coherence": "high"
+  },
+  "1": {
+   "name": "Self-Improving Reasoning and Self-Correction",
+   "one_line": "These papers improve model reasoning through self-evolution, reinforcement learning with guided exploration, latent reasoning and activation steering, alongside some work on calibration and abstention.",
+   "keywords": [
+    "reasoning",
+    "self-evolution",
+    "reinforcement learning",
+    "activation steering",
+    "latent reasoning",
+    "self-correction"
+   ],
+   "coherence": "medium"
+  },
+  "2": {
+   "name": "Graph RAG and Multi-Hop QA",
+   "one_line": "These papers answer multi-hop questions by retrieving evidence over knowledge graphs, hypergraphs and document graphs, often with agentic or iterative retrieval.",
+   "keywords": [
+    "graphrag",
+    "multi-hop qa",
+    "hypergraph",
+    "knowledge graph qa",
+    "agentic retrieval",
+    "evidence retrieval"
+   ],
+   "coherence": "high"
+  },
+  "3": {
+   "name": "Psycholinguistics and Linguistic Knowledge Probing",
+   "one_line": "These papers compare language models with human sentence processing and test their syntactic, lexical and typological knowledge, with a mix of morphology, parsing and corpus work.",
+   "keywords": [
+    "psycholinguistics",
+    "surprisal",
+    "reading times",
+    "syntax",
+    "minimal pairs",
+    "typology"
+   ],
+   "coherence": "medium"
+  },
+  "4": {
+   "name": "Indirect Prompt Injection Attacks",
+   "one_line": "These papers attack and defend tool-using agents against indirect prompt injection and build red-teaming methods and benchmarks for agent security.",
+   "keywords": [
+    "prompt injection",
+    "red teaming",
+    "agent security",
+    "adversarial prompts",
+    "defense",
+    "tool use"
+   ],
+   "coherence": "high"
+  },
+  "5": {
+   "name": "Agent Skill Libraries and Skill Evolution",
+   "one_line": "These papers let agents distill, retrieve, revise and evolve reusable procedural skills from execution traces, a topic that is new in 2026.",
+   "keywords": [
+    "agent skills",
+    "skill libraries",
+    "skill evolution",
+    "procedural knowledge",
+    "skill retrieval",
+    "self-evolving agents"
+   ],
+   "coherence": "high"
+  },
+  "6": {
+   "name": "Emotion Recognition and Affective Analysis",
+   "one_line": "These papers recognize, explain and control emotion, sentiment and stance in text and conversation, and probe how models represent affect internally.",
+   "keywords": [
+    "emotion recognition",
+    "stance detection",
+    "sentiment",
+    "affective generation",
+    "appraisal theory",
+    "emotion-cause extraction"
+   ],
+   "coherence": "high"
+  },
+  "7": {
+   "name": "Document Information Extraction and Enterprise QA",
+   "one_line": "These papers extract structured information from corporate, financial and office documents and benchmark question answering over enterprise document collections, with some legal and biomedical extraction mixed in.",
+   "keywords": [
+    "information extraction",
+    "document understanding",
+    "enterprise documents",
+    "schema-driven extraction",
+    "esg",
+    "benchmarks"
+   ],
+   "coherence": "medium"
+  },
+  "8": {
+   "name": "Dense Retrieval and LLM Reranking",
+   "one_line": "These papers train dense and generative retrievers and LLM rerankers, with a focus on reasoning-intensive and efficient text retrieval.",
+   "keywords": [
+    "dense retrieval",
+    "reranking",
+    "generative retrieval",
+    "reasoning-intensive retrieval",
+    "listwise ranking",
+    "search"
+   ],
+   "coherence": "high"
+  },
+  "9": {
+   "name": "Spatial Reasoning and 3D Visual Grounding",
+   "one_line": "These papers evaluate and improve the spatial reasoning of vision-language models, including perspective taking, 3D visual grounding, geolocalization and remote sensing.",
+   "keywords": [
+    "spatial reasoning",
+    "3d visual grounding",
+    "vision-language models",
+    "geolocalization",
+    "remote sensing",
+    "perspective taking"
+   ],
+   "coherence": "high"
+  },
+  "10": {
+   "name": "Long and Streaming Video QA",
+   "one_line": "These papers help video language models answer questions about long and streaming videos through frame selection, evidence search and hierarchical multimodal memory.",
+   "keywords": [
+    "long video",
+    "video qa",
+    "frame selection",
+    "streaming video",
+    "multimodal memory",
+    "video-llms"
+   ],
+   "coherence": "high"
+  },
+  "11": {
+   "name": "Machine Unlearning in Language Models",
+   "one_line": "These papers remove targeted knowledge from text and multimodal models while preserving utility, and test how robust the forgetting is to relearning and recovery attacks.",
+   "keywords": [
+    "machine unlearning",
+    "forget set",
+    "knowledge removal",
+    "privacy",
+    "relearning attacks",
+    "multimodal unlearning"
+   ],
+   "coherence": "high"
+  },
+  "12": {
+   "name": "Confidence Calibration and Knowledge Boundaries",
+   "one_line": "These papers study whether models know what they know, covering verbal confidence calibration, belief stability, honesty, overconfidence and hallucination mechanisms.",
+   "keywords": [
+    "calibration",
+    "verbal confidence",
+    "uncertainty estimation",
+    "knowledge boundaries",
+    "honesty",
+    "hallucination"
+   ],
+   "coherence": "high"
+  },
+  "13": {
+   "name": "Benchmark Construction and Evaluation Reliability",
+   "one_line": "These papers build new evaluation benchmarks across domains and languages and question benchmark validity through contamination detection, compression and diagnostic analysis.",
+   "keywords": [
+    "benchmarks",
+    "evaluation methodology",
+    "contamination",
+    "mcqa",
+    "instruction following",
+    "item response theory"
+   ],
+   "coherence": "medium"
+  },
+  "14": {
+   "name": "Cross-Lingual Transfer and Multilingual Representations",
+   "one_line": "These papers measure and close the gap between English and other languages through cross-lingual alignment, representation analysis, multilingual judges and multilingual training data.",
+   "keywords": [
+    "multilingual",
+    "cross-lingual transfer",
+    "cross-lingual alignment",
+    "multilingual reasoning",
+    "code-switching",
+    "multilingual evaluation"
+   ],
+   "coherence": "high"
+  },
+  "15": {
+   "name": "Automated Peer Review and Essay Scoring",
+   "one_line": "These papers generate, verify and audit scientific peer reviews with language models, alongside work on multi-trait essay scoring and deep research report evaluation.",
+   "keywords": [
+    "peer review",
+    "review generation",
+    "scholarly publishing",
+    "essay scoring",
+    "paper error detection",
+    "deep research"
+   ],
+   "coherence": "medium"
+  },
+  "16": {
+   "name": "KV Cache Compression and Eviction",
+   "one_line": "These papers shrink the key-value cache for long-context inference through token eviction, quantization, low-rank approximation and adaptive per-layer budgets.",
+   "keywords": [
+    "kv cache",
+    "cache eviction",
+    "long-context inference",
+    "compression",
+    "quantization",
+    "memory efficiency"
+   ],
+   "coherence": "high"
+  },
+  "17": {
+   "name": "Clarifying Questions and Information-Seeking QA",
+   "one_line": "These papers study how assistants ask clarifying questions, answer information-seeking and misconception-laden queries, and evaluate open QA, mixed with assorted conversation analytics and pragmatics work.",
+   "keywords": [
+    "clarifying questions",
+    "information-seeking",
+    "open qa evaluation",
+    "pragmatics",
+    "proactive elicitation",
+    "conversation analysis"
+   ],
+   "coherence": "low"
+  },
+  "18": {
+   "name": "Authorship Style and Creative Writing",
+   "one_line": "These papers analyze and transfer writing style for authorship attribution and personalized generation, and measure diversity and creativity in machine-written stories and poetry.",
+   "keywords": [
+    "authorship attribution",
+    "stylometry",
+    "style transfer",
+    "story generation",
+    "creativity",
+    "personalized generation"
+   ],
+   "coherence": "medium"
+  },
+  "19": {
+   "name": "Role-Playing Agents and Emotional Support Dialogue",
+   "one_line": "These papers train and evaluate role-playing characters, counseling and emotional support agents, and user simulators for multi-turn dialogue, with some general conversational assistant work.",
+   "keywords": [
+    "role-playing",
+    "emotional support",
+    "counseling",
+    "user simulation",
+    "multi-turn dialogue",
+    "persona consistency"
+   ],
+   "coherence": "medium"
+  },
+  "20": {
+   "name": "Multimodal and Text-to-Image Safety",
+   "one_line": "These papers benchmark and defend multimodal and text-to-image models against unsafe generation, jailbreaks and culturally specific risks, using safety unlearning, detoxification and guard models.",
+   "keywords": [
+    "multimodal safety",
+    "text-to-image",
+    "jailbreaks",
+    "safety benchmarks",
+    "unlearning",
+    "cultural bias"
+   ],
+   "coherence": "high"
+  },
+  "21": {
+   "name": "Diffusion Language Models and Parallel Decoding",
+   "one_line": "These papers build, scale and speed up masked and continuous diffusion language models, with new remasking, parallel decoding, length control and distillation strategies.",
+   "keywords": [
+    "diffusion language models",
+    "masked diffusion",
+    "parallel decoding",
+    "remasking",
+    "llada"
+   ],
+   "coherence": "high"
+  },
+  "22": {
+   "name": "Attention, State-Space and Hybrid Architectures",
+   "one_line": "These papers analyze and redesign sequence model architectures such as Transformers, linear attention, Mamba-style state-space models and hybrids, covering positional encoding, attention sinks and layer representations.",
+   "keywords": [
+    "linear attention",
+    "state-space models",
+    "hybrid architectures",
+    "positional encoding",
+    "attention sinks"
+   ],
+   "coherence": "medium"
+  },
+  "23": {
+   "name": "LLM-as-a-Judge Bias and Reliability",
+   "one_line": "These papers test how reliable LLM judges are, exposing position, self-preference and rubric biases and proposing debiasing, calibration and measurement-theory fixes, alongside a few fairness auditing studies.",
+   "keywords": [
+    "llm-as-a-judge",
+    "position bias",
+    "rubric evaluation",
+    "self-bias",
+    "evaluation reliability"
+   ],
+   "coherence": "medium"
+  },
+  "24": {
+   "name": "Long-Horizon Agents and World Models",
+   "one_line": "These papers train language agents for long-horizon interactive tasks using learned world models, experience reuse, context management and self-evolving policies in environments like ALFWorld and WebShop.",
+   "keywords": [
+    "long-horizon agents",
+    "world models",
+    "agent planning",
+    "experience reuse",
+    "agent harness"
+   ],
+   "coherence": "high"
+  },
+  "25": {
+   "name": "Vision-Language Model Failures and Robustness",
+   "one_line": "These papers diagnose where vision-language models fail, including language priors overriding perception, framing effects, false premises, miscalibrated confidence and unfaithful visual grounding.",
+   "keywords": [
+    "vision-language models",
+    "language priors",
+    "visual grounding",
+    "robustness",
+    "calibration"
+   ],
+   "coherence": "medium"
+  },
+  "26": {
+   "name": "Cultural Knowledge and Cultural Alignment",
+   "one_line": "These papers benchmark and steer how language models understand and adapt to cultural norms, values and region-specific knowledge across many languages and societies.",
+   "keywords": [
+    "cultural alignment",
+    "cultural knowledge",
+    "cross-cultural reasoning",
+    "cultural bias",
+    "multicultural benchmarks"
+   ],
+   "coherence": "high"
+  },
+  "27": {
+   "name": "Mathematical Reasoning and Formal Theorem Proving",
+   "one_line": "These papers improve and evaluate mathematical problem solving through verifiers, process reward models, distractor robustness, autoformalization and formal proof benchmarks.",
+   "keywords": [
+    "mathematical reasoning",
+    "theorem proving",
+    "autoformalization",
+    "process reward models",
+    "verification"
+   ],
+   "coherence": "medium"
+  },
+  "28": {
+   "name": "Medical Question Answering and Medical VQA",
+   "one_line": "These papers build and evaluate medical reasoning models for question answering and medical visual question answering, using reinforcement learning, multilingual medical data and evidence-grounded training.",
+   "keywords": [
+    "medical qa",
+    "medical vqa",
+    "medical reasoning",
+    "medical mllms",
+    "clinical reasoning"
+   ],
+   "coherence": "high"
+  },
+  "29": {
+   "name": "Optimization Modeling and Evolutionary Algorithm Discovery",
+   "one_line": "These papers use language models to formulate operations research and optimization problems and to evolve algorithms, code and designs through search-based self-improvement loops.",
+   "keywords": [
+    "optimization modeling",
+    "evolutionary search",
+    "algorithm discovery",
+    "operations research",
+    "automl"
+   ],
+   "coherence": "high"
+  },
+  "30": {
+   "name": "Video Benchmarks and Text-to-Video Generation",
+   "one_line": "These papers benchmark and improve video-language models on temporal reasoning, captioning, cross-video question answering and text-to-video generation quality.",
+   "keywords": [
+    "video understanding",
+    "video-llms",
+    "temporal reasoning",
+    "text-to-video",
+    "video captioning"
+   ],
+   "coherence": "high"
+  },
+  "31": {
+   "name": "Speech Language Models and Voice Agents",
+   "one_line": "These papers evaluate and build speech language models, spoken dialogue systems and voice agents, covering speech recognition, speech translation, TTS evaluation and multilingual speech benchmarks.",
+   "keywords": [
+    "speech language models",
+    "voice agents",
+    "spoken dialogue",
+    "speech recognition",
+    "speech translation"
+   ],
+   "coherence": "high"
+  },
+  "32": {
+   "name": "AI-Generated Text Detection",
+   "one_line": "These papers detect and attribute machine-generated text with zero-shot statistics, probes and trained detectors, and audit detector shortcuts, robustness and cross-lingual performance.",
+   "keywords": [
+    "ai-generated text",
+    "machine-generated text",
+    "text detectors",
+    "authorship attribution",
+    "zero-shot detection"
+   ],
+   "coherence": "high"
+  },
+  "33": {
+   "name": "Model Pruning and Sparsity",
+   "one_line": "These papers compress language models through structured pruning, quantization and distillation and measure real inference speedups, while the cluster also mixes in assorted training, data selection and representation studies.",
+   "keywords": [
+    "pruning",
+    "model compression",
+    "quantization",
+    "distillation",
+    "sparsity"
+   ],
+   "coherence": "low"
+  },
+  "34": {
+   "name": "Chemistry, Molecules and Drug Discovery",
+   "one_line": "These papers apply language models and agents to molecular property prediction, molecular optimization, retrosynthesis, structure elucidation, protein design and drug discovery.",
+   "keywords": [
+    "molecular reasoning",
+    "chemistry",
+    "drug discovery",
+    "protein",
+    "retrosynthesis"
+   ],
+   "coherence": "high"
+  },
+  "35": {
+   "name": "Long-Term Memory for Agents",
+   "one_line": "These papers design and benchmark long-term memory systems for conversational and personalized agents, covering memory extraction, consolidation, hierarchical organization and retrieval.",
+   "keywords": [
+    "agent memory",
+    "long-term memory",
+    "conversational memory",
+    "memory retrieval",
+    "personalized agents"
+   ],
+   "coherence": "high"
+  },
+  "36": {
+   "name": "Theory of Mind and Social Intelligence",
+   "one_line": "These papers benchmark theory-of-mind and social reasoning in text and multimodal models, from multi-party meetings and body language to deception and social deduction games.",
+   "keywords": [
+    "theory of mind",
+    "social intelligence",
+    "social reasoning",
+    "mental states",
+    "multimodal benchmarks"
+   ],
+   "coherence": "medium"
+  },
+  "37": {
+   "name": "Clinical Reasoning and EHR Benchmarks",
+   "one_line": "These papers evaluate and train models for clinical decision making over electronic health records, multi-turn medical consultations and diagnosis, with a focus on evidence use and rubric-based assessment.",
+   "keywords": [
+    "clinical reasoning",
+    "electronic health records",
+    "diagnosis",
+    "medical dialogue",
+    "medical agents"
+   ],
+   "coherence": "high"
+  },
+  "38": {
+   "name": "Chart and Visual Document Reasoning",
+   "one_line": "These papers benchmark and improve vision-language models on charts, diagrams, scientific figures and text-rich images, with a few studies on art, manga and specialized layouts.",
+   "keywords": [
+    "chart understanding",
+    "chart reasoning",
+    "diagrams",
+    "ocr reasoning",
+    "data visualization"
+   ],
+   "coherence": "medium"
+  },
+  "39": {
+   "name": "Direct Preference Optimization and Personalized Alignment",
+   "one_line": "These papers refine preference alignment with token-weighted and noise-robust DPO variants, preference data selection, multi-objective steering and personalized or pluralistic alignment.",
+   "keywords": [
+    "dpo",
+    "preference optimization",
+    "preference data",
+    "multi-objective alignment",
+    "pluralistic alignment"
+   ],
+   "coherence": "high"
+  },
+  "40": {
+   "name": "Vision-Language Hallucination Mitigation",
+   "one_line": "These papers detect and reduce hallucinations, mostly object hallucinations in vision-language models, using attention-head interventions, activation steering, decoding fixes and new benchmarks.",
+   "keywords": [
+    "hallucination",
+    "object hallucination",
+    "vision-language models",
+    "activation steering",
+    "hallucination detection"
+   ],
+   "coherence": "high"
+  },
+  "41": {
+   "name": "Speech Synthesis, Recognition and Audio Tokenizers",
+   "one_line": "These papers build and adapt speech and audio models for text-to-speech, speech recognition, streaming speech translation and audio tokenization.",
+   "keywords": [
+    "text-to-speech",
+    "speech recognition",
+    "spoken language models",
+    "audio tokenizers",
+    "speech translation"
+   ],
+   "coherence": "high"
+  },
+  "42": {
+   "name": "Retrieval-Augmented Generation and Evidence Grounding",
+   "one_line": "These papers improve how RAG systems select, trust and cite retrieved evidence, covering knowledge conflicts, poisoning robustness, attribution and RAG evaluation.",
+   "keywords": [
+    "retrieval-augmented generation",
+    "evidence selection",
+    "knowledge conflicts",
+    "citations",
+    "rag robustness"
+   ],
+   "coherence": "high"
+  },
+  "43": {
+   "name": "Dialects, Scripts and Underrepresented Languages",
+   "one_line": "These papers study dialects, writing systems and romanized or cross-script text in Arabic, Indic, African and other low-resource languages, alongside a mix of other language-specific resources and benchmarks.",
+   "keywords": [
+    "dialects",
+    "writing systems",
+    "romanization",
+    "low-resource languages",
+    "arabic"
+   ],
+   "coherence": "medium"
+  },
+  "44": {
+   "name": "Domain Adaptation and Continual Pre-Training",
+   "one_line": "These papers adapt pretrained models to new domains through supervised fine-tuning, continual pre-training and parameter-efficient methods while limiting catastrophic forgetting of general skills.",
+   "keywords": [
+    "catastrophic forgetting",
+    "domain adaptation",
+    "continual pre-training",
+    "supervised fine-tuning",
+    "peft"
+   ],
+   "coherence": "medium"
+  },
+  "45": {
+   "name": "Compliance Checking and Auditing Agents",
+   "one_line": "These papers build agentic systems and benchmarks for claim verification, regulatory and advertising compliance checking, fraud detection and evidence-grounded auditing in applied domains.",
+   "keywords": [
+    "claim verification",
+    "regulatory compliance",
+    "fraud detection",
+    "auditing",
+    "verification agents"
+   ],
+   "coherence": "medium"
+  },
+  "46": {
+   "name": "Machine Translation Quality Evaluation",
+   "one_line": "These papers evaluate machine translation with LLM judges, error span detection, document context and human studies, including literary and culturally loaded translation.",
+   "keywords": [
+    "machine translation",
+    "translation evaluation",
+    "error span detection",
+    "literary translation",
+    "mqm"
+   ],
+   "coherence": "high"
+  },
+  "47": {
+   "name": "Tool Use and Function Calling Agents",
+   "one_line": "These papers train and evaluate agents that select, retrieve and call external tools and APIs, with synthetic tool-use data, policy optimization and large tool ecosystems.",
+   "keywords": [
+    "tool use",
+    "function calling",
+    "tool retrieval",
+    "tool-use data synthesis",
+    "agents"
+   ],
+   "coherence": "high"
+  },
+  "48": {
+   "name": "Text Watermarking and Model Fingerprinting",
+   "one_line": "These papers embed and detect watermarks in generated text and fingerprint models for copyright protection, balancing detectability, robustness to edits and text quality.",
+   "keywords": [
+    "watermarking",
+    "fingerprinting",
+    "copyright protection",
+    "machine-generated text detection",
+    "robustness"
+   ],
+   "coherence": "high"
+  },
+  "49": {
+   "name": "Proactive Agents and Implicit User Intent",
+   "one_line": "These papers benchmark and train agents that infer implicit user intent, elicit preferences and personalize multi-turn help in shopping, travel planning and assistant settings.",
+   "keywords": [
+    "personalization",
+    "user intent",
+    "preference elicitation",
+    "shopping agents",
+    "travel planning"
+   ],
+   "coherence": "high"
+  },
+  "50": {
+   "name": "Cognitive Bias, Sycophancy and Moral Judgment",
+   "one_line": "These papers probe language models with methods from psychology and social science, measuring sycophancy, cognitive and social biases, persuasion, moral reasoning and human-model behavioral gaps.",
+   "keywords": [
+    "sycophancy",
+    "cognitive bias",
+    "moral reasoning",
+    "persuasion",
+    "psychometrics"
+   ],
+   "coherence": "medium"
+  },
+  "51": {
+   "name": "Omni-Modal Models and Modality Robustness",
+   "one_line": "These papers examine modality bias, uncertainty and robustness in omni-modal and multimodal models, mixed with assorted work on incomplete multimodal learning, emotion recognition and multimodal data pipelines.",
+   "keywords": [
+    "omni-modal models",
+    "modality bias",
+    "multimodal robustness",
+    "incomplete modalities",
+    "uncertainty"
+   ],
+   "coherence": "low"
+  },
+  "52": {
+   "name": "GUI Agent Grounding and RL Training",
+   "one_line": "These papers build benchmarks, GUI grounding methods, world models and reinforcement learning recipes for agents that operate desktop, mobile and browser interfaces.",
+   "keywords": [
+    "gui agents",
+    "computer use",
+    "gui grounding",
+    "mobile agents",
+    "reinforcement learning"
+   ],
+   "coherence": "high"
+  },
+  "53": {
+   "name": "Efficient and Latent Chain-of-Thought Reasoning",
+   "one_line": "These papers cut overthinking in reasoning models through chain-of-thought compression, adaptive token budgets, early stopping, parallel thinking and latent or implicit reasoning.",
+   "keywords": [
+    "efficient reasoning",
+    "overthinking",
+    "latent reasoning",
+    "cot compression",
+    "test-time compute"
+   ],
+   "coherence": "medium"
+  },
+  "54": {
+   "name": "Deep Research and Search Agents",
+   "one_line": "These papers train and evaluate agents that run long-horizon web search for deep research, using reinforcement learning, synthetic search environments and trajectory synthesis.",
+   "keywords": [
+    "deep research",
+    "search agents",
+    "agentic search",
+    "reinforcement learning",
+    "long-horizon search"
+   ],
+   "coherence": "high"
+  },
+  "55": {
+   "name": "Human and LLM Data Annotation",
+   "one_line": "These papers study how humans and LLMs annotate data, covering annotator disagreement and label variation, noisy labels, annotation guidelines and cost-aware human-AI labeling pipelines.",
+   "keywords": [
+    "data annotation",
+    "llm annotators",
+    "label variation",
+    "annotator disagreement",
+    "active learning"
+   ],
+   "coherence": "medium"
+  },
+  "56": {
+   "name": "RLVR and On-Policy Distillation",
+   "one_line": "These papers refine reinforcement learning with verifiable rewards and on-policy distillation for reasoning, tackling credit assignment, entropy collapse, advantage estimation and label-free rewards.",
+   "keywords": [
+    "rlvr",
+    "on-policy distillation",
+    "grpo",
+    "credit assignment",
+    "entropy collapse"
+   ],
+   "coherence": "high"
+  },
+  "57": {
+   "name": "Table Reasoning and Table Question Answering",
+   "one_line": "These papers answer questions and reason over tables, including multi-table retrieval, SQL-guided decomposition, table graphs and multimodal table images.",
+   "keywords": [
+    "table question answering",
+    "table reasoning",
+    "table retrieval",
+    "text-to-sql",
+    "tabular data"
+   ],
+   "coherence": "high"
+  },
+  "58": {
+   "name": "Coding Agents for Software Engineering",
+   "one_line": "These papers benchmark and train coding agents on repository-level tasks such as issue localization, program repair, code retrieval and refactoring.",
+   "keywords": [
+    "coding agents",
+    "swe-bench",
+    "repository-level code",
+    "fault localization",
+    "code retrieval"
+   ],
+   "coherence": "high"
+  },
+  "59": {
+   "name": "User Simulators and Human Behavior Simulation",
+   "one_line": "These papers use language models to simulate users, personas and social behavior for evaluating agents and studying surveys and online discourse, and test how faithful these simulations are.",
+   "keywords": [
+    "user simulation",
+    "persona simulation",
+    "social simulation",
+    "behavioral fidelity",
+    "agent evaluation"
+   ],
+   "coherence": "high"
+  },
+  "60": {
+   "name": "Mixture-of-Experts Routing and Fine-Tuning",
+   "one_line": "These papers improve how MoE models route tokens to experts, prune or reduce experts at test time, and fine-tune MoE models without breaking their routing structure.",
+   "keywords": [
+    "mixture-of-experts",
+    "expert routing",
+    "expert pruning",
+    "load balancing",
+    "moe fine-tuning"
+   ],
+   "coherence": "high"
+  },
+  "61": {
+   "name": "Chain-of-Thought Faithfulness and Reasoning Diagnostics",
+   "one_line": "These papers analyze why chain-of-thought reasoning fails, whether reasoning traces are faithful, and how to benchmark logical and causal reasoning, alongside work on overthinking and test-time compute.",
+   "keywords": [
+    "chain-of-thought",
+    "reasoning traces",
+    "faithfulness",
+    "logical reasoning",
+    "overthinking"
+   ],
+   "coherence": "medium"
+  },
+  "62": {
+   "name": "Visually Grounded Multimodal Reasoning with RL",
+   "one_line": "These papers train vision-language models to reason while keeping attention on visual evidence, using reinforcement learning with verifiable rewards, latent visual thinking and visual self-correction.",
+   "keywords": [
+    "multimodal reasoning",
+    "rlvr",
+    "visual grounding",
+    "visual attention",
+    "vision-language models"
+   ],
+   "coherence": "high"
+  },
+  "63": {
+   "name": "Speculative Decoding and Inference Acceleration",
+   "one_line": "These papers speed up language model inference with draft models, draft trees, retrieval-based drafting and smarter verification, plus related work on efficient sampling.",
+   "keywords": [
+    "speculative decoding",
+    "draft models",
+    "token verification",
+    "inference acceleration",
+    "draft trees"
+   ],
+   "coherence": "high"
+  },
+  "64": {
+   "name": "Document-Level and Low-Resource Translation",
+   "one_line": "These papers study how language models translate, build translation benchmarks and metrics, and improve document-level and low-resource machine translation with reasoning and reinforcement learning.",
+   "keywords": [
+    "machine translation",
+    "low-resource languages",
+    "document translation",
+    "translation evaluation",
+    "multilingual models"
+   ],
+   "coherence": "high"
+  },
+  "65": {
+   "name": "Multi-Agent Debate and Argumentation",
+   "one_line": "These papers improve multi-agent debate for reasoning through better moderation, memory and aggregation, and study persuasion, counterargument generation and competitive debating.",
+   "keywords": [
+    "multi-agent debate",
+    "deliberation",
+    "persuasion",
+    "counterarguments",
+    "argumentation"
+   ],
+   "coherence": "high"
+  },
+  "66": {
+   "name": "Event Extraction and Time-Series Grounding",
+   "one_line": "These papers extract events, arguments and timelines from documents and connect language with time-series data for event detection, forecasting and temporal explanation.",
+   "keywords": [
+    "event extraction",
+    "event argument extraction",
+    "timelines",
+    "time series",
+    "event causality"
+   ],
+   "coherence": "high"
+  },
+  "67": {
+   "name": "Radiology Report Generation",
+   "one_line": "These papers generate and evaluate radiology reports from chest X-rays and CT scans with medical vision-language models that stay grounded in images and clinical findings.",
+   "keywords": [
+    "radiology reports",
+    "report generation",
+    "chest x-ray",
+    "medical vision-language",
+    "clinical evaluation"
+   ],
+   "coherence": "high"
+  },
+  "68": {
+   "name": "Social Bias, Stereotypes and Debiasing",
+   "one_line": "These papers measure and trace gender, racial and occupational stereotypes inside language models and debias them, with a share of work on steering vectors and refusal directions more generally.",
+   "keywords": [
+    "social bias",
+    "stereotypes",
+    "gender bias",
+    "debiasing",
+    "steering vectors"
+   ],
+   "coherence": "medium"
+  },
+  "69": {
+   "name": "Legal Reasoning and Judgment Prediction",
+   "one_line": "These papers build benchmarks, retrieval systems and reasoning models for legal judgment prediction, legal case retrieval and legal question answering across jurisdictions.",
+   "keywords": [
+    "legal reasoning",
+    "legal judgment prediction",
+    "case retrieval",
+    "legal benchmarks",
+    "statutes"
+   ],
+   "coherence": "high"
+  },
+  "70": {
+   "name": "Text-to-SQL and Database Querying",
+   "one_line": "These papers translate natural language into SQL with schema linking, chain-of-thought training, reinforcement learning and candidate selection, and build more realistic text-to-SQL benchmarks.",
+   "keywords": [
+    "text-to-sql",
+    "schema linking",
+    "sql generation",
+    "databases",
+    "execution accuracy"
+   ],
+   "coherence": "high"
+  },
+  "71": {
+   "name": "Scientific Discovery, Writing and Citations",
+   "one_line": "These papers use language models for research ideation, scientific discovery, paper writing and verification, and study how AI changes citation behavior and scientific prose.",
+   "keywords": [
+    "scientific discovery",
+    "research ideation",
+    "scientific writing",
+    "citations",
+    "paper reproduction"
+   ],
+   "coherence": "high"
+  },
+  "72": {
+   "name": "Entity Linking, Relation Extraction and Taxonomies",
+   "one_line": "These papers link entities to knowledge bases, extract relations and named entities, and induce taxonomies, mixed with assorted work on topic modeling, embedding geometry and intent discovery.",
+   "keywords": [
+    "entity linking",
+    "relation extraction",
+    "named entity recognition",
+    "taxonomy construction",
+    "topic modeling"
+   ],
+   "coherence": "low"
+  },
+  "73": {
+   "name": "Agent Benchmarks and Failure Diagnosis",
+   "one_line": "These papers benchmark and debug LLM agents on real-world planning, enterprise workflows and MCP tool use, and diagnose failures from agent execution trajectories.",
+   "keywords": [
+    "agent benchmarks",
+    "mcp",
+    "tool use",
+    "agent failures",
+    "planning"
+   ],
+   "coherence": "medium"
+  },
+  "74": {
+   "name": "Safety Alignment and Over-Refusal",
+   "one_line": "These papers study how safety alignment and refusal work inside models, defend against jailbreaks and over-refusal, preserve safety during fine-tuning and benchmark content moderation.",
+   "keywords": [
+    "safety alignment",
+    "refusal",
+    "jailbreaks",
+    "guardrails",
+    "over-refusal"
+   ],
+   "coherence": "high"
+  },
+  "75": {
+   "name": "Synthetic Data Generation and Data Curation",
+   "one_line": "These papers generate, select and audit synthetic training data for instruction tuning, pretraining and low-resource tasks, and design data mixtures and recipes for model adaptation.",
+   "keywords": [
+    "synthetic data",
+    "data curation",
+    "data selection",
+    "data mixtures",
+    "tabular synthesis"
+   ],
+   "coherence": "high"
+  },
+  "76": {
+   "name": "Webpage, SVG and Text-to-Image Generation",
+   "one_line": "These papers generate and evaluate visual artifacts such as webpages, SVG graphics, diagrams, slides and charts from code, and benchmark text-to-image generation and editing.",
+   "keywords": [
+    "webpage generation",
+    "svg generation",
+    "visual code generation",
+    "text-to-image",
+    "slide generation"
+   ],
+   "coherence": "high"
+  },
+  "77": {
+   "name": "Multimodal RAG and Visual Document Retrieval",
+   "one_line": "These papers retrieve images and visually rich documents with multimodal embeddings and late interaction, and use them in multimodal retrieval-augmented generation for long-document question answering.",
+   "keywords": [
+    "multimodal rag",
+    "visual document retrieval",
+    "multimodal embeddings",
+    "document question answering",
+    "reranking"
+   ],
+   "coherence": "high"
+  },
+  "78": {
+   "name": "MoE Compression and Efficient Training",
+   "one_line": "These papers compress, merge and quantize mixture-of-experts models and make MoE training and fine-tuning more efficient, alongside some work on the Muon optimizer and parallelism.",
+   "keywords": [
+    "mixture-of-experts",
+    "expert merging",
+    "moe quantization",
+    "model compression",
+    "muon optimizer"
+   ],
+   "coherence": "medium"
+  },
+  "79": {
+   "name": "GUI Agent Benchmarks and Simulators",
+   "one_line": "These papers build benchmarks, simulators and frameworks for agents that operate mobile apps, desktops and web interfaces, testing long-horizon tasks, ambiguity handling and safety.",
+   "keywords": [
+    "gui agents",
+    "computer-use agents",
+    "mobile agents",
+    "desktop automation",
+    "agent benchmarks"
+   ],
+   "coherence": "medium"
+  },
+  "80": {
+   "name": "Code Generation, Testing and Repair",
+   "one_line": "These papers train and evaluate code models with unit-test generation, execution feedback, reward models and debugging to make generated code functionally correct.",
+   "keywords": [
+    "code generation",
+    "unit tests",
+    "code repair",
+    "functional correctness",
+    "code benchmarks"
+   ],
+   "coherence": "high"
+  },
+  "81": {
+   "name": "Knowledge Editing and Lifelong Model Editing",
+   "one_line": "These papers update or reverse specific facts and rules inside model parameters, covering batch, multi-hop, temporal and lifelong editing while preserving locality.",
+   "keywords": [
+    "knowledge editing",
+    "model editing",
+    "lifelong editing",
+    "multi-hop",
+    "locality"
+   ],
+   "coherence": "high"
+  },
+  "82": {
+   "name": "AI Tutoring and Educational Dialogue",
+   "one_line": "These papers build and evaluate adaptive tutoring agents, student simulators and teacher-student dialogue corpora, alongside a smaller group of knowledge distillation papers pulled in by teacher-student wording.",
+   "keywords": [
+    "tutoring",
+    "education",
+    "student simulation",
+    "pedagogy",
+    "distillation"
+   ],
+   "coherence": "medium"
+  },
+  "83": {
+   "name": "Agentic RL and Reward Design",
+   "one_line": "These papers improve reinforcement learning for long-horizon agents and reasoning with better credit assignment, rubric and process rewards, rollout budgeting and defenses against reward hacking.",
+   "keywords": [
+    "agentic reinforcement learning",
+    "credit assignment",
+    "reward models",
+    "rubric rewards",
+    "reward hacking"
+   ],
+   "coherence": "high"
+  },
+  "84": {
+   "name": "Personalization and Personality Alignment",
+   "one_line": "These papers adapt model responses to individual users through user profiles, memory selection, preference tracing, persona steering and personality or value alignment.",
+   "keywords": [
+    "personalization",
+    "user preferences",
+    "persona",
+    "personality alignment",
+    "user memory"
+   ],
+   "coherence": "high"
+  },
+  "85": {
+   "name": "Visual Token Pruning for Efficient VLMs",
+   "one_line": "These papers cut inference cost in vision-language models by pruning, compressing or condensing visual tokens, with some papers on other efficiency and high-resolution adaptation methods for VLMs.",
+   "keywords": [
+    "visual token pruning",
+    "token compression",
+    "vision-language models",
+    "efficient inference",
+    "multi-image"
+   ],
+   "coherence": "medium"
+  },
+  "86": {
+   "name": "Multi-Agent Collaboration and Communication",
+   "one_line": "These papers design and debug multi-agent LLM systems, covering role and topology adaptation, message pruning, latent communication, failure attribution and robustness to faulty agents.",
+   "keywords": [
+    "multi-agent systems",
+    "agent collaboration",
+    "agent communication",
+    "failure attribution",
+    "orchestration"
+   ],
+   "coherence": "high"
+  },
+  "87": {
+   "name": "Fact-Checking and Factuality Evaluation",
+   "one_line": "These papers verify claims against retrieved evidence, score the factuality of long-form generations and detect fake news, including robustness to conflicting or adversarial evidence.",
+   "keywords": [
+    "fact-checking",
+    "claim verification",
+    "factuality",
+    "fake news",
+    "evidence retrieval"
+   ],
+   "coherence": "high"
+  },
+  "88": {
+   "name": "Agent Safety and Tool-Use Risks",
+   "one_line": "These papers benchmark and guard tool-using agents against unsafe actions, prompt injection, malicious skills, privacy leaks and backdoors during multi-step execution.",
+   "keywords": [
+    "agent safety",
+    "tool use",
+    "red teaming",
+    "guardrails",
+    "prompt injection"
+   ],
+   "coherence": "high"
+  },
+  "89": {
+   "name": "Low-Bit Weight and Activation Quantization",
+   "one_line": "These papers compress model weights, activations and KV caches with post-training, mixed-precision, ternary and quantization-aware methods that handle outliers.",
+   "keywords": [
+    "quantization",
+    "post-training quantization",
+    "mixed precision",
+    "low-bit",
+    "outliers"
+   ],
+   "coherence": "high"
+  },
+  "90": {
+   "name": "Knowledge Graph Reasoning and Link Prediction",
+   "one_line": "These papers reason over knowledge graphs and text-attributed graphs, covering KGQA, temporal knowledge graph forecasting, link prediction and graph serialization for language models.",
+   "keywords": [
+    "knowledge graphs",
+    "kgqa",
+    "temporal knowledge graphs",
+    "graph neural networks",
+    "link prediction"
+   ],
+   "coherence": "high"
+  },
+  "91": {
+   "name": "Audio-Language Model Understanding and Reasoning",
+   "one_line": "These papers benchmark and improve large audio-language models on acoustic perception, audio reasoning, bias, over-refusal and audio deepfake detection.",
+   "keywords": [
+    "audio-language models",
+    "audio reasoning",
+    "acoustic perception",
+    "audio benchmarks",
+    "deepfake detection"
+   ],
+   "coherence": "high"
+  },
+  "92": {
+   "name": "LoRA and Parameter-Efficient Fine-Tuning",
+   "one_line": "These papers improve low-rank adaptation through rank allocation, initialization and multi-task packing, and use adapters to limit forgetting in continual and federated fine-tuning.",
+   "keywords": [
+    "lora",
+    "parameter-efficient fine-tuning",
+    "continual learning",
+    "catastrophic forgetting",
+    "federated learning"
+   ],
+   "coherence": "high"
+  },
+  "93": {
+   "name": "Meme Understanding and Harmful Meme Detection",
+   "one_line": "These papers build multimodal models and multilingual benchmarks to interpret memes, humor and cultural references and to detect hateful or harmful memes.",
+   "keywords": [
+    "memes",
+    "harmful meme detection",
+    "humor",
+    "hate speech",
+    "multimodal"
+   ],
+   "coherence": "high"
+  },
+  "94": {
+   "name": "Detoxification and Moderation Evasion",
+   "one_line": "These papers reduce toxic generations, generate counterspeech and study how harmful content, fake news and poisoned corpora evade detectors, with a few loosely related robustness papers mixed in.",
+   "keywords": [
+    "detoxification",
+    "toxicity",
+    "hate speech",
+    "content moderation",
+    "evasion attacks"
+   ],
+   "coherence": "medium"
+  },
+  "95": {
+   "name": "Vision-Language-Action and Embodied Agents",
+   "one_line": "These papers build and diagnose vision-language-action policies for robot manipulation, navigation and autonomous driving, including grounding, planning and paraphrase robustness.",
+   "keywords": [
+    "vision-language-action",
+    "robotics",
+    "embodied agents",
+    "navigation",
+    "autonomous driving"
+   ],
+   "coherence": "high"
+  },
+  "96": {
+   "name": "Privacy Leakage, PII and Membership Inference",
+   "one_line": "These papers measure and mitigate privacy risks through PII detection, text sanitization, re-identification audits, membership inference and contextual integrity in agents.",
+   "keywords": [
+    "privacy",
+    "pii",
+    "membership inference",
+    "anonymization",
+    "contextual integrity"
+   ],
+   "coherence": "high"
+  },
+  "97": {
+   "name": "Financial NLP Benchmarks and Agents",
+   "one_line": "These papers evaluate and build models and agents for finance, covering financial reasoning benchmarks, retrieval, forecasting, trading, compliance and hallucination detection.",
+   "keywords": [
+    "finance",
+    "financial reasoning",
+    "financial benchmarks",
+    "forecasting",
+    "financial agents"
+   ],
+   "coherence": "high"
+  },
+  "98": {
+   "name": "Jailbreak and Backdoor Attacks",
+   "one_line": "These papers design jailbreak and backdoor attacks on language and vision-language models and defend against them with detection probes, guardrails and alignment interventions.",
+   "keywords": [
+    "jailbreak",
+    "backdoor attacks",
+    "adversarial attacks",
+    "safety defenses",
+    "guardrails"
+   ],
+   "coherence": "high"
+  },
+  "99": {
+   "name": "Tokenization and Subword Vocabularies",
+   "one_line": "These papers analyze and redesign tokenizers, including byte-level, grapheme and morphology-aware subwords, and study their effect on multilingual and low-resource modeling.",
+   "keywords": [
+    "tokenization",
+    "subword",
+    "bpe",
+    "byte-level",
+    "multilingual"
+   ],
+   "coherence": "high"
+  }
+ },
+ "broad": {
+  "0": {
+   "name": "Code, Optimization & Chemistry",
+   "one_line": "These papers use language models and agents to write, test and repair code, solve software engineering tasks, discover algorithms through evolutionary search and design molecules and drugs."
+  },
+  "1": {
+   "name": "Vision-Language Models",
+   "one_line": "These papers build, benchmark and diagnose vision-language models for images, charts, documents, video, spatial reasoning and embodied action, with work on hallucination and efficient visual tokens."
+  },
+  "2": {
+   "name": "Fine-Tuning & Preference Alignment",
+   "one_line": "These papers adapt pretrained models through preference optimization, domain fine-tuning and low-rank adapters while limiting catastrophic forgetting."
+  },
+  "3": {
+   "name": "Factuality, Evaluation & Expert Domains",
+   "one_line": "These papers study calibration, fact-checking, knowledge editing, benchmarks and annotation, and apply language models to legal, financial, scientific and enterprise documents."
+  },
+  "4": {
+   "name": "Speech & Audio Models",
+   "one_line": "These papers build and evaluate speech and audio-language models for recognition, synthesis, translation, spoken dialogue and audio reasoning."
+  },
+  "5": {
+   "name": "LLM Agents",
+   "one_line": "These papers train and benchmark language agents for tool use, web search, GUI control, long-horizon tasks and multi-agent collaboration, along with skill libraries and agentic reinforcement learning."
+  },
+  "6": {
+   "name": "Linguistics, Multilinguality & Translation",
+   "one_line": "These papers compare models with human language processing, study cross-lingual transfer, dialects and tokenization, and improve and evaluate machine translation."
+  },
+  "7": {
+   "name": "Social Behavior, Bias & Culture",
+   "one_line": "These papers probe the social, cultural and psychological behavior of language models, covering bias, sycophancy, theory of mind, role-play, personalization, user simulation and LLM judges."
+  },
+  "8": {
+   "name": "LLM Safety & Security",
+   "one_line": "These papers attack and defend language models and agents through jailbreaks, prompt injection, backdoors, watermarking, privacy protection and safety alignment."
+  },
+  "9": {
+   "name": "Retrieval & Structured Knowledge",
+   "one_line": "These papers improve retrieval and retrieval-augmented generation and reason over knowledge graphs, tables, databases, entities and events, including recommendation systems."
+  },
+  "10": {
+   "name": "Long-Term Agent Memory",
+   "one_line": "These papers design and benchmark long-term memory systems that let conversational and personalized agents extract, organize and retrieve past information."
+  },
+  "11": {
+   "name": "Reasoning & Reinforcement Learning",
+   "one_line": "These papers improve and analyze model reasoning through reinforcement learning with verifiable rewards, efficient chain-of-thought, mathematical problem solving and faithfulness diagnostics."
+  },
+  "12": {
+   "name": "Text Generation, Style & Detection",
+   "one_line": "These papers analyze writing style and creativity, detect machine-generated text, generate synthetic training data and produce visual artifacts such as webpages and SVG graphics."
+  },
+  "13": {
+   "name": "Sequence Model Architectures",
+   "one_line": "These papers analyze and redesign Transformers, linear attention, state-space models and hybrid architectures, covering positional encoding and attention sinks."
+  },
+  "14": {
+   "name": "Medical & Clinical NLP",
+   "one_line": "These papers build and evaluate models for medical question answering, clinical reasoning over health records and radiology report generation."
+  },
+  "15": {
+   "name": "Efficient LLMs & Decoding",
+   "one_line": "These papers make language models faster and smaller through pruning, quantization, KV cache compression, mixture-of-experts, speculative decoding and diffusion language models, along with work on unlearning."
+  }
+ }
+}

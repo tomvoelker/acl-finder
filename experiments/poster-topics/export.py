@@ -1,4 +1,4 @@
-"""Export the reviewed 12-group MiniLM experiment as a static map dataset."""
+"""Export the historical MiniLM experiment inside its own directory."""
 import argparse
 import hashlib
 import json
@@ -35,7 +35,7 @@ def export(input_dir, root=ROOT):
             review.append(f"### {g['label']} ({g['count']})\n\nTerms: {', '.join(g['keywords'])}\n")
             review.append('Closest to the centroid:\n\n' + '\n'.join(f'- {t}' for t in g['examples'][:4]) + '\n')
             review.append('Smallest assignment margins (often ambiguous):\n\n' + '\n'.join(f'- {t}' for t in g['borderline']) + '\n')
-    (root / 'data/poster-topics.json').write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+    (root / 'experiments/poster-topics/assignments.json').write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     (root / 'experiments/poster-topics' / 'metrics.json').write_text(json.dumps(metrics, indent=2) + '\n', encoding='utf-8')
     (root / 'experiments/poster-topics' / 'groups.md').write_text('# Poster topic inspection\n\nAutomatically selected examples, with manually reviewed group labels. These are inferred groups, not acceptance tracks. A paper can be close to its centroid and still have a small margin when another centroid is also close, so the two example lists can overlap.\n\n' + '\n'.join(review), encoding='utf-8')
     print(f"Exported {sum(len(s['assignments']) for s in data['sessions'].values())} poster assignments")

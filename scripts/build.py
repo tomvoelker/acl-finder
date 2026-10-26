@@ -8,6 +8,7 @@ from pathlib import Path
 from import_anthology import match_papers
 from import_underline import match_presentations
 from import_handbook import load_catalog
+from import_topics import input_hash
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
@@ -63,8 +64,8 @@ def build():
     poster_catalog = load_catalog(ROOT / "data/poster-boards.json")
     enrich_poster_boards(data, poster_catalog)
     topics = json.loads((ROOT / "data/poster-topics.json").read_text())
-    if topics["handbookSHA256"] != hashlib.sha256((ROOT / "data/poster-boards.json").read_bytes()).hexdigest():
-        raise ValueError("Poster topics are stale. Regenerate them for the current handbook before building.")
+    if topics.get("version") != 2 or topics.get("inputsSHA256") != input_hash(ROOT):
+        raise ValueError("Poster topics are stale. Run python3 scripts/import_topics.py before building.")
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)

@@ -1,54 +1,53 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateTopics, topicForEntry, topicGroups, topicEntries, TOPIC_COLORS} from '../poster-map/topics.mjs';
+import {validateTopics, topicForEntry, topicChoices, topicEntries, matchesTopic, AREA_COLORS} from '../poster-map/topics.mjs';
 import {sessionGroups, mapEntries, assignmentAt} from '../poster-map/catalog.mjs';
 
-const data = () => ({version:1, sessions:{A:{groups:[{id:0,label:'Translation'}], assignments:[{board:1,paperId:'x',title:'Example',group:0,margin:.1}]} }});
+const data = () => ({version:2, areas:[{id:0,label:'Language'},{id:1,label:'Reasoning'}], topics:[{id:0,area:0,label:'Translation'},{id:1,area:1,label:'Maths'}], sessions:{A:{assignments:[{board:1,paperId:'x',title:'Example',topic:0},{board:2,paperId:'y',title:'Unknown',topic:null},{board:3,paperId:'z',title:'Proofs',topic:1}]}}});
 const entry = {session:'A',board:1,paperId:'x',title:'Example',verified:true};
+const entries = () => data().sessions.A.assignments.map(row=>({...row,verified:true}));
 
 test('topic lookup requires the same session, board, title, paper and verified assignment', () => {
   assert.equal(topicForEntry(data(),'A',entry).label, 'Translation');
-  for (const changed of [{board:2},{paperId:'y'},{title:'Changed'}, {verified:false}]) {
-    assert.equal(topicForEntry(data(),'A',{...entry,...changed}),null);
-  }
+  for (const changed of [{board:2},{paperId:'y'},{title:'Changed'}, {verified:false}]) assert.equal(topicForEntry(data(),'A',{...entry,...changed}),null);
   assert.equal(topicForEntry(data(),'B',entry),null);
   assert.equal(topicForEntry(null,'A',entry),null);
   assert.equal(topicForEntry(data(),'A',null),null);
+  assert.equal(topicForEntry(data(),'A',entries()[1]),null);
 });
 
-test('legend counts only current verified entries', () => {
-  assert.equal(topicGroups(data(),'A',[entry,{...entry,board:2}])[0].count,1);
-  assert.deepEqual(topicGroups(data(),'B',[entry]),[]);
+test('selectors count verified posters and keep missing Atlas entries explicit', () => {
+  const choices = topicChoices(data(),'A',[...entries(),{...entry,verified:false}]);
+  assert.deepEqual(choices.areas.map(row=>[row.label,row.count]), [['Language',1],['Reasoning',1]]);
+  assert.equal(choices.unclassified,1);
+  assert.deepEqual(choices.topics.map(row=>row.label),['Maths','Translation']);
 });
 
-test('malformed groups, duplicate boards and nonexistent groups are rejected', () => {
-  assert.equal(validateTopics(data()).version,1);
-  for (const change of [d => d.version=2, d => d.sessions.A.groups.push({id:0,label:'Duplicate'}),
-    d => d.sessions.A.assignments.push({...entry,group:0}), d => d.sessions.A.assignments[0].group=99,
-    d => d.sessions.A.groups[0].label='', d => delete d.sessions.A.assignments[0].margin,
-    d => d.sessions.A.assignments[0].margin=NaN]) {
-    const invalid=data(); change(invalid); assert.throws(() => validateTopics(invalid));
+test('malformed topics, duplicate boards and unknown parent areas are rejected', () => {
+  assert.equal(validateTopics(data()).version,2);
+  for (const change of [d=>d.version=1, d=>d.areas.push(d.areas[0]), d=>d.areas[0].id=16,
+    d=>d.sessions.A.assignments.push(d.sessions.A.assignments[0]), d=>d.sessions.A.assignments[0].topic=99,
+    d=>d.topics[0].area=99, d=>d.topics[0].label='',d=>delete d.sessions.A.assignments[1].topic]) {
+    const invalid=data(); change(invalid); assert.throws(()=>validateTopics(invalid));
   }
 });
 
-test('topic browsing ranks margins, keeps low-margin papers and breaks ties by board', () => {
-  const topics = data();
-  topics.sessions.A.assignments = [
-    {...topics.sessions.A.assignments[0], margin:-.01},
-    {...topics.sessions.A.assignments[0], board:3, margin:.3},
-    {...topics.sessions.A.assignments[0], board:2, margin:.3}
-  ];
-  const entries = topics.sessions.A.assignments.map(row => ({...row, verified:true}));
-  assert.deepEqual(topicEntries(topics,'A',entries,0).map(row=>row.board),[2,3,1]);
-  assert.deepEqual(topicEntries(topics,'B',entries,0),[]);
+test('browsing uses board order and supports areas, fine topics, and unclassified posters', () => {
+  const all = entries().reverse();
+  assert.deepEqual(topicEntries(data(),'A',all).map(row=>row.board),[1,2,3]);
+  assert.deepEqual(topicEntries(data(),'A',all,0).map(row=>row.board),[1]);
+  assert.deepEqual(topicEntries(data(),'A',all,null,1).map(row=>row.board),[3]);
+  assert.deepEqual(topicEntries(data(),'A',all,'unclassified').map(row=>row.board),[2]);
+  assert.equal(matchesTopic(null,0),false);
+  assert.equal(matchesTopic(null,'unclassified'),true);
+  assert.deepEqual(topicEntries(data(),'A',all,0,1),[]);
 });
 
-test('legend sorts by label with mixed groups last', () => {
-  const topics = data();
-  topics.sessions.A.groups = [{id:0,label:'Alpha (mixed)'},{id:1,label:'Zebra'},{id:2,label:'Agents'}];
-  topics.sessions.A.assignments = topics.sessions.A.groups.map(g => ({board:g.id+1,paperId:'x',title:'Example',group:g.id,margin:.1}));
-  assert.deepEqual(topicGroups(topics,'A',topics.sessions.A.assignments.map(row=>({...row,verified:true}))).map(g=>g.id),[2,1,0]);
+test('area colours and labels stay identical between sessions', () => {
+  const topics=data(); topics.sessions.B=structuredClone(topics.sessions.A);
+  assert.deepEqual(topicForEntry(topics,'A',entry),topicForEntry(topics,'B',entry));
+  assert.equal(topicForEntry(topics,'A',entry).color, AREA_COLORS[0]);
 });
 
 test('topic swatches retain text contrast and basic colour separation', () => {
@@ -62,7 +61,7 @@ test('topic swatches retain text contrast and basic colour separation', () => {
       .map(v=>v>.008856 ? Math.cbrt(v) : 7.787*v+16/116);
     return [116*xyz[1]-16,500*(xyz[0]-xyz[1]),200*(xyz[1]-xyz[2])];
   };
-  const colors=TOPIC_COLORS.map(linear), ink=luminance(linear('#202733'));
+  const colors=AREA_COLORS.map(linear), ink=luminance(linear('#202733'));
   for (const rgb of colors) assert.ok((luminance(rgb)+.05)/(ink+.05)>=4.5, 'board text needs AA contrast');
   const labs=colors.map(lab);
   for(let i=0;i<labs.length;i++) for(let j=i+1;j<labs.length;j++) {
@@ -71,19 +70,26 @@ test('topic swatches retain text contrast and basic colour separation', () => {
   }
 });
 
-test('published experimental topics cover exactly the unambiguous physical poster assignments', () => {
+
+test('published Atlas assignments cover all unambiguous boards without classifying missing papers', () => {
   const catalog=JSON.parse(readFileSync(new URL('../data/poster-boards.json',import.meta.url)));
   const topics=validateTopics(JSON.parse(readFileSync(new URL('../data/poster-topics.json',import.meta.url))));
+  const audit=JSON.parse(readFileSync(new URL('../data/atlas/audit.json',import.meta.url)));
   const sessions=sessionGroups(catalog.sessions), entries=mapEntries(catalog.entries,sessions);
-  let verified=0;
+  let classified=0, unclassified=0;
   for (const session of sessions) {
-    const current=entries.filter(e => e.session===session.id);
+    const current=entries.filter(e=>e.session===session.id);
+    const valid=current.filter(e=>assignmentAt(entries,session.id,e.board).entry);
+    assert.deepEqual(topics.sessions[session.id].assignments.map(e=>e.board),valid.map(e=>e.board).sort((a,b)=>a-b));
     for (const entry of current) {
       const assignment=assignmentAt(entries,session.id,entry.board).entry;
-      if (assignment) { assert.ok(topicForEntry(topics,session.id,assignment),`${session.id} board ${entry.board}`); verified++; }
-      else assert.equal(topics.sessions[session.id].assignments.some(a => a.board===entry.board),false);
+      if (!assignment) assert.equal(topics.sessions[session.id].assignments.some(a=>a.board===entry.board),false);
+      else if(topicForEntry(topics,session.id,assignment)) classified++;
+      else { unclassified++; assert.ok(audit.unclassified.some(e=>e.session===session.id&&e.board===entry.board)); }
     }
-    assert.equal(topicGroups(topics,session.id,current).reduce((n,g)=>n+g.count,0),topics.sessions[session.id].assignments.length);
+    const choices=topicChoices(topics,session.id,valid);
+    assert.equal(choices.areas.length,16);
+    assert.equal(choices.topics.reduce((n,t)=>n+t.count,0)+choices.unclassified,valid.length);
   }
-  assert.equal(verified, Object.values(topics.sessions).reduce((n,s)=>n+s.assignments.length,0));
+  assert.equal(classified,2803); assert.equal(unclassified,28);
 });

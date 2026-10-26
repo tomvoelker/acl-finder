@@ -34,11 +34,14 @@
     </button>
     <button id="open-details" type="button" aria-haspopup="dialog" aria-controls="details-panel">Details</button>
   </header>
-  <section class="topic-toolbar" aria-label="Experimental topics">
-    <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-legend" disabled>Colour by topic</button>
-    <div id="topic-legend" class="topic-legend" role="group" aria-label="Highlight a topic in this session" hidden></div>
+  <section class="topic-toolbar" aria-label="Atlas topics">
+    <button id="topics-toggle" type="button" aria-pressed="false" aria-controls="topic-filters" disabled>Colour by area</button>
+    <div id="topic-filters" class="topic-filters" hidden>
+      <label class="area-filter"><span class="visually-hidden">Atlas area</span><span id="area-swatch" class="topic-swatch" aria-hidden="true" hidden></span><select id="topic-area"><option value="">All areas</option></select></label>
+      <label class="fine-filter"><span class="visually-hidden">Atlas topic</span><select id="topic-select"><option value="">All topics</option></select></label>
+    </div>
     <button id="topic-browse" type="button" hidden aria-haspopup="dialog" aria-controls="details-panel">Browse posters</button>
-    <span id="topics-note" class="topics-note" title="Approximate groups inferred from paper titles and abstracts. Colours change by session.">Loading topics…</span>
+    <span class="topics-credit">Topics by <a href="https://mohammadi.cv/emnlp/2026/atlas.html" target="_blank" rel="noopener noreferrer">Hadi Mohammadi · EMNLP Atlas ↗</a><span id="topics-note" class="topics-note">Loading topics…</span></span>
   </section>
   <main aria-label="Interactive poster floor plan">
     <div id="map-stage" class="map-stage">
@@ -96,7 +99,7 @@
         <p>Yellow highlights and markers B1–B10 are reproduced without assuming their meaning. No entrance or compass direction is identified.</p>
         <p>Paper assignments come from the conference handbook. Board numbers are reused between sessions. An unlisted board does not establish whether a paper is presenting.</p>
         <p>Stars show papers saved in the finder on this browser, using verified board assignments for the selected session. Conflicting or unverified assignments do not receive stars.</p>
-        <p>Experimental topics are inferred from paper titles and abstracts, with reviewed group labels. They are not official acceptance tracks. A paper can fit several topics; the map shows one approximate group. Topic colours change between sessions. Select a topic to highlight its boards, then use Browse posters to read the list.</p>
+        <p>Topics and areas are imported from <a href="https://mohammadi.cv/emnlp/2026/atlas.html" target="_blank" rel="noopener noreferrer">Hadi Mohammadi’s EMNLP 2026 Atlas</a>, using its 24 October snapshot. These are inferred groups, not official acceptance tracks. Colours represent 16 broad areas and stay consistent across sessions. Choose an area or one of its finer topics to highlight posters, then browse them in board order. Papers absent from the Atlas are labelled “Not classified in Atlas” and remain searchable. Paper identities match by ACL Anthology ID; dates, rooms and boards still come from this finder’s verified sources. <a href="https://github.com/tomvoelker/acl-finder/tree/main/data/atlas" target="_blank" rel="noopener noreferrer">Source snapshot and import audit ↗</a></p>
         <p><a id="handbook-source" hidden>Conference handbook (PDF)</a></p>
         <p>Drag or swipe to pan. Pinch to zoom, or double-tap to zoom in. Use Fit to see the whole map. On a trackpad, scroll to pan and pinch to zoom.</p>
       </details>

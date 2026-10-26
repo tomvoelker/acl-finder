@@ -1,0 +1,260 @@
+{
+  "sourceRevision": "58dd3536c32a4a101cc1e064e44ab25702829559",
+  "atlasPapers": 5534,
+  "posters": 2831,
+  "matched": 2803,
+  "unclassified": [
+    {
+      "session": "A",
+      "board": 55,
+      "paperId": "3579-CL",
+      "title": "Justify Your Prompts!",
+      "anthologyId": null,
+      "topic": null,
+      "reason": "No verified Anthology match"
+    },
+    {
+      "session": "A",
+      "board": 89,
+      "paperId": "10281-TACL",
+      "title": "StructTune: Structured Sparse Fine-Tuning for Efﬁcient Adaptation of Large Language Models",
+      "anthologyId": "2026.tacl-1.106",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "A",
+      "board": 272,
+      "paperId": "10951-TACL",
+      "title": "Model Directions, Not Words: Mechanistic Topic Models Using Sparse Autoencoders",
+      "anthologyId": "2026.tacl-1.99",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "B",
+      "board": 104,
+      "paperId": "9093-TACL",
+      "title": "CAuSE: Decoding Multimodal Classiﬁers using Faithful Natural Language Explanation",
+      "anthologyId": "2026.tacl-1.37",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "B",
+      "board": 105,
+      "paperId": "9955-TACL",
+      "title": "OrthoEdit: Principled and Stable Knowledge Editing via Orthogonal Subspace Projection",
+      "anthologyId": "2026.tacl-1.51",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "C",
+      "board": 5,
+      "paperId": "9837-TACL",
+      "title": "CG-TTRL: Context-guided Test-time Reinforcement Learning for On-device Large Language Models",
+      "anthologyId": "2026.tacl-1.85",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "C",
+      "board": 6,
+      "paperId": "9963-TACL",
+      "title": "Do Large Language Models Exhibit Spontaneous Rational Deception?",
+      "anthologyId": "2026.tacl-1.88",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "C",
+      "board": 164,
+      "paperId": "10565-TACL",
+      "title": "Vertical Routing: A Cost-Efﬁcient Collaboration Routing Framework",
+      "anthologyId": "2026.tacl-1.104",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "C",
+      "board": 165,
+      "paperId": "10907-TACL",
+      "title": "Lightweight Latent Reasoning for Narrative Tasks",
+      "anthologyId": "2026.tacl-1.98",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "D",
+      "board": 203,
+      "paperId": "9259-TACL",
+      "title": "Anthropomimetic Uncertainty: What Verbalized Uncertainty in Language Models is Missing",
+      "anthologyId": "2026.tacl-1.69",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "D",
+      "board": 263,
+      "paperId": "5210-MAIN",
+      "title": "Q-Bimodal Attention: Preﬁx and Tail Dispatch for Efﬁcient Tree-Structured LLM Decoding",
+      "anthologyId": null,
+      "topic": null,
+      "reason": "No verified Anthology match"
+    },
+    {
+      "session": "D",
+      "board": 295,
+      "paperId": "3417-CL",
+      "title": "How to Evaluate Speech Translation with Source-Aware Neural MT Metrics",
+      "anthologyId": null,
+      "topic": null,
+      "reason": "No verified Anthology match"
+    },
+    {
+      "session": "D",
+      "board": 368,
+      "paperId": "10393-TACL",
+      "title": "Understanding Benchmark Language Under Weakened Formal Semantics",
+      "anthologyId": "2026.tacl-1.91",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "D",
+      "board": 382,
+      "paperId": "9881-TACL",
+      "title": "Rethinking the Relationship between the Power Law and Hierarchical Structures",
+      "anthologyId": "2026.tacl-1.87",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "D",
+      "board": 383,
+      "paperId": "10171-TACL",
+      "title": "Fodor and Pylyshyn’s systematicity challenge still stands",
+      "anthologyId": "2026.tacl-1.73",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "D",
+      "board": 389,
+      "paperId": "6620-MAIN",
+      "title": "The Necessity of Rational Grounding in Surprisal Theory",
+      "anthologyId": null,
+      "topic": null,
+      "reason": "No verified Anthology match"
+    },
+    {
+      "session": "E",
+      "board": 3,
+      "paperId": "10793-TACL",
+      "title": "CURE: Cultural Value-based Reasoning for Enhancing the Cultural Adaptability of Large Language Models",
+      "anthologyId": "2026.tacl-1.97",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "E",
+      "board": 201,
+      "paperId": "10789-TACL",
+      "title": "ConspirED: A Dataset for Cognitive Traits of Conspiracy Theories and Large Language Model Safety",
+      "anthologyId": "2026.tacl-1.96",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "E",
+      "board": 202,
+      "paperId": "10995-TACL",
+      "title": "ORCA: Open-ended Response Correctness Assessment for Audio Question Answering",
+      "anthologyId": "2026.tacl-1.100",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "E",
+      "board": 335,
+      "paperId": "8523-TACL",
+      "title": "SPES: Spectrogram Perturbation for Explainable Speech-to-text Generation",
+      "anthologyId": "2026.tacl-1.35",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "E",
+      "board": 371,
+      "paperId": null,
+      "title": "Scale Doesn’t Compensate for the Gricean Maxims: The Impact of Reporting Bias on Vision-Language Reasoning",
+      "anthologyId": null,
+      "topic": null,
+      "reason": "No verified Anthology match"
+    },
+    {
+      "session": "E",
+      "board": 372,
+      "paperId": "10201-TACL",
+      "title": "Common Objects Out-of-Context (COOCO): Investigating Multimodal Context and Semantic Scene Violations in Referential Communication",
+      "anthologyId": "2026.tacl-1.52",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "F",
+      "board": 9,
+      "paperId": "9915-TACL",
+      "title": "No Shortcuts to Culture:IndonesianMulti-hop Question Answering for Complex Cultural Understanding",
+      "anthologyId": "2026.tacl-1.56",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "G",
+      "board": 1,
+      "paperId": "8687-TACL",
+      "title": "Towards More Realistic Extraction Attacks: An Adversarial Perspective",
+      "anthologyId": "2025.tacl-1.82",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "G",
+      "board": 165,
+      "paperId": "11221-TACL",
+      "title": "GTPO: Stabilizing Group Relative Policy Optimization via Gradient and Entropy Control",
+      "anthologyId": "2026.tacl-1.102",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "G",
+      "board": 342,
+      "paperId": "11242-TACL",
+      "title": "STEMTOX: From Social Tags to Fine-Grained Toxic Meme Detection via Entropy-Guided Multi-Task Learning",
+      "anthologyId": "2026.tacl-1.103",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "G",
+      "board": 360,
+      "paperId": "10177-TACL",
+      "title": "SupraTok: Cross-Boundary Tokenization for Enhanced Language Model Performance",
+      "anthologyId": "2026.tacl-1.80",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    },
+    {
+      "session": "G",
+      "board": 377,
+      "paperId": "10215-TACL",
+      "title": "Hearing to Translate: The Effectiveness of Speech Modality Integration into LLMs",
+      "anthologyId": "2026.tacl-1.89",
+      "topic": null,
+      "reason": "Not in Atlas snapshot"
+    }
+  ]
+}

@@ -70,7 +70,9 @@ Underline links use the public metadata for [event 535](https://underline.io/eve
 
 ## Run locally
 
-The poster map has an experimental **Colour by topic** layer. Its reviewed assignments for all sessions are committed in `data/poster-topics.json` and copied unchanged by the normal build. Deployment does not rerun clustering or require ML packages. The [topic experiment](experiments/poster-topics/README.md) includes the generator scripts, pinned Python dependencies, exact input snapshot, reviewed labels, comparison results and instructions for continuing the work on another machine. Pull these files together before deploying; if handbook assignments change, regenerate and review the topics before building.
+The poster map’s optional **Colour by area** layer uses [Hadi Mohammadi’s EMNLP 2026 Atlas](https://mohammadi.cv/emnlp/2026/atlas.html): 16 broad areas with stable colours across sessions, and 100 fine topics for filtering. These are inferred groups, not official acceptance tracks. The import matches 2,803 of 2,831 verified posters by Anthology ID. The other 28 remain searchable under **Not classified in Atlas**. Browse lists and Previous/Next follow board order.
+
+The [Atlas source snapshot, attribution and audit](data/atlas/README.md) and the [dependency-free importer](scripts/import_topics.py) are committed alongside `data/poster-topics.json`. Builds copy these assignments unchanged and require no network or ML packages. After changing the schedule, handbook, Anthology matches or Atlas snapshot, run `python3 scripts/import_topics.py` before building. The build rejects stale data. The original [MiniLM experiment](experiments/poster-topics/README.md), including its corpus, pinned dependencies and assignments, remains available for comparison; its exporter cannot replace the live Atlas data.
 
 Python 3.11 or newer is sufficient; no package installation is required.
 
@@ -89,6 +91,7 @@ Download and normalize the current public spreadsheet:
 python3 scripts/import_schedule.py --fetch
 python3 scripts/import_anthology.py
 python3 scripts/import_underline.py
+python3 scripts/import_topics.py
 ```
 
 Review the changes to `data/source.csv`, `data/papers.json`, `data/audit.json`, and `data/anthology-audit.json` before committing. The schedule importer rejects unknown column layouts, duplicate IDs, and invalid values so a changed source cannot silently corrupt the site.
