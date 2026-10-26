@@ -10,6 +10,8 @@ import {AREA_COLORS} from '../atlas.mjs';
 const $ = selector => document.querySelector(selector);
 const svg = $('#floor-map');
 const stage = $('#map-stage');
+const zoomControls = $('.zoom-controls');
+const inlineZoom = matchMedia('(max-width: 640px) and (min-height: 501px)');
 const analytics = createAnalytics();
 let selected = null, sessions = [], assignments = [], activeSession = '', catalogReady = false;
 let catalog = null;
@@ -31,6 +33,11 @@ function node(tag, attrs = {}, text) {
   return element;
 }
 function feedback(message) { $('#feedback').textContent = message; }
+function placeZoomControls() {
+  const actions = inlineZoom.matches && $('#selection-chip:not([hidden]) .selection-card-actions');
+  (actions || stage.parentElement).append(zoomControls);
+}
+inlineZoom.addEventListener('change', placeZoomControls);
 function applyView() {
   svg.setAttribute('viewBox', `${view.x} ${view.y} ${view.width} ${view.height}`);
   const ratio = fitView(MAP, viewport).width / view.width;
@@ -309,6 +316,7 @@ function renderAssignment() {
     link.textContent = 'View paper'; actions.append(link);
   }
   chip.append(actions);
+  placeZoomControls();
   chip.setAttribute('aria-label', `${sessionLabel}. Selected board ${selected}${savedBoards.has(selected) ? '. Saved paper' : ''}`);
 }
 function refreshAssignments() {
@@ -569,7 +577,7 @@ new ResizeObserver(() => {
   viewport = next; pointers.clear(); drag = null; pinch = null;
   stage.classList.remove('dragging'); applyView();
 }).observe(stage);
-// Reserve room for the larger phone selection card so Fit and centered boards
+// Reserve room for the phone selection card so Fit and centered boards
 // remain above it. The existing stage observer keeps camera geometry in sync.
 new ResizeObserver(() => {
   const card = $('#selection-chip');

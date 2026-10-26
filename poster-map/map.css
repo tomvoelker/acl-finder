@@ -260,7 +260,12 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
   .finder input { width: 64px; }
 }
 @media (max-width: 640px) and (min-height: 501px) {
-  main:has(.selection-chip:not([hidden])) .map-stage { bottom: calc(var(--selection-height, 148px) + 76px + env(safe-area-inset-bottom)); }
+  .selection-chip { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .selection-card-actions { gap: 6px; }
+  .selection-card-actions > button { padding-inline: 8px; }
+  .selection-card-actions > a { flex: none; white-space: nowrap; }
+  .selection-card-actions .zoom-controls { position: static; flex: none; margin-left: auto; border: 0; box-shadow: none; background: transparent; }
+  main:has(.selection-chip:not([hidden])) .map-stage { bottom: calc(var(--selection-height, 148px) + 24px + env(safe-area-inset-bottom)); }
 }
 
 .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 12px; flex: none; border: 0; color: var(--muted); background: none; }
@@ -274,6 +279,7 @@ summary { font-size: 12px; font-weight: 650; line-height: 1.5; min-height: 26px;
   .header { column-gap: 6px; }
   .finder input { width: 56px; }
   #open-filters { padding-inline: 9px; }
+  .selection-card-actions > button, .selection-card-actions > a { font-size: 12px; }
 }
 @media (max-height: 500px) {
   .selection-chip { width: 320px; max-width: 44%; max-height: calc(100% - 24px); bottom: 12px; right: auto; overflow-y: auto; }
