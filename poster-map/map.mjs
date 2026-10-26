@@ -19,6 +19,7 @@ const papers = new Map();
 let savedPapers = readSavedPapers(), savedBoards = new Map(), savedStops = [];
 let viewport = {width: stage.clientWidth, height: stage.clientHeight};
 let view = fitView(MAP, viewport);
+let revealedBoard = null;
 // Start with legible positions on a phone. Fit remains available for the overview.
 if (viewport.width <= 640) view = zoomAt(view, 1/3, {x:0.5,y:0.5}, MAP, viewport);
 const elements = new Map();
@@ -64,8 +65,9 @@ function transitionTo(target) {
   applyView();
   zoomFrame = requestAnimationFrame(tick);
 }
-function fitMap() { transitionTo(fitView(MAP, viewport)); }
+function fitMap() { revealedBoard = null; transitionTo(fitView(MAP, viewport)); }
 function zoom(factor, anchor = {x:0.5,y:0.5}, animate = false) {
+  revealedBoard = null;
   const target = zoomAt(animate && zoomTarget ? zoomTarget : view, factor, anchor, MAP, viewport);
   if (animate) transitionTo(target);
   else { stopMotion(); view = target; applyView(); }
@@ -146,6 +148,8 @@ function updateHash() {
 }
 function selectBoard(number, {reveal = false, focus = false, hash = true, keepZoom = false} = {}) {
   if (!BOARD_BY_NUMBER.has(number)) return;
+  if (reveal) revealedBoard = number;
+  else if (selected !== number) revealedBoard = null;
   selected = number;
   const board = BOARD_BY_NUMBER.get(number);
   for (const [id,element] of elements) {
@@ -457,6 +461,7 @@ stage.addEventListener('pointerdown', event => {
   stage.setPointerCapture(event.pointerId);
   if (pointers.size === 1) { gestureMoved = false; startDrag(event.pointerId,point); }
   if (pointers.size === 2) {
+    revealedBoard = null;
     const [a,b] = [...pointers.values()];
     pinch = {distance:Math.max(1,Math.hypot(a.x-b.x,a.y-b.y)),middle:midpoint(a,b),view:{...view}};
     gestureMoved = true; lastTap = null; drag = null;
@@ -476,6 +481,7 @@ stage.addEventListener('pointermove', event => {
   if (!drag || drag.id !== event.pointerId) return;
   const dx = point.x-drag.start.x, dy = point.y-drag.start.y;
   if (Math.hypot(dx,dy) < 6 && !gestureMoved) return;
+  revealedBoard = null;
   gestureMoved = true; lastTap = null; stage.classList.add('dragging');
   const now = performance.now(), elapsed = Math.max(1,now-drag.time);
   drag.vx = (point.x-drag.previous.x)/elapsed;
@@ -523,6 +529,7 @@ stage.addEventListener('lostpointercapture', event => {
   if (pointers.has(event.pointerId)) endPointer({...event,pointerId:event.pointerId,type:'pointercancel'});
 });
 stage.addEventListener('wheel', event => {
+  revealedBoard = null;
   event.preventDefault(); stopMotion();
   const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.height : 1;
   if (event.ctrlKey || event.metaKey || event.deltaMode === 1) {
@@ -536,7 +543,11 @@ new ResizeObserver(() => {
   const next = {width:stage.clientWidth,height:stage.clientHeight};
   if (!next.width || !next.height || (next.width === viewport.width && next.height === viewport.height)) return;
   stopMotion();
-  view = resizeView(view,viewport,next,MAP);
+  // Loading the selected-paper card can shrink a phone's map more than once.
+  // Keep a linked/jumped-to board in view until the visitor moves the camera.
+  const board = next.width <= 640 && revealedBoard === selected ? BOARD_BY_NUMBER.get(selected) : null;
+  const focus = board ? {x:board.x + MAP.faceWidth/2, y:board.y + MAP.faceHeight/2} : null;
+  view = resizeView(view,viewport,next,MAP,focus);
   viewport = next; pointers.clear(); drag = null; pinch = null;
   stage.classList.remove('dragging'); applyView();
 }).observe(stage);

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {fitView, constrainView, zoomAt, pinchAt, panBy, resizeView} from '../camera.mjs';
+import {MAP, BOARD_BY_NUMBER} from '../layout.mjs';
 
 const bounds = {width: 1320, height: 1280};
 const viewport = {width: 1000, height: 800};
@@ -82,6 +83,19 @@ test('orientation changes preserve center and relative zoom instead of resetting
   close(resized.width / resized.height, landscape.width / landscape.height);
   const restored = resizeView(resized, landscape, portrait, bounds);
   for (const key of ['x', 'y', 'width', 'height']) close(restored[key], current[key]);
+});
+
+test('a revealed edge poster stays visible when the mobile paper card shrinks the map', () => {
+  const before = {width: 320, height: 546}, after = {width: 320, height: 248};
+  const board = BOARD_BY_NUMBER.get(424);
+  const poster = {x: board.x + MAP.faceWidth / 2, y: board.y + MAP.faceHeight / 2};
+  const width = 430, height = width * before.height / before.width;
+  const current = constrainView({x: poster.x - width / 2, y: poster.y - height / 2, width, height}, MAP, before);
+  const resized = resizeView(current, before, after, MAP, poster);
+  // The poster centre must be in the middle half, with its full face visible.
+  assert.ok(Math.abs((poster.x - resized.x) / resized.width - 0.5) <= 0.25);
+  assert.ok(Math.abs((poster.y - resized.y) / resized.height - 0.5) <= 0.25);
+  assert.ok(poster.y + MAP.faceHeight / 2 < resized.y + resized.height);
 });
 
 test('operations return fresh objects and remain finite for transient zero-size containers', () => {

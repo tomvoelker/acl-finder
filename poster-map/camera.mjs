@@ -79,15 +79,15 @@ export function panBy(view, delta, bounds, viewport) {
   }, bounds, viewport);
 }
 
-/** Preserve map center and relative zoom when container size or orientation changes. */
-export function resizeView(view, previousViewport, nextViewport, bounds) {
+/** Preserve relative zoom and the map centre, or a deliberately revealed point. */
+export function resizeView(view, previousViewport, nextViewport, bounds, focus = null) {
   const current = constrainView(view, bounds, previousViewport);
   const oldFit = fitView(bounds, previousViewport), nextFit = fitView(bounds, nextViewport);
   const width = nextFit.width * current.width / oldFit.width;
   const height = width * positive(nextViewport.height) / positive(nextViewport.width);
   return constrainView({
-    x: current.x + current.width / 2 - width / 2,
-    y: current.y + current.height / 2 - height / 2,
+    x: (focus?.x ?? current.x + current.width / 2) - width / 2,
+    y: (focus?.y ?? current.y + current.height / 2) - height / 2,
     width, height,
   }, bounds, nextViewport);
 }
