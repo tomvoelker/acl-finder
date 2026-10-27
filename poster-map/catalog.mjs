@@ -1,4 +1,5 @@
 // The schedule sheet supplies assignments. Board numbers are reused each session.
+import {isPosterBoard, posterBoardOrder} from '../poster-view.mjs';
 export function validateCatalog(document) {
   if (document?.version !== 2 || !Array.isArray(document.sessions) || !Array.isArray(document.entries)) {
     throw new Error('Expected a version 2 schedule catalog with sessions and entries.');
@@ -21,7 +22,7 @@ export function validateCatalog(document) {
   if (!ids.size) throw new Error('The schedule catalog has no poster sessions.');
   for (const entry of document.entries) {
     if (!ids.has(entry.session)) throw new Error('An assignment has an unknown schedule session.');
-    if (!Number.isInteger(entry.board) || entry.board < 1 || entry.board > 424) throw new Error('Schedule board must be an integer from 1 to 424.');
+    if (!isPosterBoard(entry.board)) throw new Error('Schedule board must be an integer from 1 to 424 or a demo label D1–D12.');
     if (typeof entry.title !== 'string' || !entry.title.trim() || !Number.isInteger(entry.sourceRow) || entry.sourceRow < 1) {
       throw new Error('A schedule assignment needs a title and positive source row.');
     }
@@ -102,7 +103,7 @@ export function savedPosterStops(entries, sessions, savedIds, index = null) {
   return stops.sort((a,b) => {
     const first = physicalSessions.get(a.session), second = physicalSessions.get(b.session);
     return compare(first.date,second.date) || compare(first.start,second.start) ||
-      a.board-b.board || compare(a.session,b.session);
+      posterBoardOrder(a.board)-posterBoardOrder(b.board) || compare(a.session,b.session);
   });
 }
 
@@ -141,7 +142,8 @@ export function searchText(value) {
 }
 
 export function boardSearchNumber(query) {
-  const match = String(query).trim().match(/^(?:board\s+)?(\d+)$/i);
+  const match = String(query).trim().match(/^(?:board\s+)?(D(?:[1-9]|1[0-2])|\d+)$/i);
+  if (match && /^D/i.test(match[1])) return match[1].toUpperCase();
   const number = match ? Number(match[1]) : null;
   return Number.isInteger(number) && number >= 1 && number <= 424 ? number : null;
 }

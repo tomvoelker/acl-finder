@@ -142,7 +142,7 @@ def create_dataset(root=ROOT):
         if assignment["topic"] is None and "area" not in assignment:
             missing.append({"session": sid, **assignment, "reason": "No verified Anthology match" if not anthology_id else "Not in Atlas snapshot"})
     for session in sessions.values():
-        session["assignments"].sort(key=lambda row: row["board"])
+        session["assignments"].sort(key=lambda row: (0, row["board"]) if type(row["board"]) is int else (1, int(row["board"][1:])))
     data = {"version": 2, "source": source, "inputsSHA256": input_hash(root),
             "areas": areas, "topics": topics, "papers": atlas, "localAreas": local,
             "localSource": {k: local_review[k] for k in ["assignedBy", "reviewedAt", "method"]}, "sessions": sessions}

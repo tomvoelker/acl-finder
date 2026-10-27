@@ -1,8 +1,18 @@
 // Numbered poster locations come from the official schedule sheet.
+export function isPosterBoard(board) {
+  return Number.isInteger(board) && board >= 1 && board <= 424 ||
+    typeof board === 'string' && /^D(?:[1-9]|1[0-2])$/.test(board);
+}
+
+export function posterBoardOrder(board) {
+  return typeof board === 'string' ? 424 + Number(board.slice(1)) : board;
+}
+
 export function readPosterLocation(raw, sessions) {
   const slot = sessions.get(raw.posterSession);
-  if (!slot || !Number.isInteger(raw.posterBoard) || raw.posterBoard < 1 || raw.posterBoard > 424) return null;
-  return { ...slot, board: raw.posterBoard, sourceRow: raw.posterSourceRow };
+  if (!slot || !isPosterBoard(raw.posterBoard)) return null;
+  return { ...slot, label:typeof raw.posterBoard === 'string' ? `Demo Session ${slot.id}` : slot.label,
+    board: raw.posterBoard, sourceRow: raw.posterSourceRow };
 }
 
 export function posterMapHref(poster) {
@@ -13,14 +23,15 @@ export function posterMapHref(poster) {
 export function posterSlotDiffers(paper, poster) {
   if (!poster) return false;
   const room = value => String(value || '').trim().toLowerCase().replace(/^hall$/, 'hall h');
-  return paper.presentation !== 'Poster' || paper.date !== poster.date ||
+  const presentation = typeof poster.board === 'string' ? 'Demo' : 'Poster';
+  return paper.presentation !== presentation || paper.date !== poster.date ||
     paper.start !== poster.start || paper.end !== poster.end || room(paper.room) !== room(poster.room);
 }
 
 // Keep explicit board lookups separate from ordinary substring title/ID search.
 export function parsePosterQuery(query) {
   const boards = [];
-  const text = query.replace(/(^|\s)board\s*#?\s*(D(?:10|[1-9])|\d+)(?=\s|$)/gi, (_match, space, number) => {
+  const text = query.replace(/(^|\s)board\s*#?\s*(D(?:1[0-2]|[1-9])|\d+)(?=\s|$)/gi, (_match, space, number) => {
     boards.push(/^d/i.test(number) ? number.toUpperCase() : Number(number));
     return space;
   }).trim();
@@ -28,7 +39,7 @@ export function parsePosterQuery(query) {
 }
 
 export function matchesPosterQuery(paper, boards) {
-  return boards.every(board => board === (paper.poster?.board ?? paper.posterClaimedBoard ?? (/^D(?:10|[1-9])$/i.test(paper.board || '') ? paper.board.toUpperCase() : null)));
+  return boards.every(board => board === (paper.poster?.board ?? paper.posterClaimedBoard ?? (/^D(?:1[0-2]|[1-9])$/i.test(paper.board || '') ? paper.board.toUpperCase() : null)));
 }
 
 // A poster slot is independent of the presentation format in the source sheet.

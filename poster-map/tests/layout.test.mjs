@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {MAP, BOARDS, BOARD_BY_NUMBER, MARKERS, YELLOW, DEMO_BOARDS} from '../layout.mjs';
+import {MAP, BOARDS, BOARD_BY_NUMBER, MARKERS, YELLOW, DEMO_BOARDS, MAP_BOARDS, MAP_BOARD_BY_NUMBER} from '../layout.mjs';
 
 test('the reconstruction contains every numbered position exactly once and inside the map', () => {
   assert.equal(BOARDS.length,424);
@@ -48,3 +48,28 @@ test('demo sides pair D1/D7 through D6/D12 and keep D7 facing 201 without overla
   }
 });
 
+
+
+test('interactive map inventory includes every numeric face and every demo face exactly once', () => {
+  assert.equal(MAP_BOARDS.length,436);
+  assert.equal(MAP_BOARD_BY_NUMBER.size,436);
+  for (const board of BOARDS) assert.strictEqual(MAP_BOARD_BY_NUMBER.get(board.number),board);
+  for (const demo of DEMO_BOARDS) {
+    const board=MAP_BOARD_BY_NUMBER.get(demo.id);
+    assert.ok(board);
+    assert.equal(board.number,demo.id);
+    assert.equal(board.demo,true);
+    assert.equal(board.x,demo.x);
+    assert.equal(board.y,demo.y);
+    assert.equal(board.row,0);
+    assert.ok(Number.isInteger(board.column));
+    assert.ok(board.face===0 || board.face===1);
+    assert.equal(BOARD_BY_NUMBER.has(demo.id),false);
+  }
+  for (let number=1;number<=6;number++) {
+    const lower=MAP_BOARD_BY_NUMBER.get(`D${number}`),upper=MAP_BOARD_BY_NUMBER.get(`D${number+6}`);
+    assert.equal(lower.column,upper.column);
+    assert.equal(lower.face,1);
+    assert.equal(upper.face,0);
+  }
+});

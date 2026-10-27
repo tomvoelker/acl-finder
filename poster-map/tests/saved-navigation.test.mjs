@@ -63,3 +63,26 @@ test('empty and single-stop navigation remain usable', () => {
   assert.strictEqual(nextSavedPoster([stop],'A',null),stop);
   assert.strictEqual(nextSavedPoster([stop],'F',200),stop);
 });
+
+
+test('saved demos sort naturally after numeric boards with canonical sessions and board reuse', () => {
+  const sessions=sessionGroups([session('A','2026-10-25'),session('D','2026-10-26'),session('Demo2','2026-10-26')]);
+  const entries=mapEntries([
+    row('D','D12','last'),row('A','D1','first-day'),row('Demo2','D2','demo-alias'),
+    row('D',424,'numeric'),row('D','D10','ten'),row('D','D1','one'),row('D',1,'first-numeric'),
+  ],sessions);
+  const stops=savedPosterStops(entries,sessions,entries.map(entry=>entry.paperId));
+  assert.deepEqual(positions(stops),['A/D1','D/1','D/424','D/D1','D/D2','D/D10','D/D12']);
+  assert.equal(stops[4].entry.sourceSession,'Demo2');
+  assert.strictEqual(nextSavedPoster(stops,'D',424),stops[3]);
+  assert.strictEqual(nextSavedPoster(stops,'D','D1'),stops[4]);
+  assert.strictEqual(nextSavedPoster(stops,'D','D12'),stops[0]);
+  assert.strictEqual(nextSavedPoster(stops,'A','D1'),stops[1]);
+});
+
+test('demo alias conflicts and unverified demos stay out of saved navigation', () => {
+  const sessions=sessionGroups([session('D','2026-10-26'),session('Demo2','2026-10-26')]);
+  const entries=mapEntries([row('D','D1','conflict'),row('Demo2','D1','other'),row('D','D2','unverified',false),row('Demo2','D12','confirmed'),row('D',1,'numeric')],sessions);
+  const stops=savedPosterStops(entries,sessions,new Set(['conflict','unverified','confirmed','numeric']));
+  assert.deepEqual(positions(stops),['D/1','D/D12']);
+});

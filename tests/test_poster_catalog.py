@@ -32,8 +32,11 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog["source"]["updatedAt"], "2026-10-26")
         self.assertEqual(self.catalog["source"]["sha256"], hashlib.sha256(self.source.encode()).hexdigest())
         self.assertEqual(self.catalog["source"]["timelineSHA256"], hashlib.sha256(self.timeline.encode()).hexdigest())
-        self.assertEqual(len(self.catalog["entries"]), 2806)
-        self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2795)
+        self.assertEqual(len(self.catalog["entries"]), 2876)
+        self.assertEqual(sum(e["verified"] for e in self.catalog["entries"]), 2865)
+        numeric = [e for e in self.catalog["entries"] if type(e["board"]) is int]
+        self.assertEqual(len(numeric), 2806)
+        self.assertEqual(sum(e["verified"] for e in numeric), 2795)
         papers = {p["id"]: p for p in self.data["papers"]}
         virtual = papers["3310-FIND"]
         self.assertEqual((virtual["presentation"], virtual["mode"], virtual["room"], virtual["session"], virtual["board"]),
@@ -47,22 +50,72 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertNotIn(temps["id"], {entry["paperId"] for entry in self.catalog["entries"]})
         for entry in self.catalog["entries"]:
             paper = papers[entry["paperId"]]
-            self.assertEqual(entry["board"], int(paper["board"]))
+            self.assertEqual(entry["board"], paper["board"] if paper["board"].startswith("D") else int(paper["board"]))
             self.assertEqual(entry["sourceRow"], paper["sourceRow"])
             self.assertEqual(entry["authors"], [])
             self.assertNotIn("boardPage", entry)
 
-    def test_demos_keep_literal_positions_without_numeric_map_boards(self):
+    def test_demos_map_verified_literal_positions_to_the_existing_sessions(self):
         demos = [p for p in self.data["papers"] if (p["board"] or "").startswith("D")]
         self.assertEqual(len(demos), 70)
         self.assertEqual({p["board"] for p in demos}, {f"D{i}" for i in range(1, 11)})
-        mapped = {e["paperId"] for e in self.catalog["entries"]}
-        self.assertFalse(mapped.intersection(p["id"] for p in demos))
+        mapped = {e["paperId"]: e for e in self.catalog["entries"] if type(e["board"]) is str}
+        self.assertEqual(set(mapped), {p["id"] for p in demos})
+        for paper in demos:
+            entry = mapped[paper["id"]]
+            self.assertEqual(entry["board"], paper["board"])
+            self.assertEqual(entry["session"], paper["topic"][-1])
+            self.assertTrue(entry["verified"])
+        self.assertEqual({e["board"] for e in mapped.values()}, {f"D{i}" for i in range(1, 11)})
         data = deepcopy(self.data)
         enrich_poster_boards(data, deepcopy(self.catalog))
         demo = next(p for p in data["papers"] if p["id"] == demos[0]["id"])
         self.assertEqual(demo["board"], demos[0]["board"])
-        self.assertNotIn("posterBoard", demo)
+        self.assertEqual(demo["posterBoard"], demos[0]["board"])
+
+    def test_demo_verification_rejects_mismatches_inactive_and_duplicate_rows(self):
+        changes = [{"start": "11:01"}, {"date": "2026-10-26"}, {"end": "12:31"},
+                   {"room": "Other"}, {"status": "withdrawn"}, {"presentation": "Poster"},
+                   {"scheduleNote": "Time needs confirmation"}]
+        for change in changes:
+            with self.subTest(change=change):
+                data = deepcopy(self.data)
+                demo = next(p for p in data["papers"] if p["board"] == "D1")
+                demo.update(change)
+                entry = next(e for e in self.catalog_for(data)["entries"] if e["paperId"] == demo["id"])
+                self.assertFalse(entry["verified"])
+        data = deepcopy(self.data)
+        demo = next(p for p in data["papers"] if p["board"] == "D1")
+        duplicate = {**demo, "id": "duplicate-DEMO", "sourceRow": 9999}
+        data["papers"].append(duplicate)
+        occupants = [e for e in self.catalog_for(data)["entries"] if e["session"] == "A" and e["board"] == "D1"]
+        self.assertEqual(len(occupants), 2)
+        self.assertTrue(all(not e["verified"] and e["conflict"] for e in occupants))
+
+    def test_demo_and_poster_session_labels_cannot_be_interchanged(self):
+        for board, topic in [("D1", "Poster Session A"), ("1", "Demo Session A")]:
+            with self.subTest(board=board):
+                data = deepcopy(self.data)
+                paper = next(p for p in data["papers"] if p["board"] == board)
+                paper["topic"] = topic
+                self.assertNotIn(paper["id"], {e["paperId"] for e in self.catalog_for(data)["entries"]})
+
+    def test_board_union_validates_demo_range_and_keeps_numeric_positions_distinct(self):
+        catalog = deepcopy(self.catalog)
+        numeric = next(e for e in catalog["entries"] if e["session"] == "A" and e["board"] == 1)
+        demo = next(e for e in catalog["entries"] if e["session"] == "A" and e["board"] == "D1")
+        catalog["entries"] = [numeric, demo]
+        self.assertEqual(validate_catalog(catalog), catalog)
+        for board in ["D1", "D10", "D11", "D12", 1, 424]:
+            single = deepcopy(catalog)
+            single["entries"] = [{**demo, "board": board}]
+            validate_catalog(single)
+        for board in ["D0", "D13", "D01", "d1", "1", True, 0, 425, None]:
+            with self.subTest(board=board):
+                single = deepcopy(catalog)
+                single["entries"] = [{**demo, "board": board}]
+                with self.assertRaisesRegex(ValueError, "Invalid board"):
+                    validate_catalog(single)
 
     def test_blank_board_removes_a_previous_handbook_location(self):
         data = deepcopy(self.data)

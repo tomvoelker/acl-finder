@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {validateTopics, indexTopics, topicForEntry, topicChoices, topicEntries, matchesTopic} from '../poster-map/topics.mjs';
+import {posterBoardOrder} from '../poster-view.mjs';
 import {AREA_COLORS, readAtlasLabel} from '../atlas.mjs';
 import {sessionGroups, mapEntries, assignmentAt} from '../poster-map/catalog.mjs';
 
@@ -86,17 +87,18 @@ test('published areas cover every unambiguous board and distinguish local assign
   const topics=validateTopics(JSON.parse(readFileSync(new URL('../data/poster-topics.json',import.meta.url))));
   const audit=JSON.parse(readFileSync(new URL('../data/atlas/audit.json',import.meta.url)));
   const sessions=sessionGroups(catalog.sessions), entries=mapEntries(catalog.entries,sessions);
-  let classified=0, local=0, unclassified=0;
+  let classified=0, local=0, unclassified=0, numericClassified=0, numericLocal=0;
   for (const session of sessions) {
     const current=entries.filter(e=>e.session===session.id);
     const valid=current.filter(e=>assignmentAt(entries,session.id,e.board).entry);
-    assert.deepEqual(topics.sessions[session.id].assignments.map(e=>e.board),valid.map(e=>e.board).sort((a,b)=>a-b));
+    assert.deepEqual(topics.sessions[session.id].assignments.map(e=>e.board),valid.map(e=>e.board).sort((a,b)=>posterBoardOrder(a)-posterBoardOrder(b)));
     for (const entry of current) {
       const assignment=assignmentAt(entries,session.id,entry.board).entry;
       if (!assignment) assert.equal(topics.sessions[session.id].assignments.some(a=>a.board===entry.board),false);
       else if(topicForEntry(topics,session.id,assignment)) {
         const label=topicForEntry(topics,session.id,assignment);
-        if(label.source==='local') { local++; assert.equal(label.id,null); } else classified++;
+        if(label.source==='local') { local++; if(Number.isInteger(entry.board)) numericLocal++; assert.equal(label.id,null); }
+        else { classified++; if(Number.isInteger(entry.board)) numericClassified++; }
       }
       else { unclassified++; assert.ok(audit.unclassified.some(e=>e.session===session.id&&e.board===entry.board)); }
     }
@@ -104,7 +106,10 @@ test('published areas cover every unambiguous board and distinguish local assign
     assert.equal(choices.areas.length,16);
     assert.equal(choices.topics.reduce((n,t)=>n+t.count,0)+choices.local+choices.unclassified,valid.length);
   }
-  assert.equal(classified,2767); assert.equal(local,28); assert.equal(unclassified,0);
+  assert.equal(numericClassified,2767); assert.equal(numericLocal,28);
+  assert.equal(classified,audit.matched); assert.equal(local,audit.localAssigned); assert.equal(unclassified,audit.unclassified.length);
+  assert.equal(classified+local+unclassified,audit.posters);
+  assert.equal(entries.filter(e=>typeof e.board==='string').length,70);
 });
 
 test('local areas have the same colours but never acquire an invented fine topic', () => {
@@ -132,4 +137,31 @@ test('indexed topic lookups retain identity checks and all browsing results', ()
   for (const [area,topic] of [[null,null],[0,null],[null,1],['unclassified',null]]) {
     assert.deepEqual(topicEntries(topics,'A',entries(),area,topic,index),topicEntries(topics,'A',entries(),area,topic));
   }
+});
+
+
+test('demo topic assignments validate and retain board identity in indexed lookups', () => {
+  const topics=data();
+  topics.sessions.A.assignments.push({...topics.sessions.A.assignments[0],board:'D1',paperId:'demo'}, {...topics.sessions.A.assignments[2],board:'D12',paperId:'last'});
+  validateTopics(topics);
+  const index=indexTopics(topics), demo={...topics.sessions.A.assignments[3],verified:true};
+  assert.equal(topicForEntry(topics,'A',demo,index).label,'Translation');
+  assert.equal(topicForEntry(topics,'A',{...demo,board:1},index),null);
+  assert.equal(topicForEntry(topics,'A',{...demo,verified:false},index),null);
+  for (const board of ['d1','D0','D13','D01',0,425]) {
+    const invalid=structuredClone(topics); invalid.sessions.A.assignments[3].board=board;
+    assert.throws(()=>validateTopics(invalid));
+  }
+  const duplicate=structuredClone(topics); duplicate.sessions.A.assignments.push({...duplicate.sessions.A.assignments[3]});
+  assert.throws(()=>validateTopics(duplicate));
+});
+
+test('topic browsing orders numeric posters before demos in natural board order', () => {
+  const topics=data();
+  topics.sessions.A.assignments.push(...['D12','D2','D10','D1'].map(board=>({board,paperId:board,title:board,topic:0})));
+  const all=topics.sessions.A.assignments.map(row=>({...row,verified:true})).reverse();
+  const index=indexTopics(validateTopics(topics));
+  assert.deepEqual(topicEntries(topics,'A',all).map(row=>row.board),[1,2,3,'D1','D2','D10','D12']);
+  assert.deepEqual(topicEntries(topics,'A',all,0,null,index).map(row=>row.board),[1,'D1','D2','D10','D12']);
+  assert.equal(topicChoices(topics,'A',all,index).areas.find(row=>row.id===0).count,5);
 });

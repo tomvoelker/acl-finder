@@ -118,7 +118,10 @@ class BuildTests(unittest.TestCase):
             self.assertIn("outside the programme session", by_id["809-MAIN"]["oralSlotNote"])
             catalog = json.loads((ROOT / "data/poster-boards.json").read_text())
             verified = {entry["paperId"]: entry for entry in catalog["entries"] if entry["paperId"] and entry["verified"]}
-            self.assertEqual(len(verified), 2795)
+            self.assertEqual(len(verified), 2865)
+            self.assertEqual(sum(type(entry['board']) is int for entry in verified.values()), 2795)
+            self.assertEqual(by_id['3-DEMO']['posterBoard'], 'D1')
+            self.assertEqual(by_id['3-DEMO']['posterSession'], 'A')
             self.assertEqual(by_id["9736-FIND"]["posterBoard"], 200)
             self.assertEqual(by_id["9736-FIND"]["posterSession"], "F")
             self.assertEqual(by_id["4212-FIND"]["posterBoard"], 166)
@@ -162,6 +165,8 @@ class BuildTests(unittest.TestCase):
                 self.assertIn(hashlib.sha256(content).hexdigest()[:12], name)
                 if name.startswith("topics."):
                     self.assertIn(f"'../{atlas_name}'", content.decode())
+                if name.startswith(("topics.", "catalog.")):
+                    self.assertIn(f"'../{poster_view_name}'", content.decode())
             self.assertFalse((map_output / "qa.md").exists())
             self.assertFalse((map_output / "tests").exists())
 

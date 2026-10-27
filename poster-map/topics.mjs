@@ -1,4 +1,5 @@
 import {AREA_COLORS, readAtlasLabel} from '../atlas.mjs';
+import {isPosterBoard, posterBoardOrder} from '../poster-view.mjs';
 
 export function validateTopics(data) {
   if (data?.version !== 2 || !data.sessions || typeof data.sessions !== 'object' || !Array.isArray(data.areas) || !Array.isArray(data.topics)) throw new Error('Invalid Atlas dataset');
@@ -17,7 +18,7 @@ export function validateTopics(data) {
     const boards = new Set();
     for (const entry of session.assignments) {
       if (entry.area !== undefined && (!areas.has(entry.area) || entry.topic !== null)) throw new Error('Invalid local area assignment');
-      if (!Number.isInteger(entry.board) || entry.board < 1 || entry.board > 424 || boards.has(entry.board) || (entry.topic !== null && !topics.has(entry.topic)) || typeof entry.title !== 'string' || !entry.title.trim() || (entry.paperId !== null && typeof entry.paperId !== 'string')) throw new Error('Invalid Atlas assignment');
+      if (!isPosterBoard(entry.board) || boards.has(entry.board) || (entry.topic !== null && !topics.has(entry.topic)) || typeof entry.title !== 'string' || !entry.title.trim() || (entry.paperId !== null && typeof entry.paperId !== 'string')) throw new Error('Invalid Atlas assignment');
       boards.add(entry.board);
     }
   }
@@ -59,5 +60,5 @@ export function topicChoices(data, session, entries, index = null) {
 
 export function topicEntries(data, session, entries, areaId = null, topicId = null, index = null) {
   return entries.filter(entry => entry.verified && matchesTopic(topicForEntry(data, session, entry, index), areaId, topicId))
-    .sort((a,b) => a.board - b.board);
+    .sort((a,b) => posterBoardOrder(a.board) - posterBoardOrder(b.board));
 }

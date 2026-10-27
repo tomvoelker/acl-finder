@@ -13,7 +13,7 @@ test('poster search matches author and title words, accents, IDs and exact board
 });
 
 test('board shortcuts accept only a complete, physical board number', () => {
-  for (const [query, expected] of [['1',1],[' 424 ',424],['board 329',329],['0',null],['425',null],['32.9',null],['329 paper',null],['D1',null]]) {
+  for (const [query, expected] of [['1',1],[' 424 ',424],['board 329',329],['0',null],['425',null],['32.9',null],['329 paper',null],['D1','D1'],['d7','D7'],['Board D12','D12'],['D0',null],['D13',null],['D01',null]]) {
     assert.equal(boardSearchNumber(query), expected, query);
   }
 });
@@ -27,7 +27,7 @@ const catalog = entries => ({version:2,source:{url:'https://example.test/sheet',
 
 test('official catalog validates source identity and board range without inventing paper IDs', () => {
   assert.equal(validateCatalog(catalog([entry('A',424,'Unmatched official title')])).entries[0].paperId,'test-paper');
-  for (const board of [0,425,1.5,'1',null]) assert.throws(() => validateCatalog(catalog([entry('A',board,'Title')])),/board must/);
+  for (const board of [0,425,1.5,'1','d1','D0','D13','D01',null]) assert.throws(() => validateCatalog(catalog([entry('A',board,'Title')])),/board must/);
   assert.throws(() => validateCatalog(catalog([entry('Unknown',1,'Title')])),/unknown schedule session/);
   assert.throws(() => validateCatalog(catalog([{...entry('A',1,'Title'),sourceRow:0}])),/positive source row/);
   const missingFlag = entry('A',1,'Title'); delete missingFlag.verified;
@@ -110,7 +110,7 @@ test('assignment index preserves every verified, missing, unconfirmed and confli
   const entries = mapEntries(document.entries,groups);
   const index = indexAssignments(entries);
   for (const session of [...groups.map(row => row.id), 'missing']) {
-    for (let board = 1; board <= 424; board++) {
+    for (const board of [...Array.from({length:424},(_,i)=>i+1),...Array.from({length:12},(_,i)=>`D${i+1}`)]) {
       assert.deepEqual(assignmentAt(entries,session,board,index), assignmentAt(entries,session,board));
     }
   }
@@ -121,4 +121,38 @@ test('assignment index preserves every verified, missing, unconfirmed and confli
   assert.deepEqual(savedPosterStops(entries,groups,saved,index), savedPosterStops(entries,groups,saved));
   assert.equal(assignmentAt(entries,'D',311,index).entry,null);
   assert.ok(assignmentAt(entries,'D',311,index).conflicts.length > 1);
+});
+
+
+test('demo assignments retain the version 2 catalog and distinct numeric identities', () => {
+  const document=validateCatalog(catalog([entry('A',1,'Numeric'),entry('A','D1','Demo'),entry('A','D12','Last demo')]));
+  assert.equal(document.version,2);
+  const entries=mapEntries(document.entries,sessionGroups(sessions)), index=indexAssignments(entries);
+  for (const candidate of entries) {
+    assert.strictEqual(assignmentAt(entries,'A',candidate.board,index).entry,candidate);
+    assert.strictEqual(assignmentAt(entries,'A',candidate.board).entry,candidate);
+  }
+  assert.equal(boardHash('A','D12'),'#session=A&board=D12');
+  assert.equal(assignmentAt(entries,'D','D1',index).entry,null);
+});
+
+test('demo search shortcuts match an exact board rather than another demo or numeric title', () => {
+  const demo={...entry('A','D1','D12 numeric 1'),paperId:'D12'}, numeric=entry('A',1,'D1 demo');
+  for (const query of ['D1','d1','Board D1']) {
+    assert.equal(matchesPosterSearch(demo,query),true);
+    assert.equal(matchesPosterSearch(numeric,query),false);
+    assert.equal(matchesPosterSearch({...demo,board:'D10'},query),false);
+  }
+  assert.equal(matchesPosterSearch(demo,'1'),false);
+  assert.equal(matchesPosterSearch({...demo,board:'D12'},'Board D12'),true);
+});
+
+test('published demo assignments cover the ten scheduled sides across all seven sessions', () => {
+  const document=validateCatalog(JSON.parse(readFileSync(published,'utf8')));
+  const demos=document.entries.filter(row=>typeof row.board==='string');
+  assert.equal(demos.length,70);
+  assert.deepEqual([...new Set(demos.map(row=>row.board))].sort((a,b)=>Number(a.slice(1))-Number(b.slice(1))),Array.from({length:10},(_,i)=>`D${i+1}`));
+  assert.equal(new Set(demos.map(row=>row.session)).size,7);
+  assert.equal(demos.every(row=>row.verified===true),true);
+  assert.ok(document.entries.filter(row=>Number.isInteger(row.board)).length>2700,'Numeric assignments remain present');
 });

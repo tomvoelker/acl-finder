@@ -148,7 +148,9 @@ def build():
 
     map_output = OUTPUT / "poster-map"
     map_output.mkdir()
-    map_modules = {name: asset(name, (ROOT / "poster-map" / name).read_text().replace("'../atlas.mjs'", f"'../{atlas_name}'").encode(), map_output)
+    map_modules = {name: asset(name, (ROOT / "poster-map" / name).read_text()
+                              .replace("'../atlas.mjs'", f"'../{atlas_name}'")
+                              .replace("'../poster-view.mjs'", f"'../{poster_view_name}'").encode(), map_output)
                    for name in ["layout.mjs", "camera.mjs", "catalog.mjs", "topics.mjs"]}
     map_app = (ROOT / "poster-map/map.mjs").read_text()
     map_app = map_app.replace("'../data/poster-boards.json'", f"'../data/{board_name}'")

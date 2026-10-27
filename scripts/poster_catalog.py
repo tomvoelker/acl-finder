@@ -44,21 +44,23 @@ def create_catalog(dataset, timeline_rows, source_text, timeline_text):
     entries, issues, grouped = [], [], defaultdict(list)
     for paper in dataset["papers"]:
         board = paper.get("board")
-        if board is None or not board.isdigit():
-            continue  # D1–D10 are demo positions, not numbered poster faces.
-        match = re.fullmatch(r"Poster(?: Session)? ([A-G])", paper.get("topic") or "", re.IGNORECASE)
+        demo = isinstance(board, str) and re.fullmatch(r"D(?:[1-9]|1[0-2])", board)
+        if board is None or not (board.isdigit() or demo):
+            continue
+        session_pattern = r"Demo Session ([A-G])" if demo else r"Poster(?: Session)? ([A-G])"
+        match = re.fullmatch(session_pattern, paper.get("topic") or "", re.IGNORECASE)
         if not match:
             issues.append({"kind": "unconfirmed-poster-session", "paperId": paper["id"], "sourceRow": paper["sourceRow"]})
             continue
         sid = match[1].upper()
         slot = slots[sid]
-        entry = {"session": sid, "board": int(board), "paperId": paper["id"], "title": paper["title"],
+        entry = {"session": sid, "board": board if demo else int(board), "paperId": paper["id"], "title": paper["title"],
                  "authors": [], "sourceRow": paper["sourceRow"], "verified": True}
         problems = []
         if paper["status"] in INACTIVE:
             problems.append("The schedule marks this paper as inactive.")
-        if paper["presentation"] not in ("Poster", None):
-            problems.append("The schedule does not mark this entry as a poster.")
+        if paper["presentation"] not in (("Demo",) if demo else ("Poster", None)):
+            problems.append(f"The schedule does not mark this entry as a {'demo' if demo else 'poster'}.")
         differences = {key: {"schedule": paper[key], "timeline": slot[key]}
                        for key in ("date", "start", "end") if paper[key] != slot[key]}
         if differences or paper.get("scheduleNote"):
@@ -96,7 +98,9 @@ def validate_catalog(catalog):
         raise ValueError("Missing or duplicate poster session IDs")
     seen_papers, positions = set(), defaultdict(list)
     for entry in catalog["entries"]:
-        if entry["session"] not in sessions or type(entry["board"]) is not int or not 1 <= entry["board"] <= 424:
+        board = entry["board"]
+        valid_board = (type(board) is int and 1 <= board <= 424) or (isinstance(board, str) and re.fullmatch(r"D(?:[1-9]|1[0-2])", board))
+        if entry["session"] not in sessions or not valid_board:
             raise ValueError("Invalid board or poster session")
         if not entry["title"] or not isinstance(entry["paperId"], str) or entry["paperId"] in seen_papers:
             raise ValueError("Missing title or duplicate poster paper ID")

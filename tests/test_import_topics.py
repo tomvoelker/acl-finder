@@ -22,7 +22,18 @@ class AtlasImportTests(unittest.TestCase):
             data, audit = import_topics.create_dataset()
         self.assertEqual(data, json.loads((ROOT / "data/poster-topics.json").read_text()))
         self.assertEqual(audit, json.loads((ROOT / "data/atlas/audit.json").read_text()))
-        self.assertEqual((audit["atlasPapers"], audit["posters"], audit["matched"]), (5534, 2795, 2767))
+        self.assertEqual((audit["atlasPapers"], audit["posters"], audit["matched"]), (5534, 2865, 2837))
+        assignments = [entry for session in data["sessions"].values() for entry in session["assignments"]]
+        numeric = [entry for entry in assignments if type(entry["board"]) is int]
+        demos = [entry for entry in assignments if type(entry["board"]) is str]
+        self.assertEqual(len(numeric), 2795)
+        self.assertEqual(sum(entry["topic"] is not None for entry in numeric), 2767)
+        self.assertEqual(len(demos), 70)
+        self.assertTrue(all(entry["topic"] is not None for entry in demos))
+        for session in data["sessions"].values():
+            boards = [entry["board"] for entry in session["assignments"]]
+            self.assertEqual(boards, sorted([board for board in boards if type(board) is int]) +
+                             [f"D{i}" for i in range(1, 11)])
         self.assertEqual(len(audit["unclassified"]), 0)
         self.assertEqual(audit["programme"]["matched"], 5532)
         self.assertEqual(len(audit["programme"]["unclassified"]), 0)

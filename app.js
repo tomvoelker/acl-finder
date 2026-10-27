@@ -9,7 +9,7 @@
 import { conferenceNow, initialDay, sessionKey, readOralSlot, presentationSlot, presenterAuthorIndices, authorKey, indexAuthors, searchState, resultPage, RESULT_PAGE_SIZE, posterBrowsing, posterScope } from './schedule-view.mjs';
 import { renderTitle, titleSearchText } from './math-titles.mjs';
 import { createAnalytics } from './analytics.mjs';
-import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups } from './poster-view.mjs';
+import { readPosterLocation, posterMapHref, posterSlotDiffers, parsePosterQuery, matchesPosterQuery, posterBrowseDay, posterGroups, posterBoardOrder } from './poster-view.mjs';
 import { SAVED_PAPERS_KEY as STORAGE_KEY, DEFAULT_SAVED_PAPER_ID, readSavedPapers, isDefaultSavedList, addSavedPapers } from './saved-papers.mjs';
 import { buildSavedListUrl, readSharedList } from './saved-sharing.mjs';
 import { readAtlasLabel } from './atlas.mjs';
@@ -329,7 +329,7 @@ import { readAtlasLabel } from './atlas.mjs';
   function comparePosterFirst(a, b) {
     return (a._inactive ? 2 : a.poster ? 0 : 1) - (b._inactive ? 2 : b.poster ? 0 : 1) ||
       str(a.poster?.date, b.poster?.date) || str(a.poster?.start, b.poster?.start) ||
-      (a.poster?.board || 0) - (b.poster?.board || 0) || compare(a, b);
+      posterBoardOrder(a.poster?.board || 0) - posterBoardOrder(b.poster?.board || 0) || compare(a, b);
   }
 
   const calCache = new Map();

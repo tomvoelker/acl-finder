@@ -112,3 +112,8 @@ export const DEMO_BOARDS = Array.from({length:6}, (_, column) => [
   {id:`D${column + 1}`, x:BOARD_BY_NUMBER.get(201).x + column * 52, y:1080 + MAP.faceHeight},
 ]).flat();
 
+export const MAP_BOARDS = [...BOARDS, ...DEMO_BOARDS.map((board, index) => ({
+  ...board, number:board.id, demo:true, row:0, column:Math.floor(index/2), face:index%2,
+}))];
+export const MAP_BOARD_BY_NUMBER = new Map(MAP_BOARDS.map(board => [board.number, board]));
+
