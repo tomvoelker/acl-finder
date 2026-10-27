@@ -1161,12 +1161,12 @@ Pres Type",Presentation Mode,Presenters Name,Room Location,Session,Sub-session ,
 3101-MAIN,From Content Generation to Learning Support: Pedagogy-Guided Generative Video Tutors for STEM Learning,Oral,In-Person,Xinchen Ma,G4-6,Session 2,Human-Centered NLP and Human-AI Interaction,2026-10-25,11:00,12:30,
 3103-MAIN,MAViQ: Memory-Augmented Visual Querying for Multi-Turn MLLM Jailbreaks,Virtual Pres,Virtual ,JinYun Lu,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,,
 3106-MAIN,CoreMem: Riemannian Retrieval and Fisher-Guided Distillation for Long-Term Memory in Dialogue Agents,Poster,In-Person,Jiaqi Chen,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30,143
-3114-MAIN,"Small Models, Fewer Heads, More Forgetting: Sparse Attention Fine-Tuning for SLM Continual Learning",Virtual Pres,Virtual ,Hao Xu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,,
+3114-MAIN,"Small Models, Fewer Heads, More Forgetting: Sparse Attention Fine-Tuning for SLM Continual Learning",Virtual Pres,Virtual,Hao Xu,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,,
 3120-MAIN,Lung-R1: A Knowledge Graph-Guided LLM for Pulmonary Diagnostic Reasoning,Poster,In-Person,Haoyang Zeng,Hall H,Session 10,Poster Session F,2026-10-27,09:00,10:30,278
 3124-MAIN,Rigel: Self-Distilled Score Adaptation for Image and Video Captioning Evaluation,Oral,In-Person,Shuitsu Koyama,G13-14,Session 9,Resources and Evaluation 5,2026-10-26,16:45,18:15,
 3136-MAIN,SecOPD: Mitigating Adaptive Prompt Injections by On-Policy Distillation,Poster,In-Person,Yu-Lin Tsai; Yibo Peng,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30,10
 3137-MAIN,ObSchema: From Local Observations to Global Entity Attribute Schemas in Scientific Literature,Virtual Pres,Virtual,Xueqiang Xu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,,
-3143-MAIN,HLoRA: Hierarchical Regularization on Combined Parameter Space for LoRA Fine-Tuning,Virtual Pres,Virtual ,Hao Xu,Zoom,Virtual 4,Virtual Presentations 4,2026-10-26,12:30-14:00 CET,,
+3143-MAIN,HLoRA: Hierarchical Regularization on Combined Parameter Space for LoRA Fine-Tuning,Virtual Pres,Virtual,Hao Xu,Zoom,Virtual 5,Virtual Presentations 5,2026-10-27,12:30-14:00 CET,,
 3145-MAIN,APEx: Distillation of Agent Procedural Experience for Adaptive Deep Research Question Answering,Virtual Pres,Virtual ,Jie Ding,Zoom,Virtual 3,Virtual Presentations 3,2026-10-26,07:00-08:30 CET,,
 3158-MAIN,Beyond Outliers: A Data-Free Layer-wise Mixed-Precision Quantization Approach Driven by Numerical and Structural Dual-Sensitivity,Poster,In-Person,Jing Xiong,Hall H,Session 4,Poster Session B,2026-10-25,16:00,17:30,132
 3161-MAIN,AOR-Bench: Do Large Audio Language Models Over-Refuse Pseudo-Harmful Queries?,Poster,In-Person,Chaewan Chun,Hall H,Session 2,Poster Session A,2026-10-25,11:00,12:30,209

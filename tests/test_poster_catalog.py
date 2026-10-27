@@ -29,7 +29,7 @@ class PosterCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog_for(self.data), self.catalog)
         self.assertEqual(self.catalog["version"], 2)
         self.assertEqual(self.catalog["source"]["column"], "L")
-        self.assertEqual(self.catalog["source"]["updatedAt"], "2026-10-26")
+        self.assertEqual(self.catalog["source"]["updatedAt"], "2026-10-27")
         self.assertEqual(self.catalog["source"]["sha256"], hashlib.sha256(self.source.encode()).hexdigest())
         self.assertEqual(self.catalog["source"]["timelineSHA256"], hashlib.sha256(self.timeline.encode()).hexdigest())
         self.assertEqual(len(self.catalog["entries"]), 2876)

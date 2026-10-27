@@ -44,7 +44,7 @@ The map search suggests titles, authors, paper IDs and board numbers while typin
 
 Saved papers receive purple outlines and white-star badges on verified boards in the current map session. The star in the selected map card adds or removes that paper from the same saved list as the finder. Markers, the saved-posters shortcut and open finder tabs update immediately. Saved state stays in this browser. The clickable saved-posters badge cycles through verified saved boards across all sessions in date, time and board order. It prefers the current session when starting and wraps after the last saved poster. Conflicting board assignments never receive confirmed saved markers. The selected-paper card keeps its board, title preview and star above Details and View paper actions. Full metadata lives in Details; session options show their weekday, date and time. The map’s Filters panel holds area and topic controls, attribution and theme settings.
 
-A **Board N** link on a paper opens its session and position on the [poster map](https://emnlp.vlkr.org/poster-map/). Choose the session before looking up a board, because positions are reused. Board numbers, paper IDs and titles come from column L, **Board #**, in the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490). Poster session windows come from its [Conference Timeline tab](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=1321480317). Both committed snapshots were retrieved on 26 October 2026. The venue geometry remains schematic, with the original cautions around positions 41–56.
+A **Board N** link on a paper opens its session and position on the [poster map](https://emnlp.vlkr.org/poster-map/). Choose the session before looking up a board, because positions are reused. Board numbers, paper IDs and titles come from column L, **Board #**, in the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490). Poster session windows come from its [Conference Timeline tab](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=1321480317). Both committed snapshots were retrieved on 27 October 2026. The venue geometry remains schematic, with the original cautions around positions 41–56.
 
 The compact catalog, `data/poster-boards.json`, contains 2,806 numeric board assignments across sessions A–G, including Industry papers in physical session D. It confirms 2,795 locations. Two papers claim D board 311. Nine other rows have a time or room that does not agree with the timeline, including seven 16:46 starts where the timeline says 16:45. These 11 entries retain their claimed board and an explanation, but receive no confirmed map location. The importer preserves exact source values without applying a time tolerance or guessing a room. Older Industry session links remain aliases for D.
 
@@ -55,14 +55,14 @@ Calendar exports retain each source row’s time, or its verified individual ora
 To reproduce the board catalog and schedule offline:
 
 ```sh
-python3 scripts/import_schedule.py --source data/source.csv --timeline data/timeline.csv --updated-at 2026-10-26
+python3 scripts/import_schedule.py --source data/source.csv --timeline data/timeline.csv --updated-at 2026-10-27
 ```
 
 The catalog records hashes of both CSV snapshots and source row numbers. The build recomputes it and rejects stale catalogs before replacing the existing site. The historical handbook importer remains available for reproduction with `python3 scripts/import_handbook.py --source /path/to/handbook.pdf --output /tmp/handbook-boards.json`; it requires Poppler’s `pdftotext` and an explicit output path. Its PDF page provenance does not apply to the current sheet catalog.
 
 ## Schedule data
 
-The source is the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490), linked from the [conference program](https://2026.emnlp.org/program/). The committed snapshot was retrieved on 26 October 2026 and contains 5,603 entries across Main, Findings, Industry, Demonstrations, TACL, and Computational Linguistics.
+The source is the official [author presentation spreadsheet](https://docs.google.com/spreadsheets/d/1aXGTy_7Xeh-OXIs3iJSbDpUsZ6YhbfA76b17kBZH0Yk/edit?gid=943432490), linked from the [conference program](https://2026.emnlp.org/program/). The committed snapshot was retrieved on 27 October 2026 and contains 5,603 entries across Main, Findings, Industry, Demonstrations, TACL, and Computational Linguistics.
 
 The sheet provides **presenter names**, not complete author lists or abstracts. Missing assignments remain unknown. Withdrawn papers and papers marked “Not Presenting” or “Desk Reject” retain those statuses. Conflicting times are flagged rather than inferred from other sessions. See `data/audit.json` for the import report and `data/source.csv` for the original values.
 
@@ -107,7 +107,7 @@ Review the changes to `data/source.csv`, `data/timeline.csv`, `data/papers.json`
 To reproduce the committed snapshot without network access:
 
 ```sh
-python3 scripts/import_schedule.py --source data/source.csv --timeline data/timeline.csv --updated-at 2026-10-26
+python3 scripts/import_schedule.py --source data/source.csv --timeline data/timeline.csv --updated-at 2026-10-27
 ```
 
 To refresh publication metadata from ACL Anthology:
