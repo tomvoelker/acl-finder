@@ -29,10 +29,15 @@ test('clear source anchors retain their pairing and the two highlighted edges', 
   assert.ok(BOARD_BY_NUMBER.get(49).needsReview);
 });
 
-test('the approximate demo row keeps D7 opposite 201 without overlapping numeric boards', () => {
-  assert.deepEqual(DEMO_BOARDS.map(board => board.id), Array.from({length:10}, (_, i) => `D${i+1}`));
-  assert.equal(DEMO_BOARDS[6].x, BOARD_BY_NUMBER.get(201).x);
-  assert.ok(DEMO_BOARDS[6].y > BOARD_BY_NUMBER.get(201).y + MAP.faceHeight);
+test('demo sides pair D1/D7 through D6/D12 and keep D7 facing 201 without overlapping numeric boards', () => {
+  const demos = new Map(DEMO_BOARDS.map(board => [board.id,board]));
+  assert.equal(demos.size,12);
+  for (let number = 1; number <= 6; number++) {
+    assert.equal(demos.get(`D${number}`).x, demos.get(`D${number+6}`).x);
+    assert.equal(demos.get(`D${number}`).y, demos.get(`D${number+6}`).y + MAP.faceHeight);
+  }
+  assert.equal(demos.get('D7').x, BOARD_BY_NUMBER.get(201).x);
+  assert.ok(demos.get('D7').y > BOARD_BY_NUMBER.get(201).y + MAP.faceHeight);
   for (const demo of DEMO_BOARDS) {
     assert.ok(demo.x >= 0 && demo.x + MAP.faceWidth <= MAP.width);
     assert.ok(demo.y >= 0 && demo.y + MAP.faceHeight <= MAP.height);

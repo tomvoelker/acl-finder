@@ -532,8 +532,8 @@ function drawMap() {
     group.append(node('text', {x:marker.x,y:marker.y}, marker.id));
     svg.append(group);
   }
-  const demos = node('g', {role:'img', 'aria-label':'Demo boards D1 to D10. Approximate row, anchored by D7 facing poster 201.'});
-  demos.append(node('text', {x:659,y:1048,'text-anchor':'middle',class:'floor-note'}, 'DEMO SESSIONS'));
+  const demos = node('g', {role:'img', 'aria-label':'Demo boards D1 to D6 opposite D7 to D12.'});
+  demos.append(node('text', {x:877.5,y:1048,'text-anchor':'middle',class:'floor-note'}, 'DEMO SESSIONS'));
   for (const board of DEMO_BOARDS) {
     const label = node('g', {class:'demo-board'});
     label.append(node('title', {}, `${board.id} · approximate demo position`));
@@ -541,10 +541,6 @@ function drawMap() {
     label.append(node('text', {x:board.x+MAP.faceWidth/2,y:board.y+MAP.faceHeight/2}, board.id));
     demos.append(label);
   }
-  const anchorX = BOARD_BY_NUMBER.get(201).x + MAP.faceWidth/2;
-  demos.append(node('path', {d:`M${anchorX},1072 V982 m-5,7 5,-7 5,7`,class:'demo-direction'}));
-  demos.append(node('text', {x:anchorX+12,y:1015,class:'demo-note'}, 'D7 faces 201'));
-  demos.append(node('text', {x:659,y:1134,'text-anchor':'middle',class:'demo-note'}, 'Approximate demo layout'));
   svg.append(demos);
   for (const board of BOARDS) {
     const group = node('g', {class:`board${board.yellow ? ' source-yellow' : ''}${board.needsReview ? ' needs-review' : ''}`,

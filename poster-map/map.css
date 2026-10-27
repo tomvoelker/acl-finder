@@ -129,8 +129,6 @@ main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .section-label { fill: var(--section-ink); font-size: 13px; font-weight: 550; letter-spacing: .4px; }
 .demo-board rect { fill: var(--surface); stroke: var(--board-rule); stroke-dasharray: 3 2; }
 .demo-board text { fill: var(--board-ink); font-size: 13px; font-weight: 650; text-anchor: middle; dominant-baseline: central; }
-.demo-note { fill: var(--section-ink); font-size: 12px; }
-.demo-direction { fill: none; stroke: var(--section-ink); stroke-width: 1.2; }
 .board { cursor: pointer; outline: none; }
 .board rect { fill: var(--surface); stroke: var(--board-rule); stroke-width: 1; }
 .board text { fill: var(--board-ink); font-size: 13px; font-weight: 550; text-anchor: middle; dominant-baseline: central; pointer-events: none; font-variant-numeric: tabular-nums; }
