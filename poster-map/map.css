@@ -114,7 +114,7 @@ a { color: var(--accent); }
 .finder > button { position: absolute; right: 0; top: 0; bottom: 0; display: grid; place-items: center; width: 40px; padding: 0; border: 0; background: transparent; }
 .search-suggestions { position: absolute; top: calc(100% + 6px); right: 0; width: min(560px, calc(100vw - 140px)); max-height: min(500px, 65dvh, var(--map-search-height, 500px)); overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--control-rule); border-radius: 8px; box-shadow: 0 8px 28px #19233726; background: var(--surface); }
 .search-suggestions-status { padding: 9px 12px; color: var(--muted); font-size: 11px; }
-.search-suggestion { padding: 11px 12px; border-top: 1px solid var(--rule); cursor: pointer; font-size: 13px; line-height: 1.4; }
+.search-suggestion { display: block; width: 100%; padding: 11px 12px; border: 0; border-top: 1px solid var(--rule); border-radius: 0; background: var(--surface); text-align: left; cursor: pointer; font-size: 13px; line-height: 1.4; }
 .search-suggestion[aria-selected="true"] { background: var(--hover); }
 .search-suggestion > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-weight: 600; }
 .search-suggestion small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
@@ -127,6 +127,10 @@ main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .bank-region { fill: var(--bank); stroke: var(--bank-rule); stroke-width: 1; }
 .bank-divider { stroke: var(--divider); stroke-width: 1.2; }
 .section-label { fill: var(--section-ink); font-size: 13px; font-weight: 550; letter-spacing: .4px; }
+.demo-board rect { fill: var(--surface); stroke: var(--board-rule); stroke-dasharray: 3 2; }
+.demo-board text { fill: var(--board-ink); font-size: 13px; font-weight: 650; text-anchor: middle; dominant-baseline: central; }
+.demo-note { fill: var(--section-ink); font-size: 12px; }
+.demo-direction { fill: none; stroke: var(--section-ink); stroke-width: 1.2; }
 .board { cursor: pointer; outline: none; }
 .board rect { fill: var(--surface); stroke: var(--board-rule); stroke-width: 1; }
 .board text { fill: var(--board-ink); font-size: 13px; font-weight: 550; text-anchor: middle; dominant-baseline: central; pointer-events: none; font-variant-numeric: tabular-nums; }

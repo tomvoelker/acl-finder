@@ -105,3 +105,10 @@ export const BOARDS = BANKS.flatMap(bank => bank.rows.flatMap((row, rowIndex) =>
 }));
 export const BOARD_BY_NUMBER = new Map(BOARDS.map(board => [board.number, board]));
 
+// On-site observation: D7 faces poster 201. D4–D6 run in sequence in the
+// supplied photos. Extrapolate one schematic row, without claiming surveyed
+// positions or treating these markers as verified paper assignments.
+export const DEMO_BOARDS = Array.from({length:10}, (_, index) => ({
+  id:`D${index + 1}`, x:BOARD_BY_NUMBER.get(201).x + (index - 6) * 59, y:1080,
+}));
+

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {MAP, BOARDS, BOARD_BY_NUMBER, MARKERS, YELLOW} from '../layout.mjs';
+import {MAP, BOARDS, BOARD_BY_NUMBER, MARKERS, YELLOW, DEMO_BOARDS} from '../layout.mjs';
 
 test('the reconstruction contains every numbered position exactly once and inside the map', () => {
   assert.equal(BOARDS.length,424);
@@ -27,5 +27,19 @@ test('clear source anchors retain their pairing and the two highlighted edges', 
   assert.equal(BOARD_BY_NUMBER.get(197).face,1);
   assert.equal(BOARD_BY_NUMBER.get(297).face,0);
   assert.ok(BOARD_BY_NUMBER.get(49).needsReview);
+});
+
+test('the approximate demo row keeps D7 opposite 201 without overlapping numeric boards', () => {
+  assert.deepEqual(DEMO_BOARDS.map(board => board.id), Array.from({length:10}, (_, i) => `D${i+1}`));
+  assert.equal(DEMO_BOARDS[6].x, BOARD_BY_NUMBER.get(201).x);
+  assert.ok(DEMO_BOARDS[6].y > BOARD_BY_NUMBER.get(201).y + MAP.faceHeight);
+  for (const demo of DEMO_BOARDS) {
+    assert.ok(demo.x >= 0 && demo.x + MAP.faceWidth <= MAP.width);
+    assert.ok(demo.y >= 0 && demo.y + MAP.faceHeight <= MAP.height);
+    for (const board of BOARDS) {
+      assert.ok(demo.x + MAP.faceWidth <= board.x || board.x + MAP.faceWidth <= demo.x ||
+        demo.y + MAP.faceHeight <= board.y || board.y + MAP.faceHeight <= demo.y);
+    }
+  }
 });
 

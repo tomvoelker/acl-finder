@@ -1,4 +1,4 @@
-import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS} from './layout.mjs';
+import {MAP, BANKS, BOARDS, BOARD_BY_NUMBER, MARKERS, LABELS, DEMO_BOARDS} from './layout.mjs';
 import {validateCatalog, sessionGroups, sessionOptionLabel, mapEntries, indexAssignments, assignmentAt, savedAssignments, savedPosterStops, nextSavedPoster, defaultSession, authorsText, boardHash, boardSearchNumber, matchesPosterSearch} from './catalog.mjs';
 import {SAVED_PAPERS_KEY, readSavedPapers, setSavedPaper} from '../saved-papers.mjs';
 import {createAnalytics} from '../analytics.mjs';
@@ -436,7 +436,9 @@ function renderSearchSuggestions() {
   suggestionMatches = matches.slice(0, 6);
   $('#map-search-status').textContent = matches.length ? `${matches.length} poster${matches.length === 1 ? '' : 's'} · all sessions · Budapest time` : 'No matching poster. Try another title, author or paper ID.';
   for (const [index, entry] of suggestionMatches.entries()) {
-    const option = document.createElement('div');
+    const option = document.createElement('button');
+    option.type = 'button';
+    option.tabIndex = -1;
     option.id = `poster-suggestion-${index}`;
     option.className = 'search-suggestion';
     option.setAttribute('role', 'option');
@@ -450,8 +452,12 @@ function renderSearchSuggestions() {
     if (displayAuthors(entry)) {
       const authors = document.createElement('small'); authors.className = 'suggestion-authors'; authors.textContent = displayAuthors(entry); option.append(authors);
     }
-    option.addEventListener('pointerdown', event => event.preventDefault());
-    option.addEventListener('pointerenter', () => setActiveSuggestion(index));
+    option.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'mouse') event.preventDefault();
+    });
+    option.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'mouse') setActiveSuggestion(index);
+    });
     option.addEventListener('click', () => choosePoster(entry));
     results.append(option);
   }
@@ -526,7 +532,20 @@ function drawMap() {
     group.append(node('text', {x:marker.x,y:marker.y}, marker.id));
     svg.append(group);
   }
-  svg.append(node('text', {x:812,y:1100,'text-anchor':'middle',class:'floor-note'}, 'DEMO SESSIONS'));
+  const demos = node('g', {role:'img', 'aria-label':'Demo boards D1 to D10. Approximate row, anchored by D7 facing poster 201.'});
+  demos.append(node('text', {x:659,y:1048,'text-anchor':'middle',class:'floor-note'}, 'DEMO SESSIONS'));
+  for (const board of DEMO_BOARDS) {
+    const label = node('g', {class:'demo-board'});
+    label.append(node('title', {}, `${board.id} · approximate demo position`));
+    label.append(node('rect', {x:board.x,y:board.y,width:MAP.faceWidth,height:MAP.faceHeight,rx:2}));
+    label.append(node('text', {x:board.x+MAP.faceWidth/2,y:board.y+MAP.faceHeight/2}, board.id));
+    demos.append(label);
+  }
+  const anchorX = BOARD_BY_NUMBER.get(201).x + MAP.faceWidth/2;
+  demos.append(node('path', {d:`M${anchorX},1072 V982 m-5,7 5,-7 5,7`,class:'demo-direction'}));
+  demos.append(node('text', {x:anchorX+12,y:1015,class:'demo-note'}, 'D7 faces 201'));
+  demos.append(node('text', {x:659,y:1134,'text-anchor':'middle',class:'demo-note'}, 'Approximate demo layout'));
+  svg.append(demos);
   for (const board of BOARDS) {
     const group = node('g', {class:`board${board.yellow ? ' source-yellow' : ''}${board.needsReview ? ' needs-review' : ''}`,
       role:'button',tabindex:board.number === 1 ? '0' : '-1','aria-pressed':'false','data-board':board.number});
@@ -744,7 +763,10 @@ $('#map-search').addEventListener('keydown', event => {
 });
 $('#map-search-more').addEventListener('click', openSearchResults);
 $('#find-form').addEventListener('focusout', event => {
-  if (!$('#find-form').contains(event.relatedTarget)) closeSearchSuggestions();
+  // Mobile keyboards can blur the input before dispatching the result's click.
+  // A null target is not evidence of leaving the form. Outside pointer presses
+  // still dismiss results, and Tab to another control supplies a concrete target.
+  if (event.relatedTarget && !$('#find-form').contains(event.relatedTarget)) closeSearchSuggestions();
 });
 document.addEventListener('pointerdown', event => {
   if (!$('#find-form').contains(event.target)) closeSearchSuggestions();
