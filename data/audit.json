@@ -6,8 +6,8 @@
   "countsByStatus": {
     "desk rejected": 1,
     "not presenting": 1223,
-    "scheduled": 4339,
-    "unscheduled": 40
+    "scheduled": 4340,
+    "unscheduled": 39
   },
   "countsByTrack": {
     "Computational Linguistics": 13,
@@ -25,7 +25,7 @@
   "issueCounts": {
     "inactive paper retains assignment": 2,
     "incomplete room name": 1,
-    "missing assignment": 41,
+    "missing assignment": 40,
     "presentation unconfirmed": 1,
     "presenter repeats title": 10,
     "unusual session assignment": 19
@@ -785,17 +785,6 @@
       "sourceRow": 5094,
       "type": "inactive paper retains assignment",
       "status": "not presenting"
-    },
-    {
-      "id": "7634-FIND",
-      "sourceRow": 5101,
-      "type": "missing assignment",
-      "fields": [
-        "date",
-        "start",
-        "end",
-        "session"
-      ]
     },
     {
       "id": "7677-FIND",
