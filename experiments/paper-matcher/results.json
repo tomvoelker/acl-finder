@@ -1,0 +1,142 @@
+{
+ "authors": 400,
+ "targets": 703,
+ "candidates": 4340,
+ "variants": {
+  "embedding, raw centroid": {
+   "mrr": 0.0375,
+   "mrrCI95": [
+    0.0239,
+    0.0524
+   ],
+   "recall@10": 0.0648,
+   "recall@50": 0.1173,
+   "medianRank": 1240.0,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.042,
+    "recall@50": 0.1504
+   }
+  },
+  "embedding, raw max": {
+   "mrr": 0.0576,
+   "mrrCI95": [
+    0.0406,
+    0.0755
+   ],
+   "recall@10": 0.0898,
+   "recall@50": 0.1443,
+   "medianRank": 1000.0,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.045,
+    "recall@50": 0.1395
+   }
+  },
+  "embedding, centered centroid": {
+   "mrr": 0.0502,
+   "mrrCI95": [
+    0.0332,
+    0.0688
+   ],
+   "recall@10": 0.0711,
+   "recall@50": 0.1439,
+   "medianRank": 1307.75,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.0784,
+    "recall@50": 0.1667
+   }
+  },
+  "embedding, centered max": {
+   "mrr": 0.0499,
+   "mrrCI95": [
+    0.0353,
+    0.0655
+   ],
+   "recall@10": 0.0869,
+   "recall@50": 0.1697,
+   "medianRank": 1042.0,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.0478,
+    "recall@50": 0.183
+   }
+  },
+  "embedding, centered top-3 mean": {
+   "mrr": 0.0517,
+   "mrrCI95": [
+    0.0352,
+    0.0692
+   ],
+   "recall@10": 0.0877,
+   "recall@50": 0.1718,
+   "medianRank": 1139.0,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.0706,
+    "recall@50": 0.1993
+   }
+  },
+  "embedding, centered log-sum-exp": {
+   "mrr": 0.0509,
+   "mrrCI95": [
+    0.0362,
+    0.0673
+   ],
+   "recall@10": 0.0957,
+   "recall@50": 0.1742,
+   "medianRank": 1037.5,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.0493,
+    "recall@50": 0.183
+   }
+  },
+  "embedding, centered recency centroid": {
+   "mrr": 0.0576,
+   "mrrCI95": [
+    0.0404,
+    0.0764
+   ],
+   "recall@10": 0.0956,
+   "recall@50": 0.1634,
+   "medianRank": 1188.0,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.081,
+    "recall@50": 0.1667
+   }
+  },
+  "TF-IDF": {
+   "mrr": 0.0842,
+   "mrrCI95": [
+    0.0628,
+    0.1056
+   ],
+   "recall@10": 0.1251,
+   "recall@50": 0.1915,
+   "medianRank": 917.5,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.1053,
+    "recall@50": 0.2319
+   }
+  },
+  "hybrid (recency centroid + TF-IDF, RRF)": {
+   "mrr": 0.0747,
+   "mrrCI95": [
+    0.0554,
+    0.0949
+   ],
+   "recall@10": 0.1162,
+   "recall@50": 0.2033,
+   "medianRank": 847.5,
+   "firstAuthor": {
+    "authors": 92,
+    "mrr": 0.0933,
+    "recall@50": 0.2319
+   }
+  }
+ }
+}

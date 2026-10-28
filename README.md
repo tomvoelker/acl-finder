@@ -82,7 +82,7 @@ Across the full programme, 5,532 entries use Atlas topics and 71 have broad area
 
 The [Atlas source snapshot, attribution and audit](data/atlas/README.md) and the [dependency-free importer](scripts/import_topics.py) are committed alongside `data/poster-topics.json`. Builds copy these assignments unchanged and require no network or ML packages. After changing the schedule, timeline, Anthology matches or Atlas snapshot, run `python3 scripts/import_topics.py` before building. The build rejects stale data. The original [MiniLM experiment](experiments/poster-topics/README.md), including its corpus, pinned dependencies and assignments, remains available for comparison; its exporter cannot replace the live Atlas data.
 
-[SPECTER2 vectors](data/embeddings/README.md) for every programme entry are committed in `data/embeddings/`, computed from ACL Anthology titles and abstracts in the same configuration as Semantic Scholar's `specter_v2`. The site does not use them yet, and the build does not copy them.
+[SPECTER2 vectors](data/embeddings/README.md) for every programme entry are committed in `data/embeddings/`, computed from ACL Anthology titles and abstracts in the same configuration as Semantic Scholar's `specter_v2`. The site does not use them yet, and the build does not copy them. The offline [paper-matcher experiment](experiments/paper-matcher/README.md) evaluates them for recommending papers from a researcher's earlier work.
 
 Python 3.11 or newer is sufficient; no package installation is required.
 

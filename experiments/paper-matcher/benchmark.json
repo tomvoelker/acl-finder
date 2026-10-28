@@ -1,0 +1,7482 @@
+{
+ "source": {
+  "url": "https://aclanthology.org/anthology+abstracts.bib.gz",
+  "sha256": "10b9aa916ac20916d768fc0a42a75ef175a719c8470171b832ce5a4abf6eed3a"
+ },
+ "sampling": {
+  "seed": 0,
+  "authors": 400,
+  "minPapers": 3,
+  "maxPapers": 40,
+  "eligible": 5196,
+  "programmeAuthors": 18098
+ },
+ "authors": [
+  {
+   "name": "a. seza doğruöz",
+   "prior": [
+    "2021.acl-long.131",
+    "2021.americasnlp-1.24",
+    "2021.sigdial-1.41",
+    "2022.acl-long.273",
+    "2022.sigul-1.12",
+    "2023.bea-1.51",
+    "2023.findings-emnlp.382",
+    "2023.sigdial-1.57",
+    "2024.americasnlp-1.5",
+    "2024.findings-eacl.100",
+    "2024.lrec-main.1529",
+    "2024.lrec-main.820",
+    "2024.mrl-1.20",
+    "2024.naacl-srw.25",
+    "2025.coling-main.463",
+    "2025.findings-naacl.85",
+    "2025.gem-1.74",
+    "E17-1020"
+   ],
+   "targets": [
+    "7819-FIND"
+   ]
+  },
+  {
+   "name": "abdelrahman mohamed",
+   "prior": [
+    "2020.acl-main.703",
+    "2021.tacl-1.79",
+    "2022.acl-long.105",
+    "2022.acl-long.580",
+    "2022.acl-long.593",
+    "2022.emnlp-main.769",
+    "2022.naacl-demo.1",
+    "2022.naacl-tutorials.2",
+    "2022.tacl-1.61",
+    "2023.arabicnlp-1.1",
+    "2023.tacl-1.15",
+    "2024.acl-long.673",
+    "2024.acl-long.689",
+    "2024.emnlp-main.1211",
+    "2025.findings-emnlp.825"
+   ],
+   "targets": [
+    "5537-FIND"
+   ]
+  },
+  {
+   "name": "abed alhakim freihat",
+   "prior": [
+    "2016.gwc-1.17",
+    "2020.lrec-1.342",
+    "2021.wanlp-1.18",
+    "2022.lrec-1.299",
+    "2023.arabicnlp-1.44",
+    "2024.osact-1.9",
+    "S17-2043",
+    "W19-4630",
+    "W19-4635"
+   ],
+   "targets": [
+    "928-MAIN",
+    "1742-MAIN",
+    "4359-FIND"
+   ]
+  },
+  {
+   "name": "abhishek kumar",
+   "prior": [
+    "2019.jeptalnrecital-court.21",
+    "2024.acl-long.20",
+    "2024.acl-long.23",
+    "2024.findings-acl.890",
+    "2025.emnlp-main.1287",
+    "2025.findings-acl.224",
+    "D17-1057",
+    "N18-2041",
+    "S17-2153",
+    "S19-2087",
+    "W19-0413"
+   ],
+   "targets": [
+    "671-IND"
+   ]
+  },
+  {
+   "name": "aditya joshi",
+   "prior": [
+    "2020.lrec-1.613",
+    "2022.findings-acl.148",
+    "2022.semeval-1.131",
+    "2023.alta-1.22",
+    "2024.alta-1.11",
+    "2024.alta-1.14",
+    "2024.cmcl-1.1",
+    "2024.teachingnlp-1.4",
+    "2025.alta-main.2",
+    "2025.findings-acl.441",
+    "2025.ijcnlp-short.24",
+    "2025.naacl-short.2",
+    "2025.sumeval-2.3",
+    "C16-1234",
+    "D17-3002",
+    "L12-1211",
+    "L16-1349",
+    "P19-1108",
+    "U19-1008",
+    "U19-1020",
+    "U19-1026",
+    "W16-5001",
+    "W17-5201",
+    "W18-5911",
+    "W19-1309",
+    "W19-5015"
+   ],
+   "targets": [
+    "2489-MAIN",
+    "2614-MAIN",
+    "7500-MAIN",
+    "6115-FIND",
+    "6359-FIND"
+   ]
+  },
+  {
+   "name": "akshat gupta",
+   "prior": [
+    "2021.calcs-1.13",
+    "2021.dravidianlangtech-1.44",
+    "2021.dravidianlangtech-1.9",
+    "2022.finnlp-1.5",
+    "2022.sigmorphon-1.1",
+    "2022.smm4h-1.37",
+    "2022.smm4h-1.43",
+    "2022.smm4h-1.44",
+    "2022.wnut-1.9",
+    "2023.blackboxnlp-1.4",
+    "2023.wassa-1.17",
+    "2024.blackboxnlp-1.20",
+    "2024.emnlp-main.1210",
+    "2024.findings-acl.902",
+    "2024.findings-emnlp.903",
+    "2025.acl-short.65",
+    "2025.findings-acl.870",
+    "2025.findings-emnlp.1234"
+   ],
+   "targets": [
+    "9955-TACL"
+   ]
+  },
+  {
+   "name": "albert sawczyn",
+   "prior": [
+    "2024.findings-acl.652",
+    "2024.lrec-main.512",
+    "2025.emnlp-main.1239",
+    "2025.emnlp-main.1761"
+   ],
+   "targets": [
+    "214-DEMO"
+   ]
+  },
+  {
+   "name": "alireza salemi",
+   "prior": [
+    "2021.emnlp-main.741",
+    "2021.semeval-1.136",
+    "2023.loresmt-1.3",
+    "2024.acl-long.399",
+    "2025.acl-long.1201",
+    "2025.emnlp-main.60",
+    "2025.findings-acl.693",
+    "2025.findings-acl.900"
+   ],
+   "targets": [
+    "7925-FIND"
+   ]
+  },
+  {
+   "name": "amalia todirascu",
+   "prior": [
+    "2015.jeptalnrecital-court.44",
+    "2019.jeptalnrecital-long.10",
+    "2020.jeptalnrecital-taln.36",
+    "2020.lrec-1.10",
+    "2020.lrec-1.144",
+    "2020.readi-1.14",
+    "2022.lrec-1.493",
+    "2023.jeptalnrecital-long.7",
+    "2024.cl4health-1.4",
+    "2024.determit-1.14",
+    "2025.findings-acl.411",
+    "2025.jeptalnrecital-trad.14",
+    "2025.wraicogs-1.1",
+    "C16-1094",
+    "J17-4005",
+    "L12-1286"
+   ],
+   "targets": [
+    "288-MAIN"
+   ]
+  },
+  {
+   "name": "amelie wuehrl",
+   "prior": [
+    "2023.fever-1.3",
+    "2024.eacl-long.124",
+    "2024.findings-acl.369",
+    "2024.findings-emnlp.557",
+    "2024.smm4h-1.19",
+    "2025.acl-long.848",
+    "2025.nlpsi-1.9"
+   ],
+   "targets": [
+    "4946-MAIN"
+   ]
+  },
+  {
+   "name": "ameya prabhu",
+   "prior": [
+    "2024.conda-1.4",
+    "2025.acl-long.1560",
+    "C16-1234",
+    "D19-1417"
+   ],
+   "targets": [
+    "7466-FIND"
+   ]
+  },
+  {
+   "name": "amir abdullah",
+   "prior": [
+    "2023.findings-emnlp.636",
+    "2025.emnlp-main.1489",
+    "2025.findings-emnlp.1278"
+   ],
+   "targets": [
+    "9690-FIND"
+   ]
+  },
+  {
+   "name": "amran bhuiyan",
+   "prior": [
+    "2024.emnlp-main.764",
+    "2025.acl-industry.83",
+    "2025.emnlp-industry.134"
+   ],
+   "targets": [
+    "2903-MAIN"
+   ]
+  },
+  {
+   "name": "andrei barbu",
+   "prior": [
+    "2021.findings-emnlp.21",
+    "2021.naacl-main.78",
+    "2022.emnlp-main.648",
+    "D18-1285"
+   ],
+   "targets": [
+    "8038-MAIN"
+   ]
+  },
+  {
+   "name": "anjishnu mukherjee",
+   "prior": [
+    "2023.emnlp-main.981",
+    "2024.findings-emnlp.611",
+    "2024.naacl-long.355"
+   ],
+   "targets": [
+    "6484-MAIN",
+    "6505-MAIN"
+   ]
+  },
+  {
+   "name": "ankita gupta",
+   "prior": [
+    "2020.semeval-1.236",
+    "2022.emnlp-main.649",
+    "2022.nlpcss-1.11",
+    "2023.findings-eacl.24",
+    "2024.acl-long.552",
+    "2024.knowledgenlp-1.2",
+    "2024.lrec-main.1054",
+    "2024.nlp4convai-1.4",
+    "2025.acl-long.1517",
+    "2025.emnlp-industry.138",
+    "2025.findings-acl.1255",
+    "S19-2189",
+    "S19-2204",
+    "W19-5052"
+   ],
+   "targets": [
+    "5296-MAIN"
+   ]
+  },
+  {
+   "name": "anne-laure ligozat",
+   "prior": [
+    "2004.jeptalnrecital-recital.1",
+    "2006.jeptalnrecital-long.20",
+    "2007.jeptalnrecital-poster.17",
+    "2011.jeptalnrecital-court.7",
+    "2011.jeptalnrecital-long.27",
+    "2011.jeptalnrecital-long.31",
+    "2015.jeptalnrecital-demonstration.8",
+    "2015.jeptalnrecital-long.11",
+    "2016.jeptalnrecital-demo.18",
+    "2016.jeptalnrecital-long.17",
+    "2017.jeptalnrecital-long.13",
+    "2018.jeptalnrecital-long.6",
+    "2019.jeptalnrecital-court.29",
+    "2020.jeptalnrecital-taln.33",
+    "2021.sustainlp-1.2",
+    "C16-1094",
+    "L06-1410",
+    "L10-1359",
+    "L14-1053",
+    "L14-1453",
+    "L14-1544",
+    "L16-1035",
+    "L16-1366",
+    "L16-1433"
+   ],
+   "targets": [
+    "894-MAIN",
+    "2237-FIND"
+   ]
+  },
+  {
+   "name": "arlindo rodrigues galvão filho",
+   "prior": [
+    "2025.emnlp-main.1780",
+    "2025.fever-1.3",
+    "2025.findings-emnlp.506",
+    "2025.findings-emnlp.528"
+   ],
+   "targets": [
+    "2000-MAIN",
+    "8774-MAIN"
+   ]
+  },
+  {
+   "name": "artem shelmanov",
+   "prior": [
+    "2020.lrec-1.728",
+    "2020.pam-1.13",
+    "2021.eacl-main.145",
+    "2021.eacl-main.157",
+    "2021.emnlp-main.717",
+    "2022.acl-long.566",
+    "2022.emnlp-demos.41",
+    "2022.findings-acl.21",
+    "2022.findings-emnlp.377",
+    "2022.findings-naacl.90",
+    "2022.lrec-1.447",
+    "2022.lrec-1.474",
+    "2023.acl-long.652",
+    "2023.emnlp-demo.41",
+    "2023.findings-acl.93",
+    "2024.acl-long.218",
+    "2024.eacl-long.83",
+    "2024.emnlp-demo.35",
+    "2024.findings-acl.558",
+    "2024.mrl-1.15",
+    "2024.semeval-1.279",
+    "2025.acl-demo.63",
+    "2025.acl-long.765",
+    "2025.acl-tutorials.3",
+    "2025.emnlp-main.1752",
+    "2025.emnlp-main.1807",
+    "2025.emnlp-main.1809",
+    "2025.genaidetect-1.27",
+    "2025.naacl-demo.23",
+    "2025.naacl-long.113",
+    "2025.naacl-short.9",
+    "2025.uncertainlp-main.1",
+    "R19-1073",
+    "W19-2711",
+    "W19-3708"
+   ],
+   "targets": [
+    "4595-MAIN",
+    "819-IND",
+    "4796-FIND"
+   ]
+  },
+  {
+   "name": "azmine toushik wasi",
+   "prior": [
+    "2024.kallm-1.6",
+    "2024.lrec-main.189",
+    "2024.nlp4pi-1.23",
+    "2024.nlp4science-1.22",
+    "2024.smm4h-1.3",
+    "2024.smm4h-1.4",
+    "2025.chipsal-1.33",
+    "2025.clpsych-1.19",
+    "2025.dravidianlangtech-1.2",
+    "2025.dravidianlangtech-1.28",
+    "2025.dravidianlangtech-1.3",
+    "2025.dravidianlangtech-1.63",
+    "2025.dravidianlangtech-1.8",
+    "2025.gebnlp-1.24",
+    "2025.lm4uc-1.7",
+    "2025.semeval-1.29"
+   ],
+   "targets": [
+    "5573-FIND"
+   ]
+  },
+  {
+   "name": "baotian hu",
+   "prior": [
+    "2020.coling-main.214",
+    "2020.emnlp-main.111",
+    "2021.acl-long.513",
+    "2022.coling-1.164",
+    "2022.emnlp-main.178",
+    "2022.emnlp-main.346",
+    "2022.lt4hala-1.28",
+    "2023.acl-long.601",
+    "2023.acl-long.909",
+    "2023.emnlp-main.789",
+    "2023.findings-emnlp.129",
+    "2023.findings-emnlp.912",
+    "2023.trustnlp-1.1",
+    "2024.acl-long.267",
+    "2024.acl-long.411",
+    "2024.emnlp-demo.10",
+    "2024.emnlp-demo.4",
+    "2024.emnlp-main.160",
+    "2024.emnlp-main.178",
+    "2024.findings-acl.301",
+    "2024.findings-emnlp.81",
+    "2024.lrec-main.463",
+    "2024.lrec-main.676",
+    "2024.lrec-main.77",
+    "2025.acl-demo.61",
+    "2025.acl-long.1315",
+    "2025.acl-long.620",
+    "2025.findings-naacl.165",
+    "2025.naacl-demo.33",
+    "D19-5711",
+    "N18-2013"
+   ],
+   "targets": [
+    "3259-MAIN"
+   ]
+  },
+  {
+   "name": "benjamin k. bergen",
+   "prior": [
+    "2020.conll-1.53",
+    "2022.coling-1.1",
+    "2022.conll-1.2",
+    "2022.emnlp-main.9",
+    "2022.tacl-1.1",
+    "2023.emnlp-main.227",
+    "2023.findings-acl.891",
+    "2023.findings-emnlp.973",
+    "2024.cl-1.9",
+    "2024.emnlp-main.236",
+    "2024.naacl-long.290",
+    "2024.tacl-1.74"
+   ],
+   "targets": [
+    "9963-TACL"
+   ]
+  },
+  {
+   "name": "benno krojer",
+   "prior": [
+    "2020.coling-main.417",
+    "2020.conll-1.45",
+    "2022.acl-long.241",
+    "2023.findings-acl.120"
+   ],
+   "targets": [
+    "1867-MAIN"
+   ]
+  },
+  {
+   "name": "bhargava kumar",
+   "prior": [
+    "2025.findings-acl.963",
+    "2025.ijcnlp-long.142",
+    "2025.naacl-industry.46"
+   ],
+   "targets": [
+    "5325-MAIN"
+   ]
+  },
+  {
+   "name": "bin cui",
+   "prior": [
+    "2025.acl-demo.27",
+    "2025.acl-long.1581",
+    "2025.acl-long.244",
+    "2025.emnlp-main.288",
+    "2025.emnlp-main.337",
+    "2025.emnlp-main.471"
+   ],
+   "targets": [
+    "1611-MAIN"
+   ]
+  },
+  {
+   "name": "bin liu",
+   "prior": [
+    "2020.coling-main.601",
+    "2024.findings-emnlp.347",
+    "2025.emnlp-main.468",
+    "2025.findings-acl.590"
+   ],
+   "targets": [
+    "2527-MAIN",
+    "7716-MAIN",
+    "6999-FIND"
+   ]
+  },
+  {
+   "name": "bin zhu",
+   "prior": [
+    "2022.findings-acl.246",
+    "2023.findings-acl.340",
+    "2024.emnlp-main.342",
+    "2024.findings-acl.549"
+   ],
+   "targets": [
+    "2689-MAIN",
+    "6954-MAIN",
+    "5643-FIND"
+   ]
+  },
+  {
+   "name": "bingxuan li",
+   "prior": [
+    "2024.emnlp-main.850",
+    "2025.acl-long.1452",
+    "2025.naacl-long.564"
+   ],
+   "targets": [
+    "2147-MAIN",
+    "151-DEMO",
+    "2030-FIND"
+   ]
+  },
+  {
+   "name": "biqing qi",
+   "prior": [
+    "2023.emnlp-main.597",
+    "2024.acl-long.235",
+    "2024.emnlp-main.38",
+    "2024.findings-acl.483",
+    "2024.findings-emnlp.338",
+    "2024.naacl-long.142",
+    "2024.naacl-long.60",
+    "2025.acl-long.1202",
+    "2025.acl-long.1368",
+    "2025.acl-long.6",
+    "2025.emnlp-main.857",
+    "2025.mathnlp-main.4"
+   ],
+   "targets": [
+    "7344-MAIN",
+    "8118-MAIN"
+   ]
+  },
+  {
+   "name": "bo cheng",
+   "prior": [
+    "2020.coling-main.231",
+    "2020.findings-emnlp.133",
+    "2021.emnlp-main.204",
+    "2021.findings-emnlp.362",
+    "2022.findings-emnlp.231",
+    "2022.naacl-main.50",
+    "2023.findings-emnlp.903",
+    "2024.findings-naacl.240",
+    "2024.lrec-main.747",
+    "2024.lrec-main.957",
+    "2025.coling-main.475",
+    "2025.coling-main.483",
+    "W18-5523"
+   ],
+   "targets": [
+    "551-MAIN",
+    "656-MAIN"
+   ]
+  },
+  {
+   "name": "bo lv",
+   "prior": [
+    "2023.findings-acl.339",
+    "2024.findings-acl.261",
+    "2024.lrec-main.1350",
+    "2024.lrec-main.60",
+    "2025.acl-long.1229",
+    "2025.findings-acl.999"
+   ],
+   "targets": [
+    "1342-MAIN",
+    "33-IND"
+   ]
+  },
+  {
+   "name": "bo peng",
+   "prior": [
+    "2021.acl-long.469",
+    "2021.econlp-1.5",
+    "2021.rocling-1.51",
+    "2022.fnp-1.2",
+    "2023.emnlp-main.1024",
+    "2023.emnlp-main.989",
+    "2023.findings-emnlp.936",
+    "2023.finnlp-2.7",
+    "2023.vardial-1.12",
+    "2024.emnlp-main.118",
+    "2024.emnlp-main.1247",
+    "2024.findings-emnlp.982",
+    "2024.lrec-main.514",
+    "2024.sigtyp-1.5",
+    "2025.acl-long.993",
+    "2025.findings-emnlp.923",
+    "2025.ijcnlp-long.42",
+    "2025.naacl-long.133",
+    "S18-1101",
+    "W16-4920"
+   ],
+   "targets": [
+    "5587-MAIN",
+    "2748-FIND"
+   ]
+  },
+  {
+   "name": "bowen chen",
+   "prior": [
+    "2022.coling-1.284",
+    "2022.findings-emnlp.60",
+    "2024.emnlp-main.627",
+    "2025.acl-long.1114",
+    "2025.emnlp-industry.17",
+    "2025.emnlp-main.938"
+   ],
+   "targets": [
+    "5760-MAIN"
+   ]
+  },
+  {
+   "name": "bowen xing",
+   "prior": [
+    "2022.emnlp-main.12",
+    "2022.emnlp-main.263",
+    "2022.findings-acl.286",
+    "2024.emnlp-main.804",
+    "2025.emnlp-main.380",
+    "2025.findings-acl.485",
+    "2025.findings-emnlp.823"
+   ],
+   "targets": [
+    "1829-MAIN"
+   ]
+  },
+  {
+   "name": "boyuan zheng",
+   "prior": [
+    "2021.semeval-1.4",
+    "2022.emnlp-main.264",
+    "2022.findings-naacl.105",
+    "2023.findings-emnlp.523",
+    "2023.tacl-1.52",
+    "2024.emnlp-demo.20",
+    "2024.findings-acl.156"
+   ],
+   "targets": [
+    "1143-MAIN",
+    "7933-MAIN"
+   ]
+  },
+  {
+   "name": "c.l.philip chen",
+   "prior": [
+    "2025.acl-long.1514",
+    "2025.acl-long.705",
+    "2025.emnlp-main.951"
+   ],
+   "targets": [
+    "244-IND"
+   ]
+  },
+  {
+   "name": "carolin lawrence",
+   "prior": [
+    "2021.spnlp-1.4",
+    "2022.acl-demo.5",
+    "2022.acl-long.307",
+    "2022.acl-long.478",
+    "2022.emnlp-demos.34",
+    "2023.emnlp-main.445",
+    "2023.genbench-1.8",
+    "2024.acl-long.654",
+    "2024.eacl-demo.3",
+    "2024.naacl-demo.19",
+    "2024.tacl-1.18",
+    "2025.acl-long.320",
+    "2025.acl-long.677",
+    "2025.acl-long.828",
+    "2025.emnlp-main.830",
+    "C16-2002",
+    "D17-1272",
+    "D19-1001",
+    "P18-1169",
+    "Q19-1015"
+   ],
+   "targets": [
+    "7976-MAIN",
+    "3871-FIND"
+   ]
+  },
+  {
+   "name": "chen qian",
+   "prior": [
+    "2021.acl-long.422",
+    "2024.acl-long.305",
+    "2024.acl-long.810",
+    "2024.findings-acl.290",
+    "2024.findings-emnlp.623",
+    "2025.acl-long.590",
+    "2025.acl-long.804",
+    "2025.acl-long.845",
+    "2025.coling-main.502",
+    "2025.emnlp-main.378",
+    "2025.findings-acl.541",
+    "2025.findings-acl.601",
+    "2025.findings-emnlp.284"
+   ],
+   "targets": [
+    "191-MAIN",
+    "3004-MAIN",
+    "3402-MAIN",
+    "3653-MAIN",
+    "5262-MAIN",
+    "7247-MAIN",
+    "7685-MAIN",
+    "3-DEMO"
+   ]
+  },
+  {
+   "name": "chenghao xiao",
+   "prior": [
+    "2022.nlp4pi-1.12",
+    "2023.emnlp-main.86",
+    "2023.findings-acl.778",
+    "2024.findings-acl.746",
+    "2024.findings-emnlp.380",
+    "2024.lrec-main.492",
+    "2025.acl-long.1174",
+    "2025.bionlp-1.31",
+    "2025.emnlp-main.1177",
+    "2025.emnlp-main.1344",
+    "2025.findings-emnlp.1100",
+    "2025.naacl-long.386"
+   ],
+   "targets": [
+    "7927-MAIN",
+    "8512-MAIN",
+    "9091-FIND"
+   ]
+  },
+  {
+   "name": "chengxiang zhai",
+   "prior": [
+    "2020.emnlp-main.75",
+    "2021.acl-long.488",
+    "2021.emnlp-main.47",
+    "2021.findings-emnlp.140",
+    "2022.coling-1.86",
+    "2022.emnlp-main.96",
+    "2022.findings-acl.292",
+    "2022.findings-acl.56",
+    "2023.acl-long.53",
+    "2023.acl-short.48",
+    "2023.dialdoc-1.9",
+    "2023.eacl-main.220",
+    "2023.emnlp-main.4",
+    "2023.findings-emnlp.62",
+    "2024.eacl-long.103",
+    "2024.emnlp-main.369",
+    "2024.inlg-genchal.1",
+    "2025.coling-main.20",
+    "2025.emnlp-main.97",
+    "2025.fever-1.10",
+    "2025.findings-acl.1199",
+    "2025.findings-acl.332",
+    "2025.findings-acl.51",
+    "2025.findings-emnlp.85",
+    "D17-1051",
+    "K19-1073"
+   ],
+   "targets": [
+    "5394-MAIN",
+    "8401-MAIN"
+   ]
+  },
+  {
+   "name": "chengyu dong",
+   "prior": [
+    "2021.emnlp-main.453",
+    "2021.findings-emnlp.40",
+    "2022.findings-emnlp.360",
+    "2023.emnlp-main.32",
+    "2023.findings-emnlp.719",
+    "2024.emnlp-main.219",
+    "2024.findings-acl.258"
+   ],
+   "targets": [
+    "5050-MAIN"
+   ]
+  },
+  {
+   "name": "chenhao huang",
+   "prior": [
+    "2025.acl-long.285",
+    "2025.emnlp-main.869",
+    "2025.findings-emnlp.263"
+   ],
+   "targets": [
+    "5926-MAIN"
+   ]
+  },
+  {
+   "name": "chenwei wu",
+   "prior": [
+    "2024.acl-long.173",
+    "2024.emnlp-main.116",
+    "2025.acl-industry.76"
+   ],
+   "targets": [
+    "98-DEMO"
+   ]
+  },
+  {
+   "name": "chi wang",
+   "prior": [
+    "2021.acl-long.178",
+    "2024.emnlp-demo.8",
+    "2024.emnlp-main.1219",
+    "D17-1291"
+   ],
+   "targets": [
+    "2583-MAIN",
+    "2694-MAIN"
+   ]
+  },
+  {
+   "name": "christoph m. friedrich",
+   "prior": [
+    "2024.bionlp-1.70",
+    "2024.bionlp-1.9",
+    "2024.lrec-main.324"
+   ],
+   "targets": [
+    "846-MAIN"
+   ]
+  },
+  {
+   "name": "christopher pal",
+   "prior": [
+    "2024.findings-emnlp.896",
+    "2025.emnlp-main.1276",
+    "2025.findings-naacl.410",
+    "D19-6401"
+   ],
+   "targets": [
+    "2239-MAIN"
+   ]
+  },
+  {
+   "name": "chuanyi li",
+   "prior": [
+    "2020.emnlp-main.571",
+    "2021.findings-emnlp.129",
+    "2022.acl-long.48",
+    "2024.acl-long.350",
+    "2024.findings-acl.350",
+    "2024.findings-acl.351",
+    "2025.emnlp-main.1125"
+   ],
+   "targets": [
+    "5982-MAIN",
+    "7417-MAIN"
+   ]
+  },
+  {
+   "name": "chunyang jiang",
+   "prior": [
+    "2023.eacl-main.232",
+    "2023.eacl-main.99",
+    "2023.findings-emnlp.821",
+    "2023.genbench-1.13",
+    "2024.clicit-1.125",
+    "2024.clicit-1.70",
+    "2024.clicit-1.71",
+    "2025.emnlp-main.666",
+    "2025.findings-acl.388"
+   ],
+   "targets": [
+    "6939-MAIN"
+   ]
+  },
+  {
+   "name": "colin cherry",
+   "prior": [
+    "2008.amta-papers.4",
+    "2016.amta-researchers.8",
+    "2020.emnlp-main.465",
+    "2020.emnlp-tutorials.6",
+    "2020.iwslt-1.27",
+    "2020.wmt-1.140",
+    "2021.iwslt-1.28",
+    "2021.naacl-main.91",
+    "2022.findings-acl.263",
+    "2022.wmt-1.11",
+    "2023.acl-long.524",
+    "2023.acl-long.859",
+    "2023.findings-emnlp.125",
+    "2024.acl-long.836",
+    "2024.findings-eacl.15",
+    "2024.tacl-1.20",
+    "2024.wmt-1.123",
+    "2025.emnlp-main.656",
+    "2025.knowledgenlp-1.7",
+    "2025.naacl-short.18",
+    "2025.wmt-1.65",
+    "2025.wmt-1.85",
+    "D17-1263",
+    "D18-1461",
+    "L16-1623",
+    "N19-1208",
+    "P19-1126",
+    "W17-3205"
+   ],
+   "targets": [
+    "8328-MAIN"
+   ]
+  },
+  {
+   "name": "cong chen",
+   "prior": [
+    "2020.ccl-1.39",
+    "2022.semeval-1.185",
+    "2024.findings-acl.194"
+   ],
+   "targets": [
+    "670-MAIN",
+    "723-MAIN",
+    "735-MAIN"
+   ]
+  },
+  {
+   "name": "danae sanchez villegas",
+   "prior": [
+    "2022.naacl-main.131",
+    "2024.findings-eacl.76",
+    "2025.acl-long.1260"
+   ],
+   "targets": [
+    "5108-MAIN"
+   ]
+  },
+  {
+   "name": "daniel preotiuc-pietro",
+   "prior": [
+    "2020.aacl-main.80",
+    "2020.acl-main.403",
+    "2020.acl-main.680",
+    "2020.acl-main.750",
+    "2020.coling-main.540",
+    "2021.eacl-main.84",
+    "2022.aacl-main.59",
+    "2022.aacl-short.40",
+    "2022.acl-long.237",
+    "2022.acl-long.273",
+    "2022.naacl-main.131",
+    "2023.eacl-main.161",
+    "2023.emnlp-main.337",
+    "2023.findings-acl.48",
+    "2024.eacl-long.54",
+    "2024.findings-eacl.76",
+    "2024.findings-naacl.28",
+    "2024.lrec-main.1529",
+    "2024.naacl-industry.6",
+    "2025.emnlp-main.1749",
+    "2025.emnlp-main.581",
+    "2025.emnlp-main.859"
+   ],
+   "targets": [
+    "5207-MAIN"
+   ]
+  },
+  {
+   "name": "daniel russo",
+   "prior": [
+    "2023.emnlp-main.703",
+    "2023.tacl-1.71",
+    "2024.clicit-1.90",
+    "2025.acl-demo.54",
+    "2025.acl-tutorials.6",
+    "2025.findings-acl.853",
+    "2025.inlg-main.50",
+    "2025.mcg-1.9"
+   ],
+   "targets": [
+    "9534-FIND"
+   ]
+  },
+  {
+   "name": "daniela gottesman",
+   "prior": [
+    "2024.emnlp-main.781",
+    "2025.acl-long.1411",
+    "2025.findings-acl.849",
+    "2025.findings-emnlp.370"
+   ],
+   "targets": [
+    "10613-TACL"
+   ]
+  },
+  {
+   "name": "daniil gavrilov",
+   "prior": [
+    "2021.eacl-main.123",
+    "2024.acl-long.518",
+    "2025.emnlp-main.467",
+    "2025.emnlp-main.515"
+   ],
+   "targets": [
+    "4162-MAIN",
+    "7009-MAIN",
+    "8239-MAIN",
+    "9163-MAIN",
+    "1665-FIND"
+   ]
+  },
+  {
+   "name": "darpan aswal",
+   "prior": [
+    "2025.ijcnlp-srw.3",
+    "2025.semeval-1.255",
+    "2025.semeval-1.285"
+   ],
+   "targets": [
+    "222-MAIN"
+   ]
+  },
+  {
+   "name": "david e. losada",
+   "prior": [
+    "2023.acl-long.853",
+    "2024.cl4health-1.28",
+    "2024.clpsych-1.2",
+    "2024.eacl-demo.5",
+    "2025.findings-emnlp.955"
+   ],
+   "targets": [
+    "4306-FIND"
+   ]
+  },
+  {
+   "name": "david kletz",
+   "prior": [
+    "2022.lrec-1.228",
+    "2023.blackboxnlp-1.16",
+    "2023.lchange-1.7",
+    "2023.nodalida-1.54",
+    "2024.clicit-1.51",
+    "2025.chomps-main.3",
+    "2025.conll-1.20",
+    "2025.semeval-1.239"
+   ],
+   "targets": [
+    "4399-FIND"
+   ]
+  },
+  {
+   "name": "david wan",
+   "prior": [
+    "2020.clssts-1.11",
+    "2020.wmt-1.141",
+    "2021.eacl-main.248",
+    "2022.coling-1.236",
+    "2022.emnlp-main.654",
+    "2022.naacl-main.74",
+    "2023.acl-long.120",
+    "2023.eacl-main.210",
+    "2023.emnlp-main.179",
+    "2024.findings-acl.597",
+    "2025.acl-long.746",
+    "2025.naacl-long.442",
+    "2025.naacl-long.498"
+   ],
+   "targets": [
+    "5048-MAIN"
+   ]
+  },
+  {
+   "name": "dehai min",
+   "prior": [
+    "2023.emnlp-main.103",
+    "2024.naacl-industry.41",
+    "2025.naacl-long.234"
+   ],
+   "targets": [
+    "6641-MAIN"
+   ]
+  },
+  {
+   "name": "di wu",
+   "prior": [
+    "2020.coling-main.389",
+    "2020.emnlp-main.152",
+    "2021.emnlp-main.263",
+    "2022.findings-acl.11",
+    "2022.findings-emnlp.49",
+    "2022.iwslt-1.8",
+    "2023.emnlp-main.112",
+    "2023.emnlp-main.386",
+    "2023.emnlp-main.410",
+    "2023.emnlp-main.605",
+    "2023.wmt-1.17",
+    "2024.acl-long.546",
+    "2024.eacl-short.33",
+    "2024.emnlp-demo.29",
+    "2024.emnlp-main.374",
+    "2024.emnlp-main.513",
+    "2024.emnlp-main.527",
+    "2024.findings-acl.117",
+    "2024.findings-acl.896",
+    "2024.findings-emnlp.494",
+    "2024.findings-emnlp.823",
+    "2024.lrec-main.1083",
+    "2024.mrl-1.24",
+    "2024.wmt-1.11",
+    "2025.acl-demo.20",
+    "2025.emnlp-demos.42",
+    "2025.emnlp-main.1031",
+    "2025.findings-acl.66",
+    "2025.findings-acl.783",
+    "2025.findings-naacl.301",
+    "2025.findings-naacl.416",
+    "2025.wmt-1.45",
+    "2025.wmt-1.72",
+    "D18-1272"
+   ],
+   "targets": [
+    "2610-MAIN",
+    "3475-MAIN",
+    "6007-MAIN",
+    "8803-MAIN",
+    "1503-FIND",
+    "8205-FIND",
+    "9459-FIND"
+   ]
+  },
+  {
+   "name": "dimitrios dimitriadis",
+   "prior": [
+    "2022.naacl-main.252",
+    "2023.findings-emnlp.43",
+    "2024.acl-long.419",
+    "2025.findings-naacl.41"
+   ],
+   "targets": [
+    "564-IND"
+   ]
+  },
+  {
+   "name": "dinesh khandelwal",
+   "prior": [
+    "2020.acl-main.117",
+    "2021.acl-long.238",
+    "2022.findings-emnlp.284",
+    "2022.findings-naacl.127",
+    "2023.emnlp-main.181",
+    "2023.emnlp-main.287",
+    "2025.findings-naacl.329",
+    "2025.findings-naacl.349"
+   ],
+   "targets": [
+    "1151-MAIN"
+   ]
+  },
+  {
+   "name": "dinesh manocha",
+   "prior": [
+    "2021.acl-short.67",
+    "2022.emnlp-main.51",
+    "2022.findings-emnlp.139",
+    "2022.naacl-main.73",
+    "2023.acl-long.8",
+    "2023.emnlp-main.377",
+    "2023.emnlp-main.528",
+    "2023.emnlp-main.629",
+    "2023.findings-emnlp.757",
+    "2024.acl-long.43",
+    "2024.emnlp-main.1092",
+    "2024.emnlp-main.361",
+    "2024.emnlp-main.366",
+    "2024.emnlp-main.867",
+    "2024.findings-acl.22",
+    "2024.findings-acl.637",
+    "2024.findings-emnlp.493",
+    "2024.findings-naacl.238",
+    "2024.lrec-main.1244",
+    "2024.lrec-main.457",
+    "2024.lrec-main.458",
+    "2024.naacl-short.24",
+    "2024.naacl-short.43",
+    "2025.acl-long.1094",
+    "2025.coling-main.730",
+    "2025.emnlp-main.1144",
+    "2025.emnlp-main.1446",
+    "2025.emnlp-main.1447",
+    "2025.findings-acl.125",
+    "2025.findings-emnlp.79",
+    "2025.ijcnlp-demo.10",
+    "2025.naacl-long.17",
+    "2025.naacl-long.310",
+    "2025.naacl-long.616",
+    "2025.naacl-long.619",
+    "2025.naacl-short.76",
+    "2025.uncertainlp-main.10"
+   ],
+   "targets": [
+    "204-MAIN",
+    "1845-MAIN",
+    "3301-FIND"
+   ]
+  },
+  {
+   "name": "dmitry morozov",
+   "prior": [
+    "2021.semeval-1.124",
+    "2025.acl-long.337",
+    "2025.bsnlp-1.18"
+   ],
+   "targets": [
+    "2676-FIND",
+    "2696-FIND"
+   ]
+  },
+  {
+   "name": "do xuan long",
+   "prior": [
+    "2022.findings-acl.177",
+    "2024.emnlp-main.1135",
+    "2025.acl-long.292",
+    "2025.coling-main.172",
+    "2025.findings-acl.176",
+    "2025.naacl-long.15"
+   ],
+   "targets": [
+    "3132-FIND"
+   ]
+  },
+  {
+   "name": "dong li",
+   "prior": [
+    "2022.coling-1.543",
+    "2023.clasp-1.19",
+    "2024.emnlp-industry.10",
+    "2024.emnlp-main.916",
+    "2024.findings-acl.483",
+    "2025.acl-long.1202",
+    "2025.acl-long.302",
+    "2025.coling-main.117",
+    "2025.emnlp-main.210",
+    "2025.findings-emnlp.888",
+    "2025.findings-naacl.2",
+    "2025.finnlp-1.30",
+    "2025.finnlp-1.46",
+    "2025.naacl-long.450"
+   ],
+   "targets": [
+    "1287-MAIN",
+    "5745-FIND"
+   ]
+  },
+  {
+   "name": "dongyue li",
+   "prior": [
+    "2024.findings-emnlp.321",
+    "2025.acl-long.1231",
+    "2025.emnlp-main.832"
+   ],
+   "targets": [
+    "5290-MAIN"
+   ]
+  },
+  {
+   "name": "dorothea kolossa",
+   "prior": [
+    "2020.coling-main.45",
+    "2020.lrec-1.260",
+    "2020.mwe-1.3",
+    "2022.semeval-1.86",
+    "2024.findings-emnlp.922",
+    "2025.woah-1.16",
+    "L10-1366",
+    "W19-5925"
+   ],
+   "targets": [
+    "3026-MAIN"
+   ]
+  },
+  {
+   "name": "du-seong chang",
+   "prior": [
+    "2022.emnlp-main.450",
+    "2023.findings-eacl.12",
+    "2023.findings-emnlp.404",
+    "2024.acl-long.612",
+    "2024.acl-short.61",
+    "2024.emnlp-main.602",
+    "2024.findings-acl.308",
+    "2024.lrec-main.1166",
+    "2025.acl-long.1066",
+    "2025.dstc-1.5"
+   ],
+   "targets": [
+    "9793-MAIN"
+   ]
+  },
+  {
+   "name": "dushyanta dhyani",
+   "prior": [
+    "2025.findings-acl.641",
+    "I17-4028",
+    "S18-1124"
+   ],
+   "targets": [
+    "8840-MAIN"
+   ]
+  },
+  {
+   "name": "edison marrese-taylor",
+   "prior": [
+    "2020.challengehml-1.2",
+    "2020.emnlp-main.513",
+    "2021.americasnlp-1.26",
+    "2021.findings-emnlp.344",
+    "2022.emnlp-main.495",
+    "2022.nlp4dh-1.11",
+    "2022.umios-1.4",
+    "2022.wat-1.3",
+    "2023.eacl-main.140",
+    "2023.fever-1.7",
+    "2023.findings-acl.829",
+    "2023.findings-emnlp.102",
+    "2023.wmt-1.49",
+    "2024.bionlp-1.13",
+    "2024.findings-acl.670",
+    "2024.findings-emnlp.606",
+    "2024.lrec-main.111",
+    "2024.naacl-long.227",
+    "2025.emnlp-main.79",
+    "2025.findings-acl.1328",
+    "2025.findings-emnlp.896",
+    "2025.mathnlp-main.14",
+    "2025.naacl-long.317",
+    "2025.uncertainlp-main.15",
+    "D19-5550",
+    "E17-4003",
+    "P17-2045",
+    "S18-1087",
+    "W17-5213",
+    "W17-5232",
+    "W17-5310",
+    "W18-3722",
+    "W18-6202",
+    "W18-6208",
+    "W18-6513"
+   ],
+   "targets": [
+    "9632-FIND"
+   ]
+  },
+  {
+   "name": "eduard tulchinskii",
+   "prior": [
+    "2022.findings-emnlp.7",
+    "2024.findings-emnlp.992",
+    "2025.emnlp-main.1785"
+   ],
+   "targets": [
+    "1361-MAIN"
+   ]
+  },
+  {
+   "name": "eduardo sánchez",
+   "prior": [
+    "2024.findings-emnlp.564",
+    "2024.gebnlp-1.26",
+    "2024.mrl-1.10",
+    "2025.africanlp-1.34",
+    "2025.emnlp-main.1400",
+    "2025.findings-acl.556",
+    "2025.naacl-long.67",
+    "2025.wmt-1.15",
+    "2025.wmt-1.23"
+   ],
+   "targets": [
+    "3727-MAIN"
+   ]
+  },
+  {
+   "name": "ehsan barkhordar",
+   "prior": [
+    "2024.alta-1.8",
+    "2024.case-1.30",
+    "2024.sigul-1.49"
+   ],
+   "targets": [
+    "250-MAIN"
+   ]
+  },
+  {
+   "name": "elisei rykov",
+   "prior": [
+    "2022.textgraphs-1.9",
+    "2024.semeval-1.125",
+    "2025.chomps-main.8",
+    "2025.findings-emnlp.626",
+    "2025.naacl-srw.28",
+    "2025.semeval-1.137"
+   ],
+   "targets": [
+    "7375-FIND"
+   ]
+  },
+  {
+   "name": "esmeralda s. whitammer",
+   "prior": [
+    "2021.emnlp-main.809",
+    "2021.naacl-main.439",
+    "2022.acl-long.565",
+    "2023.acl-long.68",
+    "2025.acl-long.1277"
+   ],
+   "targets": [
+    "10907-TACL",
+    "7230-MAIN"
+   ]
+  },
+  {
+   "name": "esther ploeger",
+   "prior": [
+    "2021.crac-1.5",
+    "2022.semeval-1.31",
+    "2023.findings-emnlp.82",
+    "2024.eacl-short.6",
+    "2024.eamt-1.24",
+    "2024.emnlp-main.326",
+    "2024.sigtyp-1.10",
+    "2024.tacl-1.53",
+    "2025.acl-long.1361",
+    "2025.emnlp-demos.23",
+    "2025.emnlp-main.445",
+    "2025.naacl-long.600",
+    "2025.nodalida-1.52",
+    "2025.wmt-1.21"
+   ],
+   "targets": [
+    "1283-MAIN"
+   ]
+  },
+  {
+   "name": "fanyu meng",
+   "prior": [
+    "2020.emnlp-main.490",
+    "2020.findings-emnlp.52",
+    "2025.findings-emnlp.195"
+   ],
+   "targets": [
+    "5072-MAIN",
+    "8527-MAIN"
+   ]
+  },
+  {
+   "name": "farah benamara",
+   "prior": [
+    "2009.jeptalnrecital-court.5",
+    "2016.dnd-7.8",
+    "2020.acl-main.373",
+    "2020.coling-main.116",
+    "2020.jeptalnrecital-taln.3",
+    "2020.lrec-1.151",
+    "2020.lrec-1.175",
+    "2021.findings-emnlp.242",
+    "2022.finnlp-1.23",
+    "2022.lrec-1.25",
+    "2022.lrec-1.394",
+    "2022.lrec-1.462",
+    "2022.starsem-1.25",
+    "2023.eacl-main.254",
+    "2023.findings-eacl.51",
+    "2023.findings-emnlp.718",
+    "2023.jeptalnrecital-long.16",
+    "2024.dnd-15.6",
+    "2024.jeptalnrecital-jep.51",
+    "2024.lrec-main.740",
+    "2025.acl-long.783",
+    "2025.findings-acl.892",
+    "2025.findings-naacl.252",
+    "2025.genaik-1.14",
+    "2025.r2lm-1.6",
+    "E17-1025",
+    "J17-1006",
+    "J18-4006",
+    "L12-1498",
+    "L12-1559",
+    "L14-1411",
+    "L16-1432"
+   ],
+   "targets": [
+    "765-IND"
+   ]
+  },
+  {
+   "name": "farhan samir",
+   "prior": [
+    "2021.tacl-1.91",
+    "2022.computel-1.5",
+    "2022.findings-acl.167",
+    "2022.lrec-1.710",
+    "2023.emnlp-main.19",
+    "2024.emnlp-main.384",
+    "2024.naacl-long.43",
+    "2025.acl-long.961"
+   ],
+   "targets": [
+    "4797-MAIN"
+   ]
+  },
+  {
+   "name": "fatemeh shiri",
+   "prior": [
+    "2023.eacl-main.77",
+    "2024.alta-1.7",
+    "2024.emnlp-main.1195",
+    "2024.findings-acl.168"
+   ],
+   "targets": [
+    "777-IND"
+   ]
+  },
+  {
+   "name": "fazl barez",
+   "prior": [
+    "2023.findings-acl.19",
+    "2023.findings-acl.733",
+    "2024.emnlp-main.699",
+    "2024.emnlp-main.930",
+    "2024.findings-acl.492",
+    "2025.emnlp-main.1595",
+    "2025.emnlp-main.960",
+    "2025.findings-emnlp.1278",
+    "2025.findings-emnlp.792"
+   ],
+   "targets": [
+    "5517-MAIN"
+   ]
+  },
+  {
+   "name": "fei yu",
+   "prior": [
+    "2023.findings-emnlp.725",
+    "2024.emnlp-main.333",
+    "2024.findings-emnlp.93",
+    "2024.naacl-long.450",
+    "2025.acl-long.100",
+    "2025.acl-long.713",
+    "2025.emnlp-main.1382",
+    "2025.emnlp-main.37",
+    "2025.findings-acl.1004",
+    "2025.findings-acl.646",
+    "2025.findings-naacl.55"
+   ],
+   "targets": [
+    "5957-MAIN"
+   ]
+  },
+  {
+   "name": "fei zhao",
+   "prior": [
+    "2020.coling-main.70",
+    "2020.findings-emnlp.234",
+    "2022.coling-1.590",
+    "2022.findings-emnlp.177",
+    "2023.emnlp-main.561",
+    "2023.findings-acl.178",
+    "2024.emnlp-main.67",
+    "2024.findings-acl.446",
+    "2024.findings-acl.823",
+    "2025.emnlp-industry.180",
+    "2025.findings-emnlp.1039"
+   ],
+   "targets": [
+    "5646-MAIN"
+   ]
+  },
+  {
+   "name": "feng tian",
+   "prior": [
+    "2022.emnlp-main.85",
+    "2023.emnlp-main.499",
+    "2023.emnlp-main.756",
+    "2024.findings-acl.512"
+   ],
+   "targets": [
+    "1257-MAIN"
+   ]
+  },
+  {
+   "name": "feng zhao",
+   "prior": [
+    "2022.coling-1.433",
+    "2022.emnlp-main.317",
+    "2022.findings-emnlp.147",
+    "2023.emnlp-main.537",
+    "2024.acl-long.515",
+    "2024.acl-long.812",
+    "2024.findings-acl.557",
+    "2024.lrec-main.359",
+    "2025.coling-main.150",
+    "2025.emnlp-main.1048",
+    "2025.emnlp-main.1058",
+    "2025.emnlp-main.1355",
+    "2025.emnlp-main.1357",
+    "2025.emnlp-main.464",
+    "2025.emnlp-main.55",
+    "2025.findings-acl.280",
+    "2025.findings-emnlp.677"
+   ],
+   "targets": [
+    "3529-MAIN",
+    "3673-MAIN",
+    "4218-MAIN"
+   ]
+  },
+  {
+   "name": "fuzhen zhuang",
+   "prior": [
+    "2022.coling-1.611",
+    "2022.emnlp-main.268",
+    "2022.emnlp-main.603",
+    "2023.acl-long.35",
+    "2024.findings-emnlp.181",
+    "2025.acl-industry.31",
+    "2025.acl-long.497",
+    "D18-1358"
+   ],
+   "targets": [
+    "1685-MAIN",
+    "4770-MAIN",
+    "280-IND",
+    "752-IND"
+   ]
+  },
+  {
+   "name": "gabriella lapesa",
+   "prior": [
+    "2020.lrec-1.115",
+    "2020.nlpcss-1.3",
+    "2021.acl-long.107",
+    "2021.argmining-1.13",
+    "2021.conll-1.46",
+    "2021.spnlp-1.6",
+    "2021.vardial-1.3",
+    "2022.acl-long.379",
+    "2022.deeplo-1.22",
+    "2022.findings-acl.186",
+    "2022.findings-naacl.11",
+    "2022.lrec-1.353",
+    "2022.lrec-1.569",
+    "2023.acl-long.132",
+    "2023.acl-long.322",
+    "2023.eacl-tutorials.1",
+    "2023.findings-eacl.187",
+    "2024.argmining-1.18",
+    "2024.eacl-long.60",
+    "2024.findings-emnlp.354",
+    "2024.lrec-main.1272",
+    "2024.lrec-main.1331",
+    "2024.lrec-main.135",
+    "2024.lrec-tutorials.5",
+    "2025.acl-long.1116",
+    "2025.argmining-1.12",
+    "2025.emnlp-main.1733",
+    "2025.emnlp-main.1755",
+    "2025.findings-naacl.470",
+    "2025.naacl-long.382",
+    "2025.naacl-long.567",
+    "2025.woah-1.45",
+    "E17-2063",
+    "L10-1216",
+    "L12-1356",
+    "P19-3018",
+    "Q14-1041"
+   ],
+   "targets": [
+    "1149-MAIN",
+    "4237-MAIN"
+   ]
+  },
+  {
+   "name": "gagan bhatia",
+   "prior": [
+    "2023.arabicnlp-1.9",
+    "2023.semeval-1.33",
+    "2023.vardial-1.24",
+    "2024.acl-long.689",
+    "2024.arabicnlp-1.19",
+    "2024.arabicnlp-1.27",
+    "2024.findings-acl.774",
+    "2025.emnlp-main.159",
+    "2025.findings-naacl.263",
+    "2025.naacl-srw.32"
+   ],
+   "targets": [
+    "1078-MAIN",
+    "8248-FIND"
+   ]
+  },
+  {
+   "name": "ganesh ramakrishnan",
+   "prior": [
+    "2020.aacl-main.78",
+    "2021.eacl-main.247",
+    "2021.eacl-main.314",
+    "2022.coling-1.421",
+    "2022.emnlp-demos.12",
+    "2022.findings-acl.94",
+    "2022.findings-emnlp.443",
+    "2022.findings-emnlp.466",
+    "2023.acl-long.319",
+    "2023.findings-emnlp.445",
+    "2024.eacl-long.34",
+    "2024.findings-acl.766",
+    "2024.findings-emnlp.31",
+    "2024.findings-emnlp.399",
+    "2024.findings-emnlp.643",
+    "2024.lrec-main.1245",
+    "2025.acl-long.365",
+    "2025.bea-1.20",
+    "2025.findings-ijcnlp.129",
+    "2025.findings-naacl.141",
+    "2025.findings-naacl.261",
+    "2025.findings-naacl.359",
+    "D19-3030",
+    "K19-1076",
+    "L14-1235",
+    "N18-5010",
+    "P19-1481"
+   ],
+   "targets": [
+    "9050-FIND"
+   ]
+  },
+  {
+   "name": "giuseppe attanasio",
+   "prior": [
+    "2022.findings-acl.88",
+    "2022.nlppower-1.11",
+    "2022.semeval-1.90",
+    "2022.woah-1.24",
+    "2023.cs4oa-1.2",
+    "2023.eacl-demo.29",
+    "2023.emnlp-main.243",
+    "2023.semeval-1.285",
+    "2024.acl-long.682",
+    "2024.clicit-1.116",
+    "2024.clicit-1.117",
+    "2024.clicit-1.6",
+    "2024.clicit-1.83",
+    "2024.eacl-long.136",
+    "2024.eamt-2.19",
+    "2024.emnlp-main.1188",
+    "2024.emnlp-main.1207",
+    "2024.findings-acl.448",
+    "2024.gitt-1.2",
+    "2024.naacl-long.301",
+    "2024.wmt-1.3",
+    "2025.acl-long.1228",
+    "2025.acl-short.78",
+    "2025.emnlp-main.692",
+    "2025.findings-emnlp.1002",
+    "2025.iwslt-1.36",
+    "2025.naacl-long.600",
+    "2025.wmt-1.19"
+   ],
+   "targets": [
+    "5108-MAIN",
+    "9432-MAIN",
+    "8010-FIND"
+   ]
+  },
+  {
+   "name": "giwon hong",
+   "prior": [
+    "2020.coling-main.306",
+    "2020.findings-emnlp.293",
+    "2021.emnlp-main.563",
+    "2021.emnlp-main.78",
+    "2022.emnlp-main.702",
+    "2022.findings-naacl.138",
+    "2023.findings-emnlp.245",
+    "2024.findings-naacl.159",
+    "2024.semeval-1.265",
+    "2025.acl-long.1277",
+    "2025.acl-long.1448",
+    "2025.emnlp-main.1132",
+    "2025.naacl-long.262",
+    "2025.naacl-long.264",
+    "W19-0412"
+   ],
+   "targets": [
+    "3871-FIND"
+   ]
+  },
+  {
+   "name": "gleb kuzmin",
+   "prior": [
+    "2020.rdsm-1.5",
+    "2022.acl-long.566",
+    "2022.emnlp-demos.41",
+    "2022.findings-naacl.90",
+    "2023.acl-long.652",
+    "2024.findings-acl.558",
+    "2025.emnlp-main.1752",
+    "2025.emnlp-main.1807",
+    "2025.naacl-short.9"
+   ],
+   "targets": [
+    "819-IND",
+    "4796-FIND"
+   ]
+  },
+  {
+   "name": "guanchu wang",
+   "prior": [
+    "2024.emnlp-main.393",
+    "2024.findings-emnlp.266",
+    "2025.acl-long.131",
+    "2025.acl-long.1473",
+    "2025.findings-emnlp.1166",
+    "2025.findings-emnlp.902"
+   ],
+   "targets": [
+    "1341-MAIN"
+   ]
+  },
+  {
+   "name": "guangzhi xiong",
+   "prior": [
+    "2024.findings-acl.372",
+    "2025.emnlp-main.135",
+    "2025.findings-acl.967"
+   ],
+   "targets": [
+    "262-MAIN"
+   ]
+  },
+  {
+   "name": "gunhee kim",
+   "prior": [
+    "2020.emnlp-main.65",
+    "2020.figlang-1.2",
+    "2021.emnlp-main.170",
+    "2021.naacl-main.121",
+    "2022.emnlp-main.267",
+    "2023.acl-industry.21",
+    "2023.acl-long.189",
+    "2023.acl-long.370",
+    "2023.emnlp-main.176",
+    "2023.emnlp-main.251",
+    "2023.emnlp-main.799",
+    "2023.emnlp-main.890",
+    "2023.findings-acl.40",
+    "2024.acl-long.181",
+    "2024.acl-long.268",
+    "2024.emnlp-main.640",
+    "2024.emnlp-main.762",
+    "2024.findings-acl.197",
+    "2024.findings-acl.202",
+    "2025.acl-long.1280",
+    "2025.acl-long.1302",
+    "2025.emnlp-main.1192",
+    "2025.emnlp-main.726",
+    "2025.findings-acl.1334",
+    "2025.naacl-long.456",
+    "2025.naacl-long.484",
+    "N18-1162",
+    "N19-1011",
+    "N19-1260"
+   ],
+   "targets": [
+    "3503-MAIN",
+    "6468-MAIN",
+    "8998-MAIN",
+    "9001-MAIN",
+    "8804-FIND"
+   ]
+  },
+  {
+   "name": "haijin liang",
+   "prior": [
+    "2022.coling-1.212",
+    "2025.coling-industry.11",
+    "2025.naacl-industry.13"
+   ],
+   "targets": [
+    "904-MAIN",
+    "5997-MAIN",
+    "6045-MAIN",
+    "3520-FIND"
+   ]
+  },
+  {
+   "name": "haitao li",
+   "prior": [
+    "2025.acl-long.116",
+    "2025.acl-long.808",
+    "2025.emnlp-main.541"
+   ],
+   "targets": [
+    "1243-MAIN",
+    "1258-MAIN",
+    "1543-MAIN",
+    "2149-MAIN",
+    "3609-MAIN",
+    "3633-MAIN",
+    "6692-MAIN",
+    "3471-FIND"
+   ]
+  },
+  {
+   "name": "haiyang wang",
+   "prior": [
+    "2024.emnlp-main.255",
+    "2024.lrec-main.800",
+    "2025.acl-long.184",
+    "2025.emnlp-main.508"
+   ],
+   "targets": [
+    "2826-MAIN"
+   ]
+  },
+  {
+   "name": "han yu",
+   "prior": [
+    "2021.naacl-main.425",
+    "2022.findings-emnlp.258",
+    "2023.emnlp-main.256",
+    "2024.acl-long.8"
+   ],
+   "targets": [
+    "667-MAIN"
+   ]
+  },
+  {
+   "name": "hao an",
+   "prior": [
+    "2024.acl-long.608",
+    "2024.emnlp-main.564",
+    "2024.lrec-main.1554",
+    "2024.lrec-main.858"
+   ],
+   "targets": [
+    "668-MAIN"
+   ]
+  },
+  {
+   "name": "hao jiang",
+   "prior": [
+    "2022.acl-long.493",
+    "2022.coling-1.492",
+    "2022.naacl-main.240",
+    "2024.findings-acl.973",
+    "2025.acl-long.1334",
+    "2025.acl-long.669",
+    "2025.findings-acl.458"
+   ],
+   "targets": [
+    "5031-MAIN",
+    "5957-MAIN",
+    "8848-MAIN",
+    "388-IND"
+   ]
+  },
+  {
+   "name": "haojin yang",
+   "prior": [
+    "2020.lrec-1.576",
+    "L16-1103",
+    "W17-5302"
+   ],
+   "targets": [
+    "2068-MAIN",
+    "8589-MAIN"
+   ]
+  },
+  {
+   "name": "haojing huang",
+   "prior": [
+    "2023.findings-emnlp.771",
+    "2024.acl-long.469",
+    "2024.findings-emnlp.845",
+    "2025.acl-industry.39",
+    "2025.acl-long.1061",
+    "2025.emnlp-industry.30"
+   ],
+   "targets": [
+    "4463-MAIN"
+   ]
+  },
+  {
+   "name": "haoqin tu",
+   "prior": [
+    "2023.emnlp-main.479",
+    "2025.emnlp-main.344",
+    "2025.naacl-demo.23"
+   ],
+   "targets": [
+    "605-MAIN",
+    "2591-MAIN"
+   ]
+  },
+  {
+   "name": "haoyi zhou",
+   "prior": [
+    "2022.findings-acl.277",
+    "2023.eacl-main.232",
+    "2025.acl-long.722"
+   ],
+   "targets": [
+    "1230-MAIN"
+   ]
+  },
+  {
+   "name": "haozhe zhang",
+   "prior": [
+    "2023.findings-emnlp.1003",
+    "2023.findings-emnlp.565",
+    "2024.emnlp-main.116"
+   ],
+   "targets": [
+    "3358-MAIN",
+    "443-IND"
+   ]
+  },
+  {
+   "name": "harshita diddee",
+   "prior": [
+    "2020.semeval-1.233",
+    "2022.tacl-1.9",
+    "2022.wmt-1.80",
+    "2023.emnlp-main.115",
+    "2023.emnlp-main.258",
+    "2024.customnlp4u-1.4",
+    "2024.findings-eacl.71",
+    "2024.inlg-main.34",
+    "2024.lrec-main.797",
+    "2025.emnlp-main.189"
+   ],
+   "targets": [
+    "5301-MAIN"
+   ]
+  },
+  {
+   "name": "heiner stuckenschmidt",
+   "prior": [
+    "2020.argmining-1.4",
+    "2020.emnlp-main.4",
+    "2020.fnp-1.35",
+    "2020.starsem-1.8",
+    "2021.emnlp-main.615",
+    "2023.nlrse-1.9",
+    "P17-2016",
+    "P19-1377",
+    "W18-3104"
+   ],
+   "targets": [
+    "854-MAIN"
+   ]
+  },
+  {
+   "name": "hendrik buschmeier",
+   "prior": [
+    "2021.inlg-1.41",
+    "2023.findings-emnlp.1026",
+    "2024.emnlp-main.1084",
+    "2024.findings-acl.210",
+    "2024.legal-1.8",
+    "2024.sigdial-1.38",
+    "2025.babylm-main.29",
+    "2025.clasp-main.4",
+    "2025.dnd-16.8",
+    "2025.findings-acl.1236",
+    "L14-1013"
+   ],
+   "targets": [
+    "3590-MAIN"
+   ]
+  },
+  {
+   "name": "hexuan deng",
+   "prior": [
+    "2024.emnlp-main.768",
+    "2024.sighan-1.6",
+    "2025.acl-long.1414",
+    "2025.emnlp-main.293"
+   ],
+   "targets": [
+    "4892-MAIN"
+   ]
+  },
+  {
+   "name": "hitesh laxmichand patel",
+   "prior": [
+    "2025.acl-industry.51",
+    "2025.acl-industry.72",
+    "2025.acl-long.916",
+    "2025.emnlp-industry.10",
+    "2025.emnlp-industry.105",
+    "2025.emnlp-industry.14",
+    "2025.emnlp-industry.9",
+    "2025.emnlp-main.1653",
+    "2025.findings-acl.963",
+    "2025.ijcnlp-long.142",
+    "2025.ijcnlp-long.170",
+    "2025.knowledgenlp-1.20",
+    "2025.naacl-industry.46"
+   ],
+   "targets": [
+    "3936-MAIN",
+    "5281-MAIN",
+    "5325-MAIN",
+    "5377-FIND"
+   ]
+  },
+  {
+   "name": "hongcheng guo",
+   "prior": [
+    "2022.emnlp-main.184",
+    "2022.findings-emnlp.34",
+    "2023.findings-emnlp.661",
+    "2024.acl-long.100",
+    "2024.findings-acl.878",
+    "2024.findings-emnlp.232",
+    "2024.lrec-main.948",
+    "2025.acl-industry.8",
+    "2025.acl-industry.89",
+    "2025.emnlp-industry.180",
+    "2025.findings-acl.334",
+    "2025.findings-acl.373"
+   ],
+   "targets": [
+    "4136-FIND"
+   ]
+  },
+  {
+   "name": "hongyan wu",
+   "prior": [
+    "2024.ccl-3.13",
+    "2024.findings-emnlp.280",
+    "2025.acl-long.570",
+    "2025.coling-main.361"
+   ],
+   "targets": [
+    "8598-MAIN"
+   ]
+  },
+  {
+   "name": "hongyu li",
+   "prior": [
+    "2020.aacl-srw.21",
+    "2020.fever-1.4",
+    "2021.acl-short.120",
+    "2022.emnlp-main.357",
+    "2022.findings-acl.105",
+    "2023.semeval-1.92",
+    "2024.findings-emnlp.249",
+    "2024.smm4h-1.8",
+    "2025.acl-long.1479",
+    "2025.ccl-2.19",
+    "2025.semeval-1.132",
+    "D19-5828"
+   ],
+   "targets": [
+    "923-MAIN",
+    "7046-MAIN"
+   ]
+  },
+  {
+   "name": "huan zhao",
+   "prior": [
+    "2022.acl-long.216",
+    "2022.findings-emnlp.332",
+    "2024.findings-acl.720",
+    "2024.naacl-long.326",
+    "2025.acl-long.1063"
+   ],
+   "targets": [
+    "4460-MAIN"
+   ]
+  },
+  {
+   "name": "hui huang",
+   "prior": [
+    "2021.findings-emnlp.55",
+    "2022.coling-1.448",
+    "2022.wmt-1.125",
+    "2022.wmt-1.58",
+    "2023.acl-long.121",
+    "2023.ccl-1.54",
+    "2023.eval4nlp-1.11",
+    "2023.findings-acl.840",
+    "2024.ccl-1.101",
+    "2024.findings-emnlp.333",
+    "2024.semeval-1.253",
+    "2025.acl-long.523",
+    "2025.acl-long.941",
+    "2025.ccl-1.69",
+    "2025.emnlp-main.1628",
+    "2025.emnlp-main.322",
+    "2025.findings-acl.306",
+    "2025.findings-acl.743",
+    "2025.findings-acl.744",
+    "2025.findings-emnlp.576",
+    "2025.findings-naacl.455",
+    "2025.jeptalnrecital-coria.3",
+    "2025.naacl-long.604"
+   ],
+   "targets": [
+    "3358-MAIN",
+    "8870-MAIN",
+    "6560-FIND"
+   ]
+  },
+  {
+   "name": "hyeonseok lim",
+   "prior": [
+    "2024.findings-naacl.158",
+    "2024.lrec-main.1095",
+    "2025.coling-main.411",
+    "2025.findings-emnlp.702",
+    "2025.findings-naacl.250"
+   ],
+   "targets": [
+    "5761-FIND"
+   ]
+  },
+  {
+   "name": "ikhyun cho",
+   "prior": [
+    "2023.findings-emnlp.572",
+    "2024.findings-emnlp.554",
+    "2025.emnlp-main.1474",
+    "2025.findings-emnlp.1063",
+    "2025.findings-naacl.166"
+   ],
+   "targets": [
+    "5825-MAIN"
+   ]
+  },
+  {
+   "name": "irene li",
+   "prior": [
+    "2020.coling-main.99",
+    "2021.acl-short.127",
+    "2021.repl4nlp-1.1",
+    "2022.acl-long.199",
+    "2022.dlg4nlp-1.7",
+    "2022.lrec-1.576",
+    "2023.acl-short.16",
+    "2023.bea-1.3",
+    "2024.acl-long.388",
+    "2024.bionlp-1.13",
+    "2024.findings-acl.321",
+    "2024.findings-eacl.138",
+    "2025.acl-long.729",
+    "2025.emnlp-main.202",
+    "2025.emnlp-main.79",
+    "D18-1425",
+    "P18-1057",
+    "P19-1102",
+    "P19-1443"
+   ],
+   "targets": [
+    "2697-FIND"
+   ]
+  },
+  {
+   "name": "ishani mondal",
+   "prior": [
+    "2020.clinicalnlp-1.27",
+    "2020.knlp-1.4",
+    "2021.law-1.7",
+    "2021.naacl-main.423",
+    "2022.coling-1.381",
+    "2022.emnlp-main.340",
+    "2022.findings-aacl.35",
+    "2022.lrec-1.102",
+    "2023.findings-eacl.140",
+    "2024.computel-1.11",
+    "2024.eacl-long.163",
+    "2024.findings-emnlp.548",
+    "2024.findings-emnlp.780",
+    "2025.coling-main.392",
+    "2025.emnlp-industry.56",
+    "2025.naacl-long.27",
+    "2025.newsum-main.1",
+    "W19-1912"
+   ],
+   "targets": [
+    "351-MAIN",
+    "349-FIND"
+   ]
+  },
+  {
+   "name": "jaap jumelet",
+   "prior": [
+    "2020.blackboxnlp-1.32",
+    "2021.deelio-1.13",
+    "2021.eacl-main.176",
+    "2022.gebnlp-1.8",
+    "2022.tacl-1.60",
+    "2023.conll-1.18",
+    "2023.findings-acl.554",
+    "2023.findings-emnlp.288",
+    "2024.acl-long.248",
+    "2024.eacl-tutorials.4",
+    "2024.findings-acl.877",
+    "2024.findings-naacl.296",
+    "2024.tacl-1.87",
+    "2025.babylm-main.28",
+    "2025.emnlp-main.834",
+    "2025.emnlp-main.999",
+    "K19-1001",
+    "W18-5424"
+   ],
+   "targets": [
+    "926-MAIN"
+   ]
+  },
+  {
+   "name": "jaehyung kim",
+   "prior": [
+    "2023.acl-long.547",
+    "2023.findings-emnlp.223",
+    "2024.emnlp-main.504",
+    "2025.acl-long.1023",
+    "2025.emnlp-main.1723",
+    "2025.emnlp-main.1747",
+    "2025.emnlp-main.791",
+    "2025.findings-acl.1034",
+    "2025.naacl-long.598"
+   ],
+   "targets": [
+    "3203-MAIN",
+    "3205-MAIN",
+    "3630-MAIN",
+    "4567-MAIN",
+    "4600-MAIN",
+    "2621-FIND",
+    "5889-FIND"
+   ]
+  },
+  {
+   "name": "jaeyoung do",
+   "prior": [
+    "2023.acl-industry.35",
+    "2023.acl-long.703",
+    "2024.acl-short.62"
+   ],
+   "targets": [
+    "4338-MAIN"
+   ]
+  },
+  {
+   "name": "james xu zhao",
+   "prior": [
+    "2024.acl-long.395",
+    "2024.acl-srw.52",
+    "2025.findings-acl.161"
+   ],
+   "targets": [
+    "8901-MAIN"
+   ]
+  },
+  {
+   "name": "jan philip wahle",
+   "prior": [
+    "2022.emnlp-main.62",
+    "2022.gem-1.5",
+    "2022.lrec-1.283",
+    "2023.acl-long.734",
+    "2023.emnlp-main.746",
+    "2023.emnlp-main.797",
+    "2024.eacl-long.180",
+    "2024.emnlp-main.617",
+    "2024.findings-emnlp.393",
+    "2024.lrec-main.952",
+    "2024.sdp-1.10",
+    "2025.acl-long.436",
+    "2025.coling-main.421",
+    "2025.coling-main.69",
+    "2025.emnlp-demos.29",
+    "2025.emnlp-main.1386",
+    "2025.emnlp-main.526",
+    "2025.findings-acl.599",
+    "2025.findings-acl.606",
+    "2025.findings-emnlp.1269",
+    "2025.semeval-1.327"
+   ],
+   "targets": [
+    "3397-MAIN",
+    "9377-FIND"
+   ]
+  },
+  {
+   "name": "janghoon han",
+   "prior": [
+    "2021.naacl-main.122",
+    "2022.emnlp-main.418",
+    "2023.acl-long.159",
+    "2023.dstc-1.23",
+    "2023.findings-acl.628",
+    "2024.emnlp-main.1036",
+    "2024.findings-acl.912",
+    "2024.nlp4convai-1.6",
+    "2024.sigdial-1.39"
+   ],
+   "targets": [
+    "7979-FIND"
+   ]
+  },
+  {
+   "name": "jasabanta patro",
+   "prior": [
+    "2020.acl-main.96",
+    "2021.eacl-main.289",
+    "2022.semeval-1.131",
+    "2025.findings-emnlp.1308",
+    "D17-1240",
+    "D19-1663",
+    "S19-2040"
+   ],
+   "targets": [
+    "6359-FIND",
+    "6712-FIND"
+   ]
+  },
+  {
+   "name": "jay gala",
+   "prior": [
+    "2023.eacl-main.237",
+    "2023.wmt-1.88",
+    "2024.acl-long.833",
+    "2024.findings-acl.440",
+    "2024.findings-acl.560",
+    "2025.findings-emnlp.825",
+    "2025.naacl-long.600"
+   ],
+   "targets": [
+    "135-IND"
+   ]
+  },
+  {
+   "name": "jay pujara",
+   "prior": [
+    "2021.emnlp-main.410",
+    "2021.emnlp-main.557",
+    "2021.emnlp-main.598",
+    "2021.findings-emnlp.338",
+    "2021.findings-emnlp.349",
+    "2021.naacl-main.53",
+    "2021.nlp4convai-1.23",
+    "2021.sdp-1.10",
+    "2021.sigdial-1.13",
+    "2022.acl-long.192",
+    "2022.acl-long.196",
+    "2022.acl-long.88",
+    "2022.emnlp-main.714",
+    "2022.emnlp-main.751",
+    "2023.acl-demo.25",
+    "2023.acl-long.624",
+    "2023.eacl-main.219",
+    "2023.emnlp-main.36",
+    "2023.emnlp-main.55",
+    "2023.emnlp-main.948",
+    "2023.findings-emnlp.662",
+    "2023.insights-1.14",
+    "2023.matching-1.2",
+    "2024.findings-acl.904",
+    "2024.lrec-main.1085",
+    "2024.lrec-main.496",
+    "2024.nlp4convai-1.8",
+    "2024.woah-1.21",
+    "2025.emnlp-main.8",
+    "2025.findings-acl.1311",
+    "2025.findings-naacl.446",
+    "D17-1184"
+   ],
+   "targets": [
+    "6459-FIND"
+   ]
+  },
+  {
+   "name": "jean maillard",
+   "prior": [
+    "2020.emnlp-main.408",
+    "2020.tacl-1.16",
+    "2021.acl-long.89",
+    "2021.naacl-main.200",
+    "2022.findings-acl.92",
+    "2022.wmt-1.72",
+    "2023.acl-long.154",
+    "2023.findings-eacl.38",
+    "2023.findings-emnlp.642",
+    "2023.findings-emnlp.856",
+    "2024.acl-long.467",
+    "2024.sigul-1.21",
+    "2024.wmt-1.4",
+    "2025.emnlp-main.1400",
+    "2025.findings-acl.569",
+    "2025.wmt-1.26",
+    "P19-1508",
+    "W18-2903"
+   ],
+   "targets": [
+    "3727-MAIN"
+   ]
+  },
+  {
+   "name": "jeff z. pan",
+   "prior": [
+    "2021.acl-long.407",
+    "2022.argmining-1.9",
+    "2023.eacl-main.182",
+    "2023.emnlp-main.800",
+    "2023.findings-emnlp.594",
+    "2024.emnlp-main.1233",
+    "2024.emnlp-main.14",
+    "2024.emnlp-main.205",
+    "2024.emnlp-main.856",
+    "2024.findings-emnlp.459",
+    "2024.findings-emnlp.927",
+    "2024.lrec-main.1348",
+    "2025.acl-long.837",
+    "2025.acl-long.869",
+    "2025.coling-main.11",
+    "2025.emnlp-industry.174",
+    "2025.emnlp-main.558",
+    "2025.findings-acl.284",
+    "2025.findings-acl.291",
+    "2025.findings-acl.61",
+    "2025.findings-acl.624",
+    "2025.naacl-long.504",
+    "2025.naacl-long.513"
+   ],
+   "targets": [
+    "590-MAIN",
+    "6018-MAIN",
+    "8330-FIND"
+   ]
+  },
+  {
+   "name": "jenna kanerva",
+   "prior": [
+    "2020.iwpt-1.17",
+    "2020.lrec-1.470",
+    "2021.nodalida-main.1",
+    "2021.nodalida-main.29",
+    "2022.bea-1.30",
+    "2022.emnlp-demos.27",
+    "2022.lrec-1.120",
+    "2023.emnlp-main.164",
+    "2024.nlp4dh-1.21",
+    "2025.ranlp-1.146",
+    "2025.resourceful-1.8",
+    "D19-5728",
+    "K17-3001",
+    "K17-3012",
+    "K18-2013",
+    "W17-4808",
+    "W18-6006",
+    "W18-6012",
+    "W19-6125",
+    "W19-6204"
+   ],
+   "targets": [
+    "6918-MAIN"
+   ]
+  },
+  {
+   "name": "jia zhu",
+   "prior": [
+    "2020.semeval-1.47",
+    "2025.acl-long.148",
+    "2025.acl-long.361",
+    "2025.emnlp-main.215",
+    "2025.findings-acl.188",
+    "C16-2041",
+    "C18-1095",
+    "W17-5905"
+   ],
+   "targets": [
+    "4436-MAIN"
+   ]
+  },
+  {
+   "name": "jiakai wang",
+   "prior": [
+    "2024.findings-acl.252",
+    "2025.acl-long.1346",
+    "2025.emnlp-main.480"
+   ],
+   "targets": [
+    "4549-MAIN",
+    "5072-MAIN"
+   ]
+  },
+  {
+   "name": "jiale chen",
+   "prior": [
+    "2024.figlang-1.12",
+    "2025.emnlp-main.1195",
+    "2025.findings-acl.737",
+    "D19-1089"
+   ],
+   "targets": [
+    "2402-MAIN",
+    "6715-MAIN",
+    "7131-MAIN"
+   ]
+  },
+  {
+   "name": "jialian wu",
+   "prior": [
+    "2025.acl-long.275",
+    "2025.emnlp-main.140",
+    "2025.findings-emnlp.320"
+   ],
+   "targets": [
+    "1918-FIND"
+   ]
+  },
+  {
+   "name": "jian cheng",
+   "prior": [
+    "2025.acl-long.633",
+    "2025.findings-acl.551",
+    "2025.findings-acl.554",
+    "2025.findings-emnlp.676",
+    "2025.findings-emnlp.691",
+    "W19-3016"
+   ],
+   "targets": [
+    "2496-MAIN",
+    "2590-FIND"
+   ]
+  },
+  {
+   "name": "jianbin qin",
+   "prior": [
+    "2023.arabicnlp-1.16",
+    "2023.findings-emnlp.756",
+    "2024.findings-eacl.99",
+    "2025.coling-main.377"
+   ],
+   "targets": [
+    "615-MAIN",
+    "3909-MAIN"
+   ]
+  },
+  {
+   "name": "jianghao chen",
+   "prior": [
+    "2025.acl-long.154",
+    "2025.coling-main.555",
+    "2025.findings-acl.312"
+   ],
+   "targets": [
+    "572-MAIN"
+   ]
+  },
+  {
+   "name": "jianguo li",
+   "prior": [
+    "2023.findings-acl.200",
+    "2024.acl-long.233",
+    "2024.acl-long.791",
+    "2024.emnlp-main.459",
+    "2025.acl-long.676",
+    "2025.emnlp-main.970"
+   ],
+   "targets": [
+    "6928-MAIN",
+    "6413-FIND"
+   ]
+  },
+  {
+   "name": "jianqiao lu",
+   "prior": [
+    "2023.findings-emnlp.327",
+    "2024.findings-acl.259",
+    "2025.emnlp-main.209",
+    "2025.findings-acl.284",
+    "2025.findings-emnlp.1295"
+   ],
+   "targets": [
+    "388-MAIN",
+    "7818-MAIN"
+   ]
+  },
+  {
+   "name": "jiaoyan chen",
+   "prior": [
+    "2020.acl-main.272",
+    "2020.coling-industry.17",
+    "2022.semeval-1.33",
+    "2023.findings-acl.20",
+    "2023.findings-acl.213",
+    "2023.findings-acl.312",
+    "2023.findings-emnlp.211",
+    "2024.emnlp-main.205",
+    "2024.lrec-main.1348",
+    "2024.lrec-main.419",
+    "2024.naacl-industry.41",
+    "2025.acl-long.837",
+    "2025.coling-main.11",
+    "2025.emnlp-main.441",
+    "2025.findings-acl.137"
+   ],
+   "targets": [
+    "2871-MAIN"
+   ]
+  },
+  {
+   "name": "jiashuo sun",
+   "prior": [
+    "2024.emnlp-main.434",
+    "2024.findings-naacl.257",
+    "2024.lrec-main.122",
+    "2024.naacl-long.65",
+    "2025.coling-main.299"
+   ],
+   "targets": [
+    "6119-FIND"
+   ]
+  },
+  {
+   "name": "jiawei du",
+   "prior": [
+    "2024.emnlp-main.962",
+    "2024.findings-emnlp.583",
+    "2025.findings-emnlp.294"
+   ],
+   "targets": [
+    "3320-MAIN"
+   ]
+  },
+  {
+   "name": "jiayi wang",
+   "prior": [
+    "2020.findings-emnlp.197",
+    "2020.wmt-1.84",
+    "2021.findings-emnlp.401",
+    "2021.wmt-1.100",
+    "2022.findings-acl.73",
+    "2022.wmt-1.123",
+    "2023.acl-long.434",
+    "2024.naacl-long.122",
+    "2024.naacl-long.334",
+    "2024.wmt-1.2",
+    "2024.wmt-1.36",
+    "2025.acl-long.434",
+    "2025.emnlp-main.1426",
+    "2025.emnlp-main.656",
+    "2025.wmt-1.24",
+    "2025.wmt-1.65",
+    "W18-6465"
+   ],
+   "targets": [
+    "3025-MAIN"
+   ]
+  },
+  {
+   "name": "jie shi",
+   "prior": [
+    "2025.coling-main.256",
+    "2025.emnlp-main.178",
+    "2025.emnlp-main.64",
+    "2025.emnlp-main.869"
+   ],
+   "targets": [
+    "6985-MAIN"
+   ]
+  },
+  {
+   "name": "jielin qiu",
+   "prior": [
+    "2023.findings-acl.101",
+    "2023.findings-eacl.33",
+    "2023.findings-emnlp.120",
+    "2024.findings-emnlp.14",
+    "2024.naacl-long.105",
+    "2025.emnlp-demos.27"
+   ],
+   "targets": [
+    "2117-MAIN"
+   ]
+  },
+  {
+   "name": "jiho kim",
+   "prior": [
+    "2023.acl-long.895",
+    "2023.findings-emnlp.631",
+    "2025.findings-ijcnlp.29",
+    "2025.in2writing-1.6",
+    "2025.in2writing-1.7",
+    "C18-2005",
+    "C18-2011"
+   ],
+   "targets": [
+    "6745-MAIN"
+   ]
+  },
+  {
+   "name": "jin yea jang",
+   "prior": [
+    "2021.emnlp-main.277",
+    "2021.findings-emnlp.33",
+    "2022.cai-1.3",
+    "2022.lrec-1.734",
+    "2024.findings-emnlp.849",
+    "D17-1317",
+    "P17-2102"
+   ],
+   "targets": [
+    "58-FIND"
+   ]
+  },
+  {
+   "name": "jing huang",
+   "prior": [
+    "2020.acl-main.241",
+    "2021.naacl-main.206",
+    "2021.naacl-main.229",
+    "2021.repl4nlp-1.30",
+    "2021.sustainlp-1.10",
+    "2021.textgraphs-1.8",
+    "2022.acl-long.552",
+    "2022.emnlp-main.304",
+    "2022.emnlp-main.306",
+    "2023.acl-long.513",
+    "2023.blackboxnlp-1.24",
+    "2023.findings-acl.318",
+    "2023.findings-acl.385",
+    "2023.findings-acl.770",
+    "2023.findings-emnlp.509",
+    "2023.repl4nlp-1.10",
+    "2024.acl-long.470",
+    "2024.emnlp-main.598",
+    "2024.findings-naacl.178",
+    "2024.naacl-demo.16",
+    "2024.nlp4pi-1.7",
+    "2025.emnlp-main.551",
+    "2025.findings-acl.956",
+    "2025.naacl-long.476",
+    "K19-1070",
+    "P19-1260"
+   ],
+   "targets": [
+    "7244-MAIN"
+   ]
+  },
+  {
+   "name": "jing peng",
+   "prior": [
+    "2022.flp-1.27",
+    "2022.lrec-1.285",
+    "2022.unimplicit-1.4",
+    "2023.acl-short.85",
+    "2023.starsem-1.38",
+    "2024.emnlp-main.279",
+    "2024.findings-eacl.59",
+    "2025.ranlp-1.122",
+    "C16-1259",
+    "W18-4202",
+    "W19-2105"
+   ],
+   "targets": [
+    "3766-FIND"
+   ]
+  },
+  {
+   "name": "jingbo zhou",
+   "prior": [
+    "2020.aacl-main.54",
+    "2020.findings-emnlp.444",
+    "2022.emnlp-main.315",
+    "2023.findings-emnlp.44",
+    "2024.acl-long.716"
+   ],
+   "targets": [
+    "70-DEMO"
+   ]
+  },
+  {
+   "name": "jingchi jiang",
+   "prior": [
+    "2025.acl-long.576",
+    "2025.emnlp-main.1181",
+    "2025.findings-acl.344"
+   ],
+   "targets": [
+    "869-MAIN"
+   ]
+  },
+  {
+   "name": "jinghang gu",
+   "prior": [
+    "2020.lrec-1.14",
+    "2021.semeval-1.70",
+    "2022.csrnlp-1.7",
+    "2023.finnlp-2.7",
+    "2024.findings-emnlp.58",
+    "2024.smm4h-1.17",
+    "2025.acl-long.414",
+    "2025.acl-short.38",
+    "2025.emnlp-main.245",
+    "2025.findings-acl.210",
+    "2025.findings-naacl.236"
+   ],
+   "targets": [
+    "3095-FIND"
+   ]
+  },
+  {
+   "name": "jinghong chen",
+   "prior": [
+    "2023.sigdial-1.42",
+    "2024.acl-long.289",
+    "2024.acl-long.291",
+    "2024.naacl-short.34",
+    "2024.naacl-short.42",
+    "2025.emnlp-main.1215"
+   ],
+   "targets": [
+    "542-MAIN",
+    "802-IND",
+    "139-FIND"
+   ]
+  },
+  {
+   "name": "jingping liu",
+   "prior": [
+    "2021.acl-long.277",
+    "2022.coling-1.481",
+    "2024.findings-acl.544",
+    "2024.findings-acl.545",
+    "2024.findings-acl.815",
+    "2024.findings-emnlp.285",
+    "2024.lrec-main.1058",
+    "2025.acl-long.31",
+    "2025.acl-long.971",
+    "2025.coling-main.556",
+    "2025.findings-acl.34",
+    "2025.findings-acl.548",
+    "2025.findings-acl.886",
+    "2025.findings-naacl.154"
+   ],
+   "targets": [
+    "7376-MAIN",
+    "3843-FIND"
+   ]
+  },
+  {
+   "name": "jingwen zhang",
+   "prior": [
+    "2021.sigdial-1.5",
+    "2022.aacl-main.31",
+    "2023.eacl-main.53",
+    "2024.acl-long.773",
+    "P19-1566"
+   ],
+   "targets": [
+    "1696-MAIN"
+   ]
+  },
+  {
+   "name": "jun gao",
+   "prior": [
+    "2021.findings-emnlp.70",
+    "2022.acl-long.216",
+    "2022.constraint-1.2",
+    "2022.emnlp-main.437",
+    "2022.emnlp-main.821",
+    "2022.findings-emnlp.332",
+    "2022.naacl-main.216",
+    "2023.findings-acl.800",
+    "2023.findings-emnlp.76",
+    "2024.acl-long.806",
+    "2025.acl-long.24",
+    "2025.emnlp-main.211",
+    "2025.emnlp-main.357",
+    "2025.findings-emnlp.746",
+    "D18-1297",
+    "D19-1198",
+    "P19-1389"
+   ],
+   "targets": [
+    "4149-MAIN",
+    "8646-MAIN"
+   ]
+  },
+  {
+   "name": "junfei liu",
+   "prior": [
+    "2020.coling-main.236",
+    "2021.findings-emnlp.111",
+    "2021.semeval-1.30",
+    "2024.conll-1.15",
+    "2024.lrec-main.1160",
+    "2024.lrec-main.66"
+   ],
+   "targets": [
+    "8915-MAIN"
+   ]
+  },
+  {
+   "name": "junghyun min",
+   "prior": [
+    "2020.acl-main.212",
+    "2020.blackboxnlp-1.21",
+    "2025.nllp-1.22",
+    "2025.repl4nlp-1.10",
+    "2025.starsem-1.16",
+    "2025.udw-1.10"
+   ],
+   "targets": [
+    "5342-MAIN"
+   ]
+  },
+  {
+   "name": "jungong han",
+   "prior": [
+    "2025.acl-long.28",
+    "2025.emnlp-main.1244",
+    "2025.emnlp-main.997",
+    "2025.findings-emnlp.174",
+    "2025.naacl-long.75"
+   ],
+   "targets": [
+    "7757-MAIN",
+    "7828-FIND"
+   ]
+  },
+  {
+   "name": "junguo zhu",
+   "prior": [
+    "2020.ccl-1.41",
+    "2025.ccl-1.63",
+    "2025.ccl-1.67"
+   ],
+   "targets": [
+    "6979-FIND"
+   ]
+  },
+  {
+   "name": "junjie zhou",
+   "prior": [
+    "2024.acl-long.175",
+    "2025.acl-long.935",
+    "2025.acl-long.943"
+   ],
+   "targets": [
+    "1381-MAIN"
+   ]
+  },
+  {
+   "name": "junseok kim",
+   "prior": [
+    "2021.findings-emnlp.389",
+    "2023.dstc-1.21",
+    "2025.findings-ijcnlp.51",
+    "D19-5208"
+   ],
+   "targets": [
+    "5935-FIND"
+   ]
+  },
+  {
+   "name": "junyeong kim",
+   "prior": [
+    "2022.emnlp-main.280",
+    "2023.findings-emnlp.797",
+    "2025.emnlp-main.715",
+    "2025.findings-emnlp.1340"
+   ],
+   "targets": [
+    "4462-MAIN",
+    "2326-FIND",
+    "6585-FIND"
+   ]
+  },
+  {
+   "name": "kang-il lee",
+   "prior": [
+    "2023.dstc-1.23",
+    "2023.emnlp-main.1046",
+    "2023.emnlp-main.425",
+    "2024.naacl-long.449",
+    "2025.findings-emnlp.324",
+    "2025.findings-naacl.231",
+    "2025.findings-naacl.235",
+    "2025.naacl-long.429"
+   ],
+   "targets": [
+    "4652-FIND",
+    "7979-FIND"
+   ]
+  },
+  {
+   "name": "kang-min kim",
+   "prior": [
+    "2020.acl-main.364",
+    "2020.findings-emnlp.185",
+    "2020.lrec-1.587",
+    "2021.emnlp-demo.9",
+    "2022.emnlp-main.502",
+    "2022.findings-acl.119",
+    "2023.findings-eacl.85",
+    "2024.findings-emnlp.477",
+    "2025.emnlp-main.1513",
+    "2025.emnlp-main.1549",
+    "2025.naacl-industry.67",
+    "C18-1216"
+   ],
+   "targets": [
+    "6877-MAIN"
+   ]
+  },
+  {
+   "name": "kangyang luo",
+   "prior": [
+    "2024.findings-emnlp.595",
+    "2024.lrec-main.102",
+    "2025.acl-long.804",
+    "2025.emnlp-main.374",
+    "2025.emnlp-main.375",
+    "2025.findings-acl.422",
+    "2025.findings-acl.591",
+    "2025.findings-acl.795"
+   ],
+   "targets": [
+    "3249-MAIN",
+    "16-DEMO",
+    "7206-FIND"
+   ]
+  },
+  {
+   "name": "kevin heffernan",
+   "prior": [
+    "2020.coling-main.295",
+    "2020.lrec-1.124",
+    "2022.emnlp-demos.26",
+    "2022.findings-emnlp.154",
+    "2022.lrec-1.650",
+    "2023.acl-short.10",
+    "2023.eacl-main.108",
+    "2024.findings-acl.216"
+   ],
+   "targets": [
+    "3727-MAIN"
+   ]
+  },
+  {
+   "name": "kirill chirkunov",
+   "prior": [
+    "2025.arabicnlp-main.13",
+    "2025.bea-1.40",
+    "2025.coling-main.168",
+    "2025.in2writing-1.2"
+   ],
+   "targets": [
+    "4359-FIND"
+   ]
+  },
+  {
+   "name": "koh takeuchi",
+   "prior": [
+    "2024.findings-emnlp.101",
+    "2024.lrec-main.570",
+    "2025.ijcnlp-long.33"
+   ],
+   "targets": [
+    "7321-MAIN"
+   ]
+  },
+  {
+   "name": "korbinian randl",
+   "prior": [
+    "2024.findings-acl.459",
+    "2025.findings-emnlp.911",
+    "2025.semeval-1.325"
+   ],
+   "targets": [
+    "9543-FIND"
+   ]
+  },
+  {
+   "name": "kosuke akimoto",
+   "prior": [
+    "2021.emnlp-main.217",
+    "2023.findings-emnlp.784",
+    "D19-1645"
+   ],
+   "targets": [
+    "9044-FIND"
+   ]
+  },
+  {
+   "name": "kotaro funakoshi",
+   "prior": [
+    "2021.acl-long.115",
+    "2021.eacl-main.125",
+    "2022.coling-1.511",
+    "2022.naacl-main.301",
+    "2022.naacl-main.62",
+    "2023.acl-short.12",
+    "2023.bea-1.16",
+    "2023.eacl-main.65",
+    "2023.emnlp-main.996",
+    "2023.inlg-genchal.12",
+    "2023.ranlp-1.74",
+    "2024.eacl-short.32",
+    "2024.findings-emnlp.893",
+    "2024.findings-naacl.199",
+    "2024.lrec-main.1051",
+    "2024.sigdial-1.28",
+    "2025.acl-demo.38",
+    "2025.acl-long.149",
+    "2025.iwsds-1.28",
+    "2025.iwsds-1.29",
+    "2025.sigdial-1.12",
+    "2025.sigdial-1.36",
+    "L16-1502",
+    "W18-6106"
+   ],
+   "targets": [
+    "2446-MAIN",
+    "2668-MAIN",
+    "3931-FIND"
+   ]
+  },
+  {
+   "name": "kouta nakayama",
+   "prior": [
+    "2021.findings-emnlp.383",
+    "2022.coling-1.331",
+    "2025.emnlp-main.538"
+   ],
+   "targets": [
+    "4059-MAIN"
+   ]
+  },
+  {
+   "name": "krishna garg",
+   "prior": [
+    "2022.findings-emnlp.427",
+    "2023.acl-long.560",
+    "2023.findings-acl.534",
+    "2024.findings-emnlp.286"
+   ],
+   "targets": [
+    "3757-MAIN"
+   ]
+  },
+  {
+   "name": "kritarth prasad",
+   "prior": [
+    "2025.africanlp-1.26",
+    "2025.findings-acl.367",
+    "2025.findings-naacl.466"
+   ],
+   "targets": [
+    "5409-FIND"
+   ]
+  },
+  {
+   "name": "lei shi",
+   "prior": [
+    "2024.acl-demos.32",
+    "2024.acl-long.266",
+    "2025.acl-long.1348",
+    "2025.acl-srw.33",
+    "2025.acl-srw.35",
+    "2025.emnlp-main.1278",
+    "2025.findings-emnlp.1226",
+    "C16-1253"
+   ],
+   "targets": [
+    "7370-MAIN",
+    "804-IND"
+   ]
+  },
+  {
+   "name": "leonid sigal",
+   "prior": [
+    "2025.acl-long.1241",
+    "2025.emnlp-main.607",
+    "2025.findings-acl.246",
+    "2025.findings-emnlp.665"
+   ],
+   "targets": [
+    "5264-MAIN"
+   ]
+  },
+  {
+   "name": "li chen",
+   "prior": [
+    "2020.acl-demos.1",
+    "2021.acl-long.383",
+    "2021.semeval-1.8",
+    "2024.lrec-main.886",
+    "2025.acl-srw.94",
+    "N19-1289"
+   ],
+   "targets": [
+    "2741-MAIN"
+   ]
+  },
+  {
+   "name": "liang zhao",
+   "prior": [
+    "2020.semeval-1.126",
+    "2022.coling-1.170",
+    "2022.lrec-1.213",
+    "2023.findings-emnlp.540",
+    "2024.acl-long.648",
+    "2024.ccl-3.24",
+    "2024.emnlp-main.223",
+    "2024.findings-acl.264",
+    "2024.findings-emnlp.582",
+    "2024.naacl-long.184",
+    "2025.acl-long.1126",
+    "2025.acl-long.1199",
+    "2025.acl-long.2",
+    "2025.findings-emnlp.631",
+    "2025.findings-emnlp.646",
+    "2025.findings-naacl.232",
+    "2025.naacl-long.424",
+    "C18-1305",
+    "D19-1438",
+    "D19-1554"
+   ],
+   "targets": [
+    "170-MAIN",
+    "7239-FIND"
+   ]
+  },
+  {
+   "name": "liangyu chen",
+   "prior": [
+    "2020.acl-main.639",
+    "2022.findings-naacl.96",
+    "2022.semeval-1.41",
+    "2025.coling-industry.56",
+    "2025.findings-acl.703"
+   ],
+   "targets": [
+    "2298-MAIN"
+   ]
+  },
+  {
+   "name": "lianzhe huang",
+   "prior": [
+    "2020.coling-main.69",
+    "2022.acl-long.491",
+    "2022.emnlp-main.790",
+    "D19-1345"
+   ],
+   "targets": [
+    "9792-FIND"
+   ]
+  },
+  {
+   "name": "linfeng zhang",
+   "prior": [
+    "2025.acl-long.1055",
+    "2025.acl-long.1135",
+    "2025.emnlp-main.1112",
+    "2025.emnlp-main.505",
+    "2025.emnlp-main.98",
+    "2025.findings-acl.534",
+    "2025.findings-acl.802",
+    "2025.findings-naacl.125"
+   ],
+   "targets": [
+    "2094-MAIN",
+    "2837-MAIN",
+    "3759-MAIN",
+    "6011-MAIN"
+   ]
+  },
+  {
+   "name": "linhai zhang",
+   "prior": [
+    "2021.emnlp-main.253",
+    "2021.emnlp-main.551",
+    "2021.findings-emnlp.404",
+    "2021.findings-emnlp.412",
+    "2022.acl-long.413",
+    "2022.coling-1.224",
+    "2022.coling-1.416",
+    "2022.findings-acl.110",
+    "2023.emnlp-main.446",
+    "2023.findings-acl.164",
+    "2023.findings-acl.384",
+    "2023.findings-acl.616",
+    "2024.findings-acl.208",
+    "2024.findings-acl.209",
+    "2024.lrec-main.1363",
+    "2025.acl-long.508",
+    "2025.acl-long.529",
+    "2025.acl-long.800",
+    "2025.emnlp-main.36",
+    "2025.findings-acl.517",
+    "2025.findings-acl.840",
+    "2025.findings-emnlp.214"
+   ],
+   "targets": [
+    "20-DEMO",
+    "31-DEMO",
+    "4547-FIND"
+   ]
+  },
+  {
+   "name": "linlin shen",
+   "prior": [
+    "2022.coling-1.344",
+    "2023.acl-demo.20",
+    "2024.acl-long.514",
+    "2025.acl-long.1178",
+    "2025.acl-long.711"
+   ],
+   "targets": [
+    "3019-MAIN"
+   ]
+  },
+  {
+   "name": "liviu p dinu",
+   "prior": [
+    "2022.lchange-1.20",
+    "2024.emnlp-main.362",
+    "2025.emnlp-main.773",
+    "2025.gem-1.53"
+   ],
+   "targets": [
+    "7366-FIND"
+   ]
+  },
+  {
+   "name": "maarten de rijke",
+   "prior": [
+    "2020.findings-emnlp.209",
+    "2020.findings-emnlp.316",
+    "2020.lrec-1.257",
+    "2021.acl-long.436",
+    "2021.acl-long.438",
+    "2022.acl-long.248",
+    "2022.dialdoc-1.5",
+    "2022.in2writing-1.10",
+    "2022.naacl-main.4",
+    "2023.acl-long.348",
+    "2023.acl-long.424",
+    "2023.findings-emnlp.147",
+    "2023.findings-emnlp.422",
+    "2024.acl-long.168",
+    "2024.emnlp-main.300",
+    "2024.emnlp-main.5",
+    "2024.emnlp-main.805",
+    "2024.findings-acl.614",
+    "2024.findings-acl.829",
+    "2024.findings-acl.871",
+    "2024.findings-emnlp.92",
+    "2024.findings-naacl.80",
+    "2025.findings-acl.1087",
+    "2025.findings-acl.543",
+    "2025.findings-acl.717",
+    "2025.findings-emnlp.1151",
+    "2025.findings-emnlp.673",
+    "2025.findings-emnlp.839",
+    "L06-1515",
+    "W18-5712"
+   ],
+   "targets": [
+    "6997-MAIN"
+   ]
+  },
+  {
+   "name": "maged s. al-shaibani",
+   "prior": [
+    "2020.nlposs-1.2",
+    "2022.acl-demo.9",
+    "2022.lrec-1.681",
+    "2023.findings-emnlp.775",
+    "2024.findings-acl.764",
+    "2025.findings-emnlp.1254",
+    "2025.findings-emnlp.655"
+   ],
+   "targets": [
+    "2882-MAIN",
+    "7217-MAIN"
+   ]
+  },
+  {
+   "name": "maksim savkin",
+   "prior": [
+    "2024.emnlp-demo.47",
+    "2025.findings-emnlp.626",
+    "2025.naacl-srw.23",
+    "2025.semeval-1.126",
+    "2025.semeval-1.137"
+   ],
+   "targets": [
+    "139-DEMO"
+   ]
+  },
+  {
+   "name": "manish gupta",
+   "prior": [
+    "2018.eamt-main.16",
+    "2020.coling-main.425",
+    "2020.coling-main.552",
+    "2020.sdp-1.39",
+    "2022.coling-1.10",
+    "2022.coling-1.11",
+    "2022.emnlp-main.675",
+    "2022.naacl-main.124",
+    "2022.naacl-main.235",
+    "2023.acl-long.791",
+    "2023.findings-acl.415",
+    "2023.findings-emnlp.290",
+    "2023.findings-emnlp.477",
+    "2023.inlg-main.2",
+    "2024.emnlp-main.798",
+    "2024.wildre-1.4",
+    "2025.acl-long.730",
+    "2025.acl-long.834",
+    "2025.emnlp-main.1748",
+    "2025.emnlp-main.348",
+    "2025.findings-acl.1216",
+    "2025.findings-emnlp.440",
+    "2025.findings-emnlp.982",
+    "2025.findings-ijcnlp.101",
+    "2025.findings-ijcnlp.118",
+    "D19-1174",
+    "I17-2034",
+    "P18-1146",
+    "S19-2009",
+    "S19-2109",
+    "S19-2203"
+   ],
+   "targets": [
+    "4309-MAIN",
+    "500-IND",
+    "7992-FIND",
+    "8023-FIND"
+   ]
+  },
+  {
+   "name": "manuel brack",
+   "prior": [
+    "2024.emnlp-main.1217",
+    "2024.mrl-1.19",
+    "2024.wmt-1.23",
+    "2025.acl-long.966",
+    "2025.emnlp-main.449"
+   ],
+   "targets": [
+    "8396-MAIN"
+   ]
+  },
+  {
+   "name": "marcell fekete",
+   "prior": [
+    "2024.mrl-1.17",
+    "2024.tacl-1.53",
+    "2025.acl-short.19",
+    "2025.findings-naacl.49"
+   ],
+   "targets": [
+    "4449-MAIN"
+   ]
+  },
+  {
+   "name": "marie bauer",
+   "prior": [
+    "2024.clinicalnlp-1.44",
+    "2024.lrec-main.162",
+    "2024.lrec-main.324",
+    "2025.cl4health-1.10",
+    "2025.gem-1.5"
+   ],
+   "targets": [
+    "221-IND"
+   ]
+  },
+  {
+   "name": "maximilian maurer",
+   "prior": [
+    "2024.argmining-1.18",
+    "2024.findings-emnlp.354",
+    "2025.emnlp-main.1755",
+    "2025.naacl-long.382"
+   ],
+   "targets": [
+    "1149-MAIN"
+   ]
+  },
+  {
+   "name": "md. rafiul biswas",
+   "prior": [
+    "2024.arabicnlp-1.44",
+    "2024.arabicnlp-1.45",
+    "2024.arabicnlp-1.50",
+    "2024.lrec-main.1308",
+    "2025.arabicnlp-sharedtasks.52",
+    "2025.arabicnlp-sharedtasks.75",
+    "2025.ranlp-1.162",
+    "2025.ranlp-1.163",
+    "2025.ranlp-1.19",
+    "2025.ranlp-ahasis.4"
+   ],
+   "targets": [
+    "6648-FIND"
+   ]
+  },
+  {
+   "name": "megha sundriyal",
+   "prior": [
+    "2021.eacl-main.277",
+    "2022.constraint-1.8",
+    "2022.emnlp-main.525",
+    "2023.emnlp-main.236",
+    "2023.findings-emnlp.439",
+    "2025.emnlp-main.428",
+    "2025.findings-emnlp.987"
+   ],
+   "targets": [
+    "6823-MAIN"
+   ]
+  },
+  {
+   "name": "mei tu",
+   "prior": [
+    "2012.iwslt-papers.9",
+    "2019.iwslt-1.7",
+    "2022.acl-long.19",
+    "2023.acl-long.63",
+    "2023.findings-emnlp.330",
+    "2024.findings-naacl.154"
+   ],
+   "targets": [
+    "6917-MAIN"
+   ]
+  },
+  {
+   "name": "menan velayuthan",
+   "prior": [
+    "2024.eacl-long.52",
+    "2024.wmt-1.87",
+    "2025.coling-main.400",
+    "2025.emnlp-main.1435",
+    "2025.loresmt-1.15"
+   ],
+   "targets": [
+    "3516-MAIN"
+   ]
+  },
+  {
+   "name": "meng chen",
+   "prior": [
+    "2020.lrec-1.58",
+    "2022.coling-1.329",
+    "2022.lrec-1.622",
+    "2022.naacl-main.103",
+    "2023.acl-long.158",
+    "2023.acl-long.287",
+    "2023.acl-long.564",
+    "2025.acl-short.39",
+    "2025.naacl-demo.23",
+    "2025.naacl-long.620"
+   ],
+   "targets": [
+    "2092-MAIN"
+   ]
+  },
+  {
+   "name": "meng yang",
+   "prior": [
+    "2020.findings-emnlp.382",
+    "2021.naacl-main.464",
+    "2023.emnlp-main.129",
+    "2023.findings-acl.570",
+    "2024.emnlp-main.49"
+   ],
+   "targets": [
+    "8257-MAIN",
+    "1046-FIND"
+   ]
+  },
+  {
+   "name": "michael sullivan",
+   "prior": [
+    "2023.semeval-1.135",
+    "2024.eacl-long.116",
+    "2025.emnlp-main.1517",
+    "2025.emnlp-main.934",
+    "2025.emnlp-main.936",
+    "2025.findings-acl.635"
+   ],
+   "targets": [
+    "2026-MAIN",
+    "2044-MAIN",
+    "7051-MAIN"
+   ]
+  },
+  {
+   "name": "miles williams",
+   "prior": [
+    "2024.acl-long.544",
+    "2024.tacl-1.64",
+    "2025.naacl-long.509",
+    "2025.repl4nlp-1.14"
+   ],
+   "targets": [
+    "2443-FIND"
+   ]
+  },
+  {
+   "name": "milind agarwal",
+   "prior": [
+    "2020.nlpcovid19-2.31",
+    "2023.emnlp-main.895",
+    "2023.iwslt-1.1",
+    "2023.sigmorphon-1.27",
+    "2023.vardial-1.8",
+    "2024.americasnlp-1.10",
+    "2025.computel-main.13",
+    "2025.computel-main.15",
+    "2025.naacl-long.377"
+   ],
+   "targets": [
+    "8344-MAIN"
+   ]
+  },
+  {
+   "name": "minbyul jeong",
+   "prior": [
+    "2020.nlpcovid19-2.1",
+    "2024.emnlp-main.1194",
+    "2025.acl-long.812"
+   ],
+   "targets": [
+    "6094-MAIN"
+   ]
+  },
+  {
+   "name": "ming dong",
+   "prior": [
+    "2022.emnlp-main.342",
+    "2025.ccl-1.11",
+    "2025.coling-main.277",
+    "2025.coling-main.717",
+    "2025.emnlp-main.197",
+    "2025.findings-emnlp.265"
+   ],
+   "targets": [
+    "3655-MAIN"
+   ]
+  },
+  {
+   "name": "mingqian zheng",
+   "prior": [
+    "2024.findings-emnlp.888",
+    "2025.emnlp-main.831",
+    "2025.findings-emnlp.630",
+    "2025.naacl-long.594"
+   ],
+   "targets": [
+    "9227-MAIN"
+   ]
+  },
+  {
+   "name": "minjun kim",
+   "prior": [
+    "2024.findings-naacl.158",
+    "2025.acl-long.1382",
+    "2025.coling-main.411",
+    "2025.findings-acl.540",
+    "2025.findings-emnlp.702"
+   ],
+   "targets": [
+    "3289-MAIN",
+    "9693-MAIN"
+   ]
+  },
+  {
+   "name": "minseok choi",
+   "prior": [
+    "2022.emnlp-main.366",
+    "2023.acl-long.180",
+    "2023.findings-emnlp.199",
+    "2024.findings-emnlp.630",
+    "2025.acl-long.1371"
+   ],
+   "targets": [
+    "9283-MAIN"
+   ]
+  },
+  {
+   "name": "mohammad rostami",
+   "prior": [
+    "2021.findings-emnlp.62",
+    "2023.findings-acl.490",
+    "2023.findings-emnlp.466",
+    "2023.findings-emnlp.769"
+   ],
+   "targets": [
+    "40-MAIN"
+   ]
+  },
+  {
+   "name": "mustafa jarrar",
+   "prior": [
+    "2021.gwc-1.25",
+    "2021.ranlp-1.5",
+    "2021.semeval-1.99",
+    "2022.lrec-1.387",
+    "2022.lrec-1.82",
+    "2023.arabicnlp-1.2",
+    "2023.arabicnlp-1.22",
+    "2023.arabicnlp-1.25",
+    "2023.arabicnlp-1.29",
+    "2023.arabicnlp-1.83",
+    "2023.gwc-1.31",
+    "2023.gwc-1.34",
+    "2024.arabicnlp-1.101",
+    "2024.arabicnlp-1.26",
+    "2024.arabicnlp-1.30",
+    "2024.arabicnlp-1.34",
+    "2024.arabicnlp-1.56",
+    "2024.arabicnlp-1.69",
+    "2024.emnlp-main.1211",
+    "2024.lrec-main.1170",
+    "2024.semeval-1.128",
+    "2025.acl-long.1579",
+    "2025.arabicnlp-main.14",
+    "2025.arabicnlp-sharedtasks.1",
+    "2025.arabicnlp-sharedtasks.52",
+    "2025.arabicnlp-sharedtasks.99",
+    "2025.emnlp-main.1741",
+    "2025.findings-acl.382",
+    "2025.findings-emnlp.1254",
+    "2025.findings-emnlp.1359"
+   ],
+   "targets": [
+    "2882-MAIN"
+   ]
+  },
+  {
+   "name": "nafise sadat moosavi",
+   "prior": [
+    "2020.acl-main.770",
+    "2020.coling-main.538",
+    "2020.emnlp-main.613",
+    "2020.findings-emnlp.74",
+    "2021.acl-long.448",
+    "2021.emnlp-main.713",
+    "2021.naacl-main.329",
+    "2022.coling-1.300",
+    "2022.crac-1.7",
+    "2022.lrec-1.521",
+    "2023.acl-long.838",
+    "2023.dnd-14.3",
+    "2023.eacl-main.261",
+    "2023.findings-eacl.181",
+    "2023.iwcs-1.19",
+    "2023.nejlt-1.5",
+    "2023.starsem-1.42",
+    "2024.lrec-main.1484",
+    "2025.acl-long.362",
+    "2025.coling-main.514",
+    "2025.emnlp-main.1370",
+    "2025.emnlp-main.1740",
+    "2025.findings-acl.530",
+    "2025.findings-emnlp.1044",
+    "2025.ijcnlp-long.163",
+    "2025.ijcnlp-long.40",
+    "2025.ijcnlp-long.98",
+    "D17-1138",
+    "D18-1018",
+    "D19-1171",
+    "P17-2003",
+    "P19-1408",
+    "W17-1501"
+   ],
+   "targets": [
+    "9915-TACL",
+    "7583-MAIN"
+   ]
+  },
+  {
+   "name": "najoung kim",
+   "prior": [
+    "2020.acl-main.480",
+    "2020.emnlp-main.731",
+    "2021.acl-long.304",
+    "2023.acl-long.213",
+    "2023.acl-long.361",
+    "2023.acl-long.472",
+    "2023.emnlp-main.194",
+    "2023.emnlp-main.963",
+    "2023.findings-acl.523",
+    "2024.emnlp-main.235",
+    "2024.emnlp-main.364",
+    "2024.genbench-1.9",
+    "2024.naacl-long.102",
+    "2025.blackboxnlp-1.32",
+    "2025.emnlp-main.796",
+    "P19-1439",
+    "S19-1026"
+   ],
+   "targets": [
+    "5178-MAIN"
+   ]
+  },
+  {
+   "name": "nedim lipka",
+   "prior": [
+    "2020.aacl-demo.3",
+    "2020.acl-main.762",
+    "2020.semeval-1.184",
+    "2021.acl-long.126",
+    "2021.emnlp-main.145",
+    "2021.emnlp-main.520",
+    "2021.naacl-main.221",
+    "2024.emnlp-demo.26",
+    "2024.knowledgenlp-1.2",
+    "2024.lrec-main.1080",
+    "2025.acl-long.1094",
+    "2025.acl-long.708",
+    "2025.emnlp-main.1144",
+    "2025.findings-acl.941",
+    "2025.findings-emnlp.521",
+    "2025.ijcnlp-tutorials.1",
+    "2025.naacl-long.20",
+    "2025.naacl-short.74",
+    "2025.ranlp-1.13",
+    "2025.ranlp-1.43",
+    "2025.ranlp-1.93",
+    "2025.ranlp-1.96",
+    "2025.sdp-1.12",
+    "P19-1112",
+    "W18-3105",
+    "W18-6538",
+    "W19-8666"
+   ],
+   "targets": [
+    "8596-FIND"
+   ]
+  },
+  {
+   "name": "nicholas andrews",
+   "prior": [
+    "2020.acl-main.720",
+    "2020.emnlp-main.450",
+    "2020.repl4nlp-1.18",
+    "2021.emnlp-main.70",
+    "2021.naacl-main.415",
+    "2022.findings-emnlp.206",
+    "2023.findings-acl.520",
+    "2023.tacl-1.80",
+    "2024.emnlp-main.725",
+    "2024.findings-acl.883",
+    "2024.findings-eacl.34",
+    "2024.findings-emnlp.486",
+    "2024.tacl-1.49",
+    "2025.findings-acl.227",
+    "2025.ijcnlp-long.54",
+    "D19-1178",
+    "P17-1095",
+    "W18-1114",
+    "W18-6127"
+   ],
+   "targets": [
+    "5521-MAIN"
+   ]
+  },
+  {
+   "name": "nikos voskarides",
+   "prior": [
+    "2021.sustainlp-1.7",
+    "2022.aacl-short.31",
+    "2022.in2writing-1.10"
+   ],
+   "targets": [
+    "1171-MAIN",
+    "1193-MAIN"
+   ]
+  },
+  {
+   "name": "niladri chatterjee",
+   "prior": [
+    "2003.mtsummit-papers.19",
+    "2020.fnp-1.4",
+    "2021.cmcl-1.14",
+    "2021.cmcl-1.8",
+    "2021.nlp4if-1.14",
+    "2021.semeval-1.10",
+    "2022.creativesumm-1.2",
+    "2022.semeval-1.57",
+    "2023.semeval-1.111",
+    "2023.semeval-1.19",
+    "2023.semeval-1.20",
+    "2024.emnlp-main.889"
+   ],
+   "targets": [
+    "4153-FIND"
+   ]
+  },
+  {
+   "name": "ninareh mehrabi",
+   "prior": [
+    "2021.emnlp-main.410",
+    "2022.naacl-main.204",
+    "2022.trustnlp-1.2",
+    "2023.acl-long.804",
+    "2024.acl-long.665",
+    "2024.emnlp-main.41",
+    "2024.emnlp-main.461",
+    "2024.findings-eacl.91",
+    "2024.findings-emnlp.779",
+    "2024.findings-naacl.110",
+    "2024.findings-naacl.113",
+    "2024.naacl-long.405",
+    "2024.trustnlp-1.20",
+    "2025.emnlp-main.1038",
+    "2025.emnlp-main.157",
+    "2025.findings-acl.1166",
+    "2025.findings-naacl.129"
+   ],
+   "targets": [
+    "8458-MAIN"
+   ]
+  },
+  {
+   "name": "ning ding",
+   "prior": [
+    "2020.acl-main.104",
+    "2020.acl-main.595",
+    "2021.acl-long.181",
+    "2021.acl-long.248",
+    "2022.acl-demo.10",
+    "2022.acl-long.158",
+    "2022.acl-long.483",
+    "2022.emnlp-main.60",
+    "2022.findings-emnlp.244",
+    "2022.findings-emnlp.512",
+    "2022.naacl-main.313",
+    "2022.semeval-1.77",
+    "2023.acl-demo.26",
+    "2023.acl-long.499",
+    "2023.acl-long.840",
+    "2023.acl-long.860",
+    "2023.acl-short.24",
+    "2023.emnlp-main.183",
+    "2023.emnlp-main.252",
+    "2023.emnlp-main.597",
+    "2023.emnlp-main.931",
+    "2023.findings-acl.390",
+    "2023.findings-acl.57",
+    "2024.acl-long.235",
+    "2024.acl-long.644",
+    "2024.emnlp-main.808",
+    "2024.emnlp-main.85",
+    "2024.findings-acl.124",
+    "2025.acl-long.42",
+    "2025.acl-long.6",
+    "2025.emnlp-main.945",
+    "2025.findings-acl.13",
+    "2025.mathnlp-main.4",
+    "D19-1033",
+    "P19-1430"
+   ],
+   "targets": [
+    "2380-MAIN",
+    "3258-MAIN",
+    "9369-MAIN",
+    "9222-FIND"
+   ]
+  },
+  {
+   "name": "nishanth sridhar nakshatri",
+   "prior": [
+    "2022.nlpcss-1.20",
+    "2025.findings-acl.32",
+    "2025.naacl-long.239"
+   ],
+   "targets": [
+    "7740-MAIN"
+   ]
+  },
+  {
+   "name": "nojun kwak",
+   "prior": [
+    "2022.emnlp-main.6",
+    "2022.findings-acl.289",
+    "2022.lrec-1.304",
+    "2023.acl-long.117",
+    "2024.clinicalnlp-1.30",
+    "2024.emnlp-industry.41",
+    "2024.naacl-long.224",
+    "2024.trustnlp-1.7",
+    "P19-1347"
+   ],
+   "targets": [
+    "3257-MAIN",
+    "317-IND"
+   ]
+  },
+  {
+   "name": "nour rabih",
+   "prior": [
+    "2022.wanlp-1.33",
+    "2024.arabicnlp-1.18",
+    "2024.arabicnlp-1.80",
+    "2024.osact-1.12"
+   ],
+   "targets": [
+    "4359-FIND"
+   ]
+  },
+  {
+   "name": "nurkhan laiyk",
+   "prior": [
+    "2025.acl-long.701",
+    "2025.acl-long.706",
+    "2025.findings-acl.507",
+    "2025.genaidetect-1.27"
+   ],
+   "targets": [
+    "4252-FIND"
+   ]
+  },
+  {
+   "name": "olivier boeffard",
+   "prior": [
+    "2005.jeptalnrecital-long.36",
+    "L08-1083",
+    "L08-1397",
+    "L08-1527",
+    "L12-1192",
+    "L12-1363"
+   ],
+   "targets": [
+    "4748-FIND"
+   ]
+  },
+  {
+   "name": "omar sharif",
+   "prior": [
+    "2020.icon-techdofication.8",
+    "2021.dravidianlangtech-1.35",
+    "2021.dravidianlangtech-1.43",
+    "2021.ltedi-1.25",
+    "2021.naacl-srw.19",
+    "2022.aacl-srw.5",
+    "2022.constraint-1.9",
+    "2022.dravidianlangtech-1.27",
+    "2022.dravidianlangtech-1.30",
+    "2022.dravidianlangtech-1.31",
+    "2022.dravidianlangtech-1.34",
+    "2022.lrec-1.165",
+    "2023.findings-emnlp.273",
+    "2023.gem-1.23",
+    "2024.acl-long.454",
+    "2024.eacl-long.153",
+    "2024.eacl-srw.12",
+    "2024.emnlp-main.673",
+    "2025.acl-long.1221",
+    "2025.findings-acl.915",
+    "2025.findings-emnlp.649"
+   ],
+   "targets": [
+    "3018-FIND"
+   ]
+  },
+  {
+   "name": "oren barkan",
+   "prior": [
+    "2020.acl-main.356",
+    "2020.emnlp-main.284",
+    "2020.findings-emnlp.154",
+    "2024.acl-long.506",
+    "2024.findings-emnlp.551",
+    "2024.findings-emnlp.556"
+   ],
+   "targets": [
+    "3991-FIND"
+   ]
+  },
+  {
+   "name": "pavel kral",
+   "prior": [
+    "2020.fnp-1.27",
+    "2020.lrec-1.549",
+    "2021.ranlp-1.59",
+    "2021.ranlp-1.65",
+    "2024.lrec-main.316",
+    "2024.lrec-main.384",
+    "2024.semeval-1.49",
+    "2024.wassa-1.6",
+    "2025.acl-long.41",
+    "2025.semeval-1.31"
+   ],
+   "targets": [
+    "4551-MAIN"
+   ]
+  },
+  {
+   "name": "peilin wu",
+   "prior": [
+    "2025.emnlp-main.314",
+    "2025.emnlp-main.998",
+    "2025.findings-acl.698"
+   ],
+   "targets": [
+    "2961-FIND"
+   ]
+  },
+  {
+   "name": "pengcheng wu",
+   "prior": [
+    "2025.coling-main.551",
+    "2025.coling-main.571",
+    "2025.emnlp-main.1216"
+   ],
+   "targets": [
+    "6128-MAIN"
+   ]
+  },
+  {
+   "name": "philippe laban",
+   "prior": [
+    "2020.acl-demos.43",
+    "2020.acl-main.460",
+    "2021.acl-long.498",
+    "2021.acl-short.134",
+    "2021.naacl-main.255",
+    "2022.emnlp-main.135",
+    "2022.findings-emnlp.380",
+    "2022.findings-naacl.111",
+    "2022.findings-naacl.9",
+    "2022.tacl-1.10",
+    "2023.acl-long.172",
+    "2023.acl-long.596",
+    "2023.acl-long.650",
+    "2023.emnlp-demo.14",
+    "2023.emnlp-main.600",
+    "2023.findings-emnlp.657",
+    "2024.acl-tutorials.2",
+    "2024.emnlp-industry.94",
+    "2024.emnlp-main.499",
+    "2024.emnlp-main.552",
+    "2024.naacl-long.32",
+    "2025.acl-long.1577",
+    "2025.findings-acl.249",
+    "2025.in2writing-1.7",
+    "2025.naacl-long.194",
+    "2025.naacl-long.301",
+    "2025.naacl-tutorial.1",
+    "W17-2701"
+   ],
+   "targets": [
+    "3812-MAIN"
+   ]
+  },
+  {
+   "name": "ping chen",
+   "prior": [
+    "2021.icon-main.33",
+    "2022.emnlp-main.85",
+    "2023.emnlp-main.499",
+    "2023.emnlp-main.756",
+    "2024.findings-acl.512",
+    "2025.acl-short.2",
+    "2025.findings-emnlp.541",
+    "2025.findings-emnlp.698"
+   ],
+   "targets": [
+    "834-IND"
+   ]
+  },
+  {
+   "name": "pradeep natarajan",
+   "prior": [
+    "2021.emnlp-main.491",
+    "2022.emnlp-industry.37",
+    "2022.emnlp-industry.48",
+    "2022.naacl-industry.17",
+    "2023.findings-emnlp.830"
+   ],
+   "targets": [
+    "9294-MAIN"
+   ]
+  },
+  {
+   "name": "qi cao",
+   "prior": [
+    "2023.emnlp-main.550",
+    "2024.acl-long.337",
+    "2024.emnlp-main.1008",
+    "2024.findings-acl.357",
+    "2024.findings-emnlp.335",
+    "2025.acl-long.745",
+    "2025.emnlp-main.238",
+    "2025.findings-acl.1276",
+    "2025.findings-acl.739",
+    "2025.findings-emnlp.1392",
+    "2025.ijcnlp-long.135"
+   ],
+   "targets": [
+    "4761-MAIN",
+    "2648-FIND"
+   ]
+  },
+  {
+   "name": "qi guo",
+   "prior": [
+    "2023.findings-emnlp.726",
+    "2024.findings-acl.884",
+    "2025.findings-acl.446",
+    "2025.findings-emnlp.872",
+    "2025.findings-naacl.2"
+   ],
+   "targets": [
+    "3434-MAIN",
+    "4289-MAIN"
+   ]
+  },
+  {
+   "name": "qi song",
+   "prior": [
+    "2020.sigdial-1.24",
+    "2025.emnlp-main.873",
+    "2025.findings-naacl.213"
+   ],
+   "targets": [
+    "3340-MAIN"
+   ]
+  },
+  {
+   "name": "qi tian",
+   "prior": [
+    "2022.emnlp-main.394",
+    "2022.findings-emnlp.461",
+    "2023.acl-long.814",
+    "2023.findings-emnlp.835",
+    "2025.coling-main.590"
+   ],
+   "targets": [
+    "2954-MAIN",
+    "4999-FIND"
+   ]
+  },
+  {
+   "name": "qi wang",
+   "prior": [
+    "2020.aacl-main.74",
+    "2024.futured-1.2",
+    "2025.emnlp-main.1719"
+   ],
+   "targets": [
+    "4792-MAIN",
+    "5857-MAIN"
+   ]
+  },
+  {
+   "name": "qian chen",
+   "prior": [
+    "2020.emnlp-main.495",
+    "2021.ccl-1.28",
+    "2022.findings-acl.34",
+    "2023.emnlp-main.341",
+    "2023.emnlp-main.359",
+    "2023.findings-acl.753",
+    "2023.findings-acl.884",
+    "2023.findings-emnlp.337",
+    "2023.iwslt-1.47",
+    "2024.acl-long.301",
+    "2024.eacl-long.145",
+    "2024.emnlp-demo.10",
+    "2024.findings-emnlp.462",
+    "2025.acl-long.1055",
+    "2025.acl-long.346",
+    "2025.acl-long.370",
+    "2025.acl-long.709",
+    "2025.acl-long.937",
+    "2025.acl-long.977",
+    "2025.ccl-1.58",
+    "2025.coling-main.31",
+    "2025.findings-acl.904",
+    "C18-1154",
+    "P17-1152",
+    "P18-1224",
+    "W17-5307"
+   ],
+   "targets": [
+    "2231-MAIN",
+    "2293-MAIN",
+    "2701-MAIN",
+    "2835-MAIN"
+   ]
+  },
+  {
+   "name": "qianhui wu",
+   "prior": [
+    "2020.acl-main.581",
+    "2021.acl-long.61",
+    "2022.findings-acl.124",
+    "2022.naacl-main.279",
+    "2023.acl-long.330",
+    "2023.acl-long.403",
+    "2023.emnlp-main.825",
+    "2024.acl-long.91",
+    "2024.findings-acl.57",
+    "2025.findings-acl.316",
+    "2025.findings-acl.81"
+   ],
+   "targets": [
+    "1816-MAIN"
+   ]
+  },
+  {
+   "name": "qizhi pei",
+   "prior": [
+    "2023.emnlp-main.70",
+    "2024.findings-acl.71",
+    "2024.langmol-1.6",
+    "2025.acl-long.367",
+    "2025.acl-long.566",
+    "2025.emnlp-main.350",
+    "2025.findings-acl.309",
+    "2025.findings-acl.605",
+    "2025.findings-emnlp.232"
+   ],
+   "targets": [
+    "805-MAIN",
+    "2540-FIND"
+   ]
+  },
+  {
+   "name": "quan wang",
+   "prior": [
+    "2020.acl-main.542",
+    "2020.findings-emnlp.73",
+    "2021.bionlp-1.11",
+    "2022.emnlp-main.287",
+    "2022.findings-acl.179",
+    "2022.lrec-1.720",
+    "2022.naacl-main.48",
+    "2023.acl-long.439",
+    "2023.acl-long.455",
+    "2023.emnlp-main.177",
+    "2023.emnlp-main.512",
+    "2023.emnlp-main.653",
+    "2023.findings-emnlp.400",
+    "2023.findings-emnlp.654",
+    "2023.findings-emnlp.801",
+    "2024.acl-long.351",
+    "2024.acl-long.81",
+    "2024.acl-long.811",
+    "2024.emnlp-main.971",
+    "2024.findings-acl.283",
+    "2024.lrec-main.751",
+    "2024.semeval-1.217",
+    "2025.acl-long.245",
+    "2025.findings-acl.103",
+    "2025.findings-acl.302",
+    "2025.findings-acl.469",
+    "2025.findings-acl.522",
+    "2025.genaidetect-1.32",
+    "C16-1139",
+    "D19-5828",
+    "N19-1103",
+    "P18-1011",
+    "P19-1226"
+   ],
+   "targets": [
+    "5129-MAIN",
+    "6471-MAIN"
+   ]
+  },
+  {
+   "name": "rafiq ali",
+   "prior": [
+    "2025.case-1.15",
+    "2025.emnlp-industry.69",
+    "2025.emnlp-industry.71"
+   ],
+   "targets": [
+    "267-MAIN"
+   ]
+  },
+  {
+   "name": "ranbir singh sanasam",
+   "prior": [
+    "2024.conll-1.25",
+    "2025.findings-ijcnlp.132",
+    "2025.findings-ijcnlp.145",
+    "2025.findings-ijcnlp.83"
+   ],
+   "targets": [
+    "4965-MAIN"
+   ]
+  },
+  {
+   "name": "renfen hu",
+   "prior": [
+    "2021.ccl-1.50",
+    "2023.ccl-1.47",
+    "2023.ccl-3.27",
+    "2024.findings-emnlp.520",
+    "2024.findings-emnlp.530",
+    "2025.ccl-2.19",
+    "2025.emnlp-main.550",
+    "2025.findings-emnlp.920",
+    "2025.findings-emnlp.992",
+    "C16-1307",
+    "D17-1201",
+    "K18-1055",
+    "P18-2023",
+    "P19-1379",
+    "W19-4403"
+   ],
+   "targets": [
+    "5526-MAIN"
+   ]
+  },
+  {
+   "name": "renyu zhu",
+   "prior": [
+    "2022.acl-long.353",
+    "2022.findings-emnlp.295",
+    "2023.findings-acl.55",
+    "2024.lrec-main.1334",
+    "2024.lrec-main.329",
+    "2024.lrec-main.956",
+    "2025.emnlp-demos.72",
+    "2025.emnlp-main.509"
+   ],
+   "targets": [
+    "1061-MAIN"
+   ]
+  },
+  {
+   "name": "rohit saluja",
+   "prior": [
+    "2025.bhasha-1.1",
+    "2025.bhasha-1.4",
+    "2025.bhasha-1.8",
+    "2025.coling-main.142",
+    "2025.findings-ijcnlp.78"
+   ],
+   "targets": [
+    "9050-FIND"
+   ]
+  },
+  {
+   "name": "rui fan",
+   "prior": [
+    "2023.findings-acl.784",
+    "2023.findings-acl.853",
+    "2025.coling-main.210",
+    "2025.findings-emnlp.265"
+   ],
+   "targets": [
+    "3044-MAIN"
+   ]
+  },
+  {
+   "name": "ruqing zhang",
+   "prior": [
+    "2022.findings-emnlp.178",
+    "2022.flp-1.11",
+    "2023.ccl-2.5",
+    "2023.eacl-main.25",
+    "2023.findings-emnlp.422",
+    "2024.emnlp-main.300",
+    "2024.emnlp-main.853",
+    "2024.findings-acl.614",
+    "2024.findings-emnlp.133",
+    "2025.findings-acl.717",
+    "2025.findings-emnlp.753",
+    "P18-1102"
+   ],
+   "targets": [
+    "6997-MAIN",
+    "7079-MAIN",
+    "417-IND"
+   ]
+  },
+  {
+   "name": "ryan a. rossi",
+   "prior": [
+    "2024.cl-3.8",
+    "2024.emnlp-industry.13",
+    "2024.emnlp-main.1106",
+    "2024.lrec-main.377",
+    "2025.acl-long.1094",
+    "2025.acl-long.708",
+    "2025.acl-short.6",
+    "2025.emnlp-main.1144",
+    "2025.emnlp-main.152",
+    "2025.emnlp-main.482",
+    "2025.findings-acl.1158",
+    "2025.findings-acl.79",
+    "2025.findings-acl.941",
+    "2025.findings-emnlp.1131",
+    "2025.findings-emnlp.123",
+    "2025.findings-emnlp.521",
+    "2025.findings-naacl.456",
+    "2025.ijcnlp-demo.10",
+    "2025.in2writing-1.1",
+    "2025.naacl-demo.20",
+    "2025.naacl-long.216",
+    "2025.naacl-long.310",
+    "2025.naacl-long.56",
+    "2025.naacl-short.74",
+    "2025.ranlp-1.13",
+    "2025.ranlp-1.93",
+    "2025.sdp-1.12"
+   ],
+   "targets": [
+    "3573-MAIN",
+    "4654-FIND",
+    "8596-FIND"
+   ]
+  },
+  {
+   "name": "ryan soh-eun shim",
+   "prior": [
+    "2022.sigmorphon-1.20",
+    "2022.vardial-1.3",
+    "2024.lrec-main.1115",
+    "2025.findings-naacl.48"
+   ],
+   "targets": [
+    "5252-MAIN",
+    "8267-MAIN"
+   ]
+  },
+  {
+   "name": "sai munikoti",
+   "prior": [
+    "2024.nlp4science-1.7",
+    "2024.sdp-1.8",
+    "2025.nlp4pi-1.20"
+   ],
+   "targets": [
+    "8716-FIND"
+   ]
+  },
+  {
+   "name": "saim shin",
+   "prior": [
+    "2021.emnlp-main.277",
+    "2021.findings-emnlp.33",
+    "2022.cai-1.3",
+    "2022.lrec-1.734",
+    "2024.findings-emnlp.849"
+   ],
+   "targets": [
+    "58-FIND"
+   ]
+  },
+  {
+   "name": "samyadeep basu",
+   "prior": [
+    "2022.suki-1.3",
+    "2023.findings-emnlp.204",
+    "2024.emnlp-main.1092",
+    "2024.emnlp-main.351",
+    "2025.findings-emnlp.723",
+    "2025.ranlp-1.93"
+   ],
+   "targets": [
+    "8596-FIND"
+   ]
+  },
+  {
+   "name": "sanda m. harabagiu",
+   "prior": [
+    "2024.lrec-main.1385",
+    "2025.findings-emnlp.359",
+    "2025.naacl-long.608",
+    "L04-1236",
+    "L12-1059",
+    "L12-1649"
+   ],
+   "targets": [
+    "8506-MAIN"
+   ]
+  },
+  {
+   "name": "santu karmaker",
+   "prior": [
+    "2024.findings-emnlp.436",
+    "2025.acl-long.1263",
+    "2025.banglalp-1.7",
+    "2025.emnlp-main.1692",
+    "2025.ijcnlp-long.145",
+    "2025.naacl-long.395"
+   ],
+   "targets": [
+    "2408-FIND"
+   ]
+  },
+  {
+   "name": "sarah wiegreffe",
+   "prior": [
+    "2020.acl-main.409",
+    "2021.emnlp-main.804",
+    "2022.findings-emnlp.209",
+    "2022.findings-emnlp.520",
+    "2022.naacl-main.47",
+    "2023.emnlp-main.511",
+    "2023.emnlp-main.522",
+    "2024.acl-long.378",
+    "2024.blackboxnlp-1.30",
+    "2024.findings-emnlp.198",
+    "2024.findings-emnlp.205",
+    "2024.naacl-tutorials.3",
+    "2025.gem-1.46",
+    "D19-1002",
+    "N18-1100",
+    "W19-5028"
+   ],
+   "targets": [
+    "204-MAIN"
+   ]
+  },
+  {
+   "name": "scott a. hale",
+   "prior": [
+    "2020.alw-1.19",
+    "2020.nlpcss-1.14",
+    "2021.acl-long.347",
+    "2022.naacl-main.97",
+    "2022.semeval-1.155",
+    "2022.trac-1.7",
+    "2023.emnlp-main.148",
+    "2024.trac-1.15",
+    "2024.woah-1.23",
+    "2025.acl-long.115",
+    "2025.findings-acl.1150",
+    "D19-1007"
+   ],
+   "targets": [
+    "3936-MAIN"
+   ]
+  },
+  {
+   "name": "sen hu",
+   "prior": [
+    "2021.naacl-demos.3",
+    "2023.acl-industry.22",
+    "2023.emnlp-industry.20",
+    "2024.acl-long.516",
+    "D18-1234"
+   ],
+   "targets": [
+    "2208-MAIN"
+   ]
+  },
+  {
+   "name": "seojin lee",
+   "prior": [
+    "2021.emnlp-main.180",
+    "2023.acl-industry.68",
+    "2024.emnlp-industry.45",
+    "2025.emnlp-industry.83"
+   ],
+   "targets": [
+    "4953-MAIN"
+   ]
+  },
+  {
+   "name": "seungjun lee",
+   "prior": [
+    "2023.acl-demo.18",
+    "2023.iwslt-1.40",
+    "2024.findings-acl.135",
+    "2024.findings-acl.141",
+    "2024.findings-emnlp.114"
+   ],
+   "targets": [
+    "5143-FIND"
+   ]
+  },
+  {
+   "name": "seungyoon han",
+   "prior": [
+    "2024.findings-emnlp.683",
+    "2024.knowledgenlp-1.6",
+    "2025.findings-acl.253",
+    "2025.knowllm-1.1"
+   ],
+   "targets": [
+    "6725-MAIN"
+   ]
+  },
+  {
+   "name": "shaina raza",
+   "prior": [
+    "2021.case-1.10",
+    "2022.bionlp-1.10",
+    "2022.coling-1.332",
+    "2024.wassa-1.9",
+    "2025.findings-emnlp.1343"
+   ],
+   "targets": [
+    "2086-MAIN",
+    "456-IND"
+   ]
+  },
+  {
+   "name": "shanu kumar",
+   "prior": [
+    "2022.acl-long.374",
+    "2022.findings-naacl.78",
+    "2023.eacl-main.29",
+    "2025.acl-long.730",
+    "2025.coling-main.137",
+    "2025.ijcnlp-demo.6",
+    "2025.naacl-long.388"
+   ],
+   "targets": [
+    "5387-MAIN",
+    "4536-FIND"
+   ]
+  },
+  {
+   "name": "shengyu zhang",
+   "prior": [
+    "2022.acl-long.596",
+    "2023.acl-long.254",
+    "2023.acl-long.611",
+    "2023.emnlp-main.592",
+    "2024.emnlp-main.163",
+    "2025.acl-long.369",
+    "2025.acl-long.652",
+    "2025.emnlp-main.628"
+   ],
+   "targets": [
+    "1583-MAIN",
+    "3194-MAIN",
+    "3803-MAIN"
+   ]
+  },
+  {
+   "name": "shiyu ni",
+   "prior": [
+    "2024.findings-acl.675",
+    "2025.acl-long.1184",
+    "2025.findings-emnlp.1081"
+   ],
+   "targets": [
+    "3564-MAIN"
+   ]
+  },
+  {
+   "name": "sho hoshino",
+   "prior": [
+    "2022.naacl-industry.9",
+    "2024.lrec-main.141",
+    "2024.lrec-main.371"
+   ],
+   "targets": [
+    "461-FIND"
+   ]
+  },
+  {
+   "name": "shotaro ishihara",
+   "prior": [
+    "2022.aacl-main.17",
+    "2022.semeval-1.171",
+    "2023.trustnlp-1.23",
+    "2024.inlg-main.14",
+    "2025.l2m2-1.8"
+   ],
+   "targets": [
+    "2543-MAIN",
+    "842-IND"
+   ]
+  },
+  {
+   "name": "shuai zhang",
+   "prior": [
+    "2021.acl-long.216",
+    "2021.acl-short.48",
+    "2021.naacl-main.1",
+    "2022.acl-long.170",
+    "2022.acl-long.59",
+    "2022.conll-1.6",
+    "2022.findings-acl.191",
+    "2023.acl-long.577",
+    "2023.findings-acl.353",
+    "2024.acl-long.223",
+    "2024.findings-acl.116",
+    "2024.findings-emnlp.34",
+    "2024.findings-emnlp.69",
+    "2024.findings-naacl.112",
+    "2024.findings-naacl.17",
+    "2025.acl-long.250",
+    "2025.acl-long.497",
+    "2025.findings-emnlp.787",
+    "2025.findings-naacl.249",
+    "P19-1145"
+   ],
+   "targets": [
+    "329-MAIN",
+    "2477-MAIN",
+    "283-IND",
+    "7175-FIND"
+   ]
+  },
+  {
+   "name": "shuang liu",
+   "prior": [
+    "2022.acl-short.47",
+    "2023.acl-long.748",
+    "2023.findings-acl.607",
+    "2024.ccl-1.83",
+    "2024.cl-3.2",
+    "2025.nllp-1.19"
+   ],
+   "targets": [
+    "3100-MAIN"
+   ]
+  },
+  {
+   "name": "shuhao zhang",
+   "prior": [
+    "2023.emnlp-main.380",
+    "2024.findings-emnlp.670",
+    "2025.coling-main.483",
+    "2025.emnlp-main.977"
+   ],
+   "targets": [
+    "4761-MAIN"
+   ]
+  },
+  {
+   "name": "shumin deng",
+   "prior": [
+    "2020.coling-main.563",
+    "2020.emnlp-demos.1",
+    "2020.findings-emnlp.2",
+    "2021.acl-long.220",
+    "2021.acl-long.373",
+    "2021.semeval-1.108",
+    "2022.coling-1.209",
+    "2022.findings-naacl.121",
+    "2023.acl-long.21",
+    "2023.acl-long.294",
+    "2023.emnlp-main.632",
+    "2024.acl-long.171",
+    "2024.acl-long.782",
+    "2024.findings-emnlp.40",
+    "2024.findings-emnlp.416",
+    "2024.lrec-tutorials.6",
+    "2024.nlrse-1.3",
+    "2025.acl-long.1139",
+    "2025.acl-long.297",
+    "2025.coling-main.156",
+    "2025.emnlp-main.41",
+    "2025.emnlp-main.572",
+    "2025.findings-acl.1021",
+    "2025.findings-emnlp.32",
+    "2025.findings-naacl.205",
+    "2025.semeval-1.79",
+    "D18-1120",
+    "N19-1306"
+   ],
+   "targets": [
+    "924-MAIN",
+    "2736-MAIN",
+    "7533-MAIN",
+    "3394-FIND"
+   ]
+  },
+  {
+   "name": "si shen",
+   "prior": [
+    "2022.emnlp-main.453",
+    "2023.alt-1.1",
+    "2024.lt4hala-1.27",
+    "2025.alp-1.19"
+   ],
+   "targets": [
+    "10565-TACL"
+   ]
+  },
+  {
+   "name": "simon ostermann",
+   "prior": [
+    "2023.blackboxnlp-1.20",
+    "2023.emnlp-main.504",
+    "2024.argmining-1.9",
+    "2024.findings-emnlp.76",
+    "2024.findings-emnlp.88",
+    "2024.icnlsp-1.22",
+    "2024.iwslt-1.33",
+    "2024.kallm-1.7",
+    "2024.lrec-main.317",
+    "2024.naacl-srw.30",
+    "2025.acl-srw.24",
+    "2025.acl-srw.62",
+    "2025.blackboxnlp-1.15",
+    "2025.clpsych-1.2",
+    "2025.coling-main.77",
+    "2025.emnlp-main.418",
+    "2025.fever-1.17",
+    "2025.findings-acl.64",
+    "2025.findings-emnlp.29",
+    "2025.findings-emnlp.852",
+    "2025.findings-ijcnlp.144",
+    "2025.findings-ijcnlp.17",
+    "2025.findings-ijcnlp.86",
+    "2025.ijcnlp-long.156",
+    "2025.ijcnlp-srw.5",
+    "2025.jlcl-2.5",
+    "2025.luhme-1.2",
+    "2025.mathnlp-main.16",
+    "2025.naacl-long.517",
+    "2025.repl4nlp-1.9",
+    "2025.semeval-1.323",
+    "D19-6007",
+    "L16-1555",
+    "S17-1016",
+    "S18-1119",
+    "S19-1012"
+   ],
+   "targets": [
+    "3761-MAIN",
+    "7054-MAIN",
+    "8120-MAIN",
+    "110-FIND",
+    "588-FIND",
+    "8126-FIND"
+   ]
+  },
+  {
+   "name": "simon woodhead",
+   "prior": [
+    "2024.bea-1.19",
+    "2024.emnlp-main.512",
+    "2024.findings-naacl.193",
+    "2025.bea-1.23",
+    "2025.emnlp-main.1397"
+   ],
+   "targets": [
+    "1111-MAIN"
+   ]
+  },
+  {
+   "name": "sina ahmadi",
+   "prior": [
+    "2020.ldl-1.7",
+    "2020.loresmt-1.12",
+    "2020.lrec-1.395",
+    "2020.lrec-1.694",
+    "2020.nlposs-1.11",
+    "2020.sltu-1.46",
+    "2020.vardial-1.11",
+    "2020.vardial-1.7",
+    "2021.gwc-1.9",
+    "2022.lrec-1.174",
+    "2022.lrec-1.20",
+    "2023.acl-long.809",
+    "2023.fieldmatters-1.7",
+    "2023.sigmorphon-1.5",
+    "2023.vardial-1.8",
+    "2024.findings-eacl.125",
+    "2024.lrec-main.877",
+    "2024.mwe-1.11",
+    "2025.acl-demo.15",
+    "2025.acl-long.1451",
+    "2025.acl-long.1453",
+    "2025.acl-long.725",
+    "2025.iwslt-1.10",
+    "2025.ldk-1.29",
+    "2025.wmt-1.85",
+    "W19-3634"
+   ],
+   "targets": [
+    "6874-MAIN",
+    "880-FIND"
+   ]
+  },
+  {
+   "name": "songtao jiang",
+   "prior": [
+    "2024.findings-emnlp.221",
+    "2025.acl-long.679",
+    "2025.acl-short.41",
+    "2025.findings-emnlp.773"
+   ],
+   "targets": [
+    "744-MAIN"
+   ]
+  },
+  {
+   "name": "stefan ruseti",
+   "prior": [
+    "2020.coling-main.581",
+    "2021.ranlp-1.49",
+    "2024.bea-1.9",
+    "2024.emnlp-main.175",
+    "2025.emnlp-main.1434",
+    "C18-1043",
+    "D19-1256"
+   ],
+   "targets": [
+    "8293-FIND"
+   ]
+  },
+  {
+   "name": "stephen meisenbacher",
+   "prior": [
+    "2022.germeval-1.9",
+    "2022.privatenlp-1.1",
+    "2024.emnlp-main.324",
+    "2024.lrec-main.16",
+    "2024.privatenlp-1.5",
+    "2025.emnlp-main.455",
+    "2025.findings-naacl.32",
+    "2025.ijcnlp-long.3",
+    "2025.privatenlp-main.8"
+   ],
+   "targets": [
+    "123-DEMO",
+    "8283-FIND"
+   ]
+  },
+  {
+   "name": "stéphane clinchant",
+   "prior": [
+    "2024.findings-emnlp.449",
+    "2024.knowllm-1.15",
+    "2024.wikinlp-1.9",
+    "2025.findings-acl.800"
+   ],
+   "targets": [
+    "156-MAIN",
+    "3919-MAIN",
+    "757-FIND"
+   ]
+  },
+  {
+   "name": "takumi goto",
+   "prior": [
+    "2025.acl-demo.50",
+    "2025.acl-short.92",
+    "2025.acl-srw.77",
+    "2025.coling-main.116",
+    "2025.findings-acl.1315",
+    "2025.findings-emnlp.1356"
+   ],
+   "targets": [
+    "8568-FIND"
+   ]
+  },
+  {
+   "name": "tamanna hossain",
+   "prior": [
+    "2020.nlpcovid19-2.11",
+    "2023.acl-long.293",
+    "2024.naacl-long.419",
+    "2025.ijcnlp-long.109"
+   ],
+   "targets": [
+    "9039-FIND"
+   ]
+  },
+  {
+   "name": "tarun tater",
+   "prior": [
+    "2022.aacl-srw.13",
+    "2024.cmcl-1.18",
+    "2024.emnlp-main.1203",
+    "2025.emnlp-main.417",
+    "D19-1636"
+   ],
+   "targets": [
+    "4946-MAIN"
+   ]
+  },
+  {
+   "name": "tatsuki kuribayashi",
+   "prior": [
+    "2020.acl-main.47",
+    "2020.acl-main.575",
+    "2020.coling-main.160",
+    "2020.emnlp-demos.28",
+    "2020.emnlp-main.574",
+    "2021.acl-long.405",
+    "2021.emnlp-main.373",
+    "2021.tacl-1.89",
+    "2022.coling-1.71",
+    "2022.emnlp-main.712",
+    "2023.eacl-main.98",
+    "2023.emnlp-main.912",
+    "2023.findings-acl.276",
+    "2023.findings-acl.856",
+    "2023.findings-eacl.86",
+    "2024.acl-long.781",
+    "2024.emnlp-main.789",
+    "2024.findings-naacl.129",
+    "2024.lrec-main.1408",
+    "2025.acl-long.219",
+    "2025.coling-main.127",
+    "2025.conll-1.35",
+    "2025.emnlp-main.1803",
+    "2025.findings-acl.1092",
+    "2025.naacl-demo.23",
+    "D19-3039",
+    "P19-1464",
+    "W18-5210",
+    "W19-8606"
+   ],
+   "targets": [
+    "2367-MAIN",
+    "3493-MAIN",
+    "4881-MAIN",
+    "9555-MAIN"
+   ]
+  },
+  {
+   "name": "teng xiao",
+   "prior": [
+    "2024.emnlp-main.744",
+    "2025.acl-long.1163",
+    "2025.acl-long.1191",
+    "2025.emnlp-main.1085",
+    "2025.naacl-long.585"
+   ],
+   "targets": [
+    "958-MAIN",
+    "9086-MAIN",
+    "3867-FIND"
+   ]
+  },
+  {
+   "name": "thibaud leteno",
+   "prior": [
+    "2023.emnlp-main.978",
+    "2025.jeptalnrecital-trad.16",
+    "2025.naacl-long.131"
+   ],
+   "targets": [
+    "464-FIND"
+   ]
+  },
+  {
+   "name": "thibaut thonet",
+   "prior": [
+    "2025.coling-main.28",
+    "2025.emnlp-main.475",
+    "2025.findings-emnlp.324"
+   ],
+   "targets": [
+    "686-MAIN"
+   ]
+  },
+  {
+   "name": "thomas demeester",
+   "prior": [
+    "2020.aacl-main.82",
+    "2021.crac-1.6",
+    "2021.emnlp-main.792",
+    "2021.naacl-main.21",
+    "2022.acl-short.88",
+    "2022.dialdoc-1.12",
+    "2022.emnlp-main.783",
+    "2022.findings-emnlp.104",
+    "2022.finnlp-1.25",
+    "2022.nlperspectives-1.9",
+    "2022.wnut-1.12",
+    "2023.bea-1.51",
+    "2023.bionlp-1.23",
+    "2023.eacl-srw.13",
+    "2023.findings-emnlp.896",
+    "2023.finnlp-2.2",
+    "2023.mwe-1.11",
+    "2023.nlp4convai-1.7",
+    "2025.gem-1.74",
+    "D17-1220",
+    "D18-1307",
+    "D18-1365",
+    "E17-2044",
+    "K18-1032",
+    "N19-1081",
+    "P18-4005",
+    "W18-0613",
+    "W19-3019",
+    "W19-4322"
+   ],
+   "targets": [
+    "2145-FIND"
+   ]
+  },
+  {
+   "name": "tianqi liu",
+   "prior": [
+    "2024.acl-long.541",
+    "2024.acl-long.755",
+    "2024.emnlp-main.1128",
+    "2024.findings-acl.923",
+    "2024.findings-emnlp.461",
+    "2024.findings-naacl.97",
+    "2025.naacl-long.121"
+   ],
+   "targets": [
+    "1583-MAIN",
+    "7493-MAIN"
+   ]
+  },
+  {
+   "name": "tianxin wei",
+   "prior": [
+    "2025.acl-long.448",
+    "2025.findings-acl.361",
+    "2025.findings-emnlp.407"
+   ],
+   "targets": [
+    "1700-MAIN",
+    "2169-MAIN",
+    "2694-MAIN",
+    "7517-MAIN",
+    "8401-MAIN"
+   ]
+  },
+  {
+   "name": "tianyue ou",
+   "prior": [
+    "2025.emnlp-demos.15",
+    "2025.findings-acl.1148",
+    "2025.naacl-demo.17"
+   ],
+   "targets": [
+    "7844-FIND"
+   ]
+  },
+  {
+   "name": "traian rebedea",
+   "prior": [
+    "2020.coling-main.34",
+    "2020.semeval-1.179",
+    "2020.vardial-1.22",
+    "2021.eacl-main.121",
+    "2021.nllp-1.8",
+    "2021.vardial-1.13",
+    "2022.coling-1.239",
+    "2022.lrec-1.39",
+    "2023.emnlp-demo.40",
+    "2024.acl-long.650",
+    "2024.emnlp-main.1060",
+    "2024.findings-emnlp.681",
+    "2024.findings-emnlp.713",
+    "2024.sigul-1.16",
+    "2025.acl-tutorials.8",
+    "2025.emnlp-main.139",
+    "2025.findings-emnlp.1193",
+    "2025.naacl-long.306",
+    "C18-1043",
+    "D19-1256",
+    "I17-1091",
+    "R19-1017",
+    "W17-3542"
+   ],
+   "targets": [
+    "7034-FIND"
+   ]
+  },
+  {
+   "name": "tun lu",
+   "prior": [
+    "2023.findings-emnlp.596",
+    "2024.findings-emnlp.56",
+    "2025.acl-demo.64"
+   ],
+   "targets": [
+    "3615-MAIN",
+    "4540-MAIN"
+   ]
+  },
+  {
+   "name": "walid magdy",
+   "prior": [
+    "2020.acl-main.118",
+    "2020.insights-1.18",
+    "2020.lrec-1.586",
+    "2020.nlpcss-1.22",
+    "2020.osact-1.14",
+    "2020.osact-1.5",
+    "2020.osact-1.7",
+    "2020.semeval-1.137",
+    "2021.emnlp-demo.38",
+    "2021.semeval-1.9",
+    "2021.wanlp-1.3",
+    "2021.wanlp-1.36",
+    "2022.acl-long.530",
+    "2022.emnlp-main.412",
+    "2022.findings-emnlp.387",
+    "2022.osact-1.17",
+    "2022.semeval-1.111",
+    "2022.wanlp-1.39",
+    "2023.arabicnlp-1.31",
+    "2023.cs4oa-1.5",
+    "2023.emnlp-main.655",
+    "2023.findings-acl.389",
+    "2024.acl-short.70",
+    "2024.arabicnlp-1.79",
+    "2025.acl-long.166",
+    "2025.acl-long.456",
+    "2025.arabicnlp-sharedtasks.67",
+    "2025.nlpsi-1.2",
+    "L06-1308",
+    "L10-1242",
+    "P19-1275",
+    "W17-3008",
+    "W19-4620",
+    "W19-4621"
+   ],
+   "targets": [
+    "4147-MAIN",
+    "4432-MAIN"
+   ]
+  },
+  {
+   "name": "wanli ouyang",
+   "prior": [
+    "2024.acl-long.401",
+    "2024.acl-long.842",
+    "2024.findings-acl.407",
+    "2024.findings-acl.630",
+    "2024.findings-acl.878",
+    "2024.findings-emnlp.314",
+    "2024.findings-emnlp.746",
+    "2025.acl-demo.58",
+    "2025.acl-long.1056",
+    "2025.acl-long.1368",
+    "2025.findings-emnlp.978",
+    "2025.naacl-long.375"
+   ],
+   "targets": [
+    "840-MAIN"
+   ]
+  },
+  {
+   "name": "wei sun",
+   "prior": [
+    "2025.acl-long.216",
+    "2025.emnlp-main.470",
+    "2025.findings-acl.460",
+    "N19-1289"
+   ],
+   "targets": [
+    "5080-MAIN"
+   ]
+  },
+  {
+   "name": "wei-yao wang",
+   "prior": [
+    "2022.ltedi-1.15",
+    "2023.findings-emnlp.698",
+    "2024.eacl-long.92"
+   ],
+   "targets": [
+    "673-MAIN"
+   ]
+  },
+  {
+   "name": "weidong chen",
+   "prior": [
+    "2023.acl-long.439",
+    "2023.emnlp-main.25",
+    "2023.findings-acl.859",
+    "2024.findings-naacl.236"
+   ],
+   "targets": [
+    "875-MAIN",
+    "4538-MAIN"
+   ]
+  },
+  {
+   "name": "weimin lyu",
+   "prior": [
+    "2022.naacl-main.348",
+    "2023.findings-emnlp.716",
+    "2024.findings-naacl.179",
+    "2025.acl-long.1424",
+    "2025.findings-acl.938",
+    "S19-2012"
+   ],
+   "targets": [
+    "8149-FIND"
+   ]
+  },
+  {
+   "name": "weitong ruan",
+   "prior": [
+    "2020.acl-main.777",
+    "2020.coling-industry.11",
+    "2020.findings-emnlp.28",
+    "2021.naacl-industry.6",
+    "2024.ecnlp-1.2",
+    "2024.trustnlp-1.19"
+   ],
+   "targets": [
+    "280-MAIN",
+    "2631-MAIN"
+   ]
+  },
+  {
+   "name": "weiyan zhang",
+   "prior": [
+    "2024.findings-acl.545",
+    "2025.acl-demo.28",
+    "2025.acl-long.31",
+    "2025.findings-acl.34"
+   ],
+   "targets": [
+    "3240-MAIN",
+    "6849-MAIN"
+   ]
+  },
+  {
+   "name": "weiyi sun",
+   "prior": [
+    "2020.nlpmc-1.4",
+    "2022.ecnlp-1.26",
+    "2024.ecnlp-1.13",
+    "2025.emnlp-industry.60",
+    "2025.finnlp-1.2",
+    "2025.finnlp-1.22"
+   ],
+   "targets": [
+    "686-IND"
+   ]
+  },
+  {
+   "name": "weizhi ma",
+   "prior": [
+    "2024.acl-long.79",
+    "2024.emnlp-main.210",
+    "2025.emnlp-main.1304",
+    "2025.findings-emnlp.522"
+   ],
+   "targets": [
+    "3288-MAIN",
+    "2678-FIND"
+   ]
+  },
+  {
+   "name": "wenbiao yin",
+   "prior": [
+    "2022.emnlp-main.312",
+    "2023.findings-emnlp.414",
+    "2025.acl-long.508",
+    "2025.emnlp-main.50",
+    "2025.emnlp-main.663"
+   ],
+   "targets": [
+    "2280-MAIN"
+   ]
+  },
+  {
+   "name": "wenbo zhang",
+   "prior": [
+    "2023.wmt-1.19",
+    "2023.wmt-1.94",
+    "2024.wmt-1.8",
+    "2025.findings-acl.1052",
+    "2025.findings-emnlp.535",
+    "2025.naacl-long.142"
+   ],
+   "targets": [
+    "2336-MAIN"
+   ]
+  },
+  {
+   "name": "wenchao yu",
+   "prior": [
+    "2024.emnlp-main.785",
+    "2024.findings-emnlp.209",
+    "2025.findings-naacl.474",
+    "2025.naacl-long.545"
+   ],
+   "targets": [
+    "8385-MAIN"
+   ]
+  },
+  {
+   "name": "wenqi fan",
+   "prior": [
+    "2020.coling-main.390",
+    "2024.findings-acl.529",
+    "2024.naacl-short.23",
+    "2025.acl-long.1317",
+    "2025.acl-long.502",
+    "2025.findings-acl.917",
+    "2025.findings-emnlp.233",
+    "2025.findings-emnlp.622",
+    "2025.ijcnlp-long.180"
+   ],
+   "targets": [
+    "3329-MAIN",
+    "4576-MAIN"
+   ]
+  },
+  {
+   "name": "wenqing chen",
+   "prior": [
+    "2020.coling-main.102",
+    "2020.emnlp-main.173",
+    "2021.acl-long.430",
+    "2021.emnlp-main.303",
+    "2022.coling-1.147",
+    "2023.emnlp-main.913",
+    "2023.findings-acl.640",
+    "2024.findings-acl.842",
+    "2025.acl-long.1239",
+    "2025.coling-main.155",
+    "2025.emnlp-main.182",
+    "C18-1175",
+    "D18-1484",
+    "D18-1486",
+    "N18-2114"
+   ],
+   "targets": [
+    "3733-MAIN",
+    "7376-MAIN",
+    "3843-FIND"
+   ]
+  },
+  {
+   "name": "wonbin kweon",
+   "prior": [
+    "2024.naacl-long.242",
+    "2025.emnlp-main.1007",
+    "2025.findings-acl.1068"
+   ],
+   "targets": [
+    "3137-MAIN"
+   ]
+  },
+  {
+   "name": "wonseok hwang",
+   "prior": [
+    "2021.emnlp-main.271",
+    "2022.nllp-1.12",
+    "2024.eacl-demo.7",
+    "2024.findings-emnlp.319",
+    "2025.emnlp-main.225",
+    "2025.naacl-long.124"
+   ],
+   "targets": [
+    "3544-MAIN",
+    "9657-FIND"
+   ]
+  },
+  {
+   "name": "wray buntine",
+   "prior": [
+    "2020.coling-main.302",
+    "2021.alta-1.3",
+    "2021.emnlp-main.80",
+    "2021.findings-emnlp.114",
+    "2021.findings-emnlp.283",
+    "2021.naacl-main.300",
+    "2022.acl-short.78",
+    "2022.emnlp-main.271",
+    "2024.acl-short.30",
+    "2024.findings-acl.398",
+    "2024.findings-acl.400",
+    "2024.findings-eacl.41",
+    "2024.lrec-main.784",
+    "2025.emnlp-main.1326",
+    "2025.findings-emnlp.891",
+    "2025.findings-emnlp.910",
+    "2025.findings-naacl.352",
+    "K18-1033",
+    "P18-1174",
+    "P18-2104",
+    "P19-1396"
+   ],
+   "targets": [
+    "7228-FIND",
+    "9355-FIND"
+   ]
+  },
+  {
+   "name": "xia hu",
+   "prior": [
+    "2021.naacl-main.71",
+    "2023.eacl-main.129",
+    "2023.findings-emnlp.1029",
+    "2024.emnlp-main.393",
+    "2024.findings-emnlp.266",
+    "2024.findings-naacl.256",
+    "2024.naacl-long.429",
+    "2025.findings-acl.700",
+    "2025.findings-acl.79",
+    "2025.findings-emnlp.1166",
+    "2025.findings-emnlp.1253",
+    "2025.findings-emnlp.902",
+    "2025.findings-naacl.451",
+    "2025.ijcnlp-long.53"
+   ],
+   "targets": [
+    "1873-MAIN",
+    "2944-MAIN",
+    "6680-MAIN"
+   ]
+  },
+  {
+   "name": "xiang ao",
+   "prior": [
+    "2020.acl-main.735",
+    "2020.coling-main.279",
+    "2020.coling-main.97",
+    "2020.findings-emnlp.378",
+    "2021.acl-long.161",
+    "2021.acl-long.7",
+    "2021.emnlp-main.199",
+    "2021.emnlp-main.246",
+    "2021.findings-emnlp.115",
+    "2022.tacl-1.33",
+    "2023.findings-acl.303",
+    "2023.findings-emnlp.447",
+    "2024.acl-long.402",
+    "2024.emnlp-main.779",
+    "2024.lrec-main.449",
+    "2024.lrec-main.477",
+    "2025.acl-long.549",
+    "D19-1300",
+    "D19-1654"
+   ],
+   "targets": [
+    "5619-MAIN"
+   ]
+  },
+  {
+   "name": "xiangyu zhang",
+   "prior": [
+    "2023.acl-long.540",
+    "2023.findings-emnlp.90",
+    "2024.eacl-long.160",
+    "2024.emnlp-main.8",
+    "2024.emnlp-main.9",
+    "2024.findings-emnlp.217",
+    "2024.teachingnlp-1.4",
+    "2025.acl-long.308",
+    "2025.acl-long.410",
+    "2025.emnlp-main.100",
+    "2025.emnlp-main.1265",
+    "2025.findings-acl.1288",
+    "2025.findings-acl.229",
+    "2025.findings-acl.521",
+    "2025.findings-emnlp.522"
+   ],
+   "targets": [
+    "190-MAIN",
+    "296-FIND"
+   ]
+  },
+  {
+   "name": "xiao huang",
+   "prior": [
+    "2020.acl-main.193",
+    "2020.acl-main.752",
+    "2020.findings-emnlp.145",
+    "2023.acl-long.358",
+    "2023.findings-acl.500",
+    "2024.acl-long.132",
+    "2024.acl-long.631",
+    "2024.findings-acl.653",
+    "2024.findings-emnlp.226",
+    "2025.acl-long.173",
+    "2025.coling-main.722",
+    "2025.findings-acl.902",
+    "2025.findings-emnlp.504",
+    "K19-1048"
+   ],
+   "targets": [
+    "4356-MAIN",
+    "8130-MAIN"
+   ]
+  },
+  {
+   "name": "xiao yang",
+   "prior": [
+    "2021.naacl-industry.25",
+    "2021.nlp4convai-1.22",
+    "2022.ccl-1.52",
+    "2025.emnlp-industry.53",
+    "2025.findings-emnlp.329",
+    "2025.findings-naacl.378",
+    "W18-0533"
+   ],
+   "targets": [
+    "1211-MAIN",
+    "2537-MAIN"
+   ]
+  },
+  {
+   "name": "xiao ye",
+   "prior": [
+    "2024.emnlp-main.725",
+    "2025.findings-emnlp.1123",
+    "2025.naacl-long.157"
+   ],
+   "targets": [
+    "2319-MAIN"
+   ]
+  },
+  {
+   "name": "xiaofei wen",
+   "prior": [
+    "2024.emnlp-main.648",
+    "2024.findings-acl.429",
+    "2025.findings-acl.704",
+    "2025.naacl-demo.34"
+   ],
+   "targets": [
+    "501-MAIN",
+    "8402-MAIN"
+   ]
+  },
+  {
+   "name": "xiaoguang li",
+   "prior": [
+    "2022.acl-long.493",
+    "2022.acl-short.47",
+    "2022.emnlp-main.764",
+    "2022.findings-acl.136",
+    "2022.findings-acl.61",
+    "2023.findings-acl.148",
+    "2023.findings-emnlp.961",
+    "2023.tacl-1.63",
+    "2024.acl-long.368",
+    "2024.acl-long.764",
+    "2024.emnlp-main.266",
+    "2024.findings-acl.633",
+    "2024.findings-emnlp.730",
+    "2024.lrec-main.463",
+    "2025.acl-long.1423",
+    "2025.coling-main.349",
+    "2025.findings-emnlp.429"
+   ],
+   "targets": [
+    "1238-MAIN",
+    "8632-FIND"
+   ]
+  },
+  {
+   "name": "xiaoyu he",
+   "prior": [
+    "2023.ccl-1.77",
+    "2024.wmt-1.120",
+    "2025.naacl-long.359"
+   ],
+   "targets": [
+    "448-IND"
+   ]
+  },
+  {
+   "name": "xiaozhong liu",
+   "prior": [
+    "2020.acl-main.279",
+    "2020.emnlp-main.114",
+    "2020.emnlp-main.149",
+    "2020.emnlp-main.56",
+    "2020.findings-emnlp.179",
+    "2021.acl-long.471",
+    "2021.emnlp-main.767",
+    "2023.emnlp-main.375",
+    "2023.emnlp-main.465",
+    "2023.emnlp-main.578",
+    "2023.emnlp-main.740",
+    "2023.findings-emnlp.107",
+    "2023.findings-emnlp.75",
+    "2024.findings-acl.126",
+    "2024.findings-acl.918",
+    "2024.findings-emnlp.445",
+    "2024.lrec-main.1109",
+    "2024.lrec-main.520",
+    "2024.lrec-main.862",
+    "2024.naacl-long.132",
+    "2025.emnlp-main.1454",
+    "2025.findings-emnlp.710",
+    "2025.findings-emnlp.713",
+    "2025.naacl-long.290",
+    "C18-1215",
+    "D18-1204",
+    "D18-1401",
+    "D19-1019",
+    "D19-1237",
+    "D19-1560",
+    "D19-1640",
+    "P19-1345"
+   ],
+   "targets": [
+    "8548-MAIN"
+   ]
+  },
+  {
+   "name": "xin zhang",
+   "prior": [
+    "2021.acl-long.432",
+    "2021.emnlp-main.375",
+    "2022.acl-long.200",
+    "2022.coling-1.211",
+    "2022.emnlp-main.518",
+    "2023.emnlp-industry.18",
+    "2023.emnlp-industry.2",
+    "2023.emnlp-main.446",
+    "2023.findings-acl.649",
+    "2023.findings-emnlp.1055",
+    "2023.findings-emnlp.48",
+    "2024.acl-long.111",
+    "2024.acl-long.280",
+    "2024.acl-long.521",
+    "2024.emnlp-industry.103",
+    "2024.sighan-1.6",
+    "2025.acl-long.1479",
+    "2025.acl-long.214",
+    "2025.acl-long.585",
+    "2025.acl-long.656",
+    "2025.acl-long.733",
+    "2025.acl-long.813",
+    "2025.acl-long.839",
+    "2025.emnlp-main.1065",
+    "2025.emnlp-main.644",
+    "2025.emnlp-main.707",
+    "2025.emnlp-main.951",
+    "2025.findings-acl.552",
+    "2025.findings-acl.840",
+    "2025.findings-acl.930",
+    "2025.findings-acl.932",
+    "2025.findings-emnlp.48",
+    "2025.finnlp-1.30",
+    "2025.naacl-long.443",
+    "2025.naacl-long.8",
+    "2025.xllm-1.21",
+    "L10-1001",
+    "S17-2052"
+   ],
+   "targets": [
+    "1048-MAIN",
+    "1093-MAIN",
+    "3632-MAIN",
+    "4241-MAIN",
+    "6872-MAIN",
+    "7654-MAIN",
+    "75-DEMO",
+    "4392-FIND",
+    "4954-FIND"
+   ]
+  },
+  {
+   "name": "xinbei ma",
+   "prior": [
+    "2022.acl-long.23",
+    "2023.emnlp-main.322",
+    "2024.emnlp-main.906",
+    "2024.findings-acl.539",
+    "2024.findings-emnlp.70",
+    "2024.lrec-main.1148",
+    "2025.acl-long.1087",
+    "2025.acl-long.1095",
+    "2025.findings-acl.584",
+    "2025.findings-acl.774"
+   ],
+   "targets": [
+    "6412-MAIN",
+    "4673-FIND"
+   ]
+  },
+  {
+   "name": "xingyu liu",
+   "prior": [
+    "2021.jeptalnrecital-deft.7",
+    "2022.jeptalnrecital-taln.30",
+    "2024.cl4health-1.21",
+    "2024.jeptalnrecital-trad.6",
+    "2024.lrec-main.827",
+    "2025.emnlp-main.670"
+   ],
+   "targets": [
+    "1530-MAIN"
+   ]
+  },
+  {
+   "name": "xuan-son vu",
+   "prior": [
+    "2018.gwc-1.20",
+    "2020.coling-main.37",
+    "2023.emnlp-industry.70",
+    "2024.lrec-main.1164",
+    "2025.coling-industry.56",
+    "S18-1085"
+   ],
+   "targets": [
+    "902-IND"
+   ]
+  },
+  {
+   "name": "xuebing liu",
+   "prior": [
+    "2023.findings-emnlp.638",
+    "2024.findings-acl.455",
+    "2025.findings-acl.870",
+    "2025.findings-emnlp.272"
+   ],
+   "targets": [
+    "9955-TACL",
+    "1204-MAIN"
+   ]
+  },
+  {
+   "name": "xuelian dong",
+   "prior": [
+    "2024.figlang-1.12",
+    "2025.emnlp-main.1195",
+    "2025.findings-acl.737"
+   ],
+   "targets": [
+    "2402-MAIN"
+   ]
+  },
+  {
+   "name": "xueqiao zhang",
+   "prior": [
+    "2025.emnlp-main.1209",
+    "2025.findings-emnlp.1209",
+    "2025.findings-emnlp.917"
+   ],
+   "targets": [
+    "811-MAIN"
+   ]
+  },
+  {
+   "name": "xukai liu",
+   "prior": [
+    "2023.findings-acl.553",
+    "2024.emnlp-main.756",
+    "2024.findings-acl.587"
+   ],
+   "targets": [
+    "5513-MAIN"
+   ]
+  },
+  {
+   "name": "yafu li",
+   "prior": [
+    "2021.acl-long.368",
+    "2022.coling-1.464",
+    "2022.emnlp-main.339",
+    "2022.findings-acl.203",
+    "2023.acl-long.519",
+    "2023.acl-long.72",
+    "2023.acl-long.788",
+    "2023.findings-acl.806",
+    "2024.acl-long.3",
+    "2024.findings-acl.423",
+    "2024.findings-acl.452",
+    "2024.findings-emnlp.866",
+    "2025.acl-long.1099",
+    "2025.acl-long.624",
+    "2025.acl-long.630",
+    "2025.findings-acl.387"
+   ],
+   "targets": [
+    "1212-MAIN",
+    "3258-MAIN"
+   ]
+  },
+  {
+   "name": "yan lu",
+   "prior": [
+    "2024.ccl-1.87",
+    "2025.emnlp-main.244",
+    "2025.findings-acl.115",
+    "2025.findings-acl.809"
+   ],
+   "targets": [
+    "3854-MAIN",
+    "5869-FIND",
+    "6451-FIND"
+   ]
+  },
+  {
+   "name": "yanfeng wang",
+   "prior": [
+    "2018.iwslt-1.16",
+    "2022.lrec-1.723",
+    "2023.emnlp-main.878",
+    "2024.acl-long.489",
+    "2024.acl-long.498",
+    "2024.emnlp-main.438",
+    "2024.emnlp-main.480",
+    "2024.emnlp-main.685",
+    "2024.emnlp-main.836",
+    "2024.emnlp-main.99",
+    "2024.findings-acl.311",
+    "2024.findings-acl.609",
+    "2024.findings-acl.965",
+    "2024.findings-emnlp.619",
+    "2024.findings-emnlp.664",
+    "2024.lrec-main.1131",
+    "2024.lrec-main.1162",
+    "2024.lrec-main.264",
+    "2025.acl-long.1136",
+    "2025.acl-long.314",
+    "2025.acl-long.663",
+    "2025.acl-long.742",
+    "2025.acl-long.788",
+    "2025.emnlp-main.1050",
+    "2025.emnlp-main.1341",
+    "2025.emnlp-main.355",
+    "2025.emnlp-main.989",
+    "2025.findings-acl.791",
+    "2025.findings-emnlp.349",
+    "2025.hcinlp-1.8"
+   ],
+   "targets": [
+    "1604-MAIN",
+    "1661-MAIN",
+    "2782-MAIN",
+    "4546-MAIN",
+    "1635-FIND"
+   ]
+  },
+  {
+   "name": "yang song",
+   "prior": [
+    "2021.acl-long.479",
+    "2021.eacl-main.238",
+    "2021.emnlp-main.160",
+    "2021.findings-emnlp.365",
+    "2022.lrec-1.622",
+    "2024.lrec-main.1231",
+    "2024.semeval-1.53",
+    "2025.acl-long.468",
+    "2025.emnlp-industry.185",
+    "2025.emnlp-industry.77",
+    "2025.emnlp-main.639",
+    "2025.findings-emnlp.1021",
+    "2025.findings-emnlp.404",
+    "2025.naacl-long.361",
+    "D19-1268",
+    "D19-1487",
+    "P19-1190"
+   ],
+   "targets": [
+    "6014-MAIN",
+    "7606-MAIN",
+    "8623-MAIN",
+    "250-IND",
+    "5557-FIND"
+   ]
+  },
+  {
+   "name": "yanglei gan",
+   "prior": [
+    "2024.acl-long.349",
+    "2024.findings-acl.343",
+    "2024.lrec-main.1343",
+    "2025.findings-acl.1353"
+   ],
+   "targets": [
+    "6498-MAIN",
+    "1412-FIND",
+    "7096-FIND"
+   ]
+  },
+  {
+   "name": "yao wan",
+   "prior": [
+    "2020.emnlp-main.411",
+    "2021.eacl-main.105",
+    "2021.emnlp-main.13",
+    "2021.emnlp-main.282",
+    "2021.findings-emnlp.347",
+    "2022.acl-long.37",
+    "2022.findings-acl.2",
+    "2022.findings-emnlp.41",
+    "2022.findings-naacl.80",
+    "2022.nlp4convai-1.2",
+    "2023.findings-emnlp.249",
+    "2024.findings-acl.138",
+    "2024.findings-acl.972",
+    "2024.findings-eacl.158",
+    "2024.findings-emnlp.541",
+    "2024.findings-naacl.29",
+    "2024.findings-naacl.5",
+    "2024.lrec-main.521",
+    "2024.naacl-long.19",
+    "2025.acl-long.312",
+    "2025.acl-long.960",
+    "2025.findings-acl.918",
+    "2025.findings-acl.987",
+    "N19-2009"
+   ],
+   "targets": [
+    "1306-MAIN",
+    "1425-MAIN"
+   ]
+  },
+  {
+   "name": "yasha wang",
+   "prior": [
+    "2023.findings-acl.845",
+    "2024.acl-demos.31",
+    "2024.findings-acl.817",
+    "2025.acl-long.1328",
+    "2025.acl-long.558",
+    "2025.acl-long.571",
+    "2025.acl-long.580",
+    "2025.emnlp-main.676",
+    "2025.emnlp-main.678",
+    "2025.emnlp-main.983"
+   ],
+   "targets": [
+    "1265-MAIN",
+    "2417-MAIN",
+    "6360-MAIN",
+    "8817-FIND"
+   ]
+  },
+  {
+   "name": "yi chen",
+   "prior": [
+    "2020.ccl-1.63",
+    "2021.emnlp-main.210",
+    "2022.acl-long.147",
+    "2022.findings-emnlp.439",
+    "2023.acl-long.364",
+    "2023.emnlp-main.413",
+    "2024.findings-naacl.145",
+    "2024.naacl-long.299",
+    "2025.findings-acl.463"
+   ],
+   "targets": [
+    "6122-MAIN",
+    "1442-FIND",
+    "3275-FIND"
+   ]
+  },
+  {
+   "name": "yi yu",
+   "prior": [
+    "2021.acl-long.32",
+    "2024.findings-eacl.89",
+    "2025.findings-acl.754",
+    "2025.findings-emnlp.282",
+    "2025.findings-naacl.367"
+   ],
+   "targets": [
+    "851-IND"
+   ]
+  },
+  {
+   "name": "yi zhou",
+   "prior": [
+    "2020.acl-main.590",
+    "2020.acl-main.612",
+    "2020.findings-emnlp.265",
+    "2021.acl-long.426",
+    "2021.emnlp-main.121",
+    "2021.wmt-1.17",
+    "2022.acl-long.135",
+    "2022.findings-emnlp.190",
+    "2022.lt4hala-1.26",
+    "2023.acl-long.520",
+    "2023.acl-long.569",
+    "2023.emnlp-main.247",
+    "2023.emnlp-main.683",
+    "2023.findings-acl.165",
+    "2023.findings-acl.550",
+    "2023.findings-acl.747",
+    "2023.findings-emnlp.231",
+    "2023.findings-emnlp.332",
+    "2023.findings-emnlp.427",
+    "2023.findings-emnlp.981",
+    "2024.emnlp-main.1098",
+    "2024.lrec-main.579",
+    "2025.acl-long.436",
+    "2025.emnlp-main.1373",
+    "2025.findings-emnlp.705",
+    "2025.naacl-long.167",
+    "2025.semeval-1.327",
+    "C18-1045",
+    "D19-5706",
+    "S19-2154"
+   ],
+   "targets": [
+    "4576-MAIN",
+    "7181-MAIN"
+   ]
+  },
+  {
+   "name": "yifan ethan xu",
+   "prior": [
+    "2023.acl-industry.18",
+    "2024.findings-emnlp.14",
+    "2025.findings-emnlp.329"
+   ],
+   "targets": [
+    "664-IND"
+   ]
+  },
+  {
+   "name": "yifan song",
+   "prior": [
+    "2022.coling-1.298",
+    "2022.emnlp-main.420",
+    "2022.findings-emnlp.438",
+    "2022.iwslt-1.15",
+    "2023.emnlp-main.958",
+    "2023.findings-emnlp.969",
+    "2024.acl-long.409",
+    "2024.emnlp-main.47",
+    "2024.emnlp-main.93",
+    "2024.findings-emnlp.116",
+    "2024.naacl-long.55",
+    "2025.acl-long.1423",
+    "2025.acl-long.1483",
+    "2025.coling-main.351",
+    "2025.findings-emnlp.210",
+    "2025.findings-emnlp.429",
+    "2025.naacl-long.211"
+   ],
+   "targets": [
+    "2118-MAIN",
+    "4218-MAIN",
+    "4453-MAIN",
+    "4677-MAIN",
+    "8435-FIND"
+   ]
+  },
+  {
+   "name": "yifan sun",
+   "prior": [
+    "2022.wassa-1.2",
+    "2023.acl-long.677",
+    "2025.acl-long.1565",
+    "2025.emnlp-main.806",
+    "2025.emnlp-main.882",
+    "2025.findings-acl.758"
+   ],
+   "targets": [
+    "348-MAIN",
+    "6245-FIND"
+   ]
+  },
+  {
+   "name": "yihong liu",
+   "prior": [
+    "2022.acl-long.89",
+    "2023.acl-long.726",
+    "2023.findings-emnlp.562",
+    "2023.iwslt-1.48",
+    "2024.acl-long.136",
+    "2024.findings-emnlp.412",
+    "2024.insights-1.1",
+    "2025.acl-long.253",
+    "2025.acl-long.429",
+    "2025.acl-long.88",
+    "2025.acl-srw.15",
+    "2025.acl-srw.6",
+    "2025.blackboxnlp-1.31",
+    "2025.coling-main.165",
+    "2025.coling-main.32",
+    "2025.emnlp-main.128",
+    "2025.emnlp-main.52",
+    "2025.emnlp-main.677",
+    "2025.findings-acl.1379",
+    "2025.findings-emnlp.113",
+    "2025.mrl-main.27",
+    "2025.sigtyp-1.13"
+   ],
+   "targets": [
+    "1092-MAIN",
+    "1227-MAIN",
+    "4196-MAIN",
+    "588-FIND",
+    "1067-FIND"
+   ]
+  },
+  {
+   "name": "yijia xiao",
+   "prior": [
+    "2024.emnlp-main.70",
+    "2024.emnlp-main.785",
+    "2024.findings-emnlp.277",
+    "2025.findings-emnlp.1255",
+    "2025.naacl-long.633"
+   ],
+   "targets": [
+    "8724-FIND"
+   ]
+  },
+  {
+   "name": "yilin liu",
+   "prior": [
+    "2022.ccl-1.60",
+    "2024.naacl-long.103",
+    "2025.emnlp-main.637"
+   ],
+   "targets": [
+    "7789-FIND"
+   ]
+  },
+  {
+   "name": "yilin niu",
+   "prior": [
+    "2020.acl-main.361",
+    "2021.acl-long.237",
+    "2023.tacl-1.22",
+    "2025.acl-long.187",
+    "P17-1187"
+   ],
+   "targets": [
+    "1894-FIND"
+   ]
+  },
+  {
+   "name": "yin zhang",
+   "prior": [
+    "2020.coling-main.232",
+    "2020.emnlp-main.372",
+    "2020.emnlp-main.590",
+    "2020.emnlp-main.611",
+    "2021.acl-long.196",
+    "2021.emnlp-main.282",
+    "2021.emnlp-main.768",
+    "2021.findings-emnlp.156",
+    "2021.sigdial-1.24",
+    "2022.coling-1.26",
+    "2022.emnlp-main.377",
+    "2022.findings-emnlp.274",
+    "2023.emnlp-main.18",
+    "2023.findings-acl.204",
+    "2023.findings-acl.835",
+    "2023.findings-emnlp.965",
+    "2024.acl-long.592",
+    "2024.emnlp-main.333",
+    "2024.findings-emnlp.91",
+    "2024.findings-emnlp.93",
+    "2024.lrec-main.1427",
+    "2024.lrec-main.771",
+    "2025.findings-acl.792",
+    "2025.findings-emnlp.750",
+    "2025.findings-emnlp.983",
+    "2025.wat-1.3",
+    "D19-1463"
+   ],
+   "targets": [
+    "1966-FIND"
+   ]
+  },
+  {
+   "name": "ying zhou",
+   "prior": [
+    "2023.emnlp-main.644",
+    "2024.acl-long.584",
+    "2024.lrec-main.739",
+    "2025.emnlp-industry.13",
+    "2025.emnlp-main.429",
+    "2025.findings-acl.1061"
+   ],
+   "targets": [
+    "4301-MAIN",
+    "4331-FIND"
+   ]
+  },
+  {
+   "name": "yitong li",
+   "prior": [
+    "2020.acl-main.673",
+    "2020.findings-emnlp.213",
+    "2021.emnlp-main.580",
+    "2022.acl-long.402",
+    "2022.coling-1.53",
+    "2022.dialdoc-1.2",
+    "2022.emnlp-demos.7",
+    "2022.emnlp-main.343",
+    "2022.findings-acl.2",
+    "2022.findings-emnlp.262",
+    "2022.findings-emnlp.305",
+    "2022.sustainlp-1.13",
+    "2023.acl-long.364",
+    "2023.acl-long.608",
+    "2023.acl-long.757",
+    "2023.acl-short.148",
+    "2023.emnlp-main.479",
+    "2024.acl-long.8",
+    "2024.findings-acl.594",
+    "2024.findings-acl.688",
+    "2024.findings-acl.947",
+    "2024.findings-acl.951",
+    "2024.findings-acl.972",
+    "2024.findings-acl.974",
+    "2024.lrec-main.209",
+    "2025.emnlp-main.1068",
+    "D18-1210",
+    "E17-2004",
+    "N18-2076",
+    "P18-2005",
+    "P19-1186",
+    "W17-5404"
+   ],
+   "targets": [
+    "6719-MAIN"
+   ]
+  },
+  {
+   "name": "yizhou sun",
+   "prior": [
+    "2020.findings-emnlp.290",
+    "2021.emnlp-main.769",
+    "2021.findings-emnlp.292",
+    "2022.acl-long.36",
+    "2022.emnlp-main.650",
+    "2023.acl-industry.18",
+    "2023.acl-long.639",
+    "2023.eacl-main.68",
+    "2023.findings-acl.642",
+    "2024.emnlp-main.528",
+    "2024.findings-acl.158",
+    "2024.naacl-long.323",
+    "2025.acl-long.1589",
+    "2025.coling-main.462",
+    "2025.findings-acl.285",
+    "2025.findings-acl.975",
+    "2025.findings-emnlp.1255",
+    "2025.findings-emnlp.145",
+    "2025.findings-naacl.50",
+    "2025.naacl-long.410",
+    "P19-1402"
+   ],
+   "targets": [
+    "52-MAIN",
+    "9192-MAIN"
+   ]
+  },
+  {
+   "name": "yong guan",
+   "prior": [
+    "2020.acl-main.83",
+    "2020.ccl-1.23",
+    "2020.coling-main.237",
+    "2021.emnlp-main.196",
+    "2021.emnlp-main.331",
+    "2023.findings-acl.312",
+    "2024.acl-long.224",
+    "2024.lrec-main.1348",
+    "2025.coling-main.460"
+   ],
+   "targets": [
+    "9201-FIND"
+   ]
+  },
+  {
+   "name": "yong suk choi",
+   "prior": [
+    "2021.emnlp-main.36",
+    "2023.acl-short.56",
+    "2024.emnlp-main.848",
+    "2024.naacl-short.44",
+    "2025.findings-emnlp.290"
+   ],
+   "targets": [
+    "310-MAIN",
+    "398-MAIN",
+    "184-FIND",
+    "9075-FIND"
+   ]
+  },
+  {
+   "name": "yong zhang",
+   "prior": [
+    "2020.acl-main.274",
+    "2020.emnlp-main.238",
+    "2021.emnlp-main.416",
+    "2022.acl-long.359",
+    "2022.coling-1.441",
+    "2022.emnlp-industry.4",
+    "2023.acl-demo.45",
+    "2023.conll-1.7",
+    "2023.emnlp-main.326",
+    "2024.acl-long.769",
+    "2024.emnlp-main.834",
+    "2024.findings-naacl.272",
+    "2024.findings-naacl.45",
+    "2024.lrec-main.1438",
+    "2024.naacl-long.421",
+    "2025.coling-main.544",
+    "2025.emnlp-main.1338",
+    "2025.findings-acl.269",
+    "I17-4019",
+    "W17-6003"
+   ],
+   "targets": [
+    "1036-MAIN",
+    "1343-FIND"
+   ]
+  },
+  {
+   "name": "yonghyun jun",
+   "prior": [
+    "2025.acl-long.900",
+    "2025.acl-short.48",
+    "2025.emnlp-main.345"
+   ],
+   "targets": [
+    "4736-MAIN",
+    "6612-FIND",
+    "6718-FIND"
+   ]
+  },
+  {
+   "name": "youhyun shin",
+   "prior": [
+    "2023.emnlp-main.630",
+    "2024.lrec-main.775",
+    "2025.coling-main.248",
+    "2025.emnlp-main.856",
+    "W17-4106"
+   ],
+   "targets": [
+    "4116-MAIN"
+   ]
+  },
+  {
+   "name": "yu liu",
+   "prior": [
+    "2021.emnlp-main.33",
+    "2021.findings-emnlp.42",
+    "2024.lrec-main.555",
+    "2024.wmt-1.117",
+    "2025.coling-main.210",
+    "2025.emnlp-industry.135",
+    "2025.emnlp-industry.26",
+    "2025.emnlp-main.1061",
+    "2025.findings-emnlp.177"
+   ],
+   "targets": [
+    "3347-MAIN",
+    "4278-MAIN",
+    "7716-MAIN",
+    "1241-FIND",
+    "6476-FIND"
+   ]
+  },
+  {
+   "name": "yu lu",
+   "prior": [
+    "2020.iwslt-1.15",
+    "2021.acl-long.103",
+    "2022.acl-long.167",
+    "2022.emnlp-main.363",
+    "2023.findings-acl.670",
+    "2023.findings-emnlp.190",
+    "2024.acl-long.685",
+    "2024.acl-long.821",
+    "2024.findings-emnlp.69",
+    "2025.acl-long.461",
+    "2025.emnlp-main.1081",
+    "2025.emnlp-main.681",
+    "2025.findings-acl.1099"
+   ],
+   "targets": [
+    "123-MAIN"
+   ]
+  },
+  {
+   "name": "yu sun",
+   "prior": [
+    "2020.acl-main.62",
+    "2020.findings-emnlp.355",
+    "2020.semeval-1.103",
+    "2020.semeval-1.189",
+    "2020.semeval-1.190",
+    "2020.textgraphs-1.11",
+    "2021.acl-long.227",
+    "2021.emnlp-main.3",
+    "2021.findings-emnlp.110",
+    "2021.naacl-main.136",
+    "2021.naacl-srw.17",
+    "2021.semeval-1.35",
+    "2021.semeval-1.8",
+    "2022.findings-emnlp.274",
+    "2022.findings-emnlp.8",
+    "2022.semeval-1.140",
+    "2022.semeval-1.152",
+    "2023.acl-long.226",
+    "2023.acl-short.123",
+    "2023.emnlp-demo.48",
+    "2023.findings-acl.676",
+    "2023.repl4nlp-1.5",
+    "2024.acl-long.428",
+    "2024.acl-long.434",
+    "2024.acl-long.507",
+    "2024.emnlp-main.182",
+    "2024.emnlp-main.183",
+    "2024.findings-emnlp.314",
+    "2025.acl-long.1146",
+    "2025.acl-long.1369",
+    "2025.acl-long.582",
+    "2025.acl-long.626",
+    "2025.acl-long.637",
+    "2025.acl-long.792",
+    "2025.emnlp-industry.77",
+    "2025.emnlp-main.1344",
+    "Q18-1039",
+    "S19-2216"
+   ],
+   "targets": [
+    "1047-MAIN",
+    "7865-MAIN"
+   ]
+  },
+  {
+   "name": "yu yang",
+   "prior": [
+    "2021.naacl-industry.18",
+    "2023.emnlp-main.165",
+    "2024.findings-acl.309"
+   ],
+   "targets": [
+    "3529-MAIN",
+    "4348-MAIN",
+    "6601-MAIN",
+    "7842-MAIN"
+   ]
+  },
+  {
+   "name": "yu-an lu",
+   "prior": [
+    "2023.eval4nlp-1.15",
+    "2024.semeval-1.47",
+    "2024.semeval-1.60"
+   ],
+   "targets": [
+    "8955-FIND"
+   ]
+  },
+  {
+   "name": "yuchen eleanor jiang",
+   "prior": [
+    "2022.findings-emnlp.70",
+    "2023.acl-long.435",
+    "2023.eacl-main.95",
+    "2023.wmt-1.54",
+    "2025.acl-long.369",
+    "2025.findings-emnlp.720"
+   ],
+   "targets": [
+    "7600-FIND"
+   ]
+  },
+  {
+   "name": "yue cao",
+   "prior": [
+    "2020.acl-main.554",
+    "2020.findings-emnlp.218",
+    "2021.eacl-main.33",
+    "2021.emnlp-main.350",
+    "2021.naacl-main.310",
+    "2025.ccl-1.39"
+   ],
+   "targets": [
+    "7344-MAIN"
+   ]
+  },
+  {
+   "name": "yue deng",
+   "prior": [
+    "2021.findings-emnlp.30",
+    "2023.acl-long.686",
+    "2023.emnlp-main.538",
+    "2024.acl-demos.28",
+    "2024.findings-naacl.246",
+    "2025.knowllm-1.9",
+    "2025.naacl-demo.10"
+   ],
+   "targets": [
+    "367-MAIN"
+   ]
+  },
+  {
+   "name": "yufeng zhang",
+   "prior": [
+    "2020.acl-main.31",
+    "2024.acl-long.491",
+    "2025.acl-long.452",
+    "2025.coling-main.608",
+    "2025.emnlp-industry.135"
+   ],
+   "targets": [
+    "610-IND"
+   ]
+  },
+  {
+   "name": "yuki mitsufuji",
+   "prior": [
+    "2022.findings-emnlp.120",
+    "2023.acl-long.362",
+    "2024.acl-long.264",
+    "2024.findings-acl.293",
+    "2025.emnlp-main.1669",
+    "2025.emnlp-main.653",
+    "2025.repl4nlp-1.4"
+   ],
+   "targets": [
+    "673-MAIN",
+    "3447-MAIN",
+    "6436-MAIN",
+    "4461-FIND"
+   ]
+  },
+  {
+   "name": "yumeng wang",
+   "prior": [
+    "2025.emnlp-main.1680",
+    "2025.findings-acl.1037",
+    "2025.findings-emnlp.24",
+    "2025.findings-naacl.152"
+   ],
+   "targets": [
+    "1804-MAIN",
+    "2655-FIND",
+    "4501-FIND"
+   ]
+  },
+  {
+   "name": "yun luo",
+   "prior": [
+    "2022.coling-1.620",
+    "2022.coling-1.621",
+    "2023.findings-emnlp.507",
+    "2024.ccl-3.38",
+    "2024.emnlp-demo.22",
+    "2024.emnlp-main.395",
+    "2024.findings-acl.818",
+    "2024.naacl-long.372",
+    "2025.acl-long.1057",
+    "2025.acl-long.1099",
+    "2025.findings-acl.362"
+   ],
+   "targets": [
+    "3258-MAIN",
+    "3724-MAIN",
+    "8295-MAIN"
+   ]
+  },
+  {
+   "name": "yunqiao yang",
+   "prior": [
+    "2025.emnlp-main.419",
+    "2025.findings-acl.128",
+    "2025.findings-acl.333"
+   ],
+   "targets": [
+    "4396-MAIN"
+   ]
+  },
+  {
+   "name": "yunxiang li",
+   "prior": [
+    "2022.acl-long.454",
+    "2025.emnlp-main.1267",
+    "2025.findings-acl.878"
+   ],
+   "targets": [
+    "1194-MAIN",
+    "3817-FIND"
+   ]
+  },
+  {
+   "name": "yusong tan",
+   "prior": [
+    "2020.coling-main.8",
+    "2023.findings-emnlp.63",
+    "2025.findings-acl.482"
+   ],
+   "targets": [
+    "3767-MAIN"
+   ]
+  },
+  {
+   "name": "yusuke oda",
+   "prior": [
+    "2014.iwslt-papers.16",
+    "2020.lrec-1.459",
+    "2020.ngt-1.1",
+    "2021.wat-1.1",
+    "2022.acl-long.166",
+    "2022.wat-1.1",
+    "2023.wat-1.1",
+    "2025.emnlp-main.1138",
+    "2025.findings-emnlp.1246",
+    "2025.findings-emnlp.615",
+    "2025.naacl-srw.15",
+    "C16-1134",
+    "D19-5201",
+    "D19-5601",
+    "P17-1079",
+    "W17-3208",
+    "W17-5701",
+    "W17-5712",
+    "W18-2701"
+   ],
+   "targets": [
+    "3025-MAIN"
+   ]
+  },
+  {
+   "name": "yuxuan liu",
+   "prior": [
+    "2023.emnlp-main.120",
+    "2024.acl-long.413",
+    "2024.lrec-main.237"
+   ],
+   "targets": [
+    "1696-MAIN",
+    "2417-MAIN",
+    "2563-MAIN",
+    "6176-MAIN",
+    "122-IND",
+    "416-FIND",
+    "3744-FIND"
+   ]
+  },
+  {
+   "name": "zaiqiao meng",
+   "prior": [
+    "2021.emnlp-main.383",
+    "2021.findings-emnlp.77",
+    "2021.naacl-main.334",
+    "2021.wnut-1.34",
+    "2022.acl-long.329",
+    "2022.emnlp-main.168",
+    "2022.findings-naacl.191",
+    "2023.acl-long.234",
+    "2023.eacl-main.106",
+    "2023.emnlp-main.903",
+    "2023.findings-emnlp.979",
+    "2023.matching-1.4",
+    "2024.acl-long.115",
+    "2024.acl-long.533",
+    "2024.bionlp-1.54",
+    "2024.findings-emnlp.496",
+    "2024.findings-emnlp.732",
+    "2025.acl-long.929",
+    "2025.emnlp-demos.40",
+    "2025.emnlp-demos.47",
+    "2025.findings-acl.888",
+    "2025.findings-emnlp.1399",
+    "2025.findings-emnlp.237",
+    "2025.findings-emnlp.637",
+    "2025.realm-1.32"
+   ],
+   "targets": [
+    "1919-FIND",
+    "1985-FIND"
+   ]
+  },
+  {
+   "name": "ze chen",
+   "prior": [
+    "2022.evonlp-1.2",
+    "2022.semeval-1.204",
+    "2024.semeval-1.104",
+    "2025.acl-long.1425",
+    "2025.realm-1.20"
+   ],
+   "targets": [
+    "954-MAIN"
+   ]
+  },
+  {
+   "name": "ze wang",
+   "prior": [
+    "2024.findings-emnlp.184",
+    "2025.acl-long.275",
+    "2025.acl-srw.40",
+    "2025.coling-main.202",
+    "2025.findings-emnlp.320",
+    "2025.findings-ijcnlp.1",
+    "2025.ijcnlp-long.8"
+   ],
+   "targets": [
+    "1501-MAIN",
+    "2415-MAIN",
+    "1918-FIND"
+   ]
+  },
+  {
+   "name": "zhaojian yu",
+   "prior": [
+    "2024.acl-long.280",
+    "2025.emnlp-industry.182",
+    "2025.findings-acl.686"
+   ],
+   "targets": [
+    "1692-MAIN",
+    "3830-MAIN",
+    "4066-FIND"
+   ]
+  },
+  {
+   "name": "zhaokai wang",
+   "prior": [
+    "2024.emnlp-industry.104",
+    "2025.acl-long.369",
+    "2025.findings-emnlp.217"
+   ],
+   "targets": [
+    "831-IND"
+   ]
+  },
+  {
+   "name": "zhe chen",
+   "prior": [
+    "2023.dstc-1.17",
+    "2023.emnlp-main.864",
+    "2023.nllp-1.7",
+    "2024.acl-long.489",
+    "2024.findings-emnlp.619",
+    "2025.acl-long.742",
+    "2025.acl-long.788",
+    "2025.coling-main.50",
+    "2025.emnlp-main.1050",
+    "2025.emnlp-main.355",
+    "2025.findings-naacl.143"
+   ],
+   "targets": [
+    "4546-MAIN",
+    "7344-MAIN"
+   ]
+  },
+  {
+   "name": "zhe yang",
+   "prior": [
+    "2020.ccl-1.103",
+    "2022.emnlp-main.689",
+    "2023.findings-acl.575",
+    "2023.findings-emnlp.880",
+    "2024.emnlp-main.92",
+    "2024.findings-acl.456",
+    "2024.findings-emnlp.828",
+    "2025.acl-long.203",
+    "2025.coling-main.92",
+    "2025.emnlp-main.685",
+    "2025.findings-emnlp.406",
+    "2025.findings-naacl.335",
+    "2025.naacl-long.497"
+   ],
+   "targets": [
+    "2672-MAIN"
+   ]
+  },
+  {
+   "name": "zhen wang",
+   "prior": [
+    "2020.acl-main.719",
+    "2020.findings-emnlp.194",
+    "2021.semeval-1.30",
+    "2022.acl-long.565",
+    "2022.emnlp-main.156",
+    "2022.findings-acl.193",
+    "2022.findings-emnlp.457",
+    "2022.findings-emnlp.458",
+    "2022.lrec-1.729",
+    "2022.suki-1.7",
+    "2023.acl-long.68",
+    "2023.eacl-main.90",
+    "2023.emnlp-main.507",
+    "2023.sigdial-1.19",
+    "2024.emnlp-main.1220",
+    "2024.findings-emnlp.523",
+    "2024.lrec-main.351",
+    "2025.coling-main.353",
+    "2025.coling-main.64",
+    "2025.findings-acl.134",
+    "2025.findings-acl.84",
+    "2025.findings-emnlp.258",
+    "2025.findings-emnlp.683",
+    "P18-1159"
+   ],
+   "targets": [
+    "1756-MAIN",
+    "2710-MAIN",
+    "3717-MAIN",
+    "5941-MAIN",
+    "570-FIND",
+    "8633-FIND"
+   ]
+  },
+  {
+   "name": "zhendong chu",
+   "prior": [
+    "2024.findings-naacl.14",
+    "2025.emnlp-industry.68",
+    "2025.findings-emnlp.743"
+   ],
+   "targets": [
+    "1661-MAIN",
+    "4261-FIND"
+   ]
+  },
+  {
+   "name": "zheng wei",
+   "prior": [
+    "2024.acl-long.347",
+    "2025.acl-long.1169",
+    "2025.findings-acl.1277"
+   ],
+   "targets": [
+    "4098-MAIN",
+    "7533-MAIN",
+    "7673-FIND"
+   ]
+  },
+  {
+   "name": "zhenguo li",
+   "prior": [
+    "2023.acl-long.706",
+    "2024.findings-acl.397",
+    "2024.findings-naacl.279",
+    "2025.acl-long.151",
+    "2025.acl-long.522",
+    "2025.coling-main.34",
+    "2025.emnlp-main.1317",
+    "2025.emnlp-main.397",
+    "2025.findings-acl.1021",
+    "2025.findings-acl.3",
+    "2025.findings-emnlp.893",
+    "2025.naacl-long.399"
+   ],
+   "targets": [
+    "908-MAIN",
+    "8616-FIND"
+   ]
+  },
+  {
+   "name": "zhenya huang",
+   "prior": [
+    "2023.emnlp-main.700",
+    "2023.findings-acl.358",
+    "2023.findings-acl.553",
+    "2024.emnlp-main.123",
+    "2024.findings-acl.973",
+    "2024.findings-emnlp.149",
+    "2025.acl-long.628",
+    "2025.acl-long.761",
+    "2025.findings-acl.303",
+    "2025.findings-acl.40",
+    "2025.findings-acl.553"
+   ],
+   "targets": [
+    "1061-MAIN",
+    "5815-MAIN",
+    "6545-MAIN"
+   ]
+  },
+  {
+   "name": "zhenyu zhang",
+   "prior": [
+    "2020.coling-main.143",
+    "2020.coling-main.341",
+    "2020.emnlp-main.514",
+    "2020.findings-emnlp.211",
+    "2021.emnlp-main.839",
+    "2021.findings-emnlp.131",
+    "2022.acl-long.140",
+    "2022.findings-emnlp.103",
+    "2022.findings-emnlp.274",
+    "2022.naacl-main.103",
+    "2023.acl-long.564",
+    "2024.acl-long.428",
+    "2024.acl-long.434",
+    "2025.acl-long.1369",
+    "2025.acl-long.582",
+    "2025.acl-long.626",
+    "2025.acl-long.637",
+    "2025.acl-short.39",
+    "2025.coling-main.159"
+   ],
+   "targets": [
+    "1018-MAIN",
+    "1047-MAIN",
+    "1233-MAIN",
+    "4241-MAIN"
+   ]
+  },
+  {
+   "name": "zheyu zhang",
+   "prior": [
+    "2024.findings-eacl.20",
+    "2025.emnlp-main.128",
+    "2025.emnlp-main.525",
+    "2025.findings-acl.581",
+    "2025.findings-emnlp.330"
+   ],
+   "targets": [
+    "716-MAIN"
+   ]
+  },
+  {
+   "name": "zheyuan zhang",
+   "prior": [
+    "2023.emnlp-main.456",
+    "2023.findings-emnlp.111",
+    "2024.acl-long.326",
+    "2025.acl-long.296",
+    "2025.coling-main.112",
+    "2025.emnlp-main.706",
+    "2025.findings-acl.725",
+    "2025.naacl-long.520",
+    "2025.naacl-long.65"
+   ],
+   "targets": [
+    "4616-FIND"
+   ]
+  },
+  {
+   "name": "zhi zhou",
+   "prior": [
+    "2025.acl-long.1472",
+    "2025.emnlp-main.642",
+    "2025.findings-emnlp.403"
+   ],
+   "targets": [
+    "658-MAIN",
+    "4372-MAIN",
+    "6103-MAIN"
+   ]
+  },
+  {
+   "name": "zhiyu li",
+   "prior": [
+    "2024.acl-long.288",
+    "2024.acl-long.538",
+    "2024.findings-acl.345",
+    "2024.findings-emnlp.687",
+    "2025.acl-long.217",
+    "2025.acl-long.230",
+    "2025.acl-long.258",
+    "2025.acl-long.534",
+    "2025.findings-acl.1116",
+    "2025.findings-acl.1126",
+    "2025.findings-acl.423",
+    "2025.findings-acl.97"
+   ],
+   "targets": [
+    "607-MAIN",
+    "753-MAIN",
+    "7367-MAIN"
+   ]
+  },
+  {
+   "name": "zhouhang xie",
+   "prior": [
+    "2021.blackboxnlp-1.6",
+    "2024.findings-acl.782",
+    "2024.findings-emnlp.846",
+    "2024.nlp4musa-1.17",
+    "2025.acl-long.708",
+    "2025.findings-acl.1158",
+    "2025.naacl-long.554"
+   ],
+   "targets": [
+    "2765-FIND"
+   ]
+  },
+  {
+   "name": "zhuang li",
+   "prior": [
+    "2020.coling-main.226",
+    "2021.eacl-main.109",
+    "2021.eacl-main.292",
+    "2021.emnlp-main.310",
+    "2022.emnlp-main.706",
+    "2023.acl-long.529",
+    "2023.eacl-main.77",
+    "2023.emnlp-industry.18",
+    "2023.findings-acl.398",
+    "2023.findings-eacl.47",
+    "2024.acl-long.144",
+    "2024.alta-1.17",
+    "2024.findings-eacl.136",
+    "2024.findings-eacl.24",
+    "2024.findings-naacl.196",
+    "2025.acl-long.1015",
+    "2025.acl-long.165",
+    "2025.acl-long.221",
+    "2025.acl-long.471",
+    "2025.acl-long.625",
+    "2025.acl-long.733",
+    "2025.emnlp-main.398",
+    "2025.findings-emnlp.476",
+    "2025.naacl-long.465"
+   ],
+   "targets": [
+    "886-IND"
+   ]
+  },
+  {
+   "name": "zi yang",
+   "prior": [
+    "2020.findings-emnlp.64",
+    "2025.emnlp-main.230",
+    "D17-1085",
+    "W17-2307"
+   ],
+   "targets": [
+    "3572-MAIN"
+   ]
+  },
+  {
+   "name": "zihan ma",
+   "prior": [
+    "2024.acl-long.316",
+    "2025.acl-long.1494",
+    "2025.emnlp-main.1604"
+   ],
+   "targets": [
+    "1228-MAIN",
+    "6122-MAIN"
+   ]
+  },
+  {
+   "name": "zihao zhang",
+   "prior": [
+    "2024.lrec-main.936",
+    "2025.acl-long.958",
+    "2025.coling-main.139",
+    "2025.findings-acl.390"
+   ],
+   "targets": [
+    "4944-MAIN"
+   ]
+  },
+  {
+   "name": "zijie wang",
+   "prior": [
+    "2023.findings-emnlp.146",
+    "2023.nejlt-1.5",
+    "2024.acl-demos.5",
+    "2024.findings-naacl.136",
+    "2025.emnlp-main.1228"
+   ],
+   "targets": [
+    "6486-MAIN"
+   ]
+  },
+  {
+   "name": "zirui song",
+   "prior": [
+    "2024.findings-emnlp.482",
+    "2025.emnlp-main.1330",
+    "2025.findings-acl.866",
+    "2025.findings-emnlp.1321",
+    "2025.findings-emnlp.1379",
+    "2025.naacl-long.379"
+   ],
+   "targets": [
+    "7020-MAIN"
+   ]
+  },
+  {
+   "name": "zizheng zhang",
+   "prior": [
+    "2020.wat-1.4",
+    "2023.findings-eacl.39",
+    "2023.findings-emnlp.347",
+    "2025.emnlp-main.285"
+   ],
+   "targets": [
+    "6856-FIND"
+   ]
+  },
+  {
+   "name": "zongyuan ge",
+   "prior": [
+    "2024.alvr-1.3",
+    "2025.acl-long.1096",
+    "2025.acl-long.600",
+    "2025.coling-main.19",
+    "2025.emnlp-main.741"
+   ],
+   "targets": [
+    "2544-MAIN",
+    "7302-MAIN",
+    "7338-MAIN",
+    "61-FIND",
+    "6439-FIND",
+    "6472-FIND",
+    "6875-FIND"
+   ]
+  },
+  {
+   "name": "zuxin liu",
+   "prior": [
+    "2024.conll-1.33",
+    "2025.emnlp-demos.27",
+    "2025.emnlp-demos.76",
+    "2025.emnlp-main.1090",
+    "2025.findings-acl.1182",
+    "2025.findings-acl.49",
+    "2025.findings-acl.670",
+    "2025.naacl-long.578"
+   ],
+   "targets": [
+    "2101-MAIN",
+    "2117-MAIN"
+   ]
+  }
+ ]
+}
