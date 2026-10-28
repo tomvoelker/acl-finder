@@ -53,6 +53,8 @@ VARIANTS = {
     "embedding, centered recency centroid": recency,
     "TF-IDF": lexical,
     "hybrid (recency centroid + TF-IDF, RRF)": lambda a: programme.hybrid(recency(a), lexical(a)),
+    **{f"hybrid, TF-IDF gated to embedding top {g:.0%}": (lambda g: lambda a: programme.hybrid(recency(a), lexical(a), gate=g))(g)
+       for g in (0.05, 0.1, 0.2, 0.3)},
 }
 
 rng = np.random.default_rng(0)

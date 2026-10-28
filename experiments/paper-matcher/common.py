@@ -10,6 +10,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / "work/paper-matcher"
 HERE = Path(__file__).resolve().parent
+# Research boilerplate that TF-IDF still weights highly but that explains nothing.
+GENERIC_TERMS = set("""
+approach approaches method methods model models paper task tasks based using use used new novel propose proposed
+results result performance study studies work works framework existing previous prior show shows demonstrate
+significant significantly improve improves improved improvement improvements state art state art developed develop
+f1 score f1 score accuracy evaluate evaluation experiments experimental analysis effective efficient higher lower
+large small high low better best general specific various different multiple single valuable source custom
+""".split()) | {"state art", "f1 score", "large language", "language models", "language model", "large language models"}
 
 
 def unit(x):
@@ -32,6 +40,9 @@ class Programme:
                       for e, (_, aid, _) in zip(self.entries, self.meta["papers"])]
         self.tfidf = TfidfVectorizer(sublinear_tf=True, stop_words="english", ngram_range=(1, 2), min_df=2, max_df=0.5)
         self.X = self.tfidf.fit_transform(self.texts)
+        self.vocabulary = np.array(self.tfidf.get_feature_names_out())
+        self.document_frequency = np.asarray((self.X > 0).mean(0)).ravel()
+        self.uninformative = np.array([t.isdigit() or any(w in GENERIC_TERMS for w in [t, *t.split()]) for t in self.vocabulary])
 
     def centered(self, vectors=None):
         return unit((self.V if vectors is None else vectors) - self.mean)
@@ -48,9 +59,24 @@ class Programme:
         query = self.tfidf.transform([" ".join(profile_texts)])
         return (self.X @ query.T).toarray().ravel(), query
 
-    def hybrid(self, embedding_score, lexical_score, k=60):
-        """Reciprocal rank fusion of the two signals."""
-        return 1 / (k + self.ranks(embedding_score)) + 1 / (k + self.ranks(lexical_score))
+    def hybrid(self, embedding_score, lexical_score, k=60, gate=None):
+        """Reciprocal rank fusion of the two signals. With a gate, the lexical signal only counts
+        for entries within that fraction of active entries by embedding rank (no false friends)."""
+        embedding_rank = self.ranks(embedding_score)
+        lexical = 1 / (k + self.ranks(lexical_score))
+        if gate is not None:
+            lexical = np.where(embedding_rank <= gate * self.active.sum(), lexical, 0)
+        return 1 / (k + embedding_rank) + lexical
+
+    def shared_terms(self, i, query, n=3, max_document_frequency=None, min_relative=0.0):
+        """Terms contributing most to the lexical match. Optionally drop boilerplate and terms in more than
+        max_document_frequency of the programme, and terms contributing less than min_relative of the best."""
+        contribution = self.X[i].multiply(query).toarray().ravel()
+        if max_document_frequency is not None:
+            keep = (self.document_frequency <= max_document_frequency) & ~self.uninformative
+            contribution = np.where(keep, contribution, 0)
+        top = np.argsort(-contribution)[:n]
+        return [self.vocabulary[t] for t in top if contribution[t] > 0 and contribution[t] >= min_relative * contribution[top[0]]]
 
 
 def recency_centroid(P, years, half_life=2, reference=2026):

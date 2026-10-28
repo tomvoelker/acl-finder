@@ -23,17 +23,23 @@ Semantic Scholar had not indexed EMNLP 2026 on 27 October 2026, and we have no r
 | Embedding, centered recency centroid (half-life 2 years) | 0.058 [0.040–0.076] | 0.096 | 0.163 | 1,188 | 0.167 |
 | TF-IDF, word and bigram | **0.084** [0.063–0.106] | **0.125** | 0.192 | 918 | **0.232** |
 | Hybrid: recency centroid + TF-IDF, reciprocal rank fusion | 0.075 [0.055–0.095] | 0.116 | **0.203** | **848** | **0.232** |
+| Hybrid, TF-IDF counted only within embedding top 20% | 0.074 [0.055–0.095] | 0.116 | 0.194 | 1,178 | 0.221 |
 
 - Embedding variants are within noise of one another. Centering (subtracting the programme mean) matters for interpretable scores: raw cosines to any profile cluster around 0.92, centered ones around 0.
 - TF-IDF retrieves an author's own new paper better than embeddings. Authors reuse their terminology, datasets and model names, so this proxy favours lexical overlap; it does not show that TF-IDF finds better papers by others.
 - The hybrid is the most robust: best recall at 50 and best median rank.
+- Gating TF-IDF to the embedding's top 5–30% leaves MRR (0.074) and R@10 (0.116) unchanged and costs 0.003–0.017 R@50. The worse median rank only reflects the order far below the top, where the gate leaves embedding order alone.
 - Absolute numbers are low. Name collisions, middle-author papers and topic changes all lower self-retrieval; it bounds, rather than estimates, recommendation quality. Judgements from real researchers remain necessary.
 
 ## Prototype recommender
 
-`recommend.py` takes Semantic Scholar author IDs. It drops proceedings volumes and older near-duplicates (cosine ≥ 0.95, e.g. preprint and published versions) from the profile, scores the hybrid above, and lists three picks per poster session and for orals, diversified by maximal marginal relevance (λ = 0.7). Each pick names the closest own paper and the top shared TF-IDF terms. For one author, their own EMNLP 2026 paper, absent from the profile, ranked 6th of 4,340.
+`recommend.py` takes Semantic Scholar author IDs. It drops proceedings volumes and older near-duplicates (cosine ≥ 0.95, e.g. preprint and published versions) from the profile and scores the hybrid above with TF-IDF gated to the embedding's top 20%. Per poster session and for orals it lists up to three picks, diversified by maximal marginal relevance (λ = 0.7) among candidates scoring at least 80% of the session's best. Each pick names the closest own paper and up to three shared terms. For one author, their own EMNLP 2026 paper, absent from the profile, ranked 6th of 4,340.
 
-Known weaknesses from inspecting two profiles: lexical false friends (literary *characters* vs. script *characters*); generic shared terms such as “approach”, “f1 score” or years in explanations; and weak third picks where diversity outweighs relevance. Candidate fixes are an embedding gate before lexical fusion, a research-term stoplist with an IDF floor, and a relevance floor for MMR.
+The first version, inspected on two profiles, had three weaknesses. Each fix was compared on the same two profiles:
+
+- **Lexical false friends** (literary *characters* vs. script *characters*, news vs. video *similarity*, an old time-series paper pulling in forecasting agents). The 20% gate removed all three examples from one profile's 24 picks, without cost at the top of the benchmark ranking.
+- **Generic explanation terms.** Before, 14 of 54 and 11 of 51 shown terms were boilerplate (“approach”, “developed”, “f1 score”, “valuable source”, years). A research-term stoplist, a document-frequency cap of 3% and dropping terms below half the best term's contribution remove these. Filler words still slip through (“easily”, “capable”, “humans”); requiring terms to recur in two profile papers did not help. The closest own paper remains the clearer explanation.
+- **Weak later picks.** The 80% relevance floor reduces picks from 24 to 18 and 17, lowers the median overall rank of picks from 17 and 14 to 10, and the worst from 100 to 51 for the broader profile. It cannot help when a session's best candidate is itself weak: a biomedical NER corpus remains the only Poster A pick for one profile, at overall rank 51. That needs an absolute floor, e.g. overall rank.
 
 ## Reproduce
 
